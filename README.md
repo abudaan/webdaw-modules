@@ -1,2 +1,7 @@
-# WebDAW
-Useful modules for making a DAW that runs in a browser
+# WebDAW modules
+
+A set of modules that you can use to make a web-based DAW
+
+
+
+
