@@ -15,6 +15,8 @@ export interface Song extends Playable {
 }
 
 export interface Track extends Playable {
+  output?: string
+  instrument?: string
 }
 
 export interface MIDIEvent {
@@ -41,7 +43,16 @@ export interface NoteOffEvent extends NoteEvent {
 
 export type MIDINote = {
   noteOn: NoteOnEvent
-  noteOff: NoteOffEvent
+  noteOff?: NoteOffEvent
+  endless: boolean // necessary for recording MIDI
+}
+
+export type AudioEvent = {
+  sample: string
+  data: ArrayBuffer
+  start: number
+  end: number
+  volume: number
 }
 
 // start playing at position (in milliseconds)
