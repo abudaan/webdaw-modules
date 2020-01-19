@@ -1,5 +1,5 @@
 // Type definitions for webdaw-modules 1.0
-// Project: webdaw.org
+// Project: https://webdaw.org
 // Definitions by: abudaan <https://webdaw.org>
 
 /// <reference types="webmidi" />
