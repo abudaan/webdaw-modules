@@ -1,3 +1,18 @@
+// Type definitions for webdaw-modules 1.0
+// Project: webdaw.org
+// Definitions by: abudaan <https://webdaw.org>
+
+/// <reference types="webmidi" />
+
+
+// start playing at position (in milliseconds)
+declare function play(p: Playable, position: number): void;
+
+declare function pause(p: Playable): void;
+
+declare function stop(p: Playable): void;
+
+
 export interface Playable {
   events: MIDIEvent[]
   notes: MIDINote[]
@@ -19,7 +34,7 @@ export interface Track extends Playable {
   instrument?: string
 }
 
-export interface MIDIEvent {
+export interface MIDIEvent extends WebMidi.MIDIMessageEvent {
   data1: number
   data2: number
   command: number
@@ -53,14 +68,4 @@ export type AudioEvent = {
   start: number
   end: number
   volume: number
-}
-
-// start playing at position (in milliseconds)
-export const play = (p: Playable, position: number): void => {
-}
-
-export const pause = (p: Playable): void => {
-}
-
-export const stop = (p: Playable): void => {
 }
