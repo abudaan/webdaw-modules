@@ -6,7 +6,7 @@
 
 
 // start playing at position (in milliseconds)
-declare function play(p: Playable, position: number): void;
+declare function play(p: Playable, position: number, index?: number): void;
 
 declare function pause(p: Playable): void;
 

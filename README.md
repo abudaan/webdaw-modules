@@ -4,7 +4,7 @@ This project is still in a very early stage, eventually it will be a complete se
 
 Where heartbeat and qambi need to be imported in their entirety, with the new modular approach you can just import the modules you need for your project. Also you can change the code to your needs without the risk of breaking anything in the rest of the library because all modules will be able to run without the need for a specific context.
 
-Another big difference is that the project will not use classes and, more import, the modules don't hold any state. State management should be implemented in the code of your project (I often refer to this as 'user code', i.e. the code of the user that uses the module). 
+Another big difference is that the project will not use classes and, more import, the modules don't hold any state (apart from the scheduler module). State management should be implemented in the code of your project (I often refer to this as 'user code', i.e. the code of the user that uses the module). 
 
 Notably heartbeat stored a lot of state inside the library code which oftentimes led to memory leaks or other unwanted behavior. And in qambi some state is kept in the members of the instances of some classes, MIDIEvent for example.
 
@@ -30,6 +30,27 @@ const url: string = 'url/to/your/midifile.mid';
 const p: Playable = parseMIDIFile(url);
 play(p, 0);
 ```
+
+If you want to pause the song, then in qambi you could simply call `song.pause()`. As you can see below, the new setup requires a bit more work:
+
+```typescript
+import { Playable, Scheduler, play, pause, parseMIDIFile } from 'webdaw-modules';
+
+const url: string = 'url/to/your/midifile.mid';
+const p: Playable = parseMIDIFile(url);
+const s: Scheduler = play(p, 0);
+
+setTimeout(() => {
+  const [millis, index] = pause(s); 
+  play(p, millis, index);
+}, 1000);
+```
+
+You might think that this code is much less user-friendly, but the opposite is true: using this approach you can add your own imperative, object oriented or even reactive or functional sugar coating and make it fit into your project as smoothly as possible.
+
+As you can see, `play` returns a reference to the scheduler, this is necessary because the scheduler uses `requestAnimationFrame` and we need to be able to cancel that when we want to stop or pause the song. The function `pause` returns the position of the song and the index of the lastly scheduled event. Note that this information is not stored in the `Playable` object; this means that the data doesn't get altered when you play it. It also shows that the modules itself have no notion of the song position; you have to store that information in your own state manager.
+
+See also [index.d.ts](https://github.com/abudaan/webdaw-modules/blob/master/index.d.ts).
 
 ## Roadmap
 
