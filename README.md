@@ -4,13 +4,21 @@ This project is still in a very early stage, eventually it will be a complete se
 
 Where heartbeat and qambi need to be imported in their entirety, with the new modular approach you can just import the modules you need for your project. Also you can change or extend the modules without the risk of breaking anything in the rest of the library because all modules will be able to run without requiring a specific context.
 
-Another big difference is that the project will not use classes and, more import, the modules don't hold any state (apart from the scheduler module, see below). State management should be implemented in the code of your project (I often refer to this as 'user code', i.e. the code of the user that uses the module). 
+Note however that some modules will need the functionality of other modules, so if for instance module A needs module B and you change something in module B it might break module A. But there are numerous ways to circumvent this from happening, the simplest solution would be to create a new module B1 based on module B. A more elaborate solution is that you make your changes in module B compatible with module A. For every module I will compile a list of the modules that are using that module.
 
-Notably heartbeat stores a lot of state inside the library code which oftentimes leads to memory leaks or other unwanted behavior. And in qambi some state is kept in the members of the instances of some classes, MIDIEvent for example.
+## State management and classes
 
-The modules will be basically just functions that transform data structures. Because the data structures will be plain objects, they can be very easily stored in any state management library.
+Notably heartbeat stores a lot of state inside the library code which oftentimes leads to memory leaks or other unwanted behavior. And in qambi a part of the state is kept in the members of the instances of some classes, the class MIDIEvent for example.
 
-Below 2 examples that show the effect of these changes in a small snippet of code that creates a song from a MIDI file. The first example shows how it is done in qambi, as you can see it makes use of a static class function to create an instance of `Song` and then a member function (method) is called to start the playback:
+The new approach will use as little classes and internal state as possible. As far as I can oversee it at this moment, I think only the scheduler will be a class and will hold some state inside its members: the current position in millis and the index of the last event that has been scheduled. 
+
+This means that state management should be implemented in the code of your project. I often refer to this as 'user code', i.e. the code of the user that uses the module, not sure it that is an appropriate term.
+
+My goal is to create modules that will be basically just functions that transform data structures. Because the data structures are plain objects, they can be very easily stored in any state management setup.
+
+## Example
+
+Below 2 examples that show the effect of the changes in a small snippet of code that creates a song from a MIDI file. The first example shows how it is done in qambi, as you can see it makes use of a static class function to create an instance of `Song` and then a member function (method) is called to start the playback:
 
 ```typescript
 import { Song } from 'qambi';
@@ -21,35 +29,22 @@ song.play();
 
 ```
 
-The new approach shows a function that transforms binary MIDI data into an data structure that contains the bare necessities for playback; an object of type `Playable`. The `play` function takes a `Playable` and a start time for parameters:
+The new approach shows a function that transforms binary MIDI data into an data structure of type `Playable` which contains the minimal set of data for playback; an array of midi events and a value for bpm and ppq. As mentioned above, the scheduler is the only class module; it can schedule any data structure that is or extends `Playable`:
 
 ```typescript
-import { Playable, play, parseMIDIFile } from 'webdaw-modules';
+import { Playable, Scheduler, parseMIDIFile } from 'webdaw-modules';
 
 const url: string = 'url/to/your/midifile.mid';
 const p: Playable = parseMIDIFile(url);
-play(p, 0);
+const s: Scheduler = new Scheduler();
+s.play(p, 0);
 ```
 
 Note that `Playable` is only a Typescript type (an interface actually) and not a class. As such it simply describes the data structure. `Song` is another type of data structure, it extends `Playable` and describes some additional data. For instance loops can be stored in a `Song` data structure but not in a `Playable` data structure.  For the close readers: yes I wrote loop*s*; the new scheduler will support multiple loops.
 
-If you want to pause the song, then in qambi you could simply call `song.pause()`. As you can see below, the new setup requires a bit more work:
+The reason why the scheduler is a class is because it uses `requestAnimationFrame` and we need to be able to cancel that when we want to stop or pause the song. Therefor we need a reference
 
-```typescript
-import { Playable, Scheduler, play, pause, parseMIDIFile } from 'webdaw-modules';
-
-const url: string = 'url/to/your/midifile.mid';
-const p: Playable = parseMIDIFile(url);
-const s: Scheduler = play(p, 0);
-
-// pause after some time:
-const [millis, index] = pause(s); 
-
-// and then after some more time start playing again from the paused position
-play(p, millis, index);
-```
-
-As you can see, `play` returns a reference to the scheduler, this is necessary because the scheduler uses `requestAnimationFrame` and we need to be able to cancel that when we want to stop or pause the song. The function `pause` returns the position of the song and the index of the lastly scheduled event. Note that this information is not stored in the `Playable` object; this means that the data doesn't get altered when you play it. It also shows that the modules itself have no notion of the song position; you have to store that information in your own state.
+The function `pause` returns the position of the song and the index of the lastly scheduled event. Note that this information is not stored in the `Playable` object; this means that the data doesn't get altered when you play it. It also shows that the modules itself have no notion of the song position; you have to store that information in your own state.
 
 You might think that it has become much less user-friendly, but the opposite is actually true: using this approach you can add your own imperative, object oriented or even reactive or functional sugar coating and make it fit into your project as smoothly as possible.
 
@@ -76,3 +71,6 @@ Here is a quick draft of the order in which I will build the new modules:
 
 ## API (so far)
 See [index.d.ts](https://github.com/abudaan/webdaw-modules/blob/master/index.d.ts).
+
+## About the name
+I have deliberately chosen a more descriptive name instead of a more 'poetic' name such as heartbeat and qambi because I consider a web DAW to be a general concept.

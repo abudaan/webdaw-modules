@@ -3,14 +3,18 @@
 // Definitions by: abudaan <https://webdaw.org>
 
 /// <reference types="webmidi" />
+/// <reference path="./node_modules/rxjs/index.d.ts" />
 
 
-// start playing at position (in milliseconds)
-declare function play(p: Playable, position: number, index?: number): void;
+declare function init({ bufferTime: number }): Promise<void>;
 
-declare function pause(p: Playable): void;
-
-declare function stop(p: Playable): void;
+export interface Scheduler {
+  play: (p: Playable, millis: number, index?: number) => void
+  pause: () => [number, number] // [millis, index]
+  stop: () => void
+  subscribe: () => Observable<{ millis: number, event: MIDIEvent, midiMessage: WebMidi.MIDIMessageEvent }>
+  unscheduleAll: () => void
+}
 
 
 export interface Playable {
@@ -34,7 +38,7 @@ export interface Track extends Playable {
   instrument?: string
 }
 
-export interface MIDIEvent extends WebMidi.MIDIMessageEvent {
+export interface MIDIEvent {
   data1: number
   data2: number
   command: number

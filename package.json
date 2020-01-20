@@ -1,0 +1,30 @@
+{
+  "name": "webdaw-modules",
+  "version": "1.0.0",
+  "description": "a set of modules for building a web-based DAW",
+  "main": "index.js",
+  "dependencies": {
+    "@types/webmidi": "^2.0.3",
+    "rxjs": "^6.5.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abudaan/webdaw-modules.git"
+  },
+  "keywords": [
+    "MIDI",
+    "audio",
+    "web",
+    "MPE"
+  ],
+  "author": "abudaan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/abudaan/webdaw-modules/issues"
+  },
+  "homepage": "https://github.com/abudaan/webdaw-modules#readme"
+}
