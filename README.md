@@ -8,45 +8,11 @@ Note however that some modules will need the functionality of other modules, so 
 
 ## State management and classes
 
-Notably heartbeat stores a lot of state inside the library code which oftentimes leads to memory leaks or other unwanted behavior. And in qambi a part of the state is kept in the members of the instances of some classes, the class MIDIEvent for example.
+Notably heartbeat stores a lot of state inside the library code which oftentimes leads to memory leaks or other unwanted behavior. In qambi a part of the state is kept in the members of the instances of some classes, the class MIDIEvent for example.
 
-The new approach will use as little classes and internal state as possible. As far as I can oversee it at this moment, I think only the scheduler will be a class and will hold some state inside its members: the current position in millis and the index of the last event that has been scheduled. 
-
-This means that state management should be implemented in the code of your project. I often refer to this as 'user code', i.e. the code of the user that uses the module, not sure it that is an appropriate term.
+The new approach will hold no state and use as little classes as possible. This means that state management should be implemented in the code of your project. I often refer to this as 'user code', i.e. the code of the user that uses the module, not sure it that is an appropriate term.
 
 My goal is to create modules that will be basically just functions that transform data structures. Because the data structures are plain objects, they can be very easily stored in any state management setup.
-
-## Example
-
-Below 2 examples that show the effect of the changes in a small snippet of code that creates a song from a MIDI file. The first example shows how it is done in qambi, as you can see it makes use of a static class function to create an instance of `Song` and then a member function (method) is called to start the playback:
-
-```typescript
-import { Song } from 'qambi';
-
-const url = 'url/to/your/midifile.mid';
-const song = await Song.fromMIDIFile(url);
-song.play();
-
-```
-
-The new approach shows a function that transforms binary MIDI data into an data structure of type `Playable` which contains the minimal set of data for playback; an array of midi events and a value for bpm and ppq. As mentioned above, the scheduler is the only class module; it can schedule any data structure that is or extends `Playable`:
-
-```typescript
-import { Playable, Scheduler, parseMIDIFile } from 'webdaw-modules';
-
-const url: string = 'url/to/your/midifile.mid';
-const p: Playable = parseMIDIFile(url);
-const s: Scheduler = new Scheduler();
-s.play(p, 0);
-```
-
-Note that `Playable` is only a Typescript type (an interface actually) and not a class. As such it simply describes the data structure. `Song` is another type of data structure, it extends `Playable` and describes some additional data. For instance loops can be stored in a `Song` data structure but not in a `Playable` data structure.  For the close readers: yes I wrote loop*s*; the new scheduler will support multiple loops.
-
-The reason why the scheduler is a class is because it uses `requestAnimationFrame` and we need to be able to cancel that when we want to stop or pause the song. Therefor we need a reference
-
-The function `pause` returns the position of the song and the index of the lastly scheduled event. Note that this information is not stored in the `Playable` object; this means that the data doesn't get altered when you play it. It also shows that the modules itself have no notion of the song position; you have to store that information in your own state.
-
-You might think that it has become much less user-friendly, but the opposite is actually true: using this approach you can add your own imperative, object oriented or even reactive or functional sugar coating and make it fit into your project as smoothly as possible.
 
 ## Roadmap
 
@@ -58,7 +24,7 @@ Here is a quick draft of the order in which I will build the new modules:
 - [ ] simple synthesizer
 - [ ] soundfont player
 - [ ] metronome
-- [ ] MIIDI recorder
+- [ ] MIDI recorder
 - [ ] audio events
 - [ ] utils: quantize, fix note lengths
 - [ ] utils: note statistics
@@ -69,8 +35,12 @@ Here is a quick draft of the order in which I will build the new modules:
 - [ ] support for MPE
 - [ ] sysex support (incl. editor)
 
-## API (so far)
+## API (draft so far)
 See [index.d.ts](https://github.com/abudaan/webdaw-modules/blob/master/index.d.ts).
 
 ## About the name
-I have deliberately chosen a more descriptive name instead of a more 'poetic' name such as heartbeat and qambi because I consider a web DAW to be a general concept.
+I have deliberately chosen a more descriptive name instead of a more 'poetic' name such as heartbeat and qambi because the project is basically just a set of building blocks, not a complete product; I think a poetic name is more something that you put on a completely working DAW (that may or may not use the modules in this project).
+
+The name heartbeat was chosen because before the metronome was invented (and wide-spread) musicians derived tempo from their heartbeat. But the name is actually somewhat misleading because in technology a heartbeat usually refers to the state of a service. The name qambi is a Zulu word that means creator, inventor. I like that name very much but I think it is a bit over the top if I would use it for this project which merely is a simple set of modules.
+
+Also I think the term webdaw, or cased like WebDAW, describes a concept that can be implemented in many ways; this project is just one of them. It would be great if together with developers of related libraries some kind of standard eventually evolves that our libraries adhere to: then you can seamlessly connect library A to library B if they are both WebDAW compliant.

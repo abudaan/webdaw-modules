@@ -8,14 +8,10 @@
 
 declare function init({ bufferTime: number }): Promise<void>;
 
-export interface Scheduler {
-  play: (p: Playable, millis: number, index?: number) => void
-  pause: () => [number, number] // [millis, index]
-  stop: () => void
-  subscribe: () => Observable<{ millis: number, event: MIDIEvent, midiMessage: WebMidi.MIDIMessageEvent }>
-  unscheduleAll: () => void
-}
+declare function schedule({ playable: Playable, index: number }): number;
 
+declare function schedulerAsObservable({ playable: Playable, index: number }):
+  Observable<{ millis: number, event: MIDIEvent, midiMessage: WebMidi.MIDIMessageEvent }>
 
 export interface Playable {
   events: MIDIEvent[]
