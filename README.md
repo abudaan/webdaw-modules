@@ -46,11 +46,11 @@ setTimeout(() => {
 }, 1000);
 ```
 
-You might think that this code is much less user-friendly, but the opposite is true: using this approach you can add your own imperative, object oriented or even reactive or functional sugar coating and make it fit into your project as smoothly as possible.
-
 As you can see, `play` returns a reference to the scheduler, this is necessary because the scheduler uses `requestAnimationFrame` and we need to be able to cancel that when we want to stop or pause the song. The function `pause` returns the position of the song and the index of the lastly scheduled event. Note that this information is not stored in the `Playable` object; this means that the data doesn't get altered when you play it. It also shows that the modules itself have no notion of the song position; you have to store that information in your own state manager.
 
 See also [index.d.ts](https://github.com/abudaan/webdaw-modules/blob/master/index.d.ts).
+
+You might think that this code is much less user-friendly, but the opposite is true: using this approach you can add your own imperative, object oriented or even reactive or functional sugar coating and make it fit into your project as smoothly as possible.
 
 ## Roadmap
 
