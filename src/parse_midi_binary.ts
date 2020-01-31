@@ -41,9 +41,11 @@ function parseHeader(reader: BufferReader) {
 }
 
 function parseTracks(reader: BufferReader, ppq: number) {
-  let tracks: MidiEvent[][] = []
+  let tracks: MidiEvent[][] = [];
+  let trackNo = -1;
   while (!reader.eof()) {
     const trackChunk = reader.midiChunk()
+    trackNo++;
 
     if (trackChunk.id !== "MTrk") {
       throw new Error(`Unexpected chunk, expected MTrk, got ${trackChunk.id}`);
@@ -62,7 +64,7 @@ function parseTracks(reader: BufferReader, ppq: number) {
       // console.log('TICKS', ticks);
       if (bpm) {
         millisPerTick = ((1 / playbackSpeed * 60) / bpm / ppq) * 1000;
-        // console.log(bpm, ppq, millisPerTick);
+        console.log(bpm, ppq, millisPerTick, trackNo);
         millis = ticks * millisPerTick;
         track = [...track, {
           ...event,
