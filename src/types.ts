@@ -1,18 +1,3 @@
-// Type definitions for webdaw-modules 1.0
-// Project: https://webdaw.org
-// Definitions by: abudaan <https://webdaw.org>
-
-/// <reference types="webmidi" />
-/// <reference path="./node_modules/rxjs/index.d.ts" />
-
-
-declare function init({ bufferTime: number }): Promise<void>;
-
-declare function schedule({ playable: Playable, index: number }): number;
-
-declare function schedulerAsObservable({ playable: Playable, index: number }):
-  Observable<{ millis: number, event: MIDIEvent, midiMessage: WebMidi.MIDIMessageEvent }>
-
 export interface Playable {
   events: MIDIEvent[]
   notes: MIDINote[]
@@ -20,13 +5,16 @@ export interface Playable {
   bpm: number
 }
 
-export interface Song extends Playable {
-  useMetronome: boolean
-  loop: boolean
+export interface Song {
+  ppq: number
+  bpm: number
+  events: MIDIEvent[]
+  // useMetronome: boolean
   loops: {
     start: number
     end: number
-  }[],
+    loop: boolean
+  }[]
 }
 
 export interface Track extends Playable {

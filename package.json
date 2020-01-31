@@ -4,12 +4,28 @@
   "description": "a set of modules for building a web-based DAW",
   "main": "index.js",
   "dependencies": {
-    "@types/webmidi": "^2.0.3",
+    "jasmid.ts": "^2.1.0",
+    "jszip": "^3.2.2",
+    "jzz": "^0.7.9",
+    "ramda": "^0.26.1",
     "rxjs": "^6.5.4"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/webmidi": "^2.0.3",
+    "@types/ramda": "^0.26.9",
+    "eslint": "^5.16.0",
+    "eslint-import-resolver-typescript": "^1.1.1",
+    "parcel": "^1.12.4",
+    "parcel-bundler": "^1.12.4",
+    "typescript": "^3.4.5"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "npm run clean && npm run copy && parcel --port 3000 --no-hmr ./index.html",
+    "watch2": "parcel --port 3000 --no-hmr ./index.html",
+    "build": "parcel build --no-source-maps --public-url ./ ./index.html",
+    "copy": "cp -r ./assets ./dist/assets",
+    "clean": "rm -rf .cache/* && rm -rf dist/*"
   },
   "repository": {
     "type": "git",
