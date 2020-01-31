@@ -63,14 +63,20 @@ function parseTracks(reader: BufferReader, ppq: number) {
       if (bpm) {
         millisPerTick = ((1 / playbackSpeed * 60) / bpm / ppq) * 1000;
         // console.log(bpm, ppq, millisPerTick);
+        millis = ticks * millisPerTick;
+        track = [...track, {
+          ...event,
+          ticks,
+          millis,
+          millisPerTick,
+        }]
+      } else {
+        lastTypeByte = event.type[0];
+        track = [...track, {
+          ...event,
+          ticks,
+        }]
       }
-      lastTypeByte = event.type[0];
-      millis = ticks * millisPerTick;
-      track = [...track, {
-        ...event,
-        ticks,
-        millis,
-      }]
     }
 
     tracks = [...tracks, track]
@@ -321,25 +327,25 @@ function parseEvent(reader: BufferReader, lastTypeByte: number | null): ParsedDa
     const channel = typeByte & 0x0f
 
     switch (typeByte) {
-      // note on
+      // note off
       case 0x80:
         return {
           event: {
             type: [typeByte],
-            descr: NOTE_ON,
+            descr: NOTE_OFF,
             channel,
             note: value,
             velocity: reader.uint8(),
           },
           deltaTime,
         }
-      // note off
+      // note on
       case 0x90:
         const velocity = reader.uint8()
         return {
           event: {
-            type: [velocity === 0 ? 0x90 : 0x80],
-            descr: NOTE_OFF,
+            type: [velocity === 0 ? 0x80 : 0x90],
+            descr: velocity === 0 ? NOTE_OFF : NOTE_ON,
             channel,
             note: value,
             velocity,

@@ -18,13 +18,13 @@
     "jsx": "react"
   },
   "include": [
+    ".",
     "src"
   ],
   "exclude": [
     "dist",
     "node_modules",
     ".cache",
-    "src/worker.js",
     "heartbeat"
   ]
 }

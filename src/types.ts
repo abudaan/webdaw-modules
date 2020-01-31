@@ -1,3 +1,5 @@
+/// <reference types="webmidi" />
+
 export interface Playable {
   events: MIDIEvent[]
   notes: MIDINote[]
