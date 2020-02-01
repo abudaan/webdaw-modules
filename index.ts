@@ -11,8 +11,8 @@ import { parseMidiFile } from './src/parse_midi_binary';
 
 // init();
 
-// const url = './assets/minute_waltz.mid';
-const url = './assets/mozk545a.mid';
+const url = './assets/minute_waltz.mid';
+// const url = './assets/mozk545a.mid';
 // const url = './assets/mozk545a_musescore.mid';
 
 fetch(url)

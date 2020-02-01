@@ -11,6 +11,7 @@ export type ParsedData = {
   event: any,
   deltaTime: number,
   bpm?: number,
+  numerator?: number,
 }
 
 export function parseMidiFile(buffer: ArrayBufferLike) {
@@ -41,7 +42,8 @@ function parseHeader(reader: BufferReader) {
 }
 
 function parseTracks(reader: BufferReader, ppq: number) {
-  let tracks: MidiEvent[][] = [];
+  const tracks: MidiEvent[][] = [];
+  const timeTrack: MidiEvent[] = [];
   let trackNo = -1;
   while (!reader.eof()) {
     const trackChunk = reader.midiChunk()
@@ -59,19 +61,25 @@ function parseTracks(reader: BufferReader, ppq: number) {
     let lastTypeByte = null;
     while (!trackTrack.eof()) {
       let data = parseEvent(trackTrack, lastTypeByte)
-      const { event, deltaTime, bpm } = data;
+      const { event, deltaTime, bpm, numerator } = data;
       ticks += deltaTime;
-      // console.log('TICKS', ticks);
+      millis += deltaTime * millisPerTick;
+      // console.log('TICKS', ticks, bpm, numerator);
       if (bpm) {
         millisPerTick = ((1 / playbackSpeed * 60) / bpm / ppq) * 1000;
-        console.log(bpm, ppq, millisPerTick, trackNo);
-        millis = ticks * millisPerTick;
-        track = [...track, {
+        // console.log(bpm, ppq, millisPerTick, trackNo);
+        timeTrack.push({
           ...event,
           ticks,
           millis,
           millisPerTick,
-        }]
+        });
+      } else if (numerator) {
+        timeTrack.push({
+          ...event,
+          ticks,
+          millis,
+        });
       } else {
         lastTypeByte = event.type[0];
         track = [...track, {
@@ -80,10 +88,9 @@ function parseTracks(reader: BufferReader, ppq: number) {
         }]
       }
     }
-
-    tracks = [...tracks, track]
+    tracks.push(track);
   }
-  return tracks
+  return [timeTrack, ...tracks];
 }
 
 function parseEvent(reader: BufferReader, lastTypeByte: number | null): ParsedData {
@@ -247,15 +254,17 @@ function parseEvent(reader: BufferReader, lastTypeByte: number | null): ParsedDa
         if (length != 4) {
           throw new Error(`Expected length for timeSignature event is 4, got ${length}`);
         }
+        const numerator = reader.uint8();
         return {
           event: {
             type: [typeByte, subTypeByte],
             descr: TIME_SIGNATURE,
-            numerator: reader.uint8(),
+            numerator,
             denominator: Math.pow(2, reader.uint8()),
             metronome: reader.uint8(),
             thirtySeconds: reader.uint8(),
           },
+          numerator,
           deltaTime,
         }
       // key signature
@@ -328,9 +337,9 @@ function parseEvent(reader: BufferReader, lastTypeByte: number | null): ParsedDa
 
     const channel = typeByte & 0x0f
 
-    switch (typeByte) {
+    switch (typeByte >> 4) {
       // note off
-      case 0x80:
+      case 0x08:
         return {
           event: {
             type: [typeByte],
@@ -342,7 +351,7 @@ function parseEvent(reader: BufferReader, lastTypeByte: number | null): ParsedDa
           deltaTime,
         }
       // note on
-      case 0x90:
+      case 0x09:
         const velocity = reader.uint8()
         return {
           event: {
@@ -355,7 +364,7 @@ function parseEvent(reader: BufferReader, lastTypeByte: number | null): ParsedDa
           deltaTime,
         }
       // note aftertouch
-      case 0xa0:
+      case 0x0a:
         return {
           event: {
             type: [0xa0],
@@ -367,7 +376,7 @@ function parseEvent(reader: BufferReader, lastTypeByte: number | null): ParsedDa
           deltaTime,
         }
       // controller
-      case 0xb0:
+      case 0x0b:
         return {
           event: {
             type: [0xb0],
@@ -379,7 +388,7 @@ function parseEvent(reader: BufferReader, lastTypeByte: number | null): ParsedDa
           deltaTime,
         }
       // program change
-      case 0xc0:
+      case 0x0c:
         return {
           event: {
             type: [0xc0],
@@ -390,7 +399,7 @@ function parseEvent(reader: BufferReader, lastTypeByte: number | null): ParsedDa
           deltaTime,
         }
       // channel aftertouch
-      case 0xd0:
+      case 0x0d:
         return {
           event: {
             type: [0xd0],
@@ -401,7 +410,7 @@ function parseEvent(reader: BufferReader, lastTypeByte: number | null): ParsedDa
           deltaTime,
         }
       // pitch bend
-      case 0xe0:
+      case 0x0e:
         return {
           event: {
             type: [0xe0],
@@ -413,7 +422,14 @@ function parseEvent(reader: BufferReader, lastTypeByte: number | null): ParsedDa
         }
     }
   }
-  throw new Error(`Unrecognised MIDI event type byte: ${typeByte}`);
+  console.log(`Unrecognized MIDI event type byte: ${typeByte}`);
+  return {
+    event: {
+      type: [typeByte],
+    },
+    deltaTime,
+  }
+  // throw new Error(`Unrecognized MIDI event type byte: ${typeByte}`);
 }
 
 function getFrameRate(hourByte: number) {
