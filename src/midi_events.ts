@@ -241,7 +241,7 @@ export type DividedSysexEvent = {
 }
 
 
-export type MidiEvent =
+export type MIDIEvent =
   // midi
   | NoteOnEvent
   | NoteOffEvent

@@ -1,4 +1,4 @@
-import { MidiEvent } from '../midi_events';
+import { MIDIEvent } from './midi_events';
 
 export const SEQUENCE_NUMBER = 'sequence number';
 export const TEXT = 'text';
@@ -69,7 +69,7 @@ export const getMidiEventDescription = (type: number, subType?: number): string 
   return descriptions[type][subType] || 'undefined';
 }
 
-export const getMidiMessageEvent = (event: MidiEvent): number[] => {
+export const getMidiMessageEvent = (event: MIDIEvent): number[] => {
   switch (event.descr) {
     case NOTE_ON:
       return [0x90 + event.channel, event.noteNumber, event.velocity]

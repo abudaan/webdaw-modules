@@ -1,3 +1,5 @@
+import { MIDIEvent } from "./src/midi_events";
+
 // Type definitions for webdaw-modules 1.0
 // Project: https://webdaw.org
 // Definitions by: abudaan <https://webdaw.org>
@@ -13,28 +15,33 @@ declare function schedule({ playable: Playable, index: number }): number;
 declare function schedulerAsObservable({ playable: Playable, index: number }):
   Observable<{ millis: number, event: MIDIEvent, midiMessage: WebMidi.MIDIMessageEvent }>
 
-export interface Playable {
-  events: MIDIEvent[]
-  notes: MIDINote[]
-  ppq: number
-  bpm: number
-}
+// export interface Playable {
+//   events: MIDIEvent[]
+//   notes: MIDINote[]
+//   ppq: number
+//   bpm: number
+// }
 
-export interface Song extends Playable {
-  useMetronome: boolean
-  loop: boolean
-  loops: {
+export interface Song {
+  ppq: number
+  timeTrack: MIDIEvent[]
+  tracks: Track[]
+  useMetronome?: boolean
+  loop?: boolean
+  loops?: {
     start: number
     end: number
   }[],
 }
 
-export interface Track extends Playable {
-  output?: string
+export interface Track {
+  input?: string // id of MIDI input
+  output?: string // id of MIDI output
   instrument?: string
   processor?: (event: MIDIEvent | WebMidi.MIDIMessageEvent) => void // a function that processes an event into sound or something else
+  events: MIDIEvent[]
 }
-
+/*
 export interface MIDIEvent {
   data1: number
   data2: number
@@ -70,3 +77,4 @@ export type AudioEvent = {
   end: number
   volume: number
 }
+*/

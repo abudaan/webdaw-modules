@@ -2,7 +2,7 @@
 
 // import { BufferReader } from 'jasmid.ts';
 import { BufferReader } from './bufferreader';
-import { MidiEvent } from './midi_events';
+import { MIDIEvent } from './midi_events';
 import { SEQUENCE_NUMBER, TEXT, COPYRIGHT_NOTICE, TRACK_NAME, INSTRUMENT_NAME, LYRICS, MARKER, CUE_POINT, CHANNEL_PREFIX, END_OF_TRACK, TEMPO, SMPTE_OFFSET, TIME_SIGNATURE, KEY_SIGNATURE, SEQUENCER_SPECIFIC, SYSTEM_EXCLUSIVE, DIVIDED_SYSTEM_EXCLUSIVE, NOTE_ON, NOTE_OFF, NOTE_AFTERTOUCH, CONTROLLER, PROGRAM_CHANGE, CHANNEL_AFTERTOUCH, PITCH_BEND } from './midi_utils';
 
 const playbackSpeed = 1;
@@ -14,13 +14,23 @@ export type ParsedData = {
   numerator?: number,
 }
 
-export function parseMidiFile(buffer: ArrayBufferLike) {
+export type ParsedMIDIFile = {
+  header: {
+    formatType: number
+    trackCount: number
+    ticksPerBeat: number
+  }
+  tracks: MIDIEvent[][]
+  timeTrack: MIDIEvent[]
+}
+
+export function parseMidiFile(buffer: ArrayBufferLike): ParsedMIDIFile {
   const reader = new BufferReader(buffer)
 
   const header = parseHeader(reader)
-  const tracks = parseTracks(reader, header.ticksPerBeat)
+  const { timeTrack, tracks } = parseTracks(reader, header.ticksPerBeat)
 
-  return { header, tracks }
+  return { header, timeTrack, tracks }
 }
 
 function parseHeader(reader: BufferReader) {
@@ -42,8 +52,8 @@ function parseHeader(reader: BufferReader) {
 }
 
 function parseTracks(reader: BufferReader, ppq: number) {
-  const tracks: MidiEvent[][] = [];
-  const timeTrack: MidiEvent[] = [];
+  const tracks: MIDIEvent[][] = [];
+  const timeTrack: MIDIEvent[] = [];
   let trackNo = -1;
   while (!reader.eof()) {
     const trackChunk = reader.midiChunk()
@@ -54,7 +64,7 @@ function parseTracks(reader: BufferReader, ppq: number) {
     }
 
     const trackTrack = new BufferReader(trackChunk.data)
-    let track: MidiEvent[] = []
+    let track: MIDIEvent[] = []
     let ticks = 0;
     let millis = 0;
     let millisPerTick = 0;
@@ -90,7 +100,7 @@ function parseTracks(reader: BufferReader, ppq: number) {
     }
     tracks.push(track);
   }
-  return [timeTrack, ...tracks];
+  return { timeTrack, tracks };
 }
 
 function parseEvent(reader: BufferReader, lastTypeByte: number | null): ParsedData {
