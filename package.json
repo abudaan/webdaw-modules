@@ -11,7 +11,7 @@
     "rxjs": "^6.5.4"
   },
   "devDependencies": {
-    "@types/webmidi": "^2.0.3",
+    "@types/webmidi": "^2.0.4",
     "@types/ramda": "^0.26.9",
     "eslint": "^5.16.0",
     "eslint-import-resolver-typescript": "^1.1.1",
