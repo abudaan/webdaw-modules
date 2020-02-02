@@ -18,9 +18,10 @@ My goal is to create modules that will be basically just functions that transfor
 
 Here is a quick draft of the order in which I will build the new modules:
 
-- [ ] MIDI file parser
+- [x] MIDI file parser
 - [ ] MusicXML file parser
-- [ ] event scheduler
+- [x] event scheduler
+- [ ] support for loops in event scheduler
 - [ ] simple synthesizer
 - [ ] soundfont player
 - [ ] metronome
