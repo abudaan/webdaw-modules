@@ -15,13 +15,13 @@ export const getSchedulerIndex = (song: Song, millis: number): number => {
   return i;
 }
 
-
 type Args = {
   song: Song,
   millis: number
   index: number
+  outputs?: WebMidi.MIDIOutputMap
 }
-export const schedule = ({ song, index, millis }: Args): { millis: number, index: number } => {
+export const schedule = ({ song, index, millis, outputs }: Args): { millis: number, index: number } => {
   const ts = performance.now();
   const { events } = song;
   const scheduled = [];
@@ -31,17 +31,18 @@ export const schedule = ({ song, index, millis }: Args): { millis: number, index
     if (event.millis < (millis + song.bufferTime)) {
       scheduled.push(event);
       const track = song.tracksById[event.trackId];
-      track.outputs.forEach(o => {
+      track.outputs.forEach(id => {
         if (event.descr === NOTE_ON || event.descr === NOTE_OFF) {
-          o.send([event.type[0] + event.channel, event.noteNumber, event.velocity], ts + (event.millis - millis) + track.latency);
+          const time = ts + song.latency + track.latency + (event.millis - millis);
+          // console.log(time, ts, time - ts);
+          outputs?.get(id)?.send([event.type[0] + event.channel, event.noteNumber, event.velocity], time);
         }
       })
-
       index++
     } else {
       break;
     }
   }
-  console.log('[SCHEDULED]', scheduled.map(e => [e.ticks, e.millis]));
+  // console.log('[SCHEDULED]', scheduled.map(e => [e.ticks, e.millis]));
   return { millis, index };
 }

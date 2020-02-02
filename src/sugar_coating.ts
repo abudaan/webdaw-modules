@@ -8,7 +8,8 @@ export const createSongFromMIDIFile = async (url: string): Promise<Song> => {
   const { header, initialTempo, events, tracks } = parseMidiFile(ab);
   const song: Song = {
     ppq: header.ticksPerBeat,
-    bufferTime: 50, // value in milliseconds
+    latency: 17, // value in milliseconds -> the length of a single frame @ 60Hz refresh rate
+    bufferTime: 35, // value in milliseconds
     tracks,
     tracksById: tracks.reduce((acc: { [id: string]: Track }, value) => {
       acc[value.id] = value;
@@ -22,7 +23,7 @@ export const createSongFromMIDIFile = async (url: string): Promise<Song> => {
   return song;
 }
 
-export const setTrackOutput = (track: Track, output: WebMidi.MIDIOutput) => {
+export const setTrackOutput = ({ track, output }: { track: Track; output: string; }) => {
   track.outputs.push(output);
 }
 
