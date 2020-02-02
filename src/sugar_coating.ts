@@ -8,6 +8,7 @@ export const createSongFromMIDIFile = async (url: string): Promise<Song> => {
   const { header, initialTempo, events, tracks } = parseMidiFile(ab);
   const song: Song = {
     ppq: header.ticksPerBeat,
+    bufferTime: 50, // value in milliseconds
     tracks,
     tracksById: tracks.reduce((acc: { [id: string]: Track }, value) => {
       acc[value.id] = value;

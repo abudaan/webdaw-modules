@@ -3,9 +3,7 @@ import { getMIDIAccess } from './init-midi';
 import { NoteOnEvent } from './midi_events';
 import { NOTE_ON, NOTE_OFF } from './midi_utils';
 
-const bufferTime = 50; // milliseconds
-
-export const getIndex = (song: Song, millis: number): number => {
+export const getSchedulerIndex = (song: Song, millis: number): number => {
   const { events } = song;
   let i = 0;
   for (; i < events.length; i++) {
@@ -30,7 +28,7 @@ export const schedule = ({ song, index, millis }: Args): { millis: number, index
   while (index < events.length) {
     const event = events[index];
     // console.log(event.millis);
-    if (event.millis < (millis + bufferTime)) {
+    if (event.millis < (millis + song.bufferTime)) {
       scheduled.push(event);
       const track = song.tracksById[event.trackId];
       track.outputs.forEach(o => {

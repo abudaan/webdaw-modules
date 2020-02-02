@@ -4,6 +4,7 @@ import { MIDIEvent } from "./midi_events";
 
 export interface Song {
   ppq: number
+  bufferTime: number
   initialTempo: number
   tracks: Track[]
   tracksById: { [id: string]: Track }
