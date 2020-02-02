@@ -4,8 +4,10 @@ import { MIDIEvent } from "./midi_events";
 
 export interface Song {
   ppq: number
-  timeTrack: MIDIEvent[]
-  tracks: Track[]
+  initialTempo: number
+  events: MIDIEvent[]
+  // timeTrack: MIDIEvent[]
+  // tracks: Track[]
   useMetronome?: boolean
   loop?: boolean
   loops?: {

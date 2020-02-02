@@ -1,4 +1,4 @@
-import { MIDIEvent } from './midi_events';
+import { MIDIEvent, TempoEvent } from './midi_events';
 
 export const SEQUENCE_NUMBER = 'sequence number';
 export const TEXT = 'text';
@@ -99,4 +99,57 @@ export const getNoteNumber = (name: string, octave: number, mode: string = 'shar
 
   //number = (index + 12) + (octave * 12) + 12; // → in Cubase central C = C3 instead of C4
   return (index + 12) + (octave * 12);// → midi standard + scientific naming, see: http://en.wikipedia.org/wiki/Middle_C and http://en.wikipedia.org/wiki/Scientific_pitch_notation
+};
+
+export const sortMIDIEvents = (events: MIDIEvent[]): MIDIEvent[] =>
+  events.sort((a: MIDIEvent, b: MIDIEvent) => {
+    if (a.ticks < b.ticks) {
+      return -1;
+    } else if (a.ticks > b.ticks) {
+      return 1;
+    } else if (a.descr === NOTE_OFF && b.descr === NOTE_ON) {
+      return -1
+    } else if (a.descr === TEMPO || a.descr === TIME_SIGNATURE) {
+      return -1
+    }
+    return 0;
+  });
+
+
+export const calculateMillis = (events: MIDIEvent[], ppq: number, playbackSpeed: number = 1): MIDIEvent[] => {
+  let millisPerTick = 0;
+  let ticks = 0;
+  let millis = 0;
+  return events.map(event => {
+    const { bpm } = event as TempoEvent;
+    const diffTicks = event.ticks - ticks
+    millis += diffTicks * millisPerTick;
+    event.millis = millis;
+    if (bpm) {
+      millisPerTick = ((1 / playbackSpeed * 60) / bpm / ppq) * 1000;
+    }
+    ticks = event.ticks;
+    return event;
+  });
+}
+
+export const removeDoubleEvents = (events: MIDIEvent[]): MIDIEvent[] {
+  // var i, maxi = events.length,
+  //   event, eventId, lastId,
+  //   result = [];
+
+  // events.sort(function (a, b) {
+  //   return a.eventNumber - b.eventNumber;
+  // });
+
+  // for (i = 0; i < maxi; i++) {
+  //   event = events[i];
+  //   eventId = event.id;
+  //   if (eventId !== lastId) {
+  //     result.push(event);
+  //   }
+  //   lastId = eventId;
+  // }
+  // return result;
+  return [];
 };

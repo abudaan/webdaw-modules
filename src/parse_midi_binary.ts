@@ -3,7 +3,7 @@
 // import { BufferReader } from 'jasmid.ts';
 import { BufferReader } from './bufferreader';
 import { MIDIEvent } from './midi_events';
-import { SEQUENCE_NUMBER, TEXT, COPYRIGHT_NOTICE, TRACK_NAME, INSTRUMENT_NAME, LYRICS, MARKER, CUE_POINT, CHANNEL_PREFIX, END_OF_TRACK, TEMPO, SMPTE_OFFSET, TIME_SIGNATURE, KEY_SIGNATURE, SEQUENCER_SPECIFIC, SYSTEM_EXCLUSIVE, DIVIDED_SYSTEM_EXCLUSIVE, NOTE_ON, NOTE_OFF, NOTE_AFTERTOUCH, CONTROLLER, PROGRAM_CHANGE, CHANNEL_AFTERTOUCH, PITCH_BEND } from './midi_utils';
+import { SEQUENCE_NUMBER, TEXT, COPYRIGHT_NOTICE, TRACK_NAME, INSTRUMENT_NAME, LYRICS, MARKER, CUE_POINT, CHANNEL_PREFIX, END_OF_TRACK, TEMPO, SMPTE_OFFSET, TIME_SIGNATURE, KEY_SIGNATURE, SEQUENCER_SPECIFIC, SYSTEM_EXCLUSIVE, DIVIDED_SYSTEM_EXCLUSIVE, NOTE_ON, NOTE_OFF, NOTE_AFTERTOUCH, CONTROLLER, PROGRAM_CHANGE, CHANNEL_AFTERTOUCH, PITCH_BEND, sortMIDIEvents, calculateMillis } from './midi_utils';
 
 const playbackSpeed = 1;
 
@@ -20,17 +20,25 @@ export type ParsedMIDIFile = {
     trackCount: number
     ticksPerBeat: number
   }
-  tracks: MIDIEvent[][]
-  timeTrack: MIDIEvent[]
+  initialTempo: number
+  events: MIDIEvent[]
+  // tracks: MIDIEvent[][]
+  // timeTrack: MIDIEvent[]
 }
 
 export function parseMidiFile(buffer: ArrayBufferLike): ParsedMIDIFile {
   const reader = new BufferReader(buffer)
 
   const header = parseHeader(reader)
-  const { timeTrack, tracks } = parseTracks(reader, header.ticksPerBeat)
+  // const { timeTrack, tracks } = parseTracks(reader, header.ticksPerBeat)
+  const { events, initialTempo } = parseTracks(reader, header.ticksPerBeat)
 
-  return { header, timeTrack, tracks }
+  // return { header, timeTrack, tracks }
+  return {
+    header,
+    initialTempo,
+    events: calculateMillis(events, header.ticksPerBeat),
+  };
 }
 
 function parseHeader(reader: BufferReader) {
@@ -51,13 +59,11 @@ function parseHeader(reader: BufferReader) {
   return { formatType, trackCount, ticksPerBeat }
 }
 
-function parseTracks(reader: BufferReader, ppq: number) {
+function parseTracks(reader: BufferReader, ppq: number): { events: MIDIEvent[], initialTempo: number } {
+  let initialTempo = -1;
   const tracks: MIDIEvent[][] = [];
-  const timeTrack: MIDIEvent[] = [];
-  let trackNo = -1;
   while (!reader.eof()) {
     const trackChunk = reader.midiChunk()
-    trackNo++;
 
     if (trackChunk.id !== "MTrk") {
       throw new Error(`Unexpected chunk, expected MTrk, got ${trackChunk.id}`);
@@ -66,41 +72,32 @@ function parseTracks(reader: BufferReader, ppq: number) {
     const trackTrack = new BufferReader(trackChunk.data)
     let track: MIDIEvent[] = []
     let ticks = 0;
-    let millis = 0;
-    let millisPerTick = 0;
     let lastTypeByte = null;
     while (!trackTrack.eof()) {
       let data = parseEvent(trackTrack, lastTypeByte)
-      const { event, deltaTime, bpm, numerator } = data;
-      ticks += deltaTime;
-      millis += deltaTime * millisPerTick;
-      // console.log('TICKS', ticks, bpm, numerator);
-      if (bpm) {
-        millisPerTick = ((1 / playbackSpeed * 60) / bpm / ppq) * 1000;
-        // console.log(bpm, ppq, millisPerTick, trackNo);
-        timeTrack.push({
-          ...event,
-          ticks,
-          millis,
-          millisPerTick,
-        });
-      } else if (numerator) {
-        timeTrack.push({
-          ...event,
-          ticks,
-          millis,
-        });
-      } else {
-        lastTypeByte = event.type[0];
-        track = [...track, {
-          ...event,
-          ticks,
-        }]
+      const { event, deltaTime, bpm } = data;
+      if (bpm && initialTempo === -1) {
+        initialTempo = bpm;
       }
+      ticks += deltaTime;
+      // console.log('TICKS', ticks, bpm, numerator);
+      lastTypeByte = event.type[0];
+      track.push({
+        ...event,
+        ticks,
+      });
     }
     tracks.push(track);
   }
-  return { timeTrack, tracks };
+
+  // concat
+  const concat = tracks.map(track => [...track]);
+  // flatten
+  const flatten = Array.prototype.concat.apply([], concat);
+  // sort
+  const events = sortMIDIEvents(flatten);
+  // return { timeTrack, tracks };
+  return { events, initialTempo };
 }
 
 function parseEvent(reader: BufferReader, lastTypeByte: number | null): ParsedData {

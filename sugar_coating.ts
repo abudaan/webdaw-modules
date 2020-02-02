@@ -4,11 +4,13 @@ import { Song } from './src/types';
 
 export const createSongFromMIDIFile = async (url: string): Promise<Song> => {
   const ab = await fetchArraybuffer(url);
-  const { header, timeTrack, tracks } = parseMidiFile(ab);
+  // const { header, timeTrack, tracks } = parseMidiFile(ab);
+  const { header, events } = parseMidiFile(ab);
   const song: Song = {
     ppq: header.ticksPerBeat,
-    timeTrack,
-    tracks: tracks.map(track => ({ events: [...track] })),
+    events,
+    // timeTrack,
+    // tracks: tracks.map(track => ({ events: [...track] })),
   }
   return song;
 }

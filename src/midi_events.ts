@@ -174,6 +174,7 @@ export type TempoEvent = {
   ticks: number,
   millis: number,
   bpm: number,
+  millisPerTick: number,
 }
 
 export type SMPTEOffsetEvent = {
