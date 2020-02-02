@@ -2,7 +2,7 @@ import 'jzz';
 import { schedule } from './src/scheduler';
 import { fetchArraybuffer, arrayBuffer } from './src/fetch_helpers';
 import { parseMidiFile } from './src/parse_midi_binary';
-import { initMIDI, getMIDIDevices } from './src/init-midi';
+import { getMIDIAccess, getMIDIDevices } from './src/init-midi';
 import { Song } from './src/types';
 
 const url = './assets/minute_waltz.mid';
@@ -10,7 +10,7 @@ const url = './assets/minute_waltz.mid';
 // const url = './assets/mozk545a_musescore.mid';
 
 const init = async () => {
-  const ma = await initMIDI();
+  const ma = await getMIDIAccess();
   const ab = await fetchArraybuffer('./assets/minute_waltz.mid');
   const { header, timeTrack, tracks } = parseMidiFile(ab);
   console.log(header);
@@ -22,7 +22,7 @@ const init = async () => {
     tracks: tracks.map(track => ({ events: [...track] })),
   }
   console.log(song);
-  getMIDIDevices();
+  const { inputs, outputs } = await getMIDIDevices();
   if (ma !== null) {
     const o = ma.outputs.get('6FF5590044F4859ED50C5167BCFE9700A1798E39AA55A628E86D39011FAECD5D');
     // console.log(ma.outputs.keys().next());
