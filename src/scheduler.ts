@@ -1,4 +1,7 @@
 import { Song } from './types';
+import { getMIDIAccess } from './init-midi';
+import { NoteOnEvent } from './midi_events';
+import { NOTE_ON, NOTE_OFF } from './midi_utils';
 
 const bufferTime = 50; // milliseconds
 
@@ -29,6 +32,13 @@ export const schedule = ({ song, index, millis }: Args): { millis: number, index
     // console.log(event.millis);
     if (event.millis < (millis + bufferTime)) {
       scheduled.push(event);
+      const track = song.tracksById[event.trackId];
+      track.outputs.forEach(o => {
+        if (event.descr === NOTE_ON || event.descr === NOTE_OFF) {
+          o.send([event.type[0] + event.channel, event.noteNumber, event.velocity], ts + (event.millis - millis) + track.latency);
+        }
+      })
+
       index++
     } else {
       break;

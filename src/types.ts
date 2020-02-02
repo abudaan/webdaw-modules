@@ -5,6 +5,8 @@ import { MIDIEvent } from "./midi_events";
 export interface Song {
   ppq: number
   initialTempo: number
+  tracks: Track[]
+  tracksById: { [id: string]: Track }
   events: MIDIEvent[]
   // timeTrack: MIDIEvent[]
   // tracks: Track[]
@@ -17,9 +19,11 @@ export interface Song {
 }
 
 export interface Track {
-  input?: string // id of MIDI input
-  output?: string // id of MIDI output
+  id: string
+  latency: number
+  name?: string
+  inputs: WebMidi.MIDIInput[]
+  outputs: WebMidi.MIDIOutput[]
   instrument?: string
   processor?: (event: MIDIEvent | WebMidi.MIDIMessageEvent) => void // a function that processes an event into sound or something else
-  events: MIDIEvent[]
 }

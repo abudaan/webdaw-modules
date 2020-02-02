@@ -1,6 +1,13 @@
-export type NoteOnEvent = {
+export interface BaseEvent {
+  ticks: number
+  descr: string
+  trackId: string
+  part: string
+}
+
+export interface NoteOnEvent extends BaseEvent {
   // type: [0x80],
-  bytes: number[],
+  type: number[],
   descr: 'note on',
   ticks: number,
   channel: number,
@@ -11,9 +18,10 @@ export type NoteOnEvent = {
 
 export type NoteOffEvent = {
   // type: [0x90],
-  bytes: number[],
+  type: number[],
   descr: 'note off',
   ticks: number,
+  trackId: string
   channel: number,
   millis: number,
   noteNumber: number,
@@ -22,9 +30,10 @@ export type NoteOffEvent = {
 
 export type AftertouchEvent = {
   // type: [0xa0],
-  bytes: number[],
+  type: number[],
   descr: 'note aftertouch',
   ticks: number,
+  trackId: string
   channel: number,
   millis: number,
   noteNumber: number,
@@ -33,9 +42,10 @@ export type AftertouchEvent = {
 
 export type ControllerEvent = {
   // type: [0xb0],
-  bytes: number[],
+  type: number[],
   descr: 'controller',
   ticks: number,
+  trackId: string
   channel: number,
   millis: number,
   value: number,
@@ -44,9 +54,10 @@ export type ControllerEvent = {
 
 export type ProgramChangeEvent = {
   // type: [0xc0],
-  bytes: number[],
+  type: number[],
   descr: 'program change',
   ticks: number,
+  trackId: string
   channel: number,
   millis: number,
   programNumber: number
@@ -54,9 +65,10 @@ export type ProgramChangeEvent = {
 
 export type ChannelAftertouchEvent = {
   // type: [0xd0],
-  bytes: number[],
+  type: number[],
   descr: 'channel aftertouch',
   ticks: number,
+  trackId: string
   channel: number,
   millis: number,
   noteNumber: number,
@@ -65,9 +77,10 @@ export type ChannelAftertouchEvent = {
 
 export type PitchBendEvent = {
   // type: [0xe0],
-  bytes: number[],
+  type: number[],
   descr: 'pitch bend',
   ticks: number,
+  trackId: string
   channel: number,
   millis: number,
   noteNumber: number,
@@ -79,99 +92,110 @@ export type PitchBendEvent = {
 
 export type SequenceNumberEvent = {
   // type: [0xff, 0x00],
-  bytes: number[],
+  type: number[],
   descr: 'sequence number',
   number: number,
+  trackId: string
   ticks: 0,
   millis: 0,
 }
 
 export type TextEvent = {
   // type: [0xff, 0x01],
-  bytes: number[],
+  type: number[],
   descr: 'text',
   text: string,
   ticks: number,
+  trackId: string
   millis: number,
 }
 
 export type CopyrightEvent = {
   // type: [0xff, 0x02],
-  bytes: number[],
+  type: number[],
   descr: 'copyright notice'
   text: string,
   ticks: 0,
+  trackId: string
   millis: 0,
 }
 
 export type TrackNameEvent = {
   // type: [0xff, 0x03],
-  bytes: number[],
+  type: number[],
   descr: 'track name',
   text: string,
   ticks: 0,
+  trackId: string
   millis: 0,
 }
 
 export type InstrumentNameEvent = {
   // type: [0xff, 0x04],
-  bytes: number[],
+  type: number[],
   descr: 'instrument name',
   text: string,
   ticks: number,
+  trackId: string
   millis: number,
 }
 
 export type LyricsEvent = {
   // type: [0xff, 0x05],
-  bytes: number[],
+  type: number[],
   descr: 'lyrics',
   text: string,
   ticks: number,
+  trackId: string
   millis: number,
 }
 
 export type MarkerEvent = {
   // type: [0xff, 0x06],
-  bytes: number[],
+  type: number[],
   descr: 'marker',
   text: string,
   ticks: number,
+  trackId: string
   millis: number,
 }
 
 export type CuePointEvent = {
   // type: [0xff, 0x07],
-  bytes: number[],
+  type: number[],
   descr: 'cue point',
   text: string,
   ticks: number,
+  trackId: string
   millis: number,
 }
 
 export type ChannelPrefixEvent = {
   // type: [0xff, 0x20],
-  bytes: number[],
+  type: number[],
   descr: 'channel prefix',
   channel: number,
   ticks: number,
+  trackId: string
   millis: number,
 }
 
 export type EndOfTrackEvent = {
   // type: [0xff, 0x2f],
-  bytes: number[],
+  type: number[],
   descr: 'end of track',
   channel: number,
+  trackId: string
   ticks: number,
   millis: number,
 }
 
 export type TempoEvent = {
   // type: [0xff, 0x51],
-  bytes: number[],
+  type: number[],
   descr: 'tempo',
   ticks: number,
+  trackId: string
   millis: number,
   bpm: number,
   millisPerTick: number,
@@ -179,9 +203,10 @@ export type TempoEvent = {
 
 export type SMPTEOffsetEvent = {
   // type: [0xff, 0x54],
-  bytes: number[],
+  type: number[],
   descr: 'smpte offset',
   ticks: number,
+  trackId: string
   millis: number,
   frameRate: number,
   hour: number,
@@ -193,9 +218,10 @@ export type SMPTEOffsetEvent = {
 
 export type TimeSignatureEvent = {
   // type: [0xff, 0x58],
-  bytes: number[],
+  type: number[],
   descr: 'time signature',
   ticks: number,
+  trackId: string
   millis: number,
   numerator: number,
   denominator: number,
@@ -205,9 +231,10 @@ export type TimeSignatureEvent = {
 
 export type KeySignatureEvent = {
   // type: [0xff, 0x59],
-  bytes: number[],
+  type: number[],
   descr: 'key signature',
   ticks: number,
+  trackId: string
   millis: number,
   key: number,
   scale: number,
@@ -215,9 +242,10 @@ export type KeySignatureEvent = {
 
 export type SequenceSpecificEvent = {
   // type: [0xff, 0x7f],
-  bytes: number[],
+  type: number[],
   descr: 'sequencer specific',
   ticks: number,
+  trackId: string
   millis: number,
   key: number,
   scale: number,
@@ -225,18 +253,20 @@ export type SequenceSpecificEvent = {
 
 export type SysexEvent = {
   // type: [0xf0],
-  bytes: number[],
+  type: number[],
   descr: 'system exclusive',
   ticks: number,
+  trackId: string
   millis: number,
   data: number,
 }
 
 export type DividedSysexEvent = {
   // type: [0xf7],
-  bytes: number[],
+  type: number[],
   descr: 'divided system exclusive',
   ticks: number,
+  trackId: string
   millis: number,
   data: number,
 }

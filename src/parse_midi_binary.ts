@@ -1,9 +1,12 @@
 // based on: https://github.com/pravdomil/jasmid.ts
 
 // import { BufferReader } from 'jasmid.ts';
+import uniqid from 'uniqid';
 import { BufferReader } from './bufferreader';
 import { MIDIEvent } from './midi_events';
 import { SEQUENCE_NUMBER, TEXT, COPYRIGHT_NOTICE, TRACK_NAME, INSTRUMENT_NAME, LYRICS, MARKER, CUE_POINT, CHANNEL_PREFIX, END_OF_TRACK, TEMPO, SMPTE_OFFSET, TIME_SIGNATURE, KEY_SIGNATURE, SEQUENCER_SPECIFIC, SYSTEM_EXCLUSIVE, DIVIDED_SYSTEM_EXCLUSIVE, NOTE_ON, NOTE_OFF, NOTE_AFTERTOUCH, CONTROLLER, PROGRAM_CHANGE, CHANNEL_AFTERTOUCH, PITCH_BEND, sortMIDIEvents, calculateMillis } from './midi_utils';
+import { Track } from './types';
+import { createTrack } from './sugar_coating';
 
 const playbackSpeed = 1;
 
@@ -12,6 +15,7 @@ export type ParsedData = {
   deltaTime: number,
   bpm?: number,
   numerator?: number,
+  trackName?: string,
 }
 
 export type ParsedMIDIFile = {
@@ -21,6 +25,7 @@ export type ParsedMIDIFile = {
     ticksPerBeat: number
   }
   initialTempo: number
+  tracks: Track[]
   events: MIDIEvent[]
   // tracks: MIDIEvent[][]
   // timeTrack: MIDIEvent[]
@@ -31,11 +36,12 @@ export function parseMidiFile(buffer: ArrayBufferLike): ParsedMIDIFile {
 
   const header = parseHeader(reader)
   // const { timeTrack, tracks } = parseTracks(reader, header.ticksPerBeat)
-  const { events, initialTempo } = parseTracks(reader, header.ticksPerBeat)
+  const { tracks, events, initialTempo } = parseTracks(reader, header.ticksPerBeat)
 
   // return { header, timeTrack, tracks }
   return {
     header,
+    tracks,
     initialTempo,
     events: calculateMillis(events, header.ticksPerBeat),
   };
@@ -59,45 +65,43 @@ function parseHeader(reader: BufferReader) {
   return { formatType, trackCount, ticksPerBeat }
 }
 
-function parseTracks(reader: BufferReader, ppq: number): { events: MIDIEvent[], initialTempo: number } {
+function parseTracks(reader: BufferReader, ppq: number): { tracks: Track[], events: MIDIEvent[], initialTempo: number } {
   let initialTempo = -1;
-  const tracks: MIDIEvent[][] = [];
+  const tracks: Track[] = [];
+  const events: MIDIEvent[] = [];
   while (!reader.eof()) {
     const trackChunk = reader.midiChunk()
 
     if (trackChunk.id !== "MTrk") {
       throw new Error(`Unexpected chunk, expected MTrk, got ${trackChunk.id}`);
     }
-
+    const trackId = `T-${uniqid()}`;
+    const track = createTrack(trackId);
     const trackTrack = new BufferReader(trackChunk.data)
-    let track: MIDIEvent[] = []
     let ticks = 0;
     let lastTypeByte = null;
     while (!trackTrack.eof()) {
       let data = parseEvent(trackTrack, lastTypeByte)
-      const { event, deltaTime, bpm } = data;
+      const { event, deltaTime, bpm, trackName } = data;
       if (bpm && initialTempo === -1) {
         initialTempo = bpm;
+      }
+      if (trackName) {
+        track.name = trackName;
       }
       ticks += deltaTime;
       // console.log('TICKS', ticks, bpm, numerator);
       lastTypeByte = event.type[0];
-      track.push({
+      events.push({
         ...event,
+        trackId,
         ticks,
       });
     }
     tracks.push(track);
   }
 
-  // concat
-  const concat = tracks.map(track => [...track]);
-  // flatten
-  const flatten = Array.prototype.concat.apply([], concat);
-  // sort
-  const events = sortMIDIEvents(flatten);
-  // return { timeTrack, tracks };
-  return { events, initialTempo };
+  return { events: sortMIDIEvents(events), tracks, initialTempo };
 }
 
 function parseEvent(reader: BufferReader, lastTypeByte: number | null): ParsedData {
@@ -148,13 +152,15 @@ function parseEvent(reader: BufferReader, lastTypeByte: number | null): ParsedDa
         }
       // track name
       case 0x03:
+        const trackName = reader.string(length);
         return {
           event: {
             type: [typeByte, subTypeByte],
             descr: TRACK_NAME,
-            text: reader.string(length),
+            text: trackName,
           },
           deltaTime,
+          trackName,
         }
       // instrument name
       case 0x04:
@@ -352,7 +358,7 @@ function parseEvent(reader: BufferReader, lastTypeByte: number | null): ParsedDa
             type: [typeByte],
             descr: NOTE_OFF,
             channel,
-            note: value,
+            noteNumber: value,
             velocity: reader.uint8(),
           },
           deltaTime,
@@ -365,7 +371,7 @@ function parseEvent(reader: BufferReader, lastTypeByte: number | null): ParsedDa
             type: [velocity === 0 ? 0x80 : 0x90],
             descr: velocity === 0 ? NOTE_OFF : NOTE_ON,
             channel,
-            note: value,
+            noteNumber: value,
             velocity,
           },
           deltaTime,
@@ -377,7 +383,7 @@ function parseEvent(reader: BufferReader, lastTypeByte: number | null): ParsedDa
             type: [0xa0],
             descr: NOTE_AFTERTOUCH,
             channel,
-            note: value,
+            noteNumber: value,
             amount: reader.uint8(),
           },
           deltaTime,

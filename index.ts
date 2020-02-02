@@ -4,6 +4,7 @@ import { fetchArraybuffer, arrayBuffer } from './src/fetch_helpers';
 import { parseMidiFile } from './src/parse_midi_binary';
 import { getMIDIAccess, getMIDIDevices } from './src/init-midi';
 import { Song } from './src/types';
+import { createSongFromMIDIFile } from './src/sugar_coating';
 
 const url = './assets/minute_waltz.mid';
 // const url = './assets/mozk545a.mid';
@@ -11,20 +12,12 @@ const url = './assets/minute_waltz.mid';
 
 const init = async () => {
   const ma = await getMIDIAccess();
-  const ab = await fetchArraybuffer('./assets/minute_waltz.mid');
-  const { header, events, initialTempo } = parseMidiFile(ab);
-  console.log(header);
-  // console.log(events.map(e => [e.ticks, e.millis]));
-  // a song is just a plain object, hurray!
-  const song: Song = {
-    ppq: header.ticksPerBeat,
-    initialTempo,
-    events,
-    // timeTrack,
-    // tracks: tracks.map(track => ({ events: [...track] })),
-  }
-  // console.log(song);
+  const song = await createSongFromMIDIFile('./assets/minute_waltz.mid');
   const { inputs, outputs } = await getMIDIDevices();
+  song.tracks.forEach(track => {
+    track.outputs.push(...outputs);
+  });
+  console.log(song);
 
   let millis = 0;
   let index = 0;
@@ -34,7 +27,7 @@ const init = async () => {
     const progress = ts - start;
     start = ts;
     // console.log(ts);
-    if (millis < 3000) {
+    if (millis < 60000) {
       ({ index, millis } = schedule({ song, millis, index }));
       millis += progress
       console.log(index, millis);
