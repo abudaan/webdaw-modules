@@ -1,4 +1,5 @@
 import { MIDIEvent } from "./src/midi_events";
+import { Observable } from "rxjs";
 
 // Type definitions for webdaw-modules 1.0
 // Project: https://webdaw.org
