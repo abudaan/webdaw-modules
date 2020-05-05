@@ -1,8 +1,8 @@
 import "jzz";
-import { schedule, getSchedulerIndex } from "./src/scheduler";
-import { getMIDIAccess, getMIDIDevices } from "./src/init-midi";
-import { Song } from "./src/types";
-import { createSongFromMIDIFile } from "./src/sugar_coating";
+import { schedule, getSchedulerIndex } from "../../src/scheduler";
+import { getMIDIAccess, getMIDIDevices } from "../../src/init-midi";
+import { Song } from "../../src/types";
+import { createSongFromMIDIFile } from "../../src/sugar_coating";
 
 const url = "./assets/minute_waltz.mid";
 // const url = './assets/mozk545a.mid';
@@ -12,8 +12,8 @@ const init = async () => {
   const ma = await getMIDIAccess();
   const song = await createSongFromMIDIFile("./assets/minute_waltz.mid");
   const { inputs, outputs } = await getMIDIDevices();
-  song.tracks.forEach((track) => {
-    track.outputs.push(...outputs.map((o) => o.id));
+  song.tracks.forEach(track => {
+    track.outputs.push(...outputs.map(o => o.id));
   });
   console.log(song);
 
@@ -38,7 +38,7 @@ const init = async () => {
       }));
       millis += progress;
       // console.log(index, millis);
-      requestAnimationFrame((a) => {
+      requestAnimationFrame(a => {
         play(a);
       });
     }
