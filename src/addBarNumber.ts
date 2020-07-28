@@ -17,6 +17,5 @@ export const addBarNumber = (
     e.bar = bar;
     // console.log(bar, e.ticks, ticksPerBar, ppq);
   });
-
   return events;
 };
