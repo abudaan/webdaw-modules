@@ -35,7 +35,7 @@ export function fetchJSON(url: string): Promise<JSON> {
 }
 
 export async function fetchArraybuffer(url: string): Promise<ArrayBuffer> {
-  console.log('fectch ab', url);
+  // console.log('fectch ab', url);
   const response = await fetch(url)
   const response_1 = await status(response)
   return arrayBuffer(response_1)
