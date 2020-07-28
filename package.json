@@ -20,7 +20,9 @@
     "webpack-dev-server": "^3.10.3"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "basic.build": "webpack --config ./tests/basic/webpack.config.js",
+    "basic.dev": "webpack-dev-server --config ./tests/basic/webpack.config.js --display-error-details"
   },
   "repository": {
     "type": "git",

@@ -8,23 +8,11 @@
     "allowJs": true,
     "strict": true,
     "types": [],
-    "lib": [
-      "dom",
-      "es6",
-      "es2017"
-    ],
+    "lib": ["dom", "es6", "es2017"],
     "baseUrl": ".",
     "target": "es5",
     "jsx": "react"
   },
-  "include": [
-    ".",
-    "src"
-  ],
-  "exclude": [
-    "dist",
-    "node_modules",
-    ".cache",
-    "heartbeat"
-  ]
+  "include": [".", "src"],
+  "exclude": ["dist", "node_modules", ".cache", "heartbeat"]
 }

@@ -1,4 +1,4 @@
-import { MIDIEvent, NoteEvent } from "./midi_events";
+import { MIDIEvent, NoteEvent, NoteOnEvent } from "./midi_events";
 import { MIDINote } from "./types";
 import { sortMIDIEvents } from "./midi_utils";
 
@@ -11,10 +11,10 @@ export const createNotes = (events: MIDIEvent[]): MIDINote[] => {
       acc.push(val as NoteEvent);
     }
     return acc;
-  }, []);
+  }, [] as NoteEvent[]);
   // filtered = sortMIDIEvents(filtered);
-  const notes = [];
-  const tmp = {};
+  const notes: MIDINote[] = [];
+  const tmp: { [id: string]: NoteEvent } = {};
   filtered.forEach(e => {
     const id = `${e.trackId}-${e.noteNumber}`;
     // console.log(e.ticks, e.type, id);
@@ -31,7 +31,7 @@ export const createNotes = (events: MIDIEvent[]): MIDINote[] => {
         const noteOn = tmp[id];
         const note: MIDINote = {
           id: `note-${new Date().getTime()}-${index++}`,
-          noteOn,
+          noteOn: noteOn as NoteOnEvent,
           noteOff: e,
           // durationTicks: e.ticks - noteOn.ticks,
           // durationMillis: e.millis - noteOn.millis,

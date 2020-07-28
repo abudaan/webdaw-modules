@@ -5,7 +5,12 @@
   "main": "index.js",
   "dependencies": {},
   "devDependencies": {},
-  "scripts": {},
+  "scripts": {
+    "build": "webpack --config ./tests/basic/webpack.config.js",
+    "dev": "webpack-dev-server --display-error-details",
+    "tsc": "node_modules/.bin/tsc --module commonjs --esModuleInterop --declaration --outDir dist ./src/index.ts",
+    "prepublishOnly": "npm run tsc"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/abudaan/webdaw-modules.git"

@@ -1,5 +1,5 @@
-import "jzz";
-import { schedule, getSchedulerIndex } from "../../src/scheduler";
+// import "jzz";
+import { schedule, getCurrentEventIndex } from "../../src/scheduler";
 import { getMIDIAccess, getMIDIDevices } from "../../src/init-midi";
 import { Song } from "../../src/types";
 import { createSongFromMIDIFile } from "../../src/sugar_coating";
@@ -18,7 +18,7 @@ const init = async () => {
   console.log(song);
 
   let millis = 3000;
-  let index = getSchedulerIndex(song, millis);
+  let index = getCurrentEventIndex(song, millis);
   // console.log('START INDEX', index);
   let start: number = performance.now();
   const play = (a: number) => {

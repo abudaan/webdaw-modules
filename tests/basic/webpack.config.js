@@ -69,11 +69,12 @@ module.exports = {
     ],
   },
   output: {
-    // filename: "[name].js",
-    path: path.resolve(__dirname, "dist"),
+    filename: "[name].js",
+    path: path.resolve(__dirname),
   },
   devServer: {
-    contentBase: path.join(__dirname, "dist"),
+    // contentBase: path.join(__dirname, "../", "../", "assets"),
+    publicPath: path.join(__dirname),
     compress: true,
     port: 9000,
     hot: false,
