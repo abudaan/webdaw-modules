@@ -31,8 +31,9 @@ export interface Song {
   durationTicks?: number;
   durationMillis?: number;
   numBars?: number;
-  numerator?: number;
-  denominator?: number;
+  initialNumerator?: number;
+  initialDenominator?: number;
+  repeats?: number[][];
   // timeTrack: MIDIEvent[]
   // tracks: Track[]
   // useMetronome?: boolean;

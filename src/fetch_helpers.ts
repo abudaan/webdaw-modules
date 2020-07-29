@@ -32,6 +32,11 @@ export function fetchJSON(url: string): Promise<JSON> {
   });
 }
 
+export const fetchXML = (url: string) =>
+  fetch(url)
+    .then(response => response.text())
+    .then(str => new window.DOMParser().parseFromString(str, "text/xml"));
+
 export async function fetchArraybuffer(url: string): Promise<ArrayBuffer> {
   // console.log('fectch ab', url);
   const response = await fetch(url);

@@ -10,10 +10,8 @@ import { getDivisions } from "./measure/getDivisions";
 import { getSignature } from "./measure/getSignature";
 import { getTempo } from "./measure/getTempo";
 import { getRepeat } from "./measure/getRepeat";
-import { Track, MIDINote } from "../types";
-import { createNotes } from "../create_notes";
 
-let n = 0;
+// let n = 0;
 
 export type PartData = {
   id: string;
@@ -29,9 +27,7 @@ export type Repeat = {
 }[];
 
 export type ParsedMusicXML = {
-  events: MIDIEvent[];
-  notes: MIDINote[];
-  tracks: Track[];
+  parts: PartData[];
   repeats: number[][];
   initialTempo: number;
   initialNumerator: number;
@@ -372,40 +368,8 @@ const parsePartWise = (xmlDoc: XMLDocument, ppq: number = 960): ParsedMusicXML =
   });
   // console.log(repeats, repeats2);
 
-  const { tracks, events }: { tracks: Track[]; events: MIDIEvent[] } = parts.reduce(
-    (acc, val, i) => {
-      const id = `T-${i++}`;
-      acc.events.push(
-        ...val.events.map(e => {
-          e.trackId = id;
-          return e;
-        })
-      );
-      const t: Track = {
-        id,
-        name: val.name,
-        instrument: val.instrument,
-        volume: val.volume,
-        latency: 0,
-        inputs: [],
-        outputs: [],
-      };
-
-      acc.tracks.push(t);
-      return acc;
-    },
-    { tracks: [], events: [] } as { tracks: Track[]; events: MIDIEvent[] }
-  );
-
-  sortMIDIEvents(events);
-
   return {
-    events: calculateMillis(events, {
-      ppq,
-      bpm: initialTempo === -1 ? 120 : initialTempo,
-    }),
-    notes: createNotes(events),
-    tracks,
+    parts,
     repeats: repeats2,
     initialTempo,
     initialNumerator,

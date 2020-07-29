@@ -1,7 +1,7 @@
-import { fetchArraybuffer } from "./fetch_helpers";
-import { parseMidiFile } from "./parse_midi_binary";
-import { Song, Track } from "./types";
-import { createNotes } from "./create_notes";
+import { fetchArraybuffer } from "../fetch_helpers";
+import { parseMidiFile } from "../parse_midi_binary";
+import { Song, Track } from "../types";
+import { createNotes } from "../create_notes";
 
 export const createSongFromMIDIFile = async (arg: string | ArrayBuffer): Promise<Song> => {
   let ab: ArrayBuffer;
@@ -27,8 +27,8 @@ export const createSongFromMIDIFile = async (arg: string | ArrayBuffer): Promise
     events,
     notes: createNotes(events),
     initialTempo,
-    numerator: initialNumerator,
-    denominator: initialDenominator,
+    initialNumerator,
+    initialDenominator,
     // timeTrack,
     // tracks: tracks.map(track => ({ events: [...track] })),
   };
