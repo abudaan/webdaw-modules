@@ -50,5 +50,5 @@ Also I think the term webdaw, or cased like WebDAW, describes a concept, a way o
 
 ## Examples
 
-- [basic]('examples/basic)
-- [musicxml]('examples/musicxml)
+- [basic](./examples/basic)
+- [musicxml](./examples/musicxml)
