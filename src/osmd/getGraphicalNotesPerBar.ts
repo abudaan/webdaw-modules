@@ -33,6 +33,12 @@ export type GraphicalNoteData = {
   parentMusicSystem: MusicSystem;
 };
 
+export interface VexFlowStaveNote extends Vex.Flow.StaveNote {
+  attrs: {
+    el: SVGElement;
+  };
+}
+
 const getGraphicalNotesPerBar = (
   osmd: OpenSheetMusicDisplay,
   ppq: number
@@ -50,7 +56,7 @@ const getGraphicalNotesPerBar = (
                 const relPosInMeasure = n.sourceNote["voiceEntry"].timestamp.realValue;
                 const vfnote = (n as VexFlowGraphicalNote).vfnote[0];
                 return {
-                  element: vfnote["attrs"].el,
+                  element: (vfnote as VexFlowStaveNote).attrs.el,
                   ticks: i * ppq * 4 + relPosInMeasure * ppq * 4,
                   noteNumber: n.sourceNote.halfTone + 12, // heartbeat uses a different MIDI note number mapping
                   bar: i + 1,

@@ -4,7 +4,7 @@ export const getTempo = (
   xmlDoc: XMLDocument,
   measureNode: Node,
   nsResolver: XPathNSResolver
-): TempoEvent => {
+): TempoEvent | null => {
   const bpm = xmlDoc.evaluate(
     "direction/sound/@tempo",
     measureNode,

@@ -4,7 +4,7 @@ export const getSignature = (
   xmlDoc: XMLDocument,
   measureNode: Node,
   nsResolver: XPathNSResolver
-): TimeSignatureEvent => {
+): TimeSignatureEvent | null => {
   const numerator = xmlDoc.evaluate(
     "attributes/time/beats",
     measureNode,

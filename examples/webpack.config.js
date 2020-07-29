@@ -4,8 +4,8 @@ const path = require("path");
 
 module.exports = {
   entry: {
-    basic: "./tests/basic/index.ts",
-    // musicxml: "./tests/musicxml/index.ts",
+    "basic/index": "./basic/index.ts",
+    "musicxml/index": "./musicxml/index.ts",
   },
   devtool: "inline-source-map",
   mode: "development",
@@ -70,10 +70,11 @@ module.exports = {
   },
   output: {
     // filename: "[name].js",
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(__dirname),
   },
   devServer: {
-    contentBase: path.join(__dirname, "dist"),
+    // contentBase: path.join(__dirname, "../", "../", "assets"),
+    publicPath: path.join(__dirname),
     compress: true,
     port: 9000,
     hot: false,

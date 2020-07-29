@@ -4,12 +4,15 @@
   "description": "some examples using WebDAW modules",
   "main": "index.js",
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "ts-loader": "^8.0.1",
+    "webpack": "^4.44.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  },
   "scripts": {
-    "build": "webpack --config ./tests/basic/webpack.config.js",
-    "dev": "webpack-dev-server --display-error-details",
-    "tsc": "node_modules/.bin/tsc --module commonjs --esModuleInterop --declaration --outDir dist ./src/index.ts",
-    "prepublishOnly": "npm run tsc"
+    "build": "webpack --config ./webpack.config.js",
+    "dev": "webpack-dev-server --display-error-details"
   },
   "repository": {
     "type": "git",

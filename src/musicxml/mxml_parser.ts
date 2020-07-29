@@ -36,7 +36,7 @@ export type ParsedMusicXML = {
   initialTempo: number;
   initialNumerator: number;
   initialDenominator: number;
-};
+} | null;
 
 const parseMusicXML = (xmlDoc: XMLDocument, ppq: number = 960): ParsedMusicXML | null => {
   if (xmlDoc === null) {
@@ -45,14 +45,14 @@ const parseMusicXML = (xmlDoc: XMLDocument, ppq: number = 960): ParsedMusicXML |
   let type: string;
   if (xmlDoc.firstChild !== null && xmlDoc.firstChild.nextSibling !== null) {
     type = xmlDoc.firstChild.nextSibling.nodeName;
-  }
-  // console.log('type', type, nsResolver);
+    // console.log('type', type, nsResolver);
 
-  if (type === "score-partwise") {
-    return parsePartWise(xmlDoc, ppq);
-  }
-  if (type === "score-timewise") {
-    return parseTimeWise(xmlDoc);
+    if (type === "score-partwise") {
+      return parsePartWise(xmlDoc, ppq);
+    }
+    if (type === "score-timewise") {
+      return parseTimeWise(xmlDoc);
+    }
   }
   // console.log('unknown type', type);
   return null;
@@ -81,7 +81,7 @@ const parsePartWise = (xmlDoc: XMLDocument, ppq: number = 960): ParsedMusicXML =
   let initialNumerator = -1;
   let initialDenominator = -1;
   let index = -1;
-  let partNode: Node;
+  let partNode: Node | null;
   while ((partNode = partIterator.iterateNext())) {
     index += 1;
     const [partId, partName] = getPartName(xmlDoc, partNode, nsResolver);
@@ -101,8 +101,8 @@ const parsePartWise = (xmlDoc: XMLDocument, ppq: number = 960): ParsedMusicXML =
 
     let ticks = 0;
     let tmp: any;
-    let measureNode: Node;
-    let divisions: number;
+    let measureNode: Node | null;
+    let divisions: number = 24;
     while ((measureNode = measureIterator.iterateNext())) {
       const measureNumber = getMeasureNumber(xmlDoc, measureNode, nsResolver);
       divisions = getDivisions(xmlDoc, measureNode, nsResolver, divisions);
@@ -141,7 +141,7 @@ const parsePartWise = (xmlDoc: XMLDocument, ppq: number = 960): ParsedMusicXML =
         XPathResult.ANY_TYPE,
         null
       );
-      let noteNode: Node;
+      let noteNode: Node | null;
       while ((noteNode = noteIterator.iterateNext())) {
         // console.log(noteNode);
         let noteDuration = 0;
@@ -158,7 +158,7 @@ const parsePartWise = (xmlDoc: XMLDocument, ppq: number = 960): ParsedMusicXML =
           XPathResult.ANY_TYPE,
           null
         );
-        let tieNode: Node;
+        let tieNode: Node | null;
         while ((tieNode = tieIterator.iterateNext())) {
           const tieType = xmlDoc.evaluate(
             "@type",
@@ -394,7 +394,7 @@ const parsePartWise = (xmlDoc: XMLDocument, ppq: number = 960): ParsedMusicXML =
       acc.tracks.push(t);
       return acc;
     },
-    { tracks: [], events: [] }
+    { tracks: [], events: [] } as { tracks: Track[]; events: MIDIEvent[] }
   );
 
   sortMIDIEvents(events);

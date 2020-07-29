@@ -23,7 +23,12 @@ export const getActiveNotes = ({ song, index, millis, activeNotes }: Args) => {
   //     break;
   //   }
   // }
-  const current = notes.filter(n => millis >= n.noteOn.millis && millis <= n.noteOff.millis);
+  const current = notes.filter(n => {
+    if (n.noteOn.millis && n.noteOff.millis) {
+      return millis >= n.noteOn.millis && millis <= n.noteOff.millis;
+    }
+    return false;
+  });
   // console.log(millis, current);
   // console.log(activeNotes);
   const passiveNotes: MIDINote[] = activeNotes.filter(note => {

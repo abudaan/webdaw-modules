@@ -2,7 +2,7 @@ export const getRepeat = (
   xmlDoc: XMLDocument,
   measureNode: Node,
   nsResolver: XPathNSResolver
-): string => {
+): string | null => {
   const repeat = xmlDoc.evaluate(
     "barline/repeat/@direction",
     measureNode,

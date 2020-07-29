@@ -35,7 +35,7 @@ export const unschedule = (song: Song, scheduled: MIDIEvent[], outputs?: WebMidi
 
 export const unschedule = (song: Song, outputs?: WebMidi.MIDIOutputMap) => {
   const outputIds = Object.keys(
-    song.tracks.reduce((acc, val) => {
+    song.tracks.reduce((acc: { [id: string]: boolean }, val) => {
       val.outputs.forEach(id => {
         acc[id] = true;
       });
@@ -44,7 +44,7 @@ export const unschedule = (song: Song, outputs?: WebMidi.MIDIOutputMap) => {
   );
 
   // @TODO optimize this! -> add a propery song.channels, or set channel on track
-  const channels = song.events.reduce((acc, val) => {
+  const channels: number[] = song.events.reduce((acc: number[], val) => {
     const event = val as NoteOnEvent;
     // console.log(event.channel, event.descr);
     if (typeof event.channel !== "undefined") {
@@ -61,8 +61,8 @@ export const unschedule = (song: Song, outputs?: WebMidi.MIDIOutputMap) => {
 
   outputIds.forEach(id => {
     channels.forEach(channel => {
-      outputs?.get(id).send([0xb0 + channel, 0x7b, 0x00], time + 80); // stop all notes
-      outputs?.get(id).send([0xb0 + channel, 0x79, 0x00], time + 80); // reset all controllers
+      outputs?.get(id)?.send([0xb0 + channel, 0x7b, 0x00], time + 80); // stop all notes
+      outputs?.get(id)?.send([0xb0 + channel, 0x79, 0x00], time + 80); // reset all controllers
     });
   });
 };

@@ -1,6 +1,6 @@
 export type AudioEvent = {
   audioBuffer: AudioBuffer;
-  audioNode: AudioBufferSourceNode;
+  audioNode: AudioBufferSourceNode | null;
   gainNode: GainNode;
   pannerNode: PannerNode;
   // todo: more effects can be added such as reverb
@@ -28,7 +28,7 @@ export const startAudioEvent = (audioContext: AudioContext, audioEvent: AudioEve
 
 export const stopAudioEvent = (audioEvent: AudioEvent, stopParams?: any): AudioEvent => {
   // todo: add stop params such as when to stop and fade out
-  audioEvent.audioNode.stop();
+  audioEvent.audioNode?.stop();
   return {
     ...audioEvent,
     audioNode: null,

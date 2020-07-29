@@ -3,16 +3,17 @@ import { NOTE_ON, NOTE_OFF } from "./midi_utils";
 
 export const createNotePair = (events: MIDIEvent[]): [NoteOnEvent, NoteOffEvent][] => {
   const notes: { [id: string]: [NoteOnEvent, NoteOffEvent] } = {};
+  const tmpNotes: { [id: string]: NoteOnEvent } = {};
   events.forEach(e => {
     const event = e as NoteOnEvent;
     // console.log(e.ticks, event.noteNumber, event.descr, event.channel);
     if (e.descr === NOTE_ON) {
       const event = e as NoteOnEvent;
-      notes[`${e.noteNumber}`] = [event, null];
+      tmpNotes[`${e.noteNumber}`] = event;
     } else if (e.descr === NOTE_OFF) {
       const event = e as NoteOffEvent;
-      if (notes[`${e.noteNumber}`]) {
-        notes[`${e.noteNumber}`][1] = event;
+      if (tmpNotes[`${e.noteNumber}`]) {
+        notes[`${e.noteNumber}`] = [tmpNotes[`${e.noteNumber}`], event];
       } else {
         console.warn("orphaned MIDI off event!");
       }

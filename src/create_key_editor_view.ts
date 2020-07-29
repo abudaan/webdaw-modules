@@ -16,6 +16,9 @@ export const createKeyEditorView = (song: Song, tickWidth: number = 0.1): void =
   canvas.height = height;
   const ctx = canvas.getContext("2d");
   // const columns = song.numBars * song.numerator * song.denominator; // beats
+  if (!song.numerator || !song.denominator || !ctx) {
+    return;
+  }
   const columns = 4 * song.numerator * song.denominator; // beats
 
   ctx.fillStyle = "#496bd8";
