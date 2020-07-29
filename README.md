@@ -36,9 +36,9 @@ Here is a quick draft of the order in which I will build the new modules:
 - [ ] support for MPE
 - [ ] sysex support (incl. editor)
 
-## API (draft so far)
+<!-- ## API (draft so far)
 
-See [index.d.ts](https://github.com/abudaan/webdaw-modules/blob/master/index.d.ts).
+See [index.d.ts](https://github.com/abudaan/webdaw-modules/blob/master/index.d.ts). -->
 
 ## About the name
 
@@ -50,8 +50,8 @@ Also I think the term webdaw, or cased like WebDAW, describes a concept, a way o
 
 ## Examples
 
-- [basic](./examples/basic)
-- [musicxml](./examples/musicxml)
+- [basic](https://abudaan.github.io/webdaw-modules/examples/basic)
+- [musicxml](https://abudaan.github.io/webdaw-modules/examples/musicxml)
 
 ## Webpack
 

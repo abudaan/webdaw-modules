@@ -4,7 +4,7 @@ import { getMIDIAccess, getMIDIDevices } from "../../src/init-midi";
 import { Song } from "../../src/types";
 import { createSongFromMIDIFile } from "../../src/sugar_coating";
 
-const url = "/assets/minute_waltz.mid";
+const url = "../../assets/minute_waltz.mid";
 // const url = '/assets/mozk545a.mid';
 // const url = '/assets/mozk545a_musescore.mid';
 
