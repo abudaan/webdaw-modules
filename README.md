@@ -52,3 +52,17 @@ Also I think the term webdaw, or cased like WebDAW, describes a concept, a way o
 
 - [basic](./examples/basic)
 - [musicxml](./examples/musicxml)
+
+## Webpack
+
+I couldn't get webpack-dev-server to work and I didn't have the time to investigate it so for development I use the python webserver:
+
+```bash
+cd ./examples
+
+python3 -m http.server
+
+npm run watch #starts webpack in watch mode
+```
+
+Now you can see the examples at <http://localhost:8000/>

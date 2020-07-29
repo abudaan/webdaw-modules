@@ -75,10 +75,10 @@ module.exports = {
   devServer: {
     // contentBase: path.join(__dirname, "../", "../", "assets"),
     publicPath: path.join(__dirname),
-    compress: true,
+    compress: false,
     port: 9000,
-    hot: false,
-    inline: false,
-    liveReload: false,
+    hot: true,
+    inline: true,
+    liveReload: true,
   },
 };
