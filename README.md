@@ -37,11 +37,18 @@ Here is a quick draft of the order in which I will build the new modules:
 - [ ] sysex support (incl. editor)
 
 ## API (draft so far)
+
 See [index.d.ts](https://github.com/abudaan/webdaw-modules/blob/master/index.d.ts).
 
 ## About the name
+
 I have deliberately chosen a descriptive name instead of a more 'poetic' name such as heartbeat and qambi because the project is basically just a set of building blocks, not a complete product; I think a poetic name is more something that you put on a completely working DAW (that may or may not use the modules in this project).
 
 The name heartbeat was chosen because before the metronome was invented (and wide-spread) musicians derived tempo from their heartbeat. But the name is actually somewhat misleading because in technology a heartbeat usually refers to the state of a service. The name qambi is a Zulu word that means creator, inventor. I like that name very much but I think it is a bit over the top if I would use it for this project which merely is a simple set of modules.
 
 Also I think the term webdaw, or cased like WebDAW, describes a concept, a way of organizing things. It would be great if together with developers of related libraries some kind of standard can eventually be evolved. Then if our libraries adhere to that standard you can seamlessly connect library A to library B as long as they are both WebDAW compliant.
+
+## Examples
+
+- [basic]('./examples/basic)
+- [musicxml]('./examples/musicxml)
