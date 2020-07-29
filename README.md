@@ -58,11 +58,13 @@ Also I think the term webdaw, or cased like WebDAW, describes a concept, a way o
 I couldn't get webpack-dev-server to work and I didn't have the time to investigate it so for development I use the python webserver:
 
 ```bash
-cd ./examples
+python3 -m http.server #run webserver in root folder
 
-python3 -m http.server
+cd ./examples
 
 npm run watch #starts webpack in watch mode
 ```
 
-Now you can see the examples at <http://localhost:8000/>
+Now you can see the examples at <http://localhost:8000/examples>.
+
+Because I run the webserver in the root folder, the examples run on github.io as well (the examples need to have the right path to the assets folder).
