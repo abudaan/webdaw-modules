@@ -32,14 +32,20 @@ export function fetchJSON(url: string): Promise<JSON> {
   });
 }
 
-export const fetchXML = (url: string) =>
+export const fetchXML = (url: string): Promise<XMLDocument> =>
   fetch(url)
+    .then(status)
     .then(response => response.text())
     .then(str => new window.DOMParser().parseFromString(str, "text/xml"));
 
-export async function fetchArraybuffer(url: string): Promise<ArrayBuffer> {
-  // console.log('fectch ab', url);
-  const response = await fetch(url);
-  const response_1 = await status(response);
-  return arrayBuffer(response_1);
-}
+export const fetchArraybuffer = (url: string): Promise<ArrayBuffer> =>
+  fetch(url)
+    .then(status)
+    .then(arrayBuffer);
+
+// export async function fetchArraybuffer(url: string): Promise<ArrayBuffer> {
+//   // console.log('fectch ab', url);
+//   const response = await fetch(url);
+//   const response_1 = await status(response);
+//   return arrayBuffer(response_1);
+// }

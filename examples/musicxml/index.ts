@@ -1,11 +1,11 @@
 // import "jzz";
 import { schedule, getCurrentEventIndex } from "../../src/scheduler";
-import { getMIDIAccess, getMIDIDevices } from "../../src/init-midi";
+import { getMIDIAccess, getMIDIDevices } from "../../src/init_midi";
 import { createSongFromMIDIFile } from "../../src/sugarcoating/createSongFromMIDIFile";
 
 const url = "../../assets/minute_waltz.mid";
-// const url = '/assets/mozk545a.mid';
-// const url = '/assets/mozk545a_musescore.mid';
+// const url = '../../assets/mozk545a.mid';
+// const url = '../../assets/mozk545a_musescore.mid';
 
 const init = async () => {
   const ma = await getMIDIAccess();

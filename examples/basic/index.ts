@@ -1,6 +1,6 @@
 // import "jzz";
 import { schedule, getCurrentEventIndex } from "../../src/scheduler";
-import { getMIDIAccess, getMIDIDevices } from "../../src/init-midi";
+import { getMIDIAccess, getMIDIDevices } from "../../src/init_midi";
 import { createSongFromMIDIFile } from "../../src/sugarcoating/createSongFromMIDIFile";
 
 const url = "../../assets/minute_waltz.mid";
