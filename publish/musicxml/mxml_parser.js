@@ -21,7 +21,7 @@ var __spread = (this && this.__spread) || function () {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.parseMusicXML = void 0;
-var midi_utils_1 = require("../midi_utils");
+var midi_1 = require("../util/midi");
 var calculateMillis_1 = require("../calculateMillis");
 var getVolume_1 = require("./part/getVolume");
 var getPartName_1 = require("./part/getPartName");
@@ -32,8 +32,14 @@ var getDivisions_1 = require("./measure/getDivisions");
 var getSignature_1 = require("./measure/getSignature");
 var getTempo_1 = require("./measure/getTempo");
 var getRepeat_1 = require("./measure/getRepeat");
-var create_notes_1 = require("../create_notes");
-var n = 0;
+var createNotes_1 = require("src/createNotes");
+// export type ParsedMusicXML = {
+//   parts: PartData[];
+//   repeats: number[][];
+//   initialTempo: number;
+//   initialNumerator: number;
+//   initialDenominator: number;
+// } | null;
 var parseMusicXML = function (xmlDoc, ppq) {
     if (ppq === void 0) { ppq = 960; }
     if (xmlDoc === null) {
@@ -180,7 +186,7 @@ var parsePartWise = function (xmlDoc, ppq) {
                         ticks -= noteDurationTicks;
                     }
                     // console.log(ticks, measureNumber, chord);
-                    var noteNumber = midi_utils_1.getNoteNumber(noteName, octave);
+                    var noteNumber = midi_1.getNoteNumber(noteName, octave);
                     // console.log("\t", ticks, "ON", n++);
                     var note = {
                         ticks: ticks,
@@ -283,18 +289,25 @@ var parsePartWise = function (xmlDoc, ppq) {
         acc.tracks.push(t);
         return acc;
     }, { tracks: [], events: [] }), tracks = _b.tracks, events = _b.events;
-    midi_utils_1.sortMIDIEvents(events);
+    midi_1.sortMIDIEvents(events);
     return {
+        ppq: ppq,
+        latency: 17,
+        bufferTime: 100,
+        tracks: tracks,
+        tracksById: tracks.reduce(function (acc, value) {
+            acc[value.id] = value;
+            return acc;
+        }, {}),
         events: calculateMillis_1.calculateMillis(events, {
             ppq: ppq,
             bpm: initialTempo === -1 ? 120 : initialTempo,
         }),
-        notes: create_notes_1.createNotes(events),
-        tracks: tracks,
-        repeats: repeats2,
+        notes: createNotes_1.createNotes(events),
         initialTempo: initialTempo,
         initialNumerator: initialNumerator,
         initialDenominator: initialDenominator,
+        repeats: repeats2,
     };
 };
 var parseTimeWise = function (doc) {

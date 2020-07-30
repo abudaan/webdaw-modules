@@ -16,5 +16,6 @@
     "typeRoots": ["./node_modules/@types"],
     "declaration": true
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "exclude": ["examples"]
 }

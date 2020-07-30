@@ -1,4 +1,4 @@
-import { TimeSignatureEvent } from "../../midi_events";
+import { TimeSignatureEvent } from "../../types/MIDIEvent";
 
 export const getSignature = (
   xmlDoc: XMLDocument,

@@ -1,4 +1,4 @@
-import { TempoEvent } from "../../midi_events";
+import { TempoEvent } from "../../types/MIDIEvent";
 
 export const getTempo = (
   xmlDoc: XMLDocument,

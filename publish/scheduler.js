@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.schedule = exports.getCurrentEventIndex = void 0;
-var midi_utils_1 = require("./midi_utils");
+var midi_1 = require("./util/midi");
 exports.getCurrentEventIndex = function (song, millis) {
     var events = song.events;
     var i = 0;
@@ -30,7 +30,7 @@ exports.schedule = function (_a) {
             var track_1 = song.tracksById[event_2.trackId];
             track_1.outputs.forEach(function (id) {
                 var _a;
-                if (event_2.descr === midi_utils_1.NOTE_ON || event_2.descr === midi_utils_1.NOTE_OFF) {
+                if (event_2.descr === midi_1.NOTE_ON || event_2.descr === midi_1.NOTE_OFF) {
                     var e = event_2;
                     if (event_2.millis) {
                         // console.log(event.type, event.channel, event.noteNumber);
@@ -47,7 +47,7 @@ exports.schedule = function (_a) {
                         // lastNoteType = e.type;
                         // console.log(event.type + event.channel, event.noteNumber, event.velocity);
                         // quick fix for repeating notes
-                        if (e.descr === midi_utils_1.NOTE_ON) {
+                        if (e.descr === midi_1.NOTE_ON) {
                             time += 1;
                         }
                         (_a = outputs === null || outputs === void 0 ? void 0 : outputs.get(id)) === null || _a === void 0 ? void 0 : _a.send([event_2.type + event_2.channel, event_2.noteNumber, event_2.velocity], time);

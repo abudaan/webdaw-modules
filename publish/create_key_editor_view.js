@@ -18,10 +18,10 @@ exports.createKeyEditorView = function (song, tickWidth) {
     canvas.height = height;
     var ctx = canvas.getContext("2d");
     // const columns = song.numBars * song.numerator * song.denominator; // beats
-    if (!song.numerator || !song.denominator || !ctx) {
+    if (!song.initialNumerator || !song.initialDenominator || !ctx) {
         return;
     }
-    var columns = 4 * song.numerator * song.denominator; // beats
+    var columns = 4 * song.initialNumerator * song.initialDenominator; // beats
     ctx.fillStyle = "#496bd8";
     ctx.fillRect(0, 0, width, height);
     // draw lines

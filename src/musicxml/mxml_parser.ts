@@ -1,6 +1,6 @@
-import { getNoteNumber, sortMIDIEvents } from "../midi_utils";
+import { getNoteNumber, sortMIDIEvents } from "../util/midi";
 import { calculateMillis } from "../calculateMillis";
-import { MIDIEvent } from "../midi_events";
+import { MIDIEvent } from "../types/MIDIEvent";
 import { getVolume } from "./part/getVolume";
 import { getPartName } from "./part/getPartName";
 import { getChannel } from "./part/getChannel";
@@ -10,7 +10,8 @@ import { getDivisions } from "./measure/getDivisions";
 import { getSignature } from "./measure/getSignature";
 import { getTempo } from "./measure/getTempo";
 import { getRepeat } from "./measure/getRepeat";
-import { Song, Track } from "../types/MIDINote.ts";
+import { Track } from "../types/Track";
+import { Song } from "../types/Song";
 import { createNotes } from "src/createNotes";
 
 // let n = 0;
