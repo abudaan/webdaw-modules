@@ -1,9 +1,9 @@
-export const getMIDIDevices = async (
+export const getMIDIPorts = (
   midiAccess: WebMidi.MIDIAccess | null
-): Promise<{
+): {
   inputs: WebMidi.MIDIInput[];
   outputs: WebMidi.MIDIOutput[];
-}> => {
+} => {
   // export const getMIDIDevices = (): { inputs: WebMidi.MIDIInput[], outputs: WebMidi.MIDIOutput[] } => {
   const inputs: WebMidi.MIDIInput[] = [];
   const outputs: WebMidi.MIDIOutput[] = [];

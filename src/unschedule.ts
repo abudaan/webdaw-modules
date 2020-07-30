@@ -35,6 +35,8 @@ export const unschedule = (song: Song, scheduled: MIDIEvent[], outputs?: WebMidi
 */
 
 export const unschedule = (song: Song, outputs?: WebMidi.MIDIOutputMap) => {
+  // you could use resetMIDIOutputs() here as well though this might be a bit of a rough remedy
+
   const outputIds = Object.keys(
     song.tracks.reduce((acc: { [id: string]: boolean }, val) => {
       val.outputs.forEach(id => {
