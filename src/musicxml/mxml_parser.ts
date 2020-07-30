@@ -10,10 +10,12 @@ import { getDivisions } from "./measure/getDivisions";
 import { getSignature } from "./measure/getSignature";
 import { getTempo } from "./measure/getTempo";
 import { getRepeat } from "./measure/getRepeat";
+import { Song, Track } from "../types";
+import { createNotes } from "src/create_notes";
 
 // let n = 0;
 
-export type PartData = {
+type PartData = {
   id: string;
   name: string;
   instrument: string;
@@ -26,15 +28,15 @@ export type Repeat = {
   type: string;
 }[];
 
-export type ParsedMusicXML = {
-  parts: PartData[];
-  repeats: number[][];
-  initialTempo: number;
-  initialNumerator: number;
-  initialDenominator: number;
-} | null;
+// export type ParsedMusicXML = {
+//   parts: PartData[];
+//   repeats: number[][];
+//   initialTempo: number;
+//   initialNumerator: number;
+//   initialDenominator: number;
+// } | null;
 
-const parseMusicXML = (xmlDoc: XMLDocument, ppq: number = 960): ParsedMusicXML | null => {
+const parseMusicXML = (xmlDoc: XMLDocument, ppq: number = 960): Song | null => {
   if (xmlDoc === null) {
     return null;
   }
@@ -54,7 +56,7 @@ const parseMusicXML = (xmlDoc: XMLDocument, ppq: number = 960): ParsedMusicXML |
   return null;
 };
 
-const parsePartWise = (xmlDoc: XMLDocument, ppq: number = 960): ParsedMusicXML => {
+const parsePartWise = (xmlDoc: XMLDocument, ppq: number = 960): Song | null => {
   if (xmlDoc === null) {
     return null;
   }
@@ -368,16 +370,55 @@ const parsePartWise = (xmlDoc: XMLDocument, ppq: number = 960): ParsedMusicXML =
   });
   // console.log(repeats, repeats2);
 
+  const { tracks, events }: { tracks: Track[]; events: MIDIEvent[] } = parts.reduce(
+    (acc, val, i) => {
+      const id = `T-${i++}`;
+      acc.events.push(
+        ...val.events.map(e => {
+          e.trackId = id;
+          return e;
+        })
+      );
+      const t: Track = {
+        id,
+        name: val.name,
+        instrument: val.instrument,
+        volume: val.volume,
+        latency: 0,
+        inputs: [],
+        outputs: [],
+      };
+
+      acc.tracks.push(t);
+      return acc;
+    },
+    { tracks: [], events: [] } as { tracks: Track[]; events: MIDIEvent[] }
+  );
+
+  sortMIDIEvents(events);
+
   return {
-    parts,
-    repeats: repeats2,
+    ppq,
+    latency: 17, // value in milliseconds -> the length of a single frame @ 60Hz refresh rate
+    bufferTime: 100, // value in milliseconds
+    tracks,
+    tracksById: tracks.reduce((acc: { [id: string]: Track }, value) => {
+      acc[value.id] = value;
+      return acc;
+    }, {}),
+    events: calculateMillis(events, {
+      ppq,
+      bpm: initialTempo === -1 ? 120 : initialTempo,
+    }),
+    notes: createNotes(events),
     initialTempo,
     initialNumerator,
     initialDenominator,
-  };
+    repeats: repeats2,
+  } as Song;
 };
 
-const parseTimeWise = (doc: XMLDocument): ParsedMusicXML | null => {
+const parseTimeWise = (doc: XMLDocument): Song | null => {
   // to be implemented
   return null;
 };

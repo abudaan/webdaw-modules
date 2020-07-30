@@ -32,12 +32,11 @@ import {
   sortMIDIEvents,
 } from "./midi_utils";
 import { calculateMillis } from "./calculateMillis";
-import { Track } from "./types";
-import { createTrack } from "./sugar_coating";
+import { Track, Song } from "./types";
+import { createTrack } from "./sugarcoating/track";
+import { createNotes } from "./create_notes";
 
-const playbackSpeed = 1;
-
-export type ParsedData = {
+type ParsedData = {
   event: any;
   deltaTime: number;
   bpm?: number;
@@ -46,23 +45,7 @@ export type ParsedData = {
   trackName?: string;
 };
 
-export type ParsedMIDIFile = {
-  // header: {
-  //   formatType: number;
-  //   trackCount: number;
-  //   ticksPerBeat: number;
-  // };
-  ppq: number;
-  initialTempo: number;
-  initialNumerator: number;
-  initialDenominator: number;
-  tracks: Track[];
-  events: MIDIEvent[];
-  // tracks: MIDIEvent[][]
-  // timeTrack: MIDIEvent[]
-};
-
-export function parseMidiFile(buffer: ArrayBufferLike): ParsedMIDIFile {
+export function parseMidiFile(buffer: ArrayBufferLike): Song {
   const reader = new BufferReader(buffer);
 
   const header = parseHeader(reader);
@@ -72,18 +55,24 @@ export function parseMidiFile(buffer: ArrayBufferLike): ParsedMIDIFile {
     header.ticksPerBeat
   );
 
-  // return { header, timeTrack, tracks }
   return {
     ppq: header.ticksPerBeat,
+    latency: 17, // value in milliseconds -> the length of a single frame @ 60Hz refresh rate
+    bufferTime: 100, // value in milliseconds
     tracks,
-    initialTempo,
-    initialNumerator,
-    initialDenominator,
+    tracksById: tracks.reduce((acc: { [id: string]: Track }, value) => {
+      acc[value.id] = value;
+      return acc;
+    }, {}),
     events: calculateMillis(events, {
       ppq: header.ticksPerBeat,
       bpm: initialTempo,
     }),
-  };
+    notes: createNotes(events),
+    initialTempo,
+    initialNumerator,
+    initialDenominator,
+  } as Song;
 }
 
 function parseHeader(reader: BufferReader) {
