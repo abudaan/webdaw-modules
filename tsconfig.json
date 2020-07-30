@@ -13,7 +13,8 @@
     "baseUrl": ".",
     "target": "es5",
     "outDir": "publish",
-    "typeRoots": ["./node_modules/@types"]
+    "typeRoots": ["./node_modules/@types"],
+    "declaration": true
   },
   "include": ["src/**/*"]
 }

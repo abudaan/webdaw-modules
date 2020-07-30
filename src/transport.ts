@@ -1,11 +1,5 @@
-export const play = (millis: number) => {
+export const play = (millis: number) => {};
 
-}
+export const pause = () => {};
 
-export const pause = () => {
-
-}
-
-export const stop = () => {
-
-}
+export const stop = () => {};

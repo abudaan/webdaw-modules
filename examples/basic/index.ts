@@ -1,7 +1,8 @@
 // import "jzz";
 import { schedule, getCurrentEventIndex } from "../../src/scheduler";
-import { getMIDIAccess, getMIDIDevices } from "../../src/init_midi";
-import { createSongFromMIDIFile } from "../../src/sugarcoating/createSongFromMIDIFile";
+import { getMIDIAccess } from "../../src/getMIDIAccess";
+import { getMIDIDevices } from "../../src/getMIDIDevices";
+import { createSongFromMIDIFile } from "../../src/createSongFromMIDIFile";
 
 const url = "../../assets/minute_waltz.mid";
 // const url = '/assets/mozk545a.mid';
@@ -10,7 +11,7 @@ const url = "../../assets/minute_waltz.mid";
 const init = async () => {
   const ma = await getMIDIAccess();
   const song = await createSongFromMIDIFile(url);
-  const { inputs, outputs } = await getMIDIDevices();
+  const { inputs, outputs } = await getMIDIDevices(ma);
   song.tracks.forEach(track => {
     track.outputs.push(...outputs.map(o => o.id));
   });

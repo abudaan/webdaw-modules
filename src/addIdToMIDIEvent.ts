@@ -1,5 +1,5 @@
 import uniqid from "uniqid";
-import { MIDIEvent } from "./midi_events";
+import { MIDIEvent } from "./types/MIDIEvent";
 
 export const addIdToMIDIEvent = (events: MIDIEvent[]): MIDIEvent[] => {
   return events.map(e => {

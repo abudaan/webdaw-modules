@@ -1,4 +1,4 @@
-import { MIDIEvent, TempoEvent } from "./midi_events";
+import { MIDIEvent, TempoEvent } from "./types/MIDIEvent";
 
 export const calculateMillis = (
   events: MIDIEvent[],

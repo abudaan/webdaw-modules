@@ -1,6 +1,16 @@
-import { MIDIEvent, NoteEvent, NoteOnEvent } from "./midi_events";
-import { MIDINote } from "./types";
-import { sortMIDIEvents } from "./midi_utils";
+import { MIDIEvent, NoteEvent, NoteOnEvent, NoteOffEvent } from "./types/MIDIEvent";
+
+export type MIDINote = {
+  id: string;
+  noteOn: NoteOnEvent;
+  noteOff: NoteOffEvent;
+  durationTicks?: number;
+  durationMillis?: number;
+  startTicks?: number;
+  endTicks?: number;
+  startMillis?: number;
+  endMillis?: number;
+};
 
 let index = 0;
 

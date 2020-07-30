@@ -3,7 +3,7 @@
 // import { BufferReader } from 'jasmid.ts';
 import uniquid from "uniqid";
 import { BufferReader } from "./bufferreader";
-import { MIDIEvent } from "./midi_events";
+import { MIDIEvent } from "./types/MIDIEvent";
 import {
   SEQUENCE_NUMBER,
   TEXT,
@@ -30,11 +30,12 @@ import {
   CHANNEL_AFTERTOUCH,
   PITCH_BEND,
   sortMIDIEvents,
-} from "./midi_utils";
+} from "./util/midi";
 import { calculateMillis } from "./calculateMillis";
-import { Track, Song } from "./types";
-import { createTrack } from "./sugarcoating/track";
-import { createNotes } from "./create_notes";
+import { Track } from "./types/Track";
+import { Song } from "./types/Song";
+import { createTrack } from "./createTrack";
+import { createNotes } from "./createNotes";
 
 type ParsedData = {
   event: any;
@@ -45,7 +46,7 @@ type ParsedData = {
   trackName?: string;
 };
 
-export function parseMidiFile(buffer: ArrayBufferLike): Song {
+export function parseMIDIFile(buffer: ArrayBufferLike): Song {
   const reader = new BufferReader(buffer);
 
   const header = parseHeader(reader);

@@ -1,4 +1,5 @@
-import { Song, MIDINote } from "./types";
+import { Song } from "./types/Song";
+import { MIDINote } from "./types/MIDINote";
 
 type Args = {
   song: Song;

@@ -1,6 +1,6 @@
-import { fetchXML } from "../fetch_helpers";
-import { parseMusicXML } from "../musicxml/mxml_parser";
-import { Song } from "../types";
+import { fetchXML } from "./fetch_helpers";
+import { parseMusicXML } from "./musicxml/mxml_parser";
+import { Song } from "./types/Song";
 
 export const createSongFromMusicXML = async (
   arg: XMLDocument | string,

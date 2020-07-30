@@ -1,4 +1,4 @@
-import { MIDIEvent, TempoEvent, TimeSignatureEvent } from "./midi_events";
+import { MIDIEvent } from "../types/MIDIEvent";
 
 export const SEQUENCE_NUMBER = "sequence number";
 export const TEXT = "text";

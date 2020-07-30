@@ -1,5 +1,6 @@
-import { Song, Track } from "./types";
-import { MIDIEvent, NoteOnEvent } from "./midi_events";
+import { Song } from "./types/Song";
+import { Track } from "./types/Track";
+import { MIDIEvent, NoteOnEvent } from "./types/MIDIEvent";
 
 // TODO: improve this!
 /*

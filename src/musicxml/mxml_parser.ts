@@ -10,8 +10,8 @@ import { getDivisions } from "./measure/getDivisions";
 import { getSignature } from "./measure/getSignature";
 import { getTempo } from "./measure/getTempo";
 import { getRepeat } from "./measure/getRepeat";
-import { Song, Track } from "../types";
-import { createNotes } from "src/create_notes";
+import { Song, Track } from "../types/MIDINote.ts";
+import { createNotes } from "src/createNotes";
 
 // let n = 0;
 

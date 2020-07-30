@@ -26,25 +26,3 @@ export const getMIDIAccess = async (): Promise<WebMidi.MIDIAccess | null> => {
     return null;
   }
 };
-
-export const getMIDIDevices = async (): Promise<{
-  inputs: WebMidi.MIDIInput[];
-  outputs: WebMidi.MIDIOutput[];
-}> => {
-  // export const getMIDIDevices = (): { inputs: WebMidi.MIDIInput[], outputs: WebMidi.MIDIOutput[] } => {
-  const inputs: WebMidi.MIDIInput[] = [];
-  const outputs: WebMidi.MIDIOutput[] = [];
-  if (typeof midiAccess === "undefined") {
-    midiAccess = await getMIDIAccess();
-    // console.warn('MIDIAccess not yet initialized, please call initMIDI first');
-  } else if (midiAccess !== null) {
-    midiAccess.inputs.forEach(i => {
-      inputs.push(i);
-    });
-    midiAccess.outputs.forEach(o => {
-      outputs.push(o);
-    });
-  }
-  console.log(inputs, outputs);
-  return { inputs, outputs };
-};

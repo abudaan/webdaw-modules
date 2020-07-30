@@ -1,6 +1,6 @@
-import { Song } from "./types";
-import { MIDIEvent, NoteOnEvent } from "./midi_events";
-import { NOTE_ON, NOTE_OFF } from "./midi_utils";
+import { Song } from "./types/Song";
+import { MIDIEvent, NoteOnEvent } from "./types/MIDIEvent";
+import { NOTE_ON, NOTE_OFF } from "./util/midi";
 
 export const getCurrentEventIndex = (song: Song, millis: number): number => {
   const { events } = song;
