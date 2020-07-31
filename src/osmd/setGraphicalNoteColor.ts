@@ -4,7 +4,7 @@
   a too expensive action.
 */
 
-const setStaveNoteColor = (el: SVGElement, color: string) => {
+export const setGraphicalNoteColor = (el: SVGElement, color: string) => {
   const stems = el.getElementsByClassName("vf-stem");
   const noteheads = el.getElementsByClassName("vf-notehead");
   // console.log(stem, notehead);
@@ -23,5 +23,3 @@ const setStaveNoteColor = (el: SVGElement, color: string) => {
     }
   }
 };
-
-export { setStaveNoteColor };

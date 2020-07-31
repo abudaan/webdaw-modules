@@ -39,7 +39,7 @@ export interface VexFlowStaveNote extends Vex.Flow.StaveNote {
   };
 }
 
-const getGraphicalNotesPerBar = (
+export const getGraphicalNotesPerBar = (
   osmd: OpenSheetMusicDisplay,
   ppq: number
 ): Promise<GraphicalNoteData[][]> =>
@@ -83,5 +83,3 @@ const getGraphicalNotesPerBar = (
       }, [])
     )
     .toPromise();
-
-export { getGraphicalNotesPerBar };
