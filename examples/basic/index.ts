@@ -1,5 +1,6 @@
 // import "jzz";
-import { schedule, getCurrentEventIndex } from "../../src/scheduler";
+import { schedule } from "../../src/scheduler";
+import { getCurrentEventIndex } from "../../src/getCurrentEventIndex";
 import { getMIDIAccess } from "../../src/getMIDIAccess";
 import { getMIDIPorts } from "../../src/getMIDIPorts";
 import { createSongFromMIDIFile } from "../../src/createSongFromMIDIFile";
