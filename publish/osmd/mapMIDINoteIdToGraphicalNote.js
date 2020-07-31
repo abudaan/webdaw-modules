@@ -4,7 +4,7 @@ exports.mapMIDINoteIdToGraphicalNote = void 0;
 exports.mapMIDINoteIdToGraphicalNote = function (graphicalNotesPerBar, repeats, notes) {
     // console.log(graphicalNotesPerBar);
     var barIndex = -1;
-    var barOffset = 0;
+    var barOffset = 1;
     var ticksOffset = 0; // not used, keep for reference
     var repeatIndex = 0;
     var hasRepeated = {};
