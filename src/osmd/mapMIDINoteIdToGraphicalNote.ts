@@ -21,7 +21,7 @@ export const mapMIDINoteIdToGraphicalNote = (
 ): NoteMapping => {
   // console.log(graphicalNotesPerBar);
   let barIndex = -1;
-  let barOffset = 0;
+  let barOffset = 1;
   let ticksOffset = 0; // not used, keep for reference
   let repeatIndex: number = 0;
   const hasRepeated: { [index: number]: boolean } = {};

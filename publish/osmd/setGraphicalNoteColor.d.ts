@@ -1,2 +1,1 @@
-declare const setStaveNoteColor: (el: SVGElement, color: string) => void;
-export { setStaveNoteColor };
+export declare const setGraphicalNoteColor: (el: SVGElement, color: string) => void;

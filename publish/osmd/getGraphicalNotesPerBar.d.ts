@@ -11,5 +11,4 @@ export interface VexFlowStaveNote extends Vex.Flow.StaveNote {
         el: SVGElement;
     };
 }
-declare const getGraphicalNotesPerBar: (osmd: OpenSheetMusicDisplay, ppq: number) => Promise<GraphicalNoteData[][]>;
-export { getGraphicalNotesPerBar };
+export declare const getGraphicalNotesPerBar: (osmd: OpenSheetMusicDisplay, ppq: number) => Promise<GraphicalNoteData[][]>;

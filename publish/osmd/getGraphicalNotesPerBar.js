@@ -14,7 +14,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getGraphicalNotesPerBar = void 0;
 var rxjs_1 = require("rxjs");
 var operators_1 = require("rxjs/operators");
-var getGraphicalNotesPerBar = function (osmd, ppq) {
+exports.getGraphicalNotesPerBar = function (osmd, ppq) {
     return rxjs_1.from(osmd["graphic"].measureList)
         .pipe(
     // tap(m => { console.log(m); }),
@@ -56,5 +56,4 @@ var getGraphicalNotesPerBar = function (osmd, ppq) {
     }, []))
         .toPromise();
 };
-exports.getGraphicalNotesPerBar = getGraphicalNotesPerBar;
 //# sourceMappingURL=getGraphicalNotesPerBar.js.map

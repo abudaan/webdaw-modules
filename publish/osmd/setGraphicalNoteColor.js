@@ -5,8 +5,8 @@
   a too expensive action.
 */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.setStaveNoteColor = void 0;
-var setStaveNoteColor = function (el, color) {
+exports.setGraphicalNoteColor = void 0;
+exports.setGraphicalNoteColor = function (el, color) {
     var stems = el.getElementsByClassName("vf-stem");
     var noteheads = el.getElementsByClassName("vf-notehead");
     // console.log(stem, notehead);
@@ -25,5 +25,4 @@ var setStaveNoteColor = function (el, color) {
         }
     }
 };
-exports.setStaveNoteColor = setStaveNoteColor;
 //# sourceMappingURL=setGraphicalNoteColor.js.map
