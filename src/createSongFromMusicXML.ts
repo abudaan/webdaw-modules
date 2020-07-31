@@ -1,6 +1,7 @@
 import { fetchXML } from "./fetch_helpers";
-import { parseMusicXML } from "./musicxml/mxml_parser";
 import { Song } from "./types/Song";
+import { parseMusicXML } from "./musicxml/parser";
+import { parsedMusicXMLToSong } from "./musicxml/parsedMusicXMLToSong";
 
 export const createSongFromMusicXML = async (
   arg: XMLDocument | string,
@@ -13,7 +14,8 @@ export const createSongFromMusicXML = async (
     xmlDoc = arg;
   }
 
-  const song = parseMusicXML(xmlDoc);
+  const song = parsedMusicXMLToSong(parseMusicXML(xmlDoc));
+
   if (song === null) {
     throw new Error("MusicXML document not supported");
   }
