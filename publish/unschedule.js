@@ -33,6 +33,7 @@ export const unschedule = (song: Song, scheduled: MIDIEvent[], outputs?: WebMidi
 };
 */
 exports.unschedule = function (song, outputs) {
+    // you could use resetMIDIOutputs() here as well though this might be a bit of a rough remedy
     var outputIds = Object.keys(song.tracks.reduce(function (acc, val) {
         val.outputs.forEach(function (id) {
             acc[id] = true;

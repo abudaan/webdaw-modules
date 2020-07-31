@@ -1,12 +1,14 @@
+import "./index.scss";
 import { schedule } from "../../src/scheduler";
 import { getCurrentEventIndex } from "../../src/getCurrentEventIndex";
 import { getMIDIAccess } from "../../src/getMIDIAccess";
 import { getMIDIPorts } from "../../src/getMIDIPorts";
 import { createSongFromMIDIFile } from "../../src/createSongFromMIDIFile";
+import { resetMIDIOutputs } from "../../src/resetMIDIOutputs";
 
 const url = "../../assets/minute_waltz.mid";
-// const url = '../../assets/mozk545a.mid';
-// const url = '../../assets/mozk545a_musescore.mid';
+// const url = '/assets/mozk545a.mid';
+// const url = '/assets/mozk545a_musescore.mid';
 
 const init = async () => {
   const ma = await getMIDIAccess();
@@ -18,12 +20,13 @@ const init = async () => {
   console.log(song);
 
   let millis = 3000;
+  song.positionMillis = millis;
   let index = getCurrentEventIndex(song, millis);
-  // console.log('START INDEX', index);
+  // console.log("START INDEX", index);
   let start: number = performance.now();
   const play = (a: number) => {
     const ts = performance.now();
-    // console.log(ts, a);
+    // console.log(ts, ts - start, a, a - start);
     // const progress = ts - a;
     const progress = ts - start;
     start = ts;
@@ -41,16 +44,11 @@ const init = async () => {
       requestAnimationFrame(a => {
         play(a);
       });
+    } else {
+      resetMIDIOutputs(ma);
     }
   };
-  play(start);
+  // play(start);
 };
 
 init();
-
-// fetch(url)
-//   .then(arrayBuffer)
-//   .then(ab => {
-//     const { header, tracks } = parseMidiFile(ab);
-//     console.log(tracks);
-//   });

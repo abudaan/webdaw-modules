@@ -18,4 +18,10 @@ export interface Song {
     initialNumerator?: number;
     initialDenominator?: number;
     repeats?: number[][];
+    scheduler: {
+        timestamp: number;
+        index: number;
+        scheduled: MIDIEvent[];
+    };
+    positionMillis: number;
 }

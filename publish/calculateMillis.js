@@ -10,7 +10,7 @@ exports.calculateMillis = function (events, data) {
     return events.map(function (event) {
         if (event.bpm) {
             (bpm = event.bpm);
-            console.log("bpm", bpm, millis);
+            // console.log("bpm", bpm, millis);
             millisPerTick = (((1 / playbackSpeed) * 60) / bpm / ppq) * 1000;
         }
         var diffTicks = event.ticks - ticks;

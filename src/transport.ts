@@ -1,4 +1,5 @@
-import { schedule, getCurrentEventIndex } from "./scheduler";
+import { schedule } from "./scheduler";
+import { getCurrentEventIndex } from "./getCurrentEventIndex";
 import { unschedule } from "./unschedule";
 import { midiAccess } from "./initAudioAndMIDI";
 import { Song } from "./types/Song";
