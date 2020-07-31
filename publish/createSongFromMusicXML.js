@@ -38,7 +38,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createSongFromMusicXML = void 0;
 var fetch_helpers_1 = require("./fetch_helpers");
-var mxml_parser_1 = require("./musicxml/mxml_parser");
+var parser_1 = require("./musicxml/parser");
+var parsedMusicXMLToSong_1 = require("./musicxml/parsedMusicXMLToSong");
 exports.createSongFromMusicXML = function (arg, ppq) {
     if (ppq === void 0) { ppq = 960; }
     return __awaiter(void 0, void 0, void 0, function () {
@@ -55,7 +56,7 @@ exports.createSongFromMusicXML = function (arg, ppq) {
                     xmlDoc = arg;
                     _a.label = 3;
                 case 3:
-                    song = mxml_parser_1.parseMusicXML(xmlDoc);
+                    song = parsedMusicXMLToSong_1.parsedMusicXMLToSong(parser_1.parseMusicXML(xmlDoc));
                     if (song === null) {
                         throw new Error("MusicXML document not supported");
                     }

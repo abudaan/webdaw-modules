@@ -1,5 +1,4 @@
-import { getNoteNumber, sortMIDIEvents } from "../util/midi";
-import { calculateMillis } from "../calculateMillis";
+import { getNoteNumber } from "../util/midi";
 import { MIDIEvent } from "../types/MIDIEvent";
 import { getVolume } from "./part/getVolume";
 import { getPartName } from "./part/getPartName";
@@ -35,7 +34,7 @@ export type ParsedMusicXML = {
   initialDenominator: number;
 } | null;
 
-const parseMusicXML = (xmlDoc: XMLDocument, ppq: number = 960): ParsedMusicXML => {
+export const parseMusicXML = (xmlDoc: XMLDocument, ppq: number = 960): ParsedMusicXML => {
   if (xmlDoc === null) {
     return null;
   }
@@ -383,5 +382,3 @@ const parseTimeWise = (doc: XMLDocument): ParsedMusicXML => {
   // to be implemented
   return null;
 };
-
-export { parseMusicXML };
