@@ -21,11 +21,11 @@ const init = async () => {
   let millis = 3000;
   song.positionMillis = millis;
   let index = getCurrentEventIndex(song, millis);
-  // console.log('START INDEX', index);
+  // console.log("START INDEX", index);
   let start: number = performance.now();
   const play = (a: number) => {
     const ts = performance.now();
-    // console.log(ts, a);
+    // console.log(ts, ts - start, a, a - start);
     // const progress = ts - a;
     const progress = ts - start;
     start = ts;

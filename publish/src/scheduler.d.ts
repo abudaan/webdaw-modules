@@ -1,7 +1,7 @@
 /// <reference types="webmidi" />
 import { Song } from "./types/Song";
 import { MIDIEvent } from "./types/MIDIEvent";
-export declare const getCurrentEventIndex: (song: Song, millis: number) => number;
+export declare const getCurrentEventIndex: (song: Song, millis: number, startIndex?: number) => number;
 declare type Args = {
     song: Song;
     millis: number;
