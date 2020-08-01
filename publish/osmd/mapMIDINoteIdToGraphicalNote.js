@@ -9,7 +9,8 @@ exports.mapMIDINoteIdToGraphicalNote = function (graphicalNotesPerBar, repeats, 
     var repeatIndex = 0;
     var hasRepeated = {};
     var numBars = notes[notes.length - 1].noteOff.bar;
-    var mapping = {};
+    var mapping1 = {};
+    var mapping2 = {};
     var _loop_1 = function () {
         barIndex++;
         // console.log(barIndex, repeatIndex, hasRepeated[repeatIndex], repeats[repeatIndex][1]);
@@ -55,10 +56,11 @@ exports.mapMIDINoteIdToGraphicalNote = function (graphicalNotesPerBar, repeats, 
                 var element = bd.element, noteNumber = bd.noteNumber, bar = bd.bar, parentMusicSystem = bd.parentMusicSystem;
                 for (var j = 0; j < filtered_1.length; j++) {
                     var note = filtered_1[j];
-                    if (!mapping[note.id] &&
+                    if (!mapping1[note.id] &&
                         note.noteOn.bar == bar + barOffset - 1 &&
                         note.noteOn.noteNumber == noteNumber) {
-                        mapping[note.id] = { element: element, musicSystem: parentMusicSystem };
+                        mapping1[note.id] = { element: element, musicSystem: parentMusicSystem };
+                        mapping2[element.id] = note;
                         // filtered.splice(j, 1);
                         break;
                     }
@@ -78,6 +80,6 @@ exports.mapMIDINoteIdToGraphicalNote = function (graphicalNotesPerBar, repeats, 
         if (state_1 === "break")
             break;
     }
-    return mapping;
+    return { midiToGraphical: mapping1, graphicalToMidi: mapping2 };
 };
 //# sourceMappingURL=mapMIDINoteIdToGraphicalNote.js.map

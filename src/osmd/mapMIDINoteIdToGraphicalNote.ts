@@ -1,12 +1,12 @@
 import { MusicSystem } from "opensheetmusicdisplay";
 import { GraphicalNoteData } from "./getGraphicalNotesPerBar";
-import { MIDINote } from "../types/MIDINote";
+import { MIDINoteGeneric } from "../types/MIDINote";
 
 /*
   This method maps the notes in the SVG document of the score to MIDI notes in the sequencer
 */
 
-export type NoteMapping = {
+export type NoteMappingMIDIToGraphical = {
   [index: string]: {
     // vfnote: Vex.Flow.Note;
     element: SVGElement;
@@ -14,11 +14,15 @@ export type NoteMapping = {
   };
 };
 
+export type NoteMappingGraphicalToMIDI = {
+  [index: string]: MIDINoteGeneric;
+};
+
 export const mapMIDINoteIdToGraphicalNote = (
   graphicalNotesPerBar: GraphicalNoteData[][],
   repeats: number[][],
-  notes: MIDINote[]
-): NoteMapping => {
+  notes: MIDINoteGeneric[]
+): { midiToGraphical: NoteMappingMIDIToGraphical; graphicalToMidi: NoteMappingGraphicalToMIDI } => {
   // console.log(graphicalNotesPerBar);
   let barIndex = -1;
   let barOffset = 1;
@@ -26,7 +30,8 @@ export const mapMIDINoteIdToGraphicalNote = (
   let repeatIndex: number = 0;
   const hasRepeated: { [index: number]: boolean } = {};
   const numBars = notes[notes.length - 1].noteOff.bar;
-  const mapping: NoteMapping = {};
+  const mapping1: NoteMappingMIDIToGraphical = {};
+  const mapping2: NoteMappingGraphicalToMIDI = {};
 
   // console.log(numBars, graphicalNotesPerBar.length);
   // if (numBars !== graphicalNotesPerBar.length) {
@@ -77,11 +82,12 @@ export const mapMIDINoteIdToGraphicalNote = (
           for (let j = 0; j < filtered.length; j++) {
             const note = filtered[j];
             if (
-              !mapping[note.id] &&
+              !mapping1[note.id] &&
               note.noteOn.bar == bar + barOffset - 1 &&
               note.noteOn.noteNumber == noteNumber
             ) {
-              mapping[note.id] = { element, musicSystem: parentMusicSystem };
+              mapping1[note.id] = { element, musicSystem: parentMusicSystem };
+              mapping2[element.id] = note;
               // filtered.splice(j, 1);
               break;
             }
@@ -91,5 +97,6 @@ export const mapMIDINoteIdToGraphicalNote = (
       break;
     }
   }
-  return mapping;
+
+  return { midiToGraphical: mapping1, graphicalToMidi: mapping2 };
 };

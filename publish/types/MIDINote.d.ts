@@ -1,6 +1,16 @@
 import { NoteOnEvent, NoteOffEvent } from "./MIDIEvent";
-export declare type MIDINote = {
+export interface MIDIEventGeneric {
+    id?: string;
+    bar?: number;
+    ticks: number;
+    noteNumber: number;
+}
+export interface MIDINoteGeneric {
     id: string;
+    noteOn: MIDIEventGeneric;
+    noteOff: MIDIEventGeneric;
+}
+export interface MIDINote extends MIDINoteGeneric {
     noteOn: NoteOnEvent;
     noteOff: NoteOffEvent;
     durationTicks?: number;
@@ -9,4 +19,4 @@ export declare type MIDINote = {
     endTicks?: number;
     startMillis?: number;
     endMillis?: number;
-};
+}
