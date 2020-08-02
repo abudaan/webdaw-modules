@@ -3,7 +3,7 @@
 // import { BufferReader } from 'jasmid.ts';
 import uniquid from "uniqid";
 import { BufferReader } from "./bufferreader";
-import { MIDIEvent } from "./types/MIDIEvent";
+import { MIDIEvent } from "./MIDIEvent";
 import {
   SEQUENCE_NUMBER,
   TEXT,
@@ -32,8 +32,8 @@ import {
   sortMIDIEvents,
 } from "./util/midi";
 import { calculateMillis } from "./calculateMillis";
-import { Track } from "./types/Track";
-import { Song } from "./types/Song";
+import { Track } from "./createTrack";
+import { Song } from "./createSong";
 import { createTrack } from "./createTrack";
 import { createNotes } from "./createNotes";
 

@@ -1,5 +1,5 @@
-import { fetchXML } from "./fetch_helpers";
-import { Song } from "./types/Song";
+import { fetchXML } from "./util/fetch";
+import { Song } from "./createSong";
 import { parseMusicXML } from "./musicxml/parser";
 import { parsedMusicXMLToSong } from "./musicxml/parsedMusicXMLToSong";
 

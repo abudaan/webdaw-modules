@@ -1,6 +1,7 @@
 // import { midiAccess } from "./initAudioAndMIDI";
 import { getMIDIPorts } from "./getMIDIPorts";
 
+// you can use this for a panic button that is common in DAWs
 export const resetMIDIOutputs = (midiAccess: WebMidi.MIDIAccess | null, offset: number = 100) => {
   if (midiAccess) {
     const { outputs } = getMIDIPorts(midiAccess);

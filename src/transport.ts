@@ -2,7 +2,7 @@ import { schedule } from "./scheduler";
 import { getCurrentEventIndex } from "./getCurrentEventIndex";
 import { unschedule } from "./unschedule";
 import { midiAccess } from "./initAudioAndMIDI";
-import { Song } from "./types/Song";
+import { Song } from "./createSong";
 
 export const startMIDI = (song: Song, position: number): Song => {
   const timestamp = performance.now();

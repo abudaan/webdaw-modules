@@ -1,6 +1,6 @@
 import { MusicSystem } from "opensheetmusicdisplay";
 import { GraphicalNoteData } from "./getGraphicalNotesPerBar";
-import { MIDINoteGeneric } from "../types/MIDINote";
+import { MIDINoteGeneric } from "../createNotes";
 
 /*
   This method maps the notes in the SVG document of the score to MIDI notes in the sequencer

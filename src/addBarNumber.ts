@@ -1,4 +1,4 @@
-import { MIDIEvent } from "./types/MIDIEvent";
+import { MIDIEvent } from "./MIDIEvent";
 
 // @TODO: fix this for signature changes!
 export const addBarNumber = (

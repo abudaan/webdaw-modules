@@ -1,1 +1,0 @@
-{"version":3,"file":"getMeasureNumber.js","sourceRoot":"","sources":["../../../src/musicxml/measure/getMeasureNumber.ts"],"names":[],"mappings":";;;AAAa,QAAA,gBAAgB,GAAG,UAC9B,MAAmB,EACnB,WAAiB,EACjB,UAA2B;IAE3B,IAAM,aAAa,GAAG,MAAM,CAAC,QAAQ,CACnC,SAAS,EACT,WAAW,EACX,UAAU,EACV,WAAW,CAAC,WAAW,EACvB,IAAI,CACL,CAAC,WAAW,CAAC;IAEd,OAAO,aAAa,CAAC;AACvB,CAAC,CAAC"}

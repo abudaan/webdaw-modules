@@ -1,4 +1,4 @@
-import { MIDIEvent, NoteOnEvent, NoteOffEvent } from "./types/MIDIEvent";
+import { MIDIEvent, NoteOnEvent, NoteOffEvent } from "./MIDIEvent";
 import { NOTE_ON, NOTE_OFF } from "./util/midi";
 
 export const createNotePair = (events: MIDIEvent[]): [NoteOnEvent, NoteOffEvent][] => {

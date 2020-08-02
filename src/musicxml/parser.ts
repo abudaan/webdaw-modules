@@ -1,5 +1,5 @@
 import { getNoteNumber } from "../util/midi";
-import { MIDIEvent } from "../types/MIDIEvent";
+import { MIDIEvent } from "../MIDIEvent";
 import { getVolume } from "./part/getVolume";
 import { getPartName } from "./part/getPartName";
 import { getChannel } from "./part/getChannel";

@@ -1,4 +1,4 @@
-import { MIDIEvent } from "../types/MIDIEvent";
+import { MIDIEvent } from "../MIDIEvent";
 
 export const SEQUENCE_NUMBER = "sequence number";
 export const TEXT = "text";

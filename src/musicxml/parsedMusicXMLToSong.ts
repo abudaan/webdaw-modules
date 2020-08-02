@@ -1,6 +1,6 @@
-import { Song } from "../types/Song";
-import { Track } from "../types/Track";
-import { MIDIEvent } from "../types/MIDIEvent";
+import { Song } from "../createSong";
+import { Track } from "../createTrack";
+import { MIDIEvent } from "../MIDIEvent";
 import { sortMIDIEvents } from "../util/midi";
 import { calculateMillis } from "../calculateMillis";
 import { createNotes } from "../createNotes";

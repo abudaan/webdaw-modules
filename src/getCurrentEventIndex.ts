@@ -1,4 +1,4 @@
-import { Song } from "./types/Song";
+import { Song } from "./createSong";
 
 export const getCurrentEventIndex = (
   song: Song,

@@ -1,6 +1,6 @@
-import { fetchArraybuffer } from "./fetch_helpers";
+import { fetchArraybuffer } from "./util/fetch";
 import { parseMIDIFile } from "./parseMIDIFile";
-import { Song } from "./types/Song";
+import { Song } from "./createSong";
 
 export const createSongFromMIDIFile = async (arg: string | ArrayBuffer): Promise<Song> => {
   let ab: ArrayBuffer;

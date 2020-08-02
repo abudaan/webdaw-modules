@@ -1,5 +1,5 @@
-import { Song } from "./types/Song";
-import { MIDIEvent, NoteOnEvent } from "./types/MIDIEvent";
+import { Song } from "./createSong";
+import { MIDIEvent, NoteOnEvent } from "./MIDIEvent";
 import { NOTE_ON, NOTE_OFF } from "./util/midi";
 
 type Args = {

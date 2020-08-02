@@ -1,7 +1,20 @@
-import { MIDIEvent, NoteEvent, NoteOnEvent, NoteOffEvent } from "./types/MIDIEvent";
+import { MIDIEvent, NoteEvent, NoteOnEvent, NoteOffEvent } from "./MIDIEvent";
 
-export type MIDINote = {
+// MIDIEventGeneric and MIDINoteGeneric are declared to support other MIDI playback libraries such as heartbeat
+export interface MIDIEventGeneric {
+  id?: string;
+  bar?: number;
+  ticks: number;
+  noteNumber: number;
+}
+
+export interface MIDINoteGeneric {
   id: string;
+  noteOn: MIDIEventGeneric;
+  noteOff: MIDIEventGeneric;
+}
+
+export interface MIDINote extends MIDINoteGeneric {
   noteOn: NoteOnEvent;
   noteOff: NoteOffEvent;
   durationTicks?: number;
@@ -10,7 +23,7 @@ export type MIDINote = {
   endTicks?: number;
   startMillis?: number;
   endMillis?: number;
-};
+}
 
 let index = 0;
 
