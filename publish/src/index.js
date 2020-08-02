@@ -35,6 +35,7 @@ __exportStar(require("./musicxml/parser"), exports);
 __exportStar(require("./musicxml/parsedMusicXMLToSong"), exports);
 __exportStar(require("./osmd/getGraphicalNotesPerBar"), exports);
 __exportStar(require("./osmd/setGraphicalNoteColor"), exports);
+__exportStar(require("./osmd/getGraphicalNotesInSelection"), exports);
 __exportStar(require("./osmd/mapMIDINoteIdToGraphicalNote"), exports);
 __exportStar(require("./osmd/MusicSystemShim"), exports);
 __exportStar(require("./MIDIEvent"), exports);

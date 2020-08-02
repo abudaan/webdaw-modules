@@ -1,3 +1,13 @@
 export type MusicSystemShim = {
-  graphicalMeasures: { stave: { x: number; y: number } }[][];
+  graphicalMeasures: {
+    measureNumber: number;
+    stave: {
+      x: number;
+      y: number;
+      width: number;
+      height: number;
+      start_x: number;
+      end_x: number;
+    };
+  }[][];
 };

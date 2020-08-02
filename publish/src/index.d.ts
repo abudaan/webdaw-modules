@@ -2,6 +2,7 @@ export * from "./musicxml/parser";
 export * from "./musicxml/parsedMusicXMLToSong";
 export * from "./osmd/getGraphicalNotesPerBar";
 export * from "./osmd/setGraphicalNoteColor";
+export * from "./osmd/getGraphicalNotesInSelection";
 export * from "./osmd/mapMIDINoteIdToGraphicalNote";
 export * from "./osmd/MusicSystemShim";
 export * from "./MIDIEvent";
