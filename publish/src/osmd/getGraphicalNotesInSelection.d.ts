@@ -5,14 +5,19 @@ export interface Rect {
     left: number;
     right: number;
 }
-export interface SelectedBarRect extends Rect {
+export interface BoundingBoxMeasure extends Rect {
     measureNumber: number;
 }
 export declare const hasOverlap: (rect1: Rect, rect2: Rect) => boolean;
-export declare const getGraphicalNotesInSelection: (graphicalNotesPerBar: GraphicalNoteData[][], start: {
+export declare const getMeasureBoundingBoxes: (graphicalNotesPerBar: GraphicalNoteData[][]) => BoundingBoxMeasure[];
+export declare const getSelectedMeasureBoundingBoxes: (selectedMeasures: number[], graphicalNotesPerBar: GraphicalNoteData[][]) => BoundingBoxMeasure[];
+export declare const getSelectedMeasures: (graphicalNotesPerBar: GraphicalNoteData[][], start: {
     x: number;
     y: number;
 }, end: {
     x: number;
     y: number;
-}) => SelectedBarRect[];
+}) => {
+    barNumbers: number[];
+    boundingBoxes: BoundingBoxMeasure[];
+};

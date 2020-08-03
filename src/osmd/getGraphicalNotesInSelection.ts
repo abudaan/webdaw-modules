@@ -1,4 +1,3 @@
-import { uniq } from "ramda";
 import { GraphicalNoteData } from "./getGraphicalNotesPerBar";
 import { MusicSystemShim } from "./MusicSystemShim";
 
@@ -9,7 +8,7 @@ export interface Rect {
   left: number;
   right: number;
 }
-export interface SelectedBarRect extends Rect {
+export interface BoundingBoxMeasure extends Rect {
   measureNumber: number;
 }
 export const hasOverlap = (rect1: Rect, rect2: Rect) => {
@@ -21,36 +20,23 @@ export const hasOverlap = (rect1: Rect, rect2: Rect) => {
   );
 };
 
-export const getGraphicalNotesInSelection = (
-  graphicalNotesPerBar: GraphicalNoteData[][],
-  start: { x: number; y: number },
-  end: { x: number; y: number }
-): SelectedBarRect[] => {
-  const selectedBars: number[] = [];
-  const rect2: SelectedBarRect = {
-    left: start.x,
-    top: start.y,
-    right: end.x,
-    bottom: end.y,
-    measureNumber: -1,
-  };
-
+export const getMeasureBoundingBoxes = (
+  graphicalNotesPerBar: GraphicalNoteData[][]
+): BoundingBoxMeasure[] => {
   const firstNote = graphicalNotesPerBar[0][0];
   const system = firstNote.parentMusicSystem;
   const graphicalMeasures = ((system as unknown) as MusicSystemShim).graphicalMeasures;
-
-  const measureRectsPerSystem: SelectedBarRect[][] = [];
-  // measureRectsPerSystem[i] = [];
+  const boundingBoxes: BoundingBoxMeasure[][] = [];
 
   graphicalMeasures.forEach((measure, i) => {
-    measureRectsPerSystem[i] = [];
+    boundingBoxes[i] = [];
     measure.forEach((staffLine, j) => {
       const {
         stave: { x, y, width, height },
         measureNumber,
       } = staffLine;
 
-      const rect1 = {
+      const bbox = {
         measureNumber,
         top: y,
         right: x + width,
@@ -59,45 +45,21 @@ export const getGraphicalNotesInSelection = (
       };
 
       let inArray: boolean = false;
-      for (let k = 0; k < measureRectsPerSystem[i].length; k++) {
-        const val = measureRectsPerSystem[i][k];
-        if (val.top === rect1.top) {
+      for (let k = 0; k < boundingBoxes[i].length; k++) {
+        const val = boundingBoxes[i][k];
+        if (val.top === bbox.top) {
           inArray = true;
         }
       }
       if (inArray === false) {
-        measureRectsPerSystem[i].push(rect1);
-      }
-      // console.log("---", measureNumber);
-      // console.log("sel", start.x, start.y, end.x, end.y);
-      // console.log("bar", Math.round(x), Math.round(y), Math.round(maxX), Math.round(maxY));
-      if (hasOverlap(rect1, rect2)) {
-        selectedBars.push(measureNumber);
+        boundingBoxes[i].push(bbox);
       }
     });
   });
-  const u = uniq(selectedBars);
-  // console.log(u);
-  const a: number[] = [];
-  // add missing bar numbers
-  for (let i = 0; i < u.length; i++) {
-    let value = u[i];
-    a.push(value);
-    if (i + 1 < u.length) {
-      let next = u[i + 1];
-      // console.log(value, next);
-      while (next - value > 1) {
-        // console.log(value);
-        a.push(++value);
-      }
-    }
-  }
 
-  // console.log(a.sort());
-  // console.log(measureRectsPerSystem);
-
-  return a.map(measureNumber => {
-    const staffLines = measureRectsPerSystem[measureNumber - 1];
+  const result: BoundingBoxMeasure[] = [];
+  for (let i = 0; i < boundingBoxes.length; i++) {
+    const staffLines = boundingBoxes[i];
     const topValues = staffLines.map(s => s.top);
     const bottomValues = staffLines.map(s => s.bottom);
     const leftValues = staffLines.map(s => s.left);
@@ -105,12 +67,68 @@ export const getGraphicalNotesInSelection = (
     const heightValues = staffLines.map(s => s.top - s.bottom);
     const widthValues = staffLines.map(s => s.right - s.left);
 
-    return {
-      measureNumber,
+    const t = {
+      measureNumber: i + 1,
       top: Math.min(...topValues),
       bottom: Math.max(...bottomValues),
       left: Math.min(...leftValues),
       right: Math.max(...rightValues),
     };
+    // console.log("---");
+    // console.log(topValues, bottomValues);
+    // console.log(leftValues, rightValues);
+    // console.log(t);
+    result.push(t);
+  }
+  return result;
+};
+
+export const getSelectedMeasureBoundingBoxes = (
+  selectedMeasures: number[],
+  graphicalNotesPerBar: GraphicalNoteData[][]
+): BoundingBoxMeasure[] => {
+  const boundingBoxes = getMeasureBoundingBoxes(graphicalNotesPerBar);
+  return selectedMeasures.map(num => boundingBoxes[num - 1]);
+};
+
+export const getSelectedMeasures = (
+  graphicalNotesPerBar: GraphicalNoteData[][],
+  start: { x: number; y: number },
+  end: { x: number; y: number }
+): { barNumbers: number[]; boundingBoxes: BoundingBoxMeasure[] } => {
+  const boundingBoxes = getMeasureBoundingBoxes(graphicalNotesPerBar);
+  const selectedBars: number[] = [];
+  const selectedBoundingBoxes: BoundingBoxMeasure[] = [];
+  const selection: Rect = {
+    left: start.x,
+    top: start.y,
+    right: end.x,
+    bottom: end.y,
+  };
+  boundingBoxes.forEach(bbox => {
+    if (hasOverlap(bbox, selection)) {
+      selectedBars.push(bbox.measureNumber);
+      selectedBoundingBoxes.push(bbox);
+    }
   });
+  // console.log(selectedBars);
+  const barNumbers: number[] = [];
+  // add missing bar numbers
+  for (let i = 0; i < selectedBars.length; i++) {
+    let value = selectedBars[i];
+    barNumbers.push(value);
+    if (i + 1 < selectedBars.length) {
+      let next = selectedBars[i + 1];
+      // console.log(value, next);
+      while (next - value > 1) {
+        // console.log(value);
+        barNumbers.push(++value);
+      }
+    }
+  }
+
+  return {
+    barNumbers,
+    boundingBoxes: selectedBoundingBoxes,
+  };
 };

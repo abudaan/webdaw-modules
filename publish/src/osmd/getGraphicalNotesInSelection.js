@@ -20,33 +20,23 @@ var __spread = (this && this.__spread) || function () {
     return ar;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getGraphicalNotesInSelection = exports.hasOverlap = void 0;
-var ramda_1 = require("ramda");
+exports.getSelectedMeasures = exports.getSelectedMeasureBoundingBoxes = exports.getMeasureBoundingBoxes = exports.hasOverlap = void 0;
 exports.hasOverlap = function (rect1, rect2) {
     return !(rect1.right < rect2.left ||
         rect1.left > rect2.right ||
         rect1.bottom < rect2.top ||
         rect1.top > rect2.bottom);
 };
-exports.getGraphicalNotesInSelection = function (graphicalNotesPerBar, start, end) {
-    var selectedBars = [];
-    var rect2 = {
-        left: start.x,
-        top: start.y,
-        right: end.x,
-        bottom: end.y,
-        measureNumber: -1,
-    };
+exports.getMeasureBoundingBoxes = function (graphicalNotesPerBar) {
     var firstNote = graphicalNotesPerBar[0][0];
     var system = firstNote.parentMusicSystem;
     var graphicalMeasures = system.graphicalMeasures;
-    var measureRectsPerSystem = [];
-    // measureRectsPerSystem[i] = [];
+    var boundingBoxes = [];
     graphicalMeasures.forEach(function (measure, i) {
-        measureRectsPerSystem[i] = [];
+        boundingBoxes[i] = [];
         measure.forEach(function (staffLine, j) {
             var _a = staffLine.stave, x = _a.x, y = _a.y, width = _a.width, height = _a.height, measureNumber = staffLine.measureNumber;
-            var rect1 = {
+            var bbox = {
                 measureNumber: measureNumber,
                 top: y,
                 right: x + width,
@@ -54,60 +44,80 @@ exports.getGraphicalNotesInSelection = function (graphicalNotesPerBar, start, en
                 left: x,
             };
             var inArray = false;
-            for (var k = 0; k < measureRectsPerSystem[i].length; k++) {
-                var val = measureRectsPerSystem[i][k];
-                if (val.top === rect1.top) {
+            for (var k = 0; k < boundingBoxes[i].length; k++) {
+                var val = boundingBoxes[i][k];
+                if (val.top === bbox.top) {
                     inArray = true;
                 }
             }
             if (inArray === false) {
-                measureRectsPerSystem[i].push(rect1);
-            }
-            // console.log("---", measureNumber);
-            // console.log("sel", start.x, start.y, end.x, end.y);
-            // console.log("bar", Math.round(x), Math.round(y), Math.round(maxX), Math.round(maxY));
-            if (exports.hasOverlap(rect1, rect2)) {
-                selectedBars.push(measureNumber);
+                boundingBoxes[i].push(bbox);
             }
         });
     });
-    var u = ramda_1.uniq(selectedBars);
-    // console.log(u);
-    var a = [];
-    // add missing bar numbers
-    for (var i = 0; i < u.length; i++) {
-        var value = u[i];
-        a.push(value);
-        if (i + 1 < u.length) {
-            var next = u[i + 1];
-            // console.log(value, next);
-            while (next - value > 1) {
-                // console.log(value);
-                a.push(++value);
-            }
-        }
-    }
-    return a.map(function (measureNumber) {
-        var staffLines = measureRectsPerSystem[measureNumber - 1];
+    var result = [];
+    for (var i = 0; i < boundingBoxes.length; i++) {
+        var staffLines = boundingBoxes[i];
         var topValues = staffLines.map(function (s) { return s.top; });
         var bottomValues = staffLines.map(function (s) { return s.bottom; });
         var leftValues = staffLines.map(function (s) { return s.left; });
         var rightValues = staffLines.map(function (s) { return s.right; });
         var heightValues = staffLines.map(function (s) { return s.top - s.bottom; });
         var widthValues = staffLines.map(function (s) { return s.right - s.left; });
-        return {
-            measureNumber: measureNumber,
+        var t = {
+            measureNumber: i + 1,
             top: Math.min.apply(Math, __spread(topValues)),
             bottom: Math.max.apply(Math, __spread(bottomValues)),
             left: Math.min.apply(Math, __spread(leftValues)),
             right: Math.max.apply(Math, __spread(rightValues)),
         };
+        // console.log("---");
+        // console.log(topValues, bottomValues);
+        // console.log(leftValues, rightValues);
+        // console.log(t);
+        result.push(t);
+    }
+    return result;
+};
+exports.getSelectedMeasureBoundingBoxes = function (selectedMeasures, graphicalNotesPerBar) {
+    var boundingBoxes = exports.getMeasureBoundingBoxes(graphicalNotesPerBar);
+    console.log(boundingBoxes);
+    return selectedMeasures.map(function (num) { return boundingBoxes[num - 1]; });
+};
+exports.getSelectedMeasures = function (graphicalNotesPerBar, start, end) {
+    var boundingBoxes = exports.getMeasureBoundingBoxes(graphicalNotesPerBar);
+    var selectedBars = [];
+    var selectedBoundingBoxes = [];
+    var selection = {
+        left: start.x,
+        top: start.y,
+        right: end.x,
+        bottom: end.y,
+    };
+    boundingBoxes.forEach(function (bbox) {
+        if (exports.hasOverlap(bbox, selection)) {
+            selectedBars.push(bbox.measureNumber);
+            selectedBoundingBoxes.push(bbox);
+        }
     });
-    // console.log(a.sort());
-    // console.log(measureRectsPerSystem);
-    // return a.map(bar => {
-    //   return {};
-    // });
-    // return [];
+    // console.log(selectedBars);
+    var barNumbers = [];
+    // add missing bar numbers
+    for (var i = 0; i < selectedBars.length; i++) {
+        var value = selectedBars[i];
+        barNumbers.push(value);
+        if (i + 1 < selectedBars.length) {
+            var next = selectedBars[i + 1];
+            // console.log(value, next);
+            while (next - value > 1) {
+                // console.log(value);
+                barNumbers.push(++value);
+            }
+        }
+    }
+    return {
+        barNumbers: barNumbers,
+        boundingBoxes: selectedBoundingBoxes,
+    };
 };
 //# sourceMappingURL=getGraphicalNotesInSelection.js.map
