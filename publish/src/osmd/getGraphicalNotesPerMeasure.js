@@ -11,11 +11,12 @@
   More info: https://github.com/opensheetmusicdisplay/opensheetmusicdisplay/issues/549
 */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getGraphicalNotesPerBar = void 0;
+exports.getGraphicalNotesPerMeasure = void 0;
 var rxjs_1 = require("rxjs");
 var operators_1 = require("rxjs/operators");
-exports.getGraphicalNotesPerBar = function (osmd, ppq) {
-    return rxjs_1.from(osmd["graphic"].measureList)
+exports.getGraphicalNotesPerMeasure = function (osmd, ppq) {
+    // from(osmd["graphic"].measureList)
+    return rxjs_1.from(osmd.GraphicSheet.MeasureList)
         .pipe(
     // tap(m => { console.log(m); }),
     operators_1.map(function (staves, i) {
@@ -26,6 +27,7 @@ exports.getGraphicalNotesPerBar = function (osmd, ppq) {
                     // return ve.notes;
                     return ve.notes.map(function (n) {
                         var relPosInMeasure = n.sourceNote["voiceEntry"].timestamp.realValue;
+                        // const relPosInMeasure = n.sourceNote.voiceEntry.timestamp.realValue;
                         var vfnote = n.vfnote[0];
                         return {
                             element: vfnote.attrs.el,
@@ -56,4 +58,4 @@ exports.getGraphicalNotesPerBar = function (osmd, ppq) {
     }, []))
         .toPromise();
 };
-//# sourceMappingURL=getGraphicalNotesPerBar.js.map
+//# sourceMappingURL=getGraphicalNotesPerMeasure.js.map

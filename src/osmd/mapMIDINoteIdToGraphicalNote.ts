@@ -1,5 +1,5 @@
 import { MusicSystem } from "opensheetmusicdisplay";
-import { GraphicalNoteData } from "./getGraphicalNotesPerBar";
+import { GraphicalNoteData } from "./getGraphicalNotesPerMeasure";
 import { MIDINoteGeneric } from "../createNotes";
 
 /*

@@ -39,11 +39,12 @@ export interface VexFlowStaveNote extends Vex.Flow.StaveNote {
   };
 }
 
-export const getGraphicalNotesPerBar = (
+export const getGraphicalNotesPerMeasure = (
   osmd: OpenSheetMusicDisplay,
   ppq: number
 ): Promise<GraphicalNoteData[][]> =>
-  from(osmd["graphic"].measureList)
+  // from(osmd["graphic"].measureList)
+  from(osmd.GraphicSheet.MeasureList)
     .pipe(
       // tap(m => { console.log(m); }),
       map((staves: any, i) => {
@@ -54,6 +55,7 @@ export const getGraphicalNotesPerBar = (
               // return ve.notes;
               return ve.notes.map((n: GraphicalNote) => {
                 const relPosInMeasure = n.sourceNote["voiceEntry"].timestamp.realValue;
+                // const relPosInMeasure = n.sourceNote.voiceEntry.timestamp.realValue;
                 const vfnote = (n as VexFlowGraphicalNote).vfnote[0];
                 return {
                   element: (vfnote as VexFlowStaveNote).attrs.el,
