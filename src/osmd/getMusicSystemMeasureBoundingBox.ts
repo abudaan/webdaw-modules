@@ -1,11 +1,14 @@
 import { OpenSheetMusicDisplay } from "opensheetmusicdisplay";
 import { BoundingBoxMeasure } from "../types";
+import { getBoundingBoxesOfGraphicalMeasures } from "./getBoundingBoxesOfGraphicalMeasures";
 
-// combines per measure the bounding boxes of all staves
+/**
+ * combines per measure the bounding boxes of all staves
+ */
 export const getMusicSystemMeasureBoundingBoxes = (
   osmd: OpenSheetMusicDisplay
 ): BoundingBoxMeasure[] => {
-  const boundingBoxes: BoundingBoxMeasure[][] = [];
+  const boundingBoxes: BoundingBoxMeasure[][] = getBoundingBoxesOfGraphicalMeasures(osmd);
   // console.log(graphicalNotesPerBar);
   const result: BoundingBoxMeasure[] = [];
   for (let i = 0; i < boundingBoxes.length; i++) {

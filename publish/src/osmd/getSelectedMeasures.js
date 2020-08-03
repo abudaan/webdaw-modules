@@ -2,9 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getSelectedMeasures = void 0;
 var getMusicSystemMeasureBoundingBox_1 = require("./getMusicSystemMeasureBoundingBox");
-var _2d_1 = require("src/util/2d");
+var _2d_1 = require("../util/2d");
+/**
+ * finds all measures that have a overlap with the selection rectangle
+ */
 exports.getSelectedMeasures = function (osmd, start, end) {
     var boundingBoxes = getMusicSystemMeasureBoundingBox_1.getMusicSystemMeasureBoundingBoxes(osmd);
+    // console.log(boundingBoxes);
     var selectedBars = [];
     var selectedBoundingBoxes = [];
     var selection = {

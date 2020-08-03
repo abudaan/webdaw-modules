@@ -1,14 +1,18 @@
 import { OpenSheetMusicDisplay } from "opensheetmusicdisplay";
 import { getMusicSystemMeasureBoundingBoxes } from "./getMusicSystemMeasureBoundingBox";
-import { BoundingBoxMeasure, BoundingBox } from "src/types";
-import { hasOverlap } from "src/util/2d";
+import { BoundingBoxMeasure, BoundingBox } from "../types";
+import { hasOverlap } from "../util/2d";
 
+/**
+ * finds all measures that have a overlap with the selection rectangle
+ */
 export const getSelectedMeasures = (
   osmd: OpenSheetMusicDisplay,
   start: { x: number; y: number },
   end: { x: number; y: number }
 ): { barNumbers: number[]; boundingBoxes: BoundingBoxMeasure[] } => {
   const boundingBoxes = getMusicSystemMeasureBoundingBoxes(osmd);
+  // console.log(boundingBoxes);
   const selectedBars: number[] = [];
   const selectedBoundingBoxes: BoundingBoxMeasure[] = [];
   const selection: BoundingBox = {

@@ -21,9 +21,12 @@ var __spread = (this && this.__spread) || function () {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getMusicSystemMeasureBoundingBoxes = void 0;
-// combines per measure the bounding boxes of all staves
+var getBoundingBoxesOfGraphicalMeasures_1 = require("./getBoundingBoxesOfGraphicalMeasures");
+/**
+ * combines per measure the bounding boxes of all staves
+ */
 exports.getMusicSystemMeasureBoundingBoxes = function (osmd) {
-    var boundingBoxes = [];
+    var boundingBoxes = getBoundingBoxesOfGraphicalMeasures_1.getBoundingBoxesOfGraphicalMeasures(osmd);
     // console.log(graphicalNotesPerBar);
     var result = [];
     for (var i = 0; i < boundingBoxes.length; i++) {

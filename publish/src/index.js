@@ -42,6 +42,7 @@ __exportStar(require("./osmd/mapMIDINoteIdToGraphicalNote"), exports);
 __exportStar(require("./osmd/setGraphicalNoteColor"), exports);
 __exportStar(require("./osmd/type_shims"), exports);
 __exportStar(require("./MIDIEvent"), exports);
+__exportStar(require("./util/2d"), exports);
 __exportStar(require("./util/fetch"), exports);
 __exportStar(require("./util/midi"), exports);
 __exportStar(require("./util/time"), exports);
@@ -70,5 +71,6 @@ __exportStar(require("./resetMIDIOutputs"), exports);
 __exportStar(require("./scheduler"), exports);
 __exportStar(require("./setTrackOutput"), exports);
 __exportStar(require("./transport"), exports);
+__exportStar(require("./types"), exports);
 __exportStar(require("./unschedule"), exports);
 //# sourceMappingURL=index.js.map
