@@ -14,7 +14,6 @@ export const getSelectedMeasures = (
   const boundingBoxes = getMusicSystemMeasureBoundingBoxes(osmd);
   // console.log(boundingBoxes);
   const selectedBars: number[] = [];
-  const selectedBoundingBoxes: BoundingBoxMeasure[] = [];
   const selection: BoundingBox = {
     x: start.x,
     y: start.y,
@@ -28,7 +27,6 @@ export const getSelectedMeasures = (
   boundingBoxes.forEach(bbox => {
     if (hasOverlap(bbox, selection)) {
       selectedBars.push(bbox.measureNumber);
-      selectedBoundingBoxes.push(bbox);
     }
   });
   // console.log(selectedBars);
@@ -49,6 +47,6 @@ export const getSelectedMeasures = (
 
   return {
     barNumbers,
-    boundingBoxes: selectedBoundingBoxes,
+    boundingBoxes: barNumbers.map(num => boundingBoxes[num - 1]),
   };
 };

@@ -10,7 +10,6 @@ exports.getSelectedMeasures = function (osmd, start, end) {
     var boundingBoxes = getMusicSystemMeasureBoundingBox_1.getMusicSystemMeasureBoundingBoxes(osmd);
     // console.log(boundingBoxes);
     var selectedBars = [];
-    var selectedBoundingBoxes = [];
     var selection = {
         x: start.x,
         y: start.y,
@@ -24,7 +23,6 @@ exports.getSelectedMeasures = function (osmd, start, end) {
     boundingBoxes.forEach(function (bbox) {
         if (_2d_1.hasOverlap(bbox, selection)) {
             selectedBars.push(bbox.measureNumber);
-            selectedBoundingBoxes.push(bbox);
         }
     });
     // console.log(selectedBars);
@@ -44,7 +42,7 @@ exports.getSelectedMeasures = function (osmd, start, end) {
     }
     return {
         barNumbers: barNumbers,
-        boundingBoxes: selectedBoundingBoxes,
+        boundingBoxes: barNumbers.map(function (num) { return boundingBoxes[num - 1]; }),
     };
 };
 //# sourceMappingURL=getSelectedMeasures.js.map
