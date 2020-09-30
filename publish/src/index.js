@@ -36,6 +36,7 @@ __exportStar(require("./musicxml/parsedMusicXMLToSong"), exports);
 __exportStar(require("./osmd/getBoundingBoxesOfGraphicalMeasures"), exports);
 __exportStar(require("./osmd/getBoundingBoxesOfSelectedMeasures"), exports);
 __exportStar(require("./osmd/getGraphicalNotesPerMeasure"), exports);
+__exportStar(require("./osmd/getGraphicalNotesPerMeasurePerTrack"), exports);
 __exportStar(require("./osmd/getMusicSystemMeasureBoundingBox"), exports);
 __exportStar(require("./osmd/getSelectedMeasures"), exports);
 __exportStar(require("./osmd/mapMIDINoteIdToGraphicalNote"), exports);

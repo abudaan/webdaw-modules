@@ -26,6 +26,7 @@ export * from "./musicxml/parsedMusicXMLToSong";
 export * from "./osmd/getBoundingBoxesOfGraphicalMeasures";
 export * from "./osmd/getBoundingBoxesOfSelectedMeasures";
 export * from "./osmd/getGraphicalNotesPerMeasure";
+export * from "./osmd/getGraphicalNotesPerMeasurePerTrack";
 export * from "./osmd/getMusicSystemMeasureBoundingBox";
 export * from "./osmd/getSelectedMeasures";
 export * from "./osmd/mapMIDINoteIdToGraphicalNote";
