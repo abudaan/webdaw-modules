@@ -39,37 +39,42 @@ interface VexFlowStaveNote extends Vex.Flow.StaveNote {
   };
 }
 
-export const getGraphicalNotesPerMeasurePerTrack = (osmd: OpenSheetMusicDisplay, ppq: number) => {
+export const getGraphicalNotesPerMeasurePerTrack = (
+  osmd: OpenSheetMusicDisplay,
+  ppq: number
+): GraphicalNoteData[][] => {
   const tracks: any[] = [];
-  osmd.GraphicSheet.MeasureList.forEach(measure => {
+  osmd.GraphicSheet.MeasureList.forEach((measure, measureNumber) => {
     // console.log(measure);
     // const [staves] = measure;
     measure.forEach((staff, staffNo) => {
       // console.log(staff);
-      const track: any = [];
+      if (typeof tracks[staffNo] === "undefined") {
+        tracks[staffNo] = [];
+      }
       const parentMusicSystem = staff["parentMusicSystem"]; // private prop so we need to trick typescript
       const staffEntries = staff.staffEntries;
       staffEntries.forEach(entry => {
         // console.log(entry);
         entry.graphicalVoiceEntries.forEach(ve => {
-          ve.notes.forEach((note, i) => {
+          ve.notes.forEach(note => {
             const relPosInMeasure = note.sourceNote["voiceEntry"].timestamp.realValue;
             const vfnote = (note as VexFlowGraphicalNote).vfnote[0];
             // console.log(vfnote, relPosInMeasure);
-            track.push({
+            tracks[staffNo].push({
               element: (vfnote as VexFlowStaveNote).attrs.el,
-              ticks: i * ppq * 4 + relPosInMeasure * ppq * 4,
+              ticks: measureNumber * ppq * 4 + relPosInMeasure * ppq * 4,
               noteNumber: note.sourceNote.halfTone + 12, // heartbeat uses a different MIDI note number mapping
-              bar: i + 1,
+              bar: measureNumber + 1,
               parentMusicSystem, // necessary to get the y-position if the note in the score
             });
           });
         });
       });
-      tracks.push(track);
     });
   });
-  console.log(tracks);
+  // console.log(tracks);
+  return tracks;
 };
 
 const getGraphicalNotesPerMeasure = (
