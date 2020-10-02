@@ -15,7 +15,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.parseMIDIFile = void 0;
 // import { BufferReader } from 'jasmid.ts';
 var uniqid_1 = __importDefault(require("uniqid"));
 var bufferreader_1 = require("./bufferreader");

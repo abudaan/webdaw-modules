@@ -8,16 +8,9 @@
 // } from "./osmd/getGraphicalNotesPerBar";
 // import { setGraphicalNoteColor } from "./osmd/setGraphicalNoteColor";
 // import { NoteMapping, mapMIDINoteIdToGraphicalNote } from "./osmd/mapMIDINoteIdToGraphicalNote";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) __createBinding(exports, m, p);
-};
+function __export(m) {
+    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+}
 Object.defineProperty(exports, "__esModule", { value: true });
 // export {
 //   GraphicalNoteData,
@@ -31,47 +24,45 @@ Object.defineProperty(exports, "__esModule", { value: true });
 //   parsedMusicXMLToSong,
 //   setGraphicalNoteColor,
 // };
-__exportStar(require("./musicxml/parser"), exports);
-__exportStar(require("./musicxml/parsedMusicXMLToSong"), exports);
-__exportStar(require("./osmd/getBoundingBoxesOfGraphicalMeasures"), exports);
-__exportStar(require("./osmd/getBoundingBoxesOfSelectedMeasures"), exports);
-__exportStar(require("./osmd/getGraphicalNotesPerMeasure"), exports);
-__exportStar(require("./osmd/getGraphicalNotesPerMeasurePerTrack"), exports);
-__exportStar(require("./osmd/getMusicSystemMeasureBoundingBox"), exports);
-__exportStar(require("./osmd/getSelectedMeasures"), exports);
-__exportStar(require("./osmd/mapMIDINoteIdToGraphicalNote"), exports);
-__exportStar(require("./osmd/setGraphicalNoteColor"), exports);
-__exportStar(require("./osmd/type_shims"), exports);
-__exportStar(require("./MIDIEvent"), exports);
-__exportStar(require("./util/2d"), exports);
-__exportStar(require("./util/fetch"), exports);
-__exportStar(require("./util/midi"), exports);
-__exportStar(require("./util/time"), exports);
-__exportStar(require("./addBarNumber"), exports);
-__exportStar(require("./addIdToMIDIEvent"), exports);
-__exportStar(require("./addIdToMIDIEvent"), exports);
-__exportStar(require("./AudioEvent"), exports);
-__exportStar(require("./bufferreader"), exports);
-__exportStar(require("./calculateMillis"), exports);
-__exportStar(require("./createKeyEditorView"), exports);
-__exportStar(require("./createNotePair"), exports);
-__exportStar(require("./createNotes"), exports);
-__exportStar(require("./createSong"), exports);
-__exportStar(require("./createSongFromMIDIFile"), exports);
-__exportStar(require("./createSongFromMusicXML"), exports);
-__exportStar(require("./createTrack"), exports);
-__exportStar(require("./getActiveNotes"), exports);
-__exportStar(require("./getCurrentEventIndex"), exports);
-__exportStar(require("./getMIDIAccess"), exports);
-__exportStar(require("./getMIDIPorts"), exports);
-__exportStar(require("./getNoteName"), exports);
-__exportStar(require("./getVersion"), exports);
-__exportStar(require("./initAudioAndMIDI"), exports);
-__exportStar(require("./parseMIDIFile"), exports);
-__exportStar(require("./resetMIDIOutputs"), exports);
-__exportStar(require("./scheduler"), exports);
-__exportStar(require("./setTrackOutput"), exports);
-__exportStar(require("./transport"), exports);
-__exportStar(require("./types"), exports);
-__exportStar(require("./unschedule"), exports);
+__export(require("./musicxml/parser"));
+__export(require("./musicxml/parsedMusicXMLToSong"));
+__export(require("./osmd/getBoundingBoxesOfGraphicalMeasures"));
+__export(require("./osmd/getBoundingBoxesOfSelectedMeasures"));
+__export(require("./osmd/getGraphicalNotesPerMeasure"));
+__export(require("./osmd/getGraphicalNotesPerMeasurePerTrack"));
+__export(require("./osmd/getMusicSystemMeasureBoundingBox"));
+__export(require("./osmd/getSelectedMeasures"));
+__export(require("./osmd/mapMIDINoteIdToGraphicalNote"));
+__export(require("./osmd/mapMIDINoteIdToGraphicalNotePerTrack"));
+__export(require("./osmd/setGraphicalNoteColor"));
+__export(require("./util/2d"));
+__export(require("./util/fetch"));
+__export(require("./util/midi"));
+__export(require("./util/time"));
+__export(require("./addBarNumber"));
+__export(require("./addIdToMIDIEvent"));
+__export(require("./addIdToMIDIEvent"));
+__export(require("./AudioEvent"));
+__export(require("./bufferreader"));
+__export(require("./calculateMillis"));
+__export(require("./createKeyEditorView"));
+__export(require("./createNotePair"));
+__export(require("./createNotes"));
+__export(require("./createSong"));
+__export(require("./createSongFromMIDIFile"));
+__export(require("./createSongFromMusicXML"));
+__export(require("./createTrack"));
+__export(require("./getActiveNotes"));
+__export(require("./getCurrentEventIndex"));
+__export(require("./getMIDIAccess"));
+__export(require("./getMIDIPorts"));
+__export(require("./getNoteName"));
+__export(require("./getVersion"));
+__export(require("./initAudioAndMIDI"));
+__export(require("./parseMIDIFile"));
+__export(require("./resetMIDIOutputs"));
+__export(require("./scheduler"));
+__export(require("./setTrackOutput"));
+__export(require("./transport"));
+__export(require("./unschedule"));
 //# sourceMappingURL=index.js.map

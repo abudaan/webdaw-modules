@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getTempo = void 0;
 exports.getTempo = function (xmlDoc, measureNode, nsResolver) {
     var bpm = xmlDoc.evaluate("direction/sound/@tempo", measureNode, nsResolver, XPathResult.NUMBER_TYPE, null).numberValue;
     if (!isNaN(bpm)) {

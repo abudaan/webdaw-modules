@@ -16,7 +16,6 @@ var __read = (this && this.__read) || function (o, n) {
     return ar;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.parseMusicXML = void 0;
 var midi_1 = require("../util/midi");
 var getVolume_1 = require("./part/getVolume");
 var getPartName_1 = require("./part/getPartName");

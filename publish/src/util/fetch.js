@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fetchArraybuffer = exports.fetchXML = exports.fetchJSON = void 0;
 var status = function (response) {
     if (response.status >= 200 && response.status < 300) {
         return Promise.resolve(response);

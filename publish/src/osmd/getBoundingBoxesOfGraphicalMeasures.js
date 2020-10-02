@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getBoundingBoxesOfGraphicalMeasures = void 0;
 // return the bounding boxes of all staves per measure
 exports.getBoundingBoxesOfGraphicalMeasures = function (osmd) {
     return osmd.GraphicSheet.MeasureList.map(function (arr) {

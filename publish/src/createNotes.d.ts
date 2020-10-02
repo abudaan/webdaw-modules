@@ -4,6 +4,7 @@ export interface MIDIEventGeneric {
     bar?: number;
     ticks: number;
     noteNumber: number;
+    trackId?: string;
 }
 export interface MIDINoteGeneric {
     id: string;

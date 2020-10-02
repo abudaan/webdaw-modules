@@ -20,43 +20,67 @@ type NoteMappingGraphicalToMIDI = {
 };
 
 export const mapMIDINoteIdToGraphicalNotePerTrack = (
-  graphicalNotesPerBar: GraphicalNoteData[][],
+  graphicalNotesPerBarPerTrack: GraphicalNoteData[][][],
   repeats: number[][],
   notes: MIDINoteGeneric[]
-): { midiToGraphical: NoteMappingMIDIToGraphical; graphicalToMidi: NoteMappingGraphicalToMIDI } => {
+): {
+  score: number;
+  midiToGraphical: NoteMappingMIDIToGraphical;
+  graphicalToMidi: NoteMappingGraphicalToMIDI;
+}[] => {
   const notesPerTrack: { [id: string]: MIDINoteGeneric[] } = {};
   const trackIds: string[] = [];
   notes.forEach(note => {
     const trackId = note.noteOn.trackId;
-    if (typeof notesPerTrack[trackId] === "undefined") {
-      notesPerTrack[trackId] = [];
-      trackIds.push(trackId);
+    if (trackId !== undefined) {
+      if (typeof notesPerTrack[trackId] === "undefined") {
+        notesPerTrack[trackId] = [];
+        trackIds.push(trackId);
+      }
+      notesPerTrack[trackId].push(note);
     }
-    notesPerTrack[trackId].push(note);
   });
-  console.log(trackIds, graphicalNotesPerBar[0], notesPerTrack[trackIds[0]]);
-  return mapMIDINoteIdToGraphicalNote(graphicalNotesPerBar[0], repeats, notesPerTrack[trackIds[0]]);
+  const tmp: MIDINoteGeneric[][] = [];
+  trackIds.forEach(id => {
+    tmp.push(notesPerTrack[id]);
+  });
+
+  const numMIDITracks = tmp.length;
+  const numGraphicalTracks = graphicalNotesPerBarPerTrack.length;
+  const mappings = [];
+  // console.log(numMIDITracks, numGraphicalTracks);
+  for (let i = 0; i < numGraphicalTracks; i++) {
+    for (let j = 0; j < numMIDITracks; j++) {
+      mappings.push(getMappingPerTrack(graphicalNotesPerBarPerTrack[i], tmp[j], repeats));
+    }
+  }
+  mappings.sort((a, b) => b.score - a.score);
+  return mappings;
 };
 
-const mapMIDINoteIdToGraphicalNote = (
-  graphicalNotesPerBar: GraphicalNoteData[],
-  repeats: number[][],
-  notes: MIDINoteGeneric[]
-): { midiToGraphical: NoteMappingMIDIToGraphical; graphicalToMidi: NoteMappingGraphicalToMIDI } => {
-  // console.log(graphicalNotesPerBar);
+const getMappingPerTrack = (
+  graphicalNotes: GraphicalNoteData[][],
+  midiNotes: MIDINoteGeneric[],
+  repeats: number[][]
+): {
+  midiToGraphical: NoteMappingMIDIToGraphical;
+  graphicalToMidi: NoteMappingGraphicalToMIDI;
+  score: number;
+} => {
   let barIndex = -1;
   let barOffset = 1;
-  let ticksOffset = 0; // not used, keep for reference
-  let repeatIndex: number = 0;
+  let repeatIndex = 0;
+  let numMatch = 0;
   const hasRepeated: { [index: number]: boolean } = {};
-  const numBars = notes[notes.length - 1].noteOff.bar;
-  const mapping1: NoteMappingMIDIToGraphical = {};
-  const mapping2: NoteMappingGraphicalToMIDI = {};
+  const numBars = graphicalNotes.length;
+  const numNotes = graphicalNotes.reduce((acc, val) => {
+    acc += val.length;
+    return acc;
+  }, 0);
+  const midiToGraphical: NoteMappingMIDIToGraphical = {};
+  const graphicalToMidi: NoteMappingGraphicalToMIDI = {};
 
-  // console.log(numBars, graphicalNotesPerBar.length);
-  // if (numBars !== graphicalNotesPerBar.length) {
-  //   return mapping;
-  // }
+  // console.log(graphicalNotes);
 
   while (true) {
     barIndex++;
@@ -83,40 +107,31 @@ const mapMIDINoteIdToGraphicalNote = (
     }
 
     try {
-      // get all sequencer MIDI events in this bar
-      // const filtered = notes.filter(e => e.noteOn.bar === barIndex + 1 + barOffset);
-      const filtered = notes.filter(e => e.noteOn.bar === barIndex + barOffset);
-      // console.log(barIndex + 1 + barOffset, filtered.length);
-      // console.log(barIndex, barOffset, filtered);
-      graphicalNotesPerBar[barIndex]
-        .sort((a, b) => {
-          if (a.ticks < b.ticks) {
-            return -1;
-          } else if (a.ticks > b.ticks) {
-            return 1;
+      const filteredMidi = midiNotes.filter(e => e.noteOn.bar === barIndex + barOffset);
+      graphicalNotes[barIndex].forEach(bd => {
+        const { element, noteNumber, bar, parentMusicSystem } = bd;
+        for (let j = 0; j < filteredMidi.length; j++) {
+          const note = filteredMidi[j];
+          if (
+            !midiToGraphical[note.id] &&
+            note.noteOn.bar == bar + barOffset - 1 &&
+            note.noteOn.noteNumber == noteNumber
+          ) {
+            numMatch += 1;
+            midiToGraphical[note.id] = { element, musicSystem: parentMusicSystem };
+            graphicalToMidi[element.id] = note;
+            // filtered.splice(j, 1);
+            break;
           }
-          return 0;
-        })
-        .forEach(bd => {
-          const { element, noteNumber, bar, parentMusicSystem } = bd;
-          for (let j = 0; j < filtered.length; j++) {
-            const note = filtered[j];
-            if (
-              !mapping1[note.id] &&
-              note.noteOn.bar == bar + barOffset - 1 &&
-              note.noteOn.noteNumber == noteNumber
-            ) {
-              mapping1[note.id] = { element, musicSystem: parentMusicSystem };
-              mapping2[element.id] = note;
-              // filtered.splice(j, 1);
-              break;
-            }
-          }
-        });
+        }
+      });
     } catch (e) {
       break;
     }
   }
-
-  return { midiToGraphical: mapping1, graphicalToMidi: mapping2 };
+  return {
+    midiToGraphical,
+    graphicalToMidi,
+    score: numMatch / numNotes,
+  };
 };

@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getSelectedMeasures = void 0;
 var getMusicSystemMeasureBoundingBox_1 = require("./getMusicSystemMeasureBoundingBox");
 var _2d_1 = require("../util/2d");
 /**

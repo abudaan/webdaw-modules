@@ -1,7 +1,6 @@
 "use strict";
 // from: https://github.com/pravdomil/jasmid.ts
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BufferReader = void 0;
 var BufferReader = /** @class */ (function () {
     function BufferReader(buffer) {
         this.position = 0;

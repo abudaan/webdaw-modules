@@ -11,22 +11,47 @@
   More info: https://github.com/opensheetmusicdisplay/opensheetmusicdisplay/issues/549
 */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getGraphicalNotesPerMeasurePerTrack = void 0;
 var rxjs_1 = require("rxjs");
 var operators_1 = require("rxjs/operators");
 exports.getGraphicalNotesPerMeasurePerTrack = function (osmd, ppq) {
-    osmd.GraphicSheet.MeasureList.forEach(function (measure) {
+    var tracks = [];
+    osmd.GraphicSheet.MeasureList.forEach(function (measure, measureNumber) {
         // console.log(measure);
         // const [staves] = measure;
-        measure.forEach(function (staff) {
-            console.log(staff);
+        measure.forEach(function (staff, staffNo) {
+            // console.log(staff);
+            if (typeof tracks[staffNo] === "undefined") {
+                tracks[staffNo] = [];
+            }
+            if (typeof tracks[staffNo][measureNumber] === "undefined") {
+                tracks[staffNo][measureNumber] = [];
+            }
             var parentMusicSystem = staff["parentMusicSystem"]; // private prop so we need to trick typescript
             var staffEntries = staff.staffEntries;
             staffEntries.forEach(function (entry) {
-                console.log(entry.graphicalVoiceEntries);
+                // console.log(entry);
+                entry.graphicalVoiceEntries.forEach(function (ve) {
+                    ve.notes.forEach(function (note) {
+                        // console.log(note);
+                        if (note.sourceNote.halfTone > 0) {
+                            var relPosInMeasure = note.sourceNote["voiceEntry"].timestamp.realValue;
+                            var vfnote = note.vfnote[0];
+                            // console.log(vfnote, relPosInMeasure);
+                            tracks[staffNo][measureNumber].push({
+                                element: vfnote.attrs.el,
+                                ticks: measureNumber * ppq * 4 + relPosInMeasure * ppq * 4,
+                                noteNumber: note.sourceNote.halfTone + 12,
+                                bar: measureNumber + 1,
+                                parentMusicSystem: parentMusicSystem,
+                            });
+                        }
+                    });
+                });
             });
         });
     });
+    // console.log(tracks);
+    return tracks;
 };
 var getGraphicalNotesPerMeasure = function (osmd, ppq) {
     // from(osmd["graphic"].measureList)

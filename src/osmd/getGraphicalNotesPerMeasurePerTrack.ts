@@ -42,7 +42,7 @@ interface VexFlowStaveNote extends Vex.Flow.StaveNote {
 export const getGraphicalNotesPerMeasurePerTrack = (
   osmd: OpenSheetMusicDisplay,
   ppq: number
-): GraphicalNoteData[][] => {
+): GraphicalNoteData[][][] => {
   const tracks: any[] = [];
   osmd.GraphicSheet.MeasureList.forEach((measure, measureNumber) => {
     // console.log(measure);
@@ -52,22 +52,28 @@ export const getGraphicalNotesPerMeasurePerTrack = (
       if (typeof tracks[staffNo] === "undefined") {
         tracks[staffNo] = [];
       }
+      if (typeof tracks[staffNo][measureNumber] === "undefined") {
+        tracks[staffNo][measureNumber] = [];
+      }
       const parentMusicSystem = staff["parentMusicSystem"]; // private prop so we need to trick typescript
       const staffEntries = staff.staffEntries;
       staffEntries.forEach(entry => {
         // console.log(entry);
         entry.graphicalVoiceEntries.forEach(ve => {
           ve.notes.forEach(note => {
-            const relPosInMeasure = note.sourceNote["voiceEntry"].timestamp.realValue;
-            const vfnote = (note as VexFlowGraphicalNote).vfnote[0];
-            // console.log(vfnote, relPosInMeasure);
-            tracks[staffNo].push({
-              element: (vfnote as VexFlowStaveNote).attrs.el,
-              ticks: measureNumber * ppq * 4 + relPosInMeasure * ppq * 4,
-              noteNumber: note.sourceNote.halfTone + 12, // heartbeat uses a different MIDI note number mapping
-              bar: measureNumber + 1,
-              parentMusicSystem, // necessary to get the y-position if the note in the score
-            });
+            // console.log(note);
+            if (note.sourceNote.halfTone > 0) {
+              const relPosInMeasure = note.sourceNote["voiceEntry"].timestamp.realValue;
+              const vfnote = (note as VexFlowGraphicalNote).vfnote[0];
+              // console.log(vfnote, relPosInMeasure);
+              tracks[staffNo][measureNumber].push({
+                element: (vfnote as VexFlowStaveNote).attrs.el,
+                ticks: measureNumber * ppq * 4 + relPosInMeasure * ppq * 4,
+                noteNumber: note.sourceNote.halfTone + 12, // heartbeat uses a different MIDI note number mapping
+                bar: measureNumber + 1,
+                parentMusicSystem, // necessary to get the y-position if the note in the score
+              });
+            }
           });
         });
       });

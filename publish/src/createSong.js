@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createSong = void 0;
 exports.createSong = function (name) { return ({
     name: name,
     ppq: 960,

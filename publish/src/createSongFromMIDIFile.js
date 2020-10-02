@@ -36,7 +36,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createSongFromMIDIFile = void 0;
 var fetch_1 = require("./util/fetch");
 var parseMIDIFile_1 = require("./parseMIDIFile");
 exports.createSongFromMIDIFile = function (arg) { return __awaiter(void 0, void 0, void 0, function () {

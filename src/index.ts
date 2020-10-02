@@ -30,6 +30,7 @@ export * from "./osmd/getGraphicalNotesPerMeasurePerTrack";
 export * from "./osmd/getMusicSystemMeasureBoundingBox";
 export * from "./osmd/getSelectedMeasures";
 export * from "./osmd/mapMIDINoteIdToGraphicalNote";
+export * from "./osmd/mapMIDINoteIdToGraphicalNotePerTrack";
 export * from "./osmd/setGraphicalNoteColor";
 export * from "./osmd/type_shims";
 export * from "./MIDIEvent";

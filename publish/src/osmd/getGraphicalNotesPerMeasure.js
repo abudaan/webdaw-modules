@@ -11,7 +11,6 @@
   More info: https://github.com/opensheetmusicdisplay/opensheetmusicdisplay/issues/549
 */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getGraphicalNotesPerMeasure = void 0;
 var rxjs_1 = require("rxjs");
 var operators_1 = require("rxjs/operators");
 exports.getGraphicalNotesPerMeasure = function (osmd, ppq) {

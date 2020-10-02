@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getActiveNotes = void 0;
 exports.getActiveNotes = function (_a) {
     var song = _a.song, index = _a.index, millis = _a.millis, activeNotes = _a.activeNotes;
     var notes = song.notes;

@@ -36,7 +36,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.audioContext = exports.midiAccess = exports.enableAudioContext = exports.initAudioAndMIDI = void 0;
 var getMIDIAccess_1 = require("./getMIDIAccess");
 var midiAccess = null;
 exports.midiAccess = midiAccess;

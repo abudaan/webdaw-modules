@@ -1,1 +1,1 @@
-{"version":3,"file":"setTrackOutput.js","sourceRoot":"","sources":["../../src/setTrackOutput.ts"],"names":[],"mappings":";;;AAEa,QAAA,cAAc,GAAG,UAAC,EAAmD;QAAjD,KAAK,WAAA,EAAE,MAAM,YAAA;IAC5C,KAAK,CAAC,OAAO,CAAC,IAAI,CAAC,MAAM,CAAC,CAAC;AAC7B,CAAC,CAAC"}
+{"version":3,"file":"setTrackOutput.js","sourceRoot":"","sources":["../../src/setTrackOutput.ts"],"names":[],"mappings":";;AAEa,QAAA,cAAc,GAAG,UAAC,EAAmD;QAAjD,gBAAK,EAAE,kBAAM;IAC5C,KAAK,CAAC,OAAO,CAAC,IAAI,CAAC,MAAM,CAAC,CAAC;AAC7B,CAAC,CAAC"}

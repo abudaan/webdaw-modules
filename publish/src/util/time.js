@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getNiceTime = exports.floor = exports.round = void 0;
 var mPow = Math.pow;
 var mRound = Math.round;
 var mFloor = Math.floor;

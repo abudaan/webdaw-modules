@@ -11,7 +11,6 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.stopMIDI = exports.playMIDI = exports.startMIDI = void 0;
 var scheduler_1 = require("./scheduler");
 var getCurrentEventIndex_1 = require("./getCurrentEventIndex");
 var unschedule_1 = require("./unschedule");

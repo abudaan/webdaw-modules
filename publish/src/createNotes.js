@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createNotes = void 0;
 var index = 0;
 exports.createNotes = function (events) {
     var filtered = events.reduce(function (acc, val) {

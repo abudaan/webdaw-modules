@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createNotePair = void 0;
 var midi_1 = require("./util/midi");
 exports.createNotePair = function (events) {
     var notes = {};

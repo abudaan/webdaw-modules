@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addBarNumber = void 0;
 // @TODO: fix this for signature changes!
 exports.addBarNumber = function (events, ppq, numerator, denominator) {
     var ticks = 0;

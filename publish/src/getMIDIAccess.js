@@ -36,7 +36,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getMIDIAccess = void 0;
 var midiAccess;
 exports.getMIDIAccess = function () { return __awaiter(void 0, void 0, void 0, function () {
     var ma, e_1;

@@ -1,6 +1,6 @@
 {
   "name": "webdaw-modules",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "a set of modules for building a web-based DAW",
   "main": "./publish/src/index.js",
   "dependencies": {

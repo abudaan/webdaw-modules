@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.schedule = void 0;
 var midi_1 = require("./util/midi");
 exports.schedule = function (_a) {
     var song = _a.song, index = _a.index, millis = _a.millis, outputs = _a.outputs;
