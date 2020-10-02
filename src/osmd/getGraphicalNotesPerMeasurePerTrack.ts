@@ -79,6 +79,21 @@ export const getGraphicalNotesPerMeasurePerTrack = (
       });
     });
   });
+  /*
+  tracks.forEach(track => {
+    track.forEach((measure: GraphicalNoteData[][]) => {
+      // console.log(measure);
+      // measure.sort((a, b) => {
+      //   if (a.ticks < b.ticks) {
+      //     return -1;
+      //   } else if (a.ticks > b.ticks) {
+      //     return 1;
+      //   }
+      //   return 0;
+      // });
+    });
+  });
+*/
   // console.log(tracks);
   return tracks;
 };

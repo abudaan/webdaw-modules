@@ -44,7 +44,8 @@ export const mapMIDINoteIdToGraphicalNotePerTrack = (
   trackIds.forEach(id => {
     tmp.push(notesPerTrack[id]);
   });
-
+  // console.log(tmp);
+  // console.log(graphicalNotesPerBarPerTrack);
   const numMIDITracks = tmp.length;
   const numGraphicalTracks = graphicalNotesPerBarPerTrack.length;
   const mappings = [];
@@ -55,6 +56,7 @@ export const mapMIDINoteIdToGraphicalNotePerTrack = (
     }
   }
   mappings.sort((a, b) => b.score - a.score);
+  // console.log(mappings);
   return mappings;
 };
 
@@ -73,10 +75,12 @@ const getMappingPerTrack = (
   let numMatch = 0;
   const hasRepeated: { [index: number]: boolean } = {};
   const numBars = graphicalNotes.length;
-  const numNotes = graphicalNotes.reduce((acc, val) => {
-    acc += val.length;
-    return acc;
-  }, 0);
+  // const numNotes = graphicalNotes.reduce((acc, val) => {
+  //   acc += val.length;
+  //   return acc;
+  // }, 0);
+  const numNotes = midiNotes.length;
+  // console.log(numNotes);
   const midiToGraphical: NoteMappingMIDIToGraphical = {};
   const graphicalToMidi: NoteMappingGraphicalToMIDI = {};
 
@@ -129,6 +133,7 @@ const getMappingPerTrack = (
       break;
     }
   }
+
   return {
     midiToGraphical,
     graphicalToMidi,

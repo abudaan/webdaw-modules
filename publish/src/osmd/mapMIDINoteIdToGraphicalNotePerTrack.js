@@ -17,6 +17,8 @@ exports.mapMIDINoteIdToGraphicalNotePerTrack = function (graphicalNotesPerBarPer
     trackIds.forEach(function (id) {
         tmp.push(notesPerTrack[id]);
     });
+    // console.log(tmp);
+    // console.log(graphicalNotesPerBarPerTrack);
     var numMIDITracks = tmp.length;
     var numGraphicalTracks = graphicalNotesPerBarPerTrack.length;
     var mappings = [];
@@ -27,6 +29,7 @@ exports.mapMIDINoteIdToGraphicalNotePerTrack = function (graphicalNotesPerBarPer
         }
     }
     mappings.sort(function (a, b) { return b.score - a.score; });
+    // console.log(mappings);
     return mappings;
 };
 var getMappingPerTrack = function (graphicalNotes, midiNotes, repeats) {
@@ -36,10 +39,12 @@ var getMappingPerTrack = function (graphicalNotes, midiNotes, repeats) {
     var numMatch = 0;
     var hasRepeated = {};
     var numBars = graphicalNotes.length;
-    var numNotes = graphicalNotes.reduce(function (acc, val) {
-        acc += val.length;
-        return acc;
-    }, 0);
+    // const numNotes = graphicalNotes.reduce((acc, val) => {
+    //   acc += val.length;
+    //   return acc;
+    // }, 0);
+    var numNotes = midiNotes.length;
+    // console.log(numNotes);
     var midiToGraphical = {};
     var graphicalToMidi = {};
     var _loop_1 = function () {
