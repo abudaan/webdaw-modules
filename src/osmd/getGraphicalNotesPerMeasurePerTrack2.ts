@@ -42,7 +42,7 @@ interface VexFlowStaveNote extends Vex.Flow.StaveNote {
 export const getGraphicalNotesPerMeasurePerTrack = (
   osmd: OpenSheetMusicDisplay,
   ppq: number
-): GraphicalNoteData[][][] => {
+): GraphicalNoteData[][] => {
   const tracks: any[] = [];
   // console.log(osmd.GraphicSheet.MeasureList);
   osmd.GraphicSheet.MeasureList.forEach((measure, measureNumber) => {
@@ -56,9 +56,6 @@ export const getGraphicalNotesPerMeasurePerTrack = (
       if (typeof tracks[staffNo] === "undefined") {
         tracks[staffNo] = [];
       }
-      if (typeof tracks[staffNo][measureNumber] === "undefined") {
-        tracks[staffNo][measureNumber] = [];
-      }
       const parentMusicSystem = staff["parentMusicSystem"]; // private prop so we need to trick typescript
       // console.log(parentMusicSystem);
       const staffEntries = staff.staffEntries;
@@ -67,11 +64,11 @@ export const getGraphicalNotesPerMeasurePerTrack = (
         entry.graphicalVoiceEntries.forEach(ve => {
           ve.notes.forEach(note => {
             // console.log(note);
-            if (note.sourceNote.halfTone > 0) {
+            if (typeof (note as VexFlowGraphicalNote).vfnote !== "undefined") {
               const relPosInMeasure = note.sourceNote["voiceEntry"].timestamp.realValue;
               const vfnote = (note as VexFlowGraphicalNote).vfnote[0];
               // console.log(vfnote, relPosInMeasure);
-              tracks[staffNo][measureNumber].push({
+              tracks[staffNo].push({
                 element: (vfnote as VexFlowStaveNote).attrs.el,
                 ticks: measureNumber * ppq * 4 + relPosInMeasure * ppq * 4,
                 noteNumber: note.sourceNote.halfTone + 12, // heartbeat uses a different MIDI note number mapping
@@ -84,21 +81,6 @@ export const getGraphicalNotesPerMeasurePerTrack = (
       });
     });
   });
-  /*
-  tracks.forEach(track => {
-    track.forEach((measure: GraphicalNoteData[][]) => {
-      // console.log(measure);
-      // measure.sort((a, b) => {
-      //   if (a.ticks < b.ticks) {
-      //     return -1;
-      //   } else if (a.ticks > b.ticks) {
-      //     return 1;
-      //   }
-      //   return 0;
-      // });
-    });
-  });
-*/
   // console.log(tracks);
   return tracks;
 };
