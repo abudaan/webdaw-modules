@@ -7,7 +7,7 @@
     "@types/ramda": "^0.27.14",
     "@types/uniqid": "^4.1.3",
     "@types/webmidi": "^2.0.4",
-    "opensheetmusicdisplay": "0.8.3",
+    "opensheetmusicdisplay": "0.8.6",
     "ramda": "^0.27.1",
     "rxjs": "^6.5.5",
     "uniqid": "^5.2.0"
