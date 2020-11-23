@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.getChannel = void 0;
 exports.getChannel = function (xmlDoc, partNode, nsResolver) {
     var channel = xmlDoc.evaluate("midi-instrument/midi-channel", partNode, nsResolver, XPathResult.NUMBER_TYPE, null).numberValue;
     if (!isNaN(channel)) {

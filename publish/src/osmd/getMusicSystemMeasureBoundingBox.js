@@ -20,6 +20,7 @@ var __spread = (this && this.__spread) || function () {
     return ar;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.getMusicSystemMeasureBoundingBoxes = void 0;
 var getBoundingBoxesOfGraphicalMeasures_1 = require("./getBoundingBoxesOfGraphicalMeasures");
 /**
  * combines per measure the bounding boxes of all staves

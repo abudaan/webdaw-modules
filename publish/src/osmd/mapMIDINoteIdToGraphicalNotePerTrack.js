@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.mapMIDINoteIdToGraphicalNotePerTrack = void 0;
 exports.mapMIDINoteIdToGraphicalNotePerTrack = function (graphicalNotesPerBarPerTrack, repeats, notes) {
     var notesPerTrack = {};
     var trackIds = [];

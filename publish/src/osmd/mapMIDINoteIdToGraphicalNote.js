@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.mapMIDINoteIdToGraphicalNote = void 0;
 exports.mapMIDINoteIdToGraphicalNote = function (graphicalNotesPerBar, repeats, notes) {
     // console.log(graphicalNotesPerBar);
     var barIndex = -1;

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.resetMIDIOutputs = void 0;
 // import { midiAccess } from "./initAudioAndMIDI";
 var getMIDIPorts_1 = require("./getMIDIPorts");
 // you can use this for a panic button that is common in DAWs

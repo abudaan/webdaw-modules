@@ -1,6 +1,7 @@
 "use strict";
 // see this discussion: https://github.com/opensheetmusicdisplay/opensheetmusicdisplay/pull/453
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.getNotesUnderCursor = void 0;
 exports.getNotesUnderCursor = function (osmd, instrument) {
     var voiceEntries = osmd.cursor.VoicesUnderCursor(instrument);
     console.log(voiceEntries);

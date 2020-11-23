@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.getCurrentEventIndex = void 0;
 exports.getCurrentEventIndex = function (song, millis, startIndex) {
     if (startIndex === void 0) { startIndex = 0; }
     var events = song.events;

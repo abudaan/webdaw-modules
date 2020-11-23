@@ -1,2 +1,2 @@
 import { Song } from "./createSong";
-export declare const createSongFromMusicXML: (arg: string | XMLDocument, ppq?: number) => Promise<Song>;
+export declare const createSongFromMusicXML: (arg: XMLDocument | string, ppq?: number) => Promise<Song>;

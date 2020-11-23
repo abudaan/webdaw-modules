@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.unschedule = void 0;
 // TODO: improve this!
 /*
 export const unschedule = (song: Song, scheduled: MIDIEvent[], outputs?: WebMidi.MIDIOutputMap) => {

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.getSelectedMeasures = void 0;
 var getMusicSystemMeasureBoundingBox_1 = require("./getMusicSystemMeasureBoundingBox");
 var _2d_1 = require("../util/2d");
 /**
@@ -19,6 +20,7 @@ exports.getSelectedMeasures = function (osmd, start, end) {
         right: end.x,
         bottom: end.y,
     };
+    // console.log(selection);
     boundingBoxes.forEach(function (bbox) {
         if (_2d_1.hasOverlap(bbox, selection)) {
             selectedBars.push(bbox.measureNumber);

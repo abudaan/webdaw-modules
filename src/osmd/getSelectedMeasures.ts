@@ -24,6 +24,7 @@ export const getSelectedMeasures = (
     right: end.x,
     bottom: end.y,
   };
+  // console.log(selection);
   boundingBoxes.forEach(bbox => {
     if (hasOverlap(bbox, selection)) {
       selectedBars.push(bbox.measureNumber);

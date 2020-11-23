@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.createKeyEditorView = void 0;
 // import { download } from "../util/download";
 exports.createKeyEditorView = function (song, tickWidth) {
     if (tickWidth === void 0) { tickWidth = 0.1; }

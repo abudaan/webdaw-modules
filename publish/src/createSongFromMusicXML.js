@@ -36,6 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.createSongFromMusicXML = void 0;
 var fetch_1 = require("./util/fetch");
 var parser_1 = require("./musicxml/parser");
 var parsedMusicXMLToSong_1 = require("./musicxml/parsedMusicXMLToSong");

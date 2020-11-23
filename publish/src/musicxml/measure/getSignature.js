@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.getSignature = void 0;
 exports.getSignature = function (xmlDoc, measureNode, nsResolver) {
     var numerator = xmlDoc.evaluate("attributes/time/beats", measureNode, nsResolver, XPathResult.NUMBER_TYPE, null).numberValue;
     var denominator = xmlDoc.evaluate("attributes/time/beat-type", measureNode, nsResolver, XPathResult.NUMBER_TYPE, null).numberValue;
