@@ -1,0 +1,648 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE score-partwise PUBLIC "-//Recordare//DTD MusicXML 3.0 Partwise//EN" "http://www.musicxml.org/dtds/partwise.dtd">
+<score-partwise version="3.0">
+	<work>
+		<work-number/>
+		<work-title/>
+	</work>
+	<identification>
+		<creator type="composer">谷建芬曲</creator>
+		<creator type="poet">孟浩然词</creator>
+		<creator type="arranger"/>
+		<rights>柏斯音乐</rights>
+		<encoding>
+			<software>FORTE 9 Premium</software>
+			<supports attribute="new-system" element="print" type="yes" value="yes"/>
+			<supports attribute="new-page" element="print" type="yes" value="yes"/>
+		</encoding>
+	</identification>
+	<defaults>
+		<scaling>
+			<millimeters>1.88736</millimeters>
+			<tenths>10</tenths>
+		</scaling>
+		<page-layout>
+			<page-height>1480.37</page-height>
+			<page-width>1143.93</page-width>
+			<page-margins type="odd">
+				<left-margin>106.449</left-margin>
+				<right-margin>100.654</right-margin>
+				<top-margin>83.6449</top-margin>
+				<bottom-margin>67.2897</bottom-margin>
+			</page-margins>
+			<page-margins type="even">
+				<left-margin>139.813</left-margin>
+				<right-margin>100.654</right-margin>
+				<top-margin>117.29</top-margin>
+				<bottom-margin>67.2897</bottom-margin>
+			</page-margins>
+		</page-layout>
+		<system-layout>
+			<system-margins>
+				<left-margin>0</left-margin>
+				<right-margin>0</right-margin>
+			</system-margins>
+			<system-distance>101.308</system-distance>
+		</system-layout>
+		<staff-layout>
+			<staff-distance>90</staff-distance>
+		</staff-layout>
+	</defaults>
+	<credit page="1">
+		<credit-type>composer</credit-type>
+		<credit-words default-x="1046.64" default-y="1309.16" font-family="Arial" font-size="10" justify="right" valign="top">谷建芬曲</credit-words>
+	</credit>
+	<credit page="1">
+		<credit-type>lyricist</credit-type>
+		<credit-words default-x="1045.42" default-y="1287.57" font-family="Arial" font-size="10" justify="right" valign="top">孟浩然词</credit-words>
+	</credit>
+	<credit page="1">
+		<credit-type>page header</credit-type>
+		<credit-words default-x="580.093" default-y="1370.28" font-family="Arial" font-size="32" justify="center" valign="top">春晓</credit-words>
+	</credit>
+	<credit page="1">
+		<credit-type>rights</credit-type>
+		<credit-words default-x="574.953" default-y="67.2898" font-family="Arial" font-size="9" justify="center" valign="top">柏斯音乐</credit-words>
+	</credit>
+	<part-list>
+		<score-part id="P2">
+			<part-name font-family="Arial" font-size="10" justify="right">My Instrument</part-name>
+			<score-instrument id="P2-I2">
+				<instrument-name/>
+			</score-instrument>
+			<midi-instrument id="P2-I2">
+				<midi-channel>2</midi-channel>
+				<midi-bank>1</midi-bank>
+				<midi-program>1</midi-program>
+				<volume>100</volume>
+				<pan>0</pan>
+			</midi-instrument>
+		</score-part>
+	</part-list>
+	<part id="P2">
+		<measure number="1">
+			<print page-number="1">
+				<system-layout>
+					<system-margins>
+						<left-margin>0</left-margin>
+						<right-margin>0</right-margin>
+					</system-margins>
+					<top-system-distance>235.234</top-system-distance>
+				</system-layout>
+			</print>
+			<attributes>
+				<divisions>480</divisions>
+				<key>
+					<fifths>-3</fifths>
+					<mode>major</mode>
+				</key>
+				<time>
+					<beats>4</beats>
+					<beat-type>4</beat-type>
+				</time>
+				<clef>
+					<sign>G</sign>
+					<line>2</line>
+				</clef>
+			</attributes>
+			<sound tempo="86"/>
+			<sound tempo="60"/>
+			<note>
+				<pitch>
+					<step>B</step>
+					<alter>-1</alter>
+					<octave>4</octave>
+				</pitch>
+				<duration>480</duration>
+				<voice>1</voice>
+				<type>quarter</type>
+				<stem>down</stem>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">Sib</text>
+				</lyric>
+				<lyric number="2" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">春</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>A</step>
+					<octave>4</octave>
+				</pitch>
+				<duration>240</duration>
+				<voice>1</voice>
+				<type>eighth</type>
+				<accidental>natural</accidental>
+				<stem>up</stem>
+				<beam number="1">begin</beam>
+				<notations>
+					<slur type="start" placement="below" number="1"/>
+				</notations>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">La</text>
+				</lyric>
+				<lyric number="2" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">眠</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>B</step>
+					<alter>-1</alter>
+					<octave>4</octave>
+				</pitch>
+				<duration>240</duration>
+				<voice>1</voice>
+				<type>eighth</type>
+				<stem>up</stem>
+				<beam number="1">end</beam>
+				<notations>
+					<slur type="stop" number="1"/>
+				</notations>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">Sib</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>G</step>
+					<octave>4</octave>
+				</pitch>
+				<duration>480</duration>
+				<voice>1</voice>
+				<type>quarter</type>
+				<stem>up</stem>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">Sol</text>
+				</lyric>
+				<lyric number="2" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">不</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>E</step>
+					<alter>-1</alter>
+					<octave>4</octave>
+				</pitch>
+				<duration>480</duration>
+				<voice>1</voice>
+				<type>quarter</type>
+				<stem>up</stem>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">Mib</text>
+				</lyric>
+				<lyric number="2" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">觉</text>
+				</lyric>
+			</note>
+		</measure>
+		<measure number="2">
+			<note>
+				<pitch>
+					<step>B</step>
+					<alter>-1</alter>
+					<octave>3</octave>
+				</pitch>
+				<duration>1920</duration>
+				<voice>1</voice>
+				<type>whole</type>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">Sib</text>
+				</lyric>
+				<lyric number="2" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">晓</text>
+				</lyric>
+			</note>
+		</measure>
+		<measure number="3">
+			<note>
+				<pitch>
+					<step>B</step>
+					<alter>-1</alter>
+					<octave>4</octave>
+				</pitch>
+				<duration>480</duration>
+				<voice>1</voice>
+				<type>quarter</type>
+				<stem>down</stem>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">Sib</text>
+				</lyric>
+				<lyric number="2" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">处</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>B</step>
+					<alter>-1</alter>
+					<octave>4</octave>
+				</pitch>
+				<duration>480</duration>
+				<voice>1</voice>
+				<type>quarter</type>
+				<stem>down</stem>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">Sib</text>
+				</lyric>
+				<lyric number="2" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">处</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>B</step>
+					<alter>-1</alter>
+					<octave>4</octave>
+				</pitch>
+				<duration>240</duration>
+				<voice>1</voice>
+				<type>eighth</type>
+				<stem>up</stem>
+				<beam number="1">begin</beam>
+				<notations>
+					<slur type="start" placement="below" number="2"/>
+				</notations>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">Sib</text>
+				</lyric>
+				<lyric number="2" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">闻</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>G</step>
+					<octave>4</octave>
+				</pitch>
+				<duration>240</duration>
+				<voice>1</voice>
+				<type>eighth</type>
+				<stem>up</stem>
+				<beam number="1">continue</beam>
+				<notations>
+					<slur type="stop" number="2"/>
+				</notations>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">Sol</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>G</step>
+					<octave>4</octave>
+				</pitch>
+				<duration>240</duration>
+				<voice>1</voice>
+				<type>eighth</type>
+				<stem>up</stem>
+				<beam number="1">continue</beam>
+				<notations>
+					<slur type="start" placement="below" number="3"/>
+				</notations>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">Sol</text>
+				</lyric>
+				<lyric number="2" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">啼</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>E</step>
+					<alter>-1</alter>
+					<octave>4</octave>
+				</pitch>
+				<duration>240</duration>
+				<voice>1</voice>
+				<type>eighth</type>
+				<stem>up</stem>
+				<beam number="1">end</beam>
+				<notations>
+					<slur type="stop" number="3"/>
+				</notations>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">Mib</text>
+				</lyric>
+			</note>
+		</measure>
+		<measure number="4">
+			<note>
+				<pitch>
+					<step>F</step>
+					<octave>4</octave>
+				</pitch>
+				<duration>1920</duration>
+				<voice>1</voice>
+				<type>whole</type>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">Fa</text>
+				</lyric>
+				<lyric number="2" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">鸟</text>
+				</lyric>
+			</note>
+		</measure>
+		<measure number="5">
+			<print new-system="yes">
+				<system-layout>
+					<system-distance>71.3084</system-distance>
+				</system-layout>
+			</print>
+			<note>
+				<pitch>
+					<step>B</step>
+					<alter>-1</alter>
+					<octave>4</octave>
+				</pitch>
+				<duration>480</duration>
+				<voice>1</voice>
+				<type>quarter</type>
+				<stem>down</stem>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">Sib</text>
+				</lyric>
+				<lyric number="2" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">夜</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>B</step>
+					<alter>-1</alter>
+					<octave>4</octave>
+				</pitch>
+				<duration>480</duration>
+				<voice>1</voice>
+				<type>quarter</type>
+				<stem>down</stem>
+				<notations>
+					<slur type="start" placement="above" number="4"/>
+				</notations>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">Sib</text>
+				</lyric>
+				<lyric number="2" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">来</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>C</step>
+					<octave>5</octave>
+				</pitch>
+				<duration>480</duration>
+				<voice>1</voice>
+				<type>quarter</type>
+				<stem>down</stem>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">Do</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>B</step>
+					<alter>-1</alter>
+					<octave>4</octave>
+				</pitch>
+				<duration>240</duration>
+				<voice>1</voice>
+				<type>eighth</type>
+				<stem>down</stem>
+				<beam number="1">begin</beam>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">Sib</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>C</step>
+					<octave>5</octave>
+				</pitch>
+				<duration>240</duration>
+				<voice>1</voice>
+				<type>eighth</type>
+				<stem>down</stem>
+				<beam number="1">end</beam>
+				<notations>
+					<slur type="stop" number="4"/>
+				</notations>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">Do</text>
+				</lyric>
+			</note>
+		</measure>
+		<measure number="6">
+			<note>
+				<pitch>
+					<step>B</step>
+					<alter>-1</alter>
+					<octave>4</octave>
+				</pitch>
+				<duration>480</duration>
+				<voice>1</voice>
+				<type>quarter</type>
+				<stem>down</stem>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">Sib</text>
+				</lyric>
+				<lyric number="2" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">风</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>E</step>
+					<alter>-1</alter>
+					<octave>4</octave>
+				</pitch>
+				<duration>480</duration>
+				<voice>1</voice>
+				<type>quarter</type>
+				<stem>up</stem>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">Mib</text>
+				</lyric>
+				<lyric number="2" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">雨</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>G</step>
+					<octave>4</octave>
+				</pitch>
+				<duration>480</duration>
+				<voice>1</voice>
+				<type>quarter</type>
+				<stem>up</stem>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">Sol</text>
+				</lyric>
+				<lyric number="2" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">声,</text>
+				</lyric>
+			</note>
+			<note>
+				<rest/>
+				<duration>480</duration>
+				<voice>1</voice>
+				<type>quarter</type>
+			</note>
+		</measure>
+		<measure number="7">
+			<note>
+				<pitch>
+					<step>G</step>
+					<octave>4</octave>
+				</pitch>
+				<duration>240</duration>
+				<voice>1</voice>
+				<type>eighth</type>
+				<stem>up</stem>
+				<beam number="1">begin</beam>
+				<notations>
+					<slur type="start" placement="below" number="5"/>
+				</notations>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">Sol</text>
+				</lyric>
+				<lyric number="2" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">花</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>F</step>
+					<octave>4</octave>
+				</pitch>
+				<duration>240</duration>
+				<voice>1</voice>
+				<type>eighth</type>
+				<stem>up</stem>
+				<beam number="1">end</beam>
+				<notations>
+					<slur type="stop" number="5"/>
+				</notations>
+			</note>
+			<note>
+				<pitch>
+					<step>F</step>
+					<octave>4</octave>
+				</pitch>
+				<duration>480</duration>
+				<voice>1</voice>
+				<type>quarter</type>
+				<stem>up</stem>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">Fa</text>
+				</lyric>
+				<lyric number="2" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">落</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>B</step>
+					<alter>-1</alter>
+					<octave>3</octave>
+				</pitch>
+				<duration>480</duration>
+				<voice>1</voice>
+				<type>quarter</type>
+				<stem>up</stem>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">Sib</text>
+				</lyric>
+				<lyric number="2" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">知</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>F</step>
+					<octave>4</octave>
+				</pitch>
+				<duration>480</duration>
+				<voice>1</voice>
+				<type>quarter</type>
+				<stem>up</stem>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">Fa</text>
+				</lyric>
+				<lyric number="2" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">多</text>
+				</lyric>
+			</note>
+		</measure>
+		<measure number="8">
+			<note>
+				<pitch>
+					<step>E</step>
+					<alter>-1</alter>
+					<octave>4</octave>
+				</pitch>
+				<duration>1920</duration>
+				<voice>1</voice>
+				<type>whole</type>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">Mib</text>
+				</lyric>
+				<lyric number="2" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="12">少。</text>
+				</lyric>
+			</note>
+			<barline location="right">
+				<bar-style>light-heavy</bar-style>
+				<repeat direction="backward"/>
+			</barline>
+		</measure>
+	</part>
+</score-partwise>

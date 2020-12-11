@@ -1,0 +1,100 @@
+body 
+  // margin 30
+  // padding 30
+  // overflow hidden
+  width 100%
+  background-color aliceblue
+  padding 0
+  margin 0
+
+#blend
+  // mix-blend-mode multiply
+
+.unselectable 
+  // margin-left: 100px;
+  -moz-user-select none; 
+  -khtml-user-select none; 
+  -webkit-user-select none; 
+
+#app
+  width 100%
+  min-height 100vh
+  height auto
+
+  svg
+    width 100%
+    height 100vh
+
+
+#hitareas
+  z-index 100
+  position absolute
+  width 100vw
+  height 100vh
+  top 0px
+  left 0px
+  
+  .hitarea
+    position absolute
+    background-color rgba(255, 0, 0, 0.3)
+    // padding 4px
+    // margin -4px 0 0 -4px
+    // border-radius 4px
+
+
+#selected-measure
+  z-index 102
+  position absolute
+  background-color rgba(0,200,200, 0.1)
+  display none
+  #measure-number 
+    width: 100%;
+    
+
+#selection 
+  z-index 101
+  position absolute
+  background-color rgba(0,0,200, 0.1)
+  display none
+
+#selected-bars
+  z-index 100
+  position absolute
+  display none
+  top: 0px;
+
+  .bar
+    background-color rgba(0,0,200, 0.1)
+    position absolute
+
+
+#playhead 
+  position absolute
+  background-color rgba(255, 0, 0, 0.3)
+
+#controls
+  // position fixed
+  height 110px
+  width 200px
+  background-color rgba(0, 0, 0, 0.4)
+
+#score
+  div
+    // background-color pink
+
+
+
+@keyframes fadeOutAnim 
+  0% 
+    opacity 1
+  100% 
+    opacity 0
+
+.debug 
+  position absolute
+  background-color rgba(255, 0, 127, 0.3)
+  animation-duration 1s
+
+
+.fadeOut
+  animation-name fadeOutAnim

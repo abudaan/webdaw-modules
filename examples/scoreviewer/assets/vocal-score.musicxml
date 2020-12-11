@@ -1,0 +1,1003 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE score-partwise PUBLIC "-//Recordare//DTD MusicXML 3.1 Partwise//EN" "http://www.musicxml.org/dtds/partwise.dtd">
+<score-partwise version="3.1">
+  <work>
+    <work-title>花非花</work-title>
+    </work>
+  <identification>
+    <creator type="composer">作曲:黃自
+唐詞:白居易</creator>
+    <encoding>
+      <software>MuseScore 3.4.2</software>
+      <encoding-date>2020-10-02</encoding-date>
+      <supports element="accidental" type="yes"/>
+      <supports element="beam" type="yes"/>
+      <supports element="print" attribute="new-page" type="yes" value="yes"/>
+      <supports element="print" attribute="new-system" type="yes" value="yes"/>
+      <supports element="stem" type="yes"/>
+      </encoding>
+    </identification>
+  <defaults>
+    <scaling>
+      <millimeters>9.24276</millimeters>
+      <tenths>40</tenths>
+      </scaling>
+    <page-layout>
+      <page-height>1285.33</page-height>
+      <page-width>908.819</page-width>
+      <page-margins type="even">
+        <left-margin>43.2771</left-margin>
+        <right-margin>43.2771</right-margin>
+        <top-margin>43.2771</top-margin>
+        <bottom-margin>86.5542</bottom-margin>
+        </page-margins>
+      <page-margins type="odd">
+        <left-margin>43.2771</left-margin>
+        <right-margin>43.2771</right-margin>
+        <top-margin>43.2771</top-margin>
+        <bottom-margin>86.5542</bottom-margin>
+        </page-margins>
+      </page-layout>
+    <word-font font-family="FreeSerif" font-size="10"/>
+    <lyric-font font-family="FreeSerif" font-size="11"/>
+    </defaults>
+  <credit page="1">
+    <credit-words default-x="865.542" default-y="1152.4" justify="right" valign="bottom" font-family="Arial">作曲:黃自
+</credit-words>
+    <credit-words>唐詞:白居易</credit-words>
+    </credit>
+  <credit page="1">
+    <credit-words default-x="454.41" default-y="1242.05" justify="center" valign="top" font-family="Arial" font-size="24">花非花</credit-words>
+    </credit>
+  <part-list>
+    <score-part id="P1">
+      <part-name>Voice</part-name>
+      <score-instrument id="P1-I1">
+        <instrument-name></instrument-name>
+        </score-instrument>
+      <midi-device id="P1-I1" port="1"></midi-device>
+      <midi-instrument id="P1-I1">
+        <midi-channel>1</midi-channel>
+        <midi-program>1</midi-program>
+        <volume>100</volume>
+        <pan>0</pan>
+        </midi-instrument>
+      </score-part>
+    </part-list>
+  <part id="P1">
+    <measure number="1" width="228.73">
+      <print>
+        <system-layout>
+          <system-margins>
+            <left-margin>0.00</left-margin>
+            <right-margin>0.00</right-margin>
+            </system-margins>
+          <top-system-distance>159.65</top-system-distance>
+          </system-layout>
+        </print>
+      <attributes>
+        <divisions>4</divisions>
+        <key>
+          <fifths>2</fifths>
+          <mode>major</mode>
+          </key>
+        <time>
+          <beats>4</beats>
+          <beat-type>4</beat-type>
+          </time>
+        <clef>
+          <sign>G</sign>
+          <line>2</line>
+          </clef>
+        </attributes>
+      <note>
+        <rest/>
+        <duration>16</duration>
+        <voice>1</voice>
+        </note>
+      </measure>
+    <measure number="2" width="151.85">
+      <note>
+        <rest/>
+        <duration>16</duration>
+        <voice>1</voice>
+        </note>
+      </measure>
+    <measure number="3" width="230.24">
+      <direction placement="below">
+        <direction-type>
+          <dynamics default-x="6.58" default-y="-40.00" relative-y="-40.00">
+            <p/>
+            </dynamics>
+          </direction-type>
+        <sound dynamics="54.44"/>
+        </direction>
+      <direction placement="above">
+        <direction-type>
+          <words default-y="31.26" relative-y="20.00" font-weight="bold" font-style="italic" font-family="Times New Roman" font-size="9">Andante</words>
+          </direction-type>
+        <direction-type>
+          <metronome parentheses="no" default-y="31.26" relative-y="20.00">
+            <beat-unit>quarter</beat-unit>
+            <per-minute>80</per-minute>
+            </metronome>
+          </direction-type>
+        <sound tempo="80"/>
+        </direction>
+      <direction placement="above">
+        <direction-type>
+          <words relative-y="20.00" font-family="Arial" font-size="18">s</words>
+          </direction-type>
+        </direction>
+      <note default-x="10.00" default-y="-25.00">
+        <pitch>
+          <step>A</step>
+          <octave>4</octave>
+          </pitch>
+        <duration>4</duration>
+        <voice>1</voice>
+        <type>quarter</type>
+        <stem>up</stem>
+        <lyric number="1" default-x="6.58" default-y="-75.27" relative-y="-30.00">
+          <syllabic>single</syllabic>
+          <text font-family="Arial" font-size="6">花</text>
+          </lyric>
+        </note>
+      <direction placement="above">
+        <direction-type>
+          <words relative-y="20.00" font-family="Arial" font-size="18">l</words>
+          </direction-type>
+        </direction>
+      <note default-x="68.70" default-y="-20.00">
+        <pitch>
+          <step>B</step>
+          <octave>4</octave>
+          </pitch>
+        <duration>2</duration>
+        <voice>1</voice>
+        <type>eighth</type>
+        <stem>up</stem>
+        <beam number="1">begin</beam>
+        <notations>
+          <slur type="start" placement="below" number="1"/>
+          </notations>
+        <lyric number="1" default-x="6.58" default-y="-75.27" relative-y="-30.00">
+          <syllabic>single</syllabic>
+          <text font-family="Arial" font-size="6">非</text>
+          </lyric>
+        </note>
+      <direction placement="above">
+        <direction-type>
+          <words relative-y="20.00" font-family="Arial" font-size="18">s</words>
+          </direction-type>
+        </direction>
+      <note default-x="105.21" default-y="-25.00">
+        <pitch>
+          <step>A</step>
+          <octave>4</octave>
+          </pitch>
+        <duration>2</duration>
+        <voice>1</voice>
+        <type>eighth</type>
+        <stem>up</stem>
+        <beam number="1">end</beam>
+        <notations>
+          <slur type="stop" number="1"/>
+          </notations>
+        </note>
+      <direction placement="above">
+        <direction-type>
+          <words relative-y="20.00" font-family="Arial" font-size="18">s</words>
+          </direction-type>
+        </direction>
+      <note default-x="141.72" default-y="-25.00">
+        <pitch>
+          <step>A</step>
+          <octave>4</octave>
+          </pitch>
+        <duration>4</duration>
+        <voice>1</voice>
+        <type>quarter</type>
+        <stem>up</stem>
+        <notations>
+          <slur type="start" placement="below" number="1"/>
+          </notations>
+        <lyric number="1" default-x="6.74" default-y="-75.27" relative-y="-30.00">
+          <syllabic>single</syllabic>
+          <text font-family="Arial" font-size="6">花 </text>
+          </lyric>
+        </note>
+      <direction placement="above">
+        <direction-type>
+          <words relative-y="20.00" font-family="Arial" font-size="18">m</words>
+          </direction-type>
+        </direction>
+      <note default-x="185.18" default-y="-35.00">
+        <pitch>
+          <step>F</step>
+          <alter>1</alter>
+          <octave>4</octave>
+          </pitch>
+        <duration>4</duration>
+        <voice>1</voice>
+        <type>quarter</type>
+        <stem>up</stem>
+        <notations>
+          <slur type="stop" number="1"/>
+          </notations>
+        </note>
+      <direction placement="below">
+        <direction-type>
+          <words default-y="-110.23" relative-y="-35.00" font-style="italic" font-family="Verdana" font-size="9">dolce</words>
+          </direction-type>
+        <offset>-15</offset>
+        </direction>
+      </measure>
+    <measure number="4" width="211.44">
+      <direction placement="above">
+        <direction-type>
+          <words relative-y="20.00" font-family="Arial" font-size="18">d'</words>
+          </direction-type>
+        </direction>
+      <note default-x="10.00" default-y="-10.00">
+        <pitch>
+          <step>D</step>
+          <octave>5</octave>
+          </pitch>
+        <duration>4</duration>
+        <voice>1</voice>
+        <type>quarter</type>
+        <stem>down</stem>
+        <lyric number="1" default-x="6.58" default-y="-75.27" relative-y="-30.00">
+          <syllabic>single</syllabic>
+          <text font-family="Arial" font-size="6">霧</text>
+          </lyric>
+        </note>
+      <direction placement="above">
+        <direction-type>
+          <words relative-y="20.00" font-family="Arial" font-size="18">r'</words>
+          </direction-type>
+        </direction>
+      <note default-x="57.02" default-y="-5.00">
+        <pitch>
+          <step>E</step>
+          <octave>5</octave>
+          </pitch>
+        <duration>2</duration>
+        <voice>1</voice>
+        <type>eighth</type>
+        <stem>down</stem>
+        <beam number="1">begin</beam>
+        <notations>
+          <slur type="start" placement="above" number="1"/>
+          </notations>
+        <lyric number="1" default-x="6.58" default-y="-75.27" relative-y="-30.00">
+          <syllabic>single</syllabic>
+          <text font-family="Arial" font-size="6">非</text>
+          </lyric>
+        </note>
+      <direction placement="above">
+        <direction-type>
+          <words relative-y="20.00" font-family="Arial" font-size="18">d'</words>
+          </direction-type>
+        </direction>
+      <note default-x="86.41" default-y="-10.00">
+        <pitch>
+          <step>D</step>
+          <octave>5</octave>
+          </pitch>
+        <duration>2</duration>
+        <voice>1</voice>
+        <type>eighth</type>
+        <stem>down</stem>
+        <beam number="1">end</beam>
+        <notations>
+          <slur type="stop" number="1"/>
+          </notations>
+        </note>
+      <direction placement="above">
+        <direction-type>
+          <words relative-y="20.00" font-family="Arial" font-size="18">d'</words>
+          </direction-type>
+        </direction>
+      <note default-x="115.80" default-y="-10.00">
+        <pitch>
+          <step>D</step>
+          <octave>5</octave>
+          </pitch>
+        <duration>4</duration>
+        <voice>1</voice>
+        <type>quarter</type>
+        <stem>down</stem>
+        <notations>
+          <slur type="start" placement="above" number="1"/>
+          </notations>
+        <lyric number="1" default-x="7.96" default-y="-75.27" relative-y="-30.00">
+          <syllabic>single</syllabic>
+          <text font-family="Arial" font-size="6">霧:</text>
+          </lyric>
+        </note>
+      <direction placement="above">
+        <direction-type>
+          <words relative-y="20.00" font-family="Arial" font-size="18">l</words>
+          </direction-type>
+        </direction>
+      <note default-x="162.82" default-y="-20.00">
+        <pitch>
+          <step>B</step>
+          <octave>4</octave>
+          </pitch>
+        <duration>4</duration>
+        <voice>1</voice>
+        <type>quarter</type>
+        <stem>down</stem>
+        <notations>
+          <slur type="stop" number="1"/>
+          </notations>
+        </note>
+      <direction>
+        <direction-type>
+          <wedge type="stop" number="1" relative-y="-35.00"/>
+          </direction-type>
+        </direction>
+      </measure>
+    <measure number="5" width="470.06">
+      <print new-system="yes">
+        <system-layout>
+          <system-margins>
+            <left-margin>0.00</left-margin>
+            <right-margin>0.00</right-margin>
+            </system-margins>
+          <system-distance>187.48</system-distance>
+          </system-layout>
+        </print>
+      <direction placement="above">
+        <direction-type>
+          <words relative-y="20.00" font-family="Arial" font-size="18">s</words>
+          </direction-type>
+        </direction>
+      <direction>
+        <direction-type>
+          <wedge type="crescendo" number="1" relative-y="-35.00"/>
+          </direction-type>
+        </direction>
+      <note default-x="89.19" default-y="-25.00">
+        <pitch>
+          <step>A</step>
+          <octave>4</octave>
+          </pitch>
+        <duration>4</duration>
+        <voice>1</voice>
+        <type>quarter</type>
+        <stem>up</stem>
+        <lyric number="1" default-x="6.58" default-y="-70.96" relative-y="-30.00">
+          <syllabic>single</syllabic>
+          <text font-family="Arial" font-size="6">夜</text>
+          </lyric>
+        </note>
+      <direction placement="above">
+        <direction-type>
+          <words relative-y="20.00" font-family="Arial" font-size="18">s</words>
+          </direction-type>
+        </direction>
+      <note default-x="181.82" default-y="-25.00">
+        <pitch>
+          <step>A</step>
+          <octave>4</octave>
+          </pitch>
+        <duration>2</duration>
+        <voice>1</voice>
+        <type>eighth</type>
+        <stem>down</stem>
+        <beam number="1">begin</beam>
+        <notations>
+          <slur type="start" placement="above" number="1"/>
+          </notations>
+        <lyric number="1" default-x="6.58" default-y="-70.96" relative-y="-30.00">
+          <syllabic>single</syllabic>
+          <text font-family="Arial" font-size="6">半</text>
+          </lyric>
+        </note>
+      <direction placement="above">
+        <direction-type>
+          <words relative-y="20.00" font-family="Arial" font-size="18">d'</words>
+          </direction-type>
+        </direction>
+      <note default-x="239.72" default-y="-10.00">
+        <pitch>
+          <step>D</step>
+          <octave>5</octave>
+          </pitch>
+        <duration>2</duration>
+        <voice>1</voice>
+        <type>eighth</type>
+        <stem>down</stem>
+        <beam number="1">end</beam>
+        <notations>
+          <slur type="stop" number="1"/>
+          </notations>
+        </note>
+      <direction placement="above">
+        <direction-type>
+          <words relative-y="20.00" font-family="Arial" font-size="18">l</words>
+          </direction-type>
+        </direction>
+      <note default-x="297.61" default-y="-20.00">
+        <pitch>
+          <step>B</step>
+          <octave>4</octave>
+          </pitch>
+        <duration>6</duration>
+        <voice>1</voice>
+        <type>quarter</type>
+        <dot/>
+        <stem>down</stem>
+        <notations>
+          <slur type="start" placement="above" number="1"/>
+          </notations>
+        <lyric number="1" default-x="6.89" default-y="-70.96" relative-y="-30.00">
+          <syllabic>single</syllabic>
+          <text font-family="Arial" font-size="6">來 </text>
+          </lyric>
+        </note>
+      <direction placement="above">
+        <direction-type>
+          <words relative-y="20.00" font-family="Arial" font-size="18">s</words>
+          </direction-type>
+        </direction>
+      <note default-x="410.57" default-y="-25.00">
+        <pitch>
+          <step>A</step>
+          <octave>4</octave>
+          </pitch>
+        <duration>2</duration>
+        <voice>1</voice>
+        <type>eighth</type>
+        <stem>up</stem>
+        <notations>
+          <slur type="stop" number="1"/>
+          </notations>
+        </note>
+      <direction placement="below">
+        <direction-type>
+          <wedge type="stop" number="1"/>
+          </direction-type>
+        </direction>
+      </measure>
+    <measure number="6" width="352.20">
+      <direction placement="above">
+        <direction-type>
+          <words relative-y="20.00" font-family="Arial" font-size="18">m</words>
+          </direction-type>
+        </direction>
+      <direction placement="below">
+        <direction-type>
+          <wedge type="diminuendo" number="1" default-y="-75.00"/>
+          </direction-type>
+        </direction>
+      <note default-x="10.00" default-y="-35.00">
+        <pitch>
+          <step>F</step>
+          <alter>1</alter>
+          <octave>4</octave>
+          </pitch>
+        <duration>4</duration>
+        <voice>1</voice>
+        <type>quarter</type>
+        <stem>up</stem>
+        <lyric number="1" default-x="6.58" default-y="-70.96" relative-y="-30.00">
+          <syllabic>single</syllabic>
+          <text font-family="Arial" font-size="6">天</text>
+          </lyric>
+        </note>
+      <direction placement="above">
+        <direction-type>
+          <words relative-y="20.00" font-family="Arial" font-size="18">r</words>
+          </direction-type>
+        </direction>
+      <note default-x="103.96" default-y="-40.00">
+        <pitch>
+          <step>E</step>
+          <octave>4</octave>
+          </pitch>
+        <duration>2</duration>
+        <voice>1</voice>
+        <type>eighth</type>
+        <stem>up</stem>
+        <beam number="1">begin</beam>
+        <notations>
+          <slur type="start" placement="below" number="1"/>
+          </notations>
+        <lyric number="1" default-x="6.58" default-y="-70.96" relative-y="-30.00">
+          <syllabic>single</syllabic>
+          <text font-family="Arial" font-size="6">明</text>
+          </lyric>
+        </note>
+      <direction placement="above">
+        <direction-type>
+          <words relative-y="20.00" font-family="Arial" font-size="18">d</words>
+          </direction-type>
+        </direction>
+      <note default-x="162.68" default-y="-45.00">
+        <pitch>
+          <step>D</step>
+          <octave>4</octave>
+          </pitch>
+        <duration>2</duration>
+        <voice>1</voice>
+        <type>eighth</type>
+        <stem>up</stem>
+        <beam number="1">end</beam>
+        <notations>
+          <slur type="stop" number="1"/>
+          </notations>
+        </note>
+      <direction placement="above">
+        <direction-type>
+          <words relative-y="20.00" font-family="Arial" font-size="18">r</words>
+          </direction-type>
+        </direction>
+      <note default-x="221.05" default-y="-40.00">
+        <pitch>
+          <step>E</step>
+          <octave>4</octave>
+          </pitch>
+        <duration>8</duration>
+        <voice>1</voice>
+        <type>half</type>
+        <stem>up</stem>
+        <lyric number="1" default-x="6.22" default-y="-70.96" relative-y="-30.00">
+          <syllabic>single</syllabic>
+          <text font-family="Arial" font-size="6">去</text>
+          </lyric>
+        </note>
+      </measure>
+    <measure number="7" width="459.48">
+      <print new-system="yes">
+        <system-layout>
+          <system-margins>
+            <left-margin>0.00</left-margin>
+            <right-margin>0.00</right-margin>
+            </system-margins>
+          <system-distance>187.48</system-distance>
+          </system-layout>
+        </print>
+      <direction placement="above">
+        <direction-type>
+          <words relative-y="20.00" font-family="Arial" font-size="18">r</words>
+          </direction-type>
+        </direction>
+      <note default-x="89.19" default-y="-40.00">
+        <pitch>
+          <step>E</step>
+          <octave>4</octave>
+          </pitch>
+        <duration>4</duration>
+        <voice>1</voice>
+        <type>quarter</type>
+        <stem>up</stem>
+        <lyric number="1" default-x="6.58" default-y="-41.67" relative-y="-30.00">
+          <syllabic>single</syllabic>
+          <text font-family="Arial" font-size="6">來</text>
+          </lyric>
+        </note>
+      <direction placement="above">
+        <direction-type>
+          <words relative-y="20.00" font-family="Arial" font-size="18">m</words>
+          </direction-type>
+        </direction>
+      <note default-x="175.94" default-y="-35.00">
+        <pitch>
+          <step>F</step>
+          <alter>1</alter>
+          <octave>4</octave>
+          </pitch>
+        <duration>2</duration>
+        <voice>1</voice>
+        <type>eighth</type>
+        <stem>up</stem>
+        <beam number="1">begin</beam>
+        <notations>
+          <slur type="start" placement="below" number="1"/>
+          </notations>
+        <lyric number="1" default-x="6.58" default-y="-41.67" relative-y="-30.00">
+          <syllabic>single</syllabic>
+          <text font-family="Arial" font-size="6">如</text>
+          </lyric>
+        </note>
+      <direction placement="above">
+        <direction-type>
+          <words relative-y="20.00" font-family="Arial" font-size="18">s</words>
+          </direction-type>
+        </direction>
+      <note default-x="230.16" default-y="-25.00">
+        <pitch>
+          <step>A</step>
+          <octave>4</octave>
+          </pitch>
+        <duration>2</duration>
+        <voice>1</voice>
+        <type>eighth</type>
+        <stem>up</stem>
+        <beam number="1">end</beam>
+        <notations>
+          <slur type="stop" number="1"/>
+          </notations>
+        </note>
+      <direction placement="above">
+        <direction-type>
+          <words relative-y="20.00" font-family="Arial" font-size="18">l</words>
+          </direction-type>
+        </direction>
+      <note default-x="284.38" default-y="-20.00">
+        <pitch>
+          <step>B</step>
+          <octave>4</octave>
+          </pitch>
+        <duration>4</duration>
+        <voice>1</voice>
+        <type>quarter</type>
+        <stem>down</stem>
+        <lyric number="1" default-x="6.58" default-y="-41.67" relative-y="-30.00">
+          <syllabic>single</syllabic>
+          <text font-family="Arial" font-size="6">春</text>
+          </lyric>
+        </note>
+      <direction placement="above">
+        <direction-type>
+          <words relative-y="20.00" font-family="Arial" font-size="18">s</words>
+          </direction-type>
+        </direction>
+      <note default-x="371.13" default-y="-25.00">
+        <pitch>
+          <step>A</step>
+          <octave>4</octave>
+          </pitch>
+        <duration>4</duration>
+        <voice>1</voice>
+        <type>quarter</type>
+        <stem>up</stem>
+        <lyric number="1" default-x="6.58" default-y="-41.67" relative-y="-30.00">
+          <syllabic>single</syllabic>
+          <text font-family="Arial" font-size="6">夢</text>
+          </lyric>
+        </note>
+      </measure>
+    <measure number="8" width="362.79">
+      <direction placement="above">
+        <direction-type>
+          <words relative-y="20.00" font-family="Arial" font-size="18">s</words>
+          </direction-type>
+        </direction>
+      <note default-x="10.00" default-y="-25.00">
+        <pitch>
+          <step>A</step>
+          <octave>4</octave>
+          </pitch>
+        <duration>4</duration>
+        <voice>1</voice>
+        <type>quarter</type>
+        <stem>up</stem>
+        <lyric number="1" default-x="6.58" default-y="-41.67" relative-y="-30.00">
+          <syllabic>single</syllabic>
+          <text font-family="Arial" font-size="6">不</text>
+          </lyric>
+        </note>
+      <direction placement="above">
+        <direction-type>
+          <words relative-y="20.00" font-family="Arial" font-size="18">r'</words>
+          </direction-type>
+        </direction>
+      <note default-x="106.88" default-y="-5.00">
+        <pitch>
+          <step>E</step>
+          <octave>5</octave>
+          </pitch>
+        <duration>2</duration>
+        <voice>1</voice>
+        <type>eighth</type>
+        <stem>down</stem>
+        <beam number="1">begin</beam>
+        <notations>
+          <slur type="start" placement="above" number="1"/>
+          </notations>
+        <lyric number="1" default-x="6.58" default-y="-41.67" relative-y="-30.00">
+          <syllabic>single</syllabic>
+          <text font-family="Arial" font-size="6">多</text>
+          </lyric>
+        </note>
+      <direction placement="above">
+        <direction-type>
+          <words relative-y="20.00" font-family="Arial" font-size="18">d'</words>
+          </direction-type>
+        </direction>
+      <note default-x="167.43" default-y="-10.00">
+        <pitch>
+          <step>D</step>
+          <octave>5</octave>
+          </pitch>
+        <duration>2</duration>
+        <voice>1</voice>
+        <type>eighth</type>
+        <stem>down</stem>
+        <beam number="1">end</beam>
+        <notations>
+          <slur type="stop" number="1"/>
+          </notations>
+        </note>
+      <direction placement="above">
+        <direction-type>
+          <words relative-y="20.00" font-family="Arial" font-size="18">l</words>
+          </direction-type>
+        </direction>
+      <note default-x="227.62" default-y="-20.00">
+        <pitch>
+          <step>B</step>
+          <octave>4</octave>
+          </pitch>
+        <duration>8</duration>
+        <voice>1</voice>
+        <type>half</type>
+        <stem>down</stem>
+        <lyric number="1" default-x="6.94" default-y="-41.67" relative-y="-30.00">
+          <syllabic>single</syllabic>
+          <text font-family="Arial" font-size="6">時</text>
+          </lyric>
+        </note>
+      </measure>
+    <measure number="9" width="448.69">
+      <print new-system="yes">
+        <system-layout>
+          <system-margins>
+            <left-margin>0.00</left-margin>
+            <right-margin>0.00</right-margin>
+            </system-margins>
+          <system-distance>187.48</system-distance>
+          </system-layout>
+        </print>
+      <direction placement="above">
+        <direction-type>
+          <words default-y="9.91" relative-y="20.00" font-family="Arial" font-size="18">d'</words>
+          </direction-type>
+        </direction>
+      <direction placement="below">
+        <direction-type>
+          <wedge type="diminuendo" number="1" default-y="-85.91"/>
+          </direction-type>
+        </direction>
+      <direction placement="above">
+        <direction-type>
+          <words>rit.</words>
+          </direction-type>
+        <direction-type>
+          <dashes type="start" number="1"/>
+          </direction-type>
+        </direction>
+      <note default-x="89.19" default-y="-10.00">
+        <pitch>
+          <step>D</step>
+          <octave>5</octave>
+          </pitch>
+        <duration>4</duration>
+        <voice>1</voice>
+        <type>quarter</type>
+        <stem>down</stem>
+        <lyric number="1" default-x="6.58" default-y="-82.78" relative-y="-30.00">
+          <syllabic>single</syllabic>
+          <text font-family="Arial" font-size="6">去</text>
+          </lyric>
+        </note>
+      <direction placement="above">
+        <direction-type>
+          <words default-y="1.65" relative-y="20.00" font-family="Arial" font-size="18">l</words>
+          </direction-type>
+        </direction>
+      <note default-x="168.72" default-y="-20.00">
+        <pitch>
+          <step>B</step>
+          <octave>4</octave>
+          </pitch>
+        <duration>2</duration>
+        <voice>1</voice>
+        <type>eighth</type>
+        <stem>down</stem>
+        <beam number="1">begin</beam>
+        <notations>
+          <slur type="start" placement="above" number="1"/>
+          </notations>
+        <lyric number="1" default-x="6.58" default-y="-82.78" relative-y="-30.00">
+          <syllabic>single</syllabic>
+          <text font-family="Arial" font-size="6">似</text>
+          </lyric>
+        </note>
+      <direction placement="above">
+        <direction-type>
+          <words default-y="2.26" relative-y="20.00" font-family="Arial" font-size="18">d'</words>
+          </direction-type>
+        </direction>
+      <note default-x="218.43" default-y="-10.00">
+        <pitch>
+          <step>D</step>
+          <octave>5</octave>
+          </pitch>
+        <duration>2</duration>
+        <voice>1</voice>
+        <type>eighth</type>
+        <stem>down</stem>
+        <beam number="1">end</beam>
+        <notations>
+          <slur type="stop" number="1"/>
+          </notations>
+        </note>
+      <direction placement="above">
+        <direction-type>
+          <words default-y="2.26" relative-y="20.00" font-family="Arial" font-size="18">s</words>
+          </direction-type>
+        </direction>
+      <note default-x="268.14" default-y="-25.00">
+        <pitch>
+          <step>A</step>
+          <octave>4</octave>
+          </pitch>
+        <duration>4</duration>
+        <voice>1</voice>
+        <type>quarter</type>
+        <stem>up</stem>
+        <lyric number="1" default-x="6.58" default-y="-82.78" relative-y="-30.00">
+          <syllabic>single</syllabic>
+          <text font-family="Arial" font-size="6">朝</text>
+          </lyric>
+        </note>
+      <direction placement="above">
+        <direction-type>
+          <words default-y="1.65" relative-y="20.00" font-family="Arial" font-size="18">m</words>
+          </direction-type>
+        </direction>
+      <note default-x="347.67" default-y="-35.00">
+        <pitch>
+          <step>F</step>
+          <alter>1</alter>
+          <octave>4</octave>
+          </pitch>
+        <duration>2</duration>
+        <voice>1</voice>
+        <type>eighth</type>
+        <stem>up</stem>
+        <beam number="1">begin</beam>
+        <notations>
+          <slur type="start" placement="below" number="1"/>
+          </notations>
+        <lyric number="1" default-x="6.58" default-y="-82.78" relative-y="-30.00">
+          <syllabic>single</syllabic>
+          <text font-family="Arial" font-size="6">雲</text>
+          </lyric>
+        </note>
+      <direction placement="above">
+        <direction-type>
+          <words default-y="2.26" relative-y="20.00" font-family="Arial" font-size="18">s</words>
+          </direction-type>
+        </direction>
+      <note default-x="397.38" default-y="-25.00">
+        <pitch>
+          <step>A</step>
+          <octave>4</octave>
+          </pitch>
+        <duration>2</duration>
+        <voice>1</voice>
+        <type>eighth</type>
+        <stem>up</stem>
+        <beam number="1">end</beam>
+        </note>
+      <direction placement="below">
+        <direction-type>
+          <wedge type="stop" number="1"/>
+          </direction-type>
+        </direction>
+      <direction placement="above">
+        <direction-type>
+          <dashes type="stop" number="1"/>
+          </direction-type>
+        </direction>
+      </measure>
+    <measure number="10" width="373.57">
+      <direction placement="above">
+        <direction-type>
+          <words relative-y="20.00" font-family="Arial" font-size="18">l,</words>
+          </direction-type>
+        </direction>
+      <note default-x="13.80" default-y="-55.00">
+        <pitch>
+          <step>B</step>
+          <octave>3</octave>
+          </pitch>
+        <duration>4</duration>
+        <voice>1</voice>
+        <type>quarter</type>
+        <stem>up</stem>
+        <notations>
+          <slur type="stop" number="1"/>
+          </notations>
+        </note>
+      <direction placement="above">
+        <direction-type>
+          <words default-y="10.23" relative-y="20.00" font-family="Arial" font-size="18">r</words>
+          </direction-type>
+        </direction>
+      <note default-x="100.36" default-y="-40.00">
+        <pitch>
+          <step>E</step>
+          <octave>4</octave>
+          </pitch>
+        <duration>3</duration>
+        <voice>1</voice>
+        <type>eighth</type>
+        <dot/>
+        <stem>up</stem>
+        <beam number="1">begin</beam>
+        <notations>
+          <fermata type="upright"/>
+          </notations>
+        <lyric number="1" default-x="6.58" default-y="-82.78" relative-y="-30.00">
+          <syllabic>single</syllabic>
+          <text font-family="Arial" font-size="6">無</text>
+          </lyric>
+        </note>
+      <direction placement="above">
+        <direction-type>
+          <words relative-y="20.00" font-family="Arial" font-size="18">m</words>
+          </direction-type>
+        </direction>
+      <note default-x="179.22" default-y="-35.00">
+        <pitch>
+          <step>F</step>
+          <alter>1</alter>
+          <octave>4</octave>
+          </pitch>
+        <duration>1</duration>
+        <voice>1</voice>
+        <type>16th</type>
+        <stem>up</stem>
+        <beam number="1">end</beam>
+        <beam number="2">backward hook</beam>
+        <lyric number="1" default-x="6.58" default-y="-82.78" relative-y="-30.00">
+          <syllabic>single</syllabic>
+          <text font-family="Arial" font-size="6">覓</text>
+          </lyric>
+        </note>
+      <direction placement="above">
+        <direction-type>
+          <words default-y="10.85" relative-y="20.00" font-family="Arial" font-size="18">d</words>
+          </direction-type>
+        </direction>
+      <note default-x="228.32" default-y="-45.00">
+        <pitch>
+          <step>D</step>
+          <octave>4</octave>
+          </pitch>
+        <duration>8</duration>
+        <voice>1</voice>
+        <type>half</type>
+        <stem>up</stem>
+        <notations>
+          <fermata type="upright"/>
+          </notations>
+        <lyric number="1" default-x="6.22" default-y="-82.78" relative-y="-30.00">
+          <syllabic>single</syllabic>
+          <text font-family="Arial" font-size="6">處</text>
+          </lyric>
+        </note>
+      <direction placement="below">
+        <direction-type>
+          <dynamics default-y="-40.00" relative-y="-40.00">
+            <pp/>
+            </dynamics>
+          </direction-type>
+        <offset>-7</offset>
+        <sound dynamics="36.67"/>
+        </direction>
+      <barline location="right">
+        <bar-style>light-heavy</bar-style>
+        </barline>
+      </measure>
+    </part>
+  </score-partwise>
