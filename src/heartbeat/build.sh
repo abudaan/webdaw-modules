@@ -1,8 +1,9 @@
 #!/bin/bash
 
+    # ./license.js
+    # ./saveAs.js
+
 files="
-    ./license.js
-    ./saveAs.js
     ./open_module.js
     ./asset_manager.js
     ./assetpack.js

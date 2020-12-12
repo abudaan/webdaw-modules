@@ -30,12 +30,12 @@ exports.createNotes = function (events) {
             }
             else {
                 var noteOn = tmp[id];
-                var note = {
+                var note_1 = {
                     id: "note-" + new Date().getTime() + "-" + index++,
                     noteOn: noteOn,
                     noteOff: e,
                 };
-                notes.push(note);
+                notes.push(note_1);
                 delete tmp[id];
             }
         }

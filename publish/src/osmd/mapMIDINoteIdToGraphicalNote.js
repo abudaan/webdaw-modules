@@ -55,12 +55,12 @@ exports.mapMIDINoteIdToGraphicalNote = function (graphicalNotesPerBar, repeats, 
                 .forEach(function (bd) {
                 var element = bd.element, noteNumber = bd.noteNumber, bar = bd.bar, parentMusicSystem = bd.parentMusicSystem;
                 for (var j = 0; j < filtered_1.length; j++) {
-                    var note = filtered_1[j];
-                    if (!mapping1[note.id] &&
-                        note.noteOn.bar == bar + barOffset - 1 &&
-                        note.noteOn.noteNumber == noteNumber) {
-                        mapping1[note.id] = { element: element, musicSystem: parentMusicSystem };
-                        mapping2[element.id] = note;
+                    var note_1 = filtered_1[j];
+                    if (!mapping1[note_1.id] &&
+                        note_1.noteOn.bar == bar + barOffset - 1 &&
+                        note_1.noteOn.noteNumber == noteNumber) {
+                        mapping1[note_1.id] = { element: element, musicSystem: parentMusicSystem };
+                        mapping2[element.id] = note_1;
                         // filtered.splice(j, 1);
                         break;
                     }

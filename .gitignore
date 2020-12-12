@@ -1,5 +1,2 @@
 .cache
-dist
 node_modules
-publish/package.json
-public

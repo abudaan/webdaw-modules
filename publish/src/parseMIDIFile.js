@@ -75,7 +75,7 @@ function parseTracks(reader, ppq) {
             throw new Error("Unexpected chunk, expected MTrk, got " + trackChunk.id);
         }
         var trackId = "T-" + uniqid_1.default();
-        var track = createTrack_1.createTrack(trackId);
+        var track_1 = createTrack_1.createTrack(trackId);
         var trackTrack = new bufferreader_1.BufferReader(trackChunk.data);
         var ticks = 0;
         var lastTypeByte = null;
@@ -93,7 +93,7 @@ function parseTracks(reader, ppq) {
                 initialDenominator = denominator;
             }
             if (trackName) {
-                track.name = trackName;
+                track_1.name = trackName;
             }
             ticks += deltaTime;
             // console.log('TICKS', ticks, bpm, numerator);
@@ -101,7 +101,7 @@ function parseTracks(reader, ppq) {
             events.push(__assign(__assign({}, event_1), { trackId: trackId,
                 ticks: ticks }));
         }
-        tracks.push(track);
+        tracks.push(track_1);
     }
     return {
         events: midi_1.sortMIDIEvents(events),

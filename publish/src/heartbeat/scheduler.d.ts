@@ -1,0 +1,1 @@
+declare function scheduler(): void;

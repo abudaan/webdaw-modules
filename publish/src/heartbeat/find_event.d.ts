@@ -1,0 +1,1 @@
+declare function findEvent(): void;

@@ -1,28 +1,15 @@
-// import { parseMusicXML, ParsedMusicXML, Repeat } from "./musicxml/parser";
-// import { parsedMusicXMLToSong } from "./musicxml/parsedMusicXMLToSong";
-// import {
-//   GraphicalNoteData,
-//   VexFlowStaveNote,
-//   getGraphicalNotesPerBar,
-// } from "./osmd/getGraphicalNotesPerBar";
-// import { setGraphicalNoteColor } from "./osmd/setGraphicalNoteColor";
-// import { NoteMapping, mapMIDINoteIdToGraphicalNote } from "./osmd/mapMIDINoteIdToGraphicalNote";
+// /// <reference types="./heartbeat/heartbeat" />
 
-// export {
-//   GraphicalNoteData,
-//   NoteMapping,
-//   ParsedMusicXML,
-//   Repeat,
-//   VexFlowStaveNote,
-//   getGraphicalNotesPerBar,
-//   mapMIDINoteIdToGraphicalNote,
-//   parseMusicXML,
-//   parsedMusicXMLToSong,
-//   setGraphicalNoteColor,
-// };
+// import * as heartbeat from "./heartbeat/index";
+// export { heartbeat };
+// import Heartbeat from "./heartbeat/heartbeat";
+// export { Heartbeat };
+// import * as heartbeat from "./heartbeat/index";
 
+export * from "./import_heartbeat";
 export * from "./musicxml/parser";
 export * from "./musicxml/parsedMusicXMLToSong";
+export * from "./musicxml/loadMusicXMLFile";
 export * from "./osmd/getBoundingBoxesOfGraphicalMeasures";
 export * from "./osmd/getBoundingBoxesOfSelectedMeasures";
 export * from "./osmd/getGraphicalNotesPerMeasure";
@@ -65,3 +52,26 @@ export * from "./setTrackOutput";
 export * from "./transport";
 export * from "./types";
 export * from "./unschedule";
+
+// import { parseMusicXML, ParsedMusicXML, Repeat } from "./musicxml/parser";
+// import { parsedMusicXMLToSong } from "./musicxml/parsedMusicXMLToSong";
+// import {
+//   GraphicalNoteData,
+//   VexFlowStaveNote,
+//   getGraphicalNotesPerBar,
+// } from "./osmd/getGraphicalNotesPerBar";
+// import { setGraphicalNoteColor } from "./osmd/setGraphicalNoteColor";
+// import { NoteMapping, mapMIDINoteIdToGraphicalNote } from "./osmd/mapMIDINoteIdToGraphicalNote";
+
+// export {
+//   GraphicalNoteData,
+//   NoteMapping,
+//   ParsedMusicXML,
+//   Repeat,
+//   VexFlowStaveNote,
+//   getGraphicalNotesPerBar,
+//   mapMIDINoteIdToGraphicalNote,
+//   parseMusicXML,
+//   parsedMusicXMLToSong,
+//   setGraphicalNoteColor,
+// };

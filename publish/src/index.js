@@ -1,13 +1,5 @@
 "use strict";
-// import { parseMusicXML, ParsedMusicXML, Repeat } from "./musicxml/parser";
-// import { parsedMusicXMLToSong } from "./musicxml/parsedMusicXMLToSong";
-// import {
-//   GraphicalNoteData,
-//   VexFlowStaveNote,
-//   getGraphicalNotesPerBar,
-// } from "./osmd/getGraphicalNotesPerBar";
-// import { setGraphicalNoteColor } from "./osmd/setGraphicalNoteColor";
-// import { NoteMapping, mapMIDINoteIdToGraphicalNote } from "./osmd/mapMIDINoteIdToGraphicalNote";
+// /// <reference types="./heartbeat/heartbeat" />
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
@@ -19,20 +11,15 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// export {
-//   GraphicalNoteData,
-//   NoteMapping,
-//   ParsedMusicXML,
-//   Repeat,
-//   VexFlowStaveNote,
-//   getGraphicalNotesPerBar,
-//   mapMIDINoteIdToGraphicalNote,
-//   parseMusicXML,
-//   parsedMusicXMLToSong,
-//   setGraphicalNoteColor,
-// };
+// import * as heartbeat from "./heartbeat/index";
+// export { heartbeat };
+// import Heartbeat from "./heartbeat/heartbeat";
+// export { Heartbeat };
+// import * as heartbeat from "./heartbeat/index";
+__exportStar(require("./import_heartbeat"), exports);
 __exportStar(require("./musicxml/parser"), exports);
 __exportStar(require("./musicxml/parsedMusicXMLToSong"), exports);
+__exportStar(require("./musicxml/loadMusicXMLFile"), exports);
 __exportStar(require("./osmd/getBoundingBoxesOfGraphicalMeasures"), exports);
 __exportStar(require("./osmd/getBoundingBoxesOfSelectedMeasures"), exports);
 __exportStar(require("./osmd/getGraphicalNotesPerMeasure"), exports);
@@ -75,4 +62,25 @@ __exportStar(require("./setTrackOutput"), exports);
 __exportStar(require("./transport"), exports);
 __exportStar(require("./types"), exports);
 __exportStar(require("./unschedule"), exports);
+// import { parseMusicXML, ParsedMusicXML, Repeat } from "./musicxml/parser";
+// import { parsedMusicXMLToSong } from "./musicxml/parsedMusicXMLToSong";
+// import {
+//   GraphicalNoteData,
+//   VexFlowStaveNote,
+//   getGraphicalNotesPerBar,
+// } from "./osmd/getGraphicalNotesPerBar";
+// import { setGraphicalNoteColor } from "./osmd/setGraphicalNoteColor";
+// import { NoteMapping, mapMIDINoteIdToGraphicalNote } from "./osmd/mapMIDINoteIdToGraphicalNote";
+// export {
+//   GraphicalNoteData,
+//   NoteMapping,
+//   ParsedMusicXML,
+//   Repeat,
+//   VexFlowStaveNote,
+//   getGraphicalNotesPerBar,
+//   mapMIDINoteIdToGraphicalNote,
+//   parseMusicXML,
+//   parsedMusicXMLToSong,
+//   setGraphicalNoteColor,
+// };
 //# sourceMappingURL=index.js.map

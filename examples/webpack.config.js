@@ -1,21 +1,36 @@
 /* eslint @typescript-eslint/no-var-requires: 0 */
 
 const path = require("path");
+const webpack = require("webpack");
+// const { browser } = require("process");
+// const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
   entry: {
     "basic/index": "./basic/index.ts",
     "basic2/index": "./basic2/index.ts",
     "musicxml/index": "./musicxml/index.ts",
+    "scoreviewer/index": "./scoreviewer/index.ts",
   },
   devtool: "inline-source-map",
   mode: "development",
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
     // modules: ["node_modules", path.resolve(__dirname, "src")],
+    fallback: {
+      process: require.resolve("process/browser"),
+    },
   },
   module: {
     rules: [
+      {
+        test: /\.styl$/,
+        use: [
+          { loader: "style-loader" },
+          { loader: "css-loader" },
+          { loader: "stylus-loader" }, // compiles Styl to CSS
+        ],
+      },
       {
         test: /\.scss$/i,
         use: [
@@ -55,7 +70,10 @@ module.exports = {
       },
       {
         test: /\.(jpg|jpeg|gif|png|eot|woff|woff2|ttf|svg|ico)$/,
-        loader: "file-loader?name=[name].[ext]",
+        loader: "file-loader",
+        options: {
+          name: "[name].[ext]",
+        },
       },
 
       // {
@@ -69,8 +87,13 @@ module.exports = {
       // },
     ],
   },
+  plugins: [
+    new webpack.ProvidePlugin({
+      process: "process",
+    }),
+  ],
   output: {
-    // filename: "[name].js",
+    filename: "[name].js",
     path: path.resolve(__dirname),
   },
   devServer: {

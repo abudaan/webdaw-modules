@@ -70,8 +70,8 @@ var parsePartWise = function (xmlDoc, ppq) {
         var volume = getVolume_1.getVolume(xmlDoc, partNode, nsResolver);
         var velocity = (volume / 100) * 127;
         var channel = getChannel_1.getChannel(xmlDoc, partNode, nsResolver);
-        var instrument = getInstrument_1.getInstrument(xmlDoc, partNode, nsResolver);
-        parts.push({ id: partId, name: partName, volume: volume, instrument: instrument, events: [] });
+        var instrument_1 = getInstrument_1.getInstrument(xmlDoc, partNode, nsResolver);
+        parts.push({ id: partId, name: partName, volume: volume, instrument: instrument_1, events: [] });
         var measureIterator = xmlDoc.evaluate('//part[@id="' + partId + '"]/measure', partNode, nsResolver, XPathResult.ANY_TYPE, null);
         var ticks = 0;
         var tmp = void 0;
@@ -174,7 +174,7 @@ var parsePartWise = function (xmlDoc, ppq) {
                     // console.log(ticks, measureNumber, chord);
                     var noteNumber = midi_1.getNoteNumber(noteName, octave);
                     // console.log("\t", ticks, "ON", n++);
-                    var note = {
+                    var note_1 = {
                         ticks: ticks,
                         descr: "note on",
                         type: 0x90,
@@ -184,7 +184,7 @@ var parsePartWise = function (xmlDoc, ppq) {
                         bar: measureNumber,
                     };
                     ticks += noteDurationTicks;
-                    parts[index].events.push(note);
+                    parts[index].events.push(note_1);
                     //console.log('tie', tieStart, tieStop);
                     if (tieStart === false && tieStop === false) {
                         // no ties

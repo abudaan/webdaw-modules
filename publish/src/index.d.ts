@@ -1,5 +1,7 @@
+export * from "./import_heartbeat";
 export * from "./musicxml/parser";
 export * from "./musicxml/parsedMusicXMLToSong";
+export * from "./musicxml/loadMusicXMLFile";
 export * from "./osmd/getBoundingBoxesOfGraphicalMeasures";
 export * from "./osmd/getBoundingBoxesOfSelectedMeasures";
 export * from "./osmd/getGraphicalNotesPerMeasure";

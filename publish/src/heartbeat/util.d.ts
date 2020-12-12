@@ -1,0 +1,1 @@
+declare function util(): void;

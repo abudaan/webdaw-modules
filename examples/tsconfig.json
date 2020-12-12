@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "module": "commonjs",
+    "target": "es6",
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "downlevelIteration": true,
+    "allowJs": true,
+    "strict": true,
+    "types": ["./node_modules/webdaw-modules/publish/src/heartbeat"],
+    "lib": ["dom", "es6", "es2017"],
+    "baseUrl": ".",
+    "typeRoots": ["./node_modules/@types"],
+    "declaration": false
+  },
+  "include": ["./**/*.ts"],
+  "exclude": ["dist", "node_modules", ".cache"]
+}

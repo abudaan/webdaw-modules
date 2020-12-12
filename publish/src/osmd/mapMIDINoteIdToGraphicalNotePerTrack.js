@@ -78,13 +78,13 @@ var getMappingPerTrack = function (graphicalNotes, midiNotes, repeats) {
             graphicalNotes[barIndex].forEach(function (bd) {
                 var element = bd.element, noteNumber = bd.noteNumber, bar = bd.bar, parentMusicSystem = bd.parentMusicSystem;
                 for (var j = 0; j < filteredMidi_1.length; j++) {
-                    var note = filteredMidi_1[j];
-                    if (!midiToGraphical[note.id] &&
-                        note.noteOn.bar == bar + barOffset - 1 &&
-                        note.noteOn.noteNumber == noteNumber) {
+                    var note_1 = filteredMidi_1[j];
+                    if (!midiToGraphical[note_1.id] &&
+                        note_1.noteOn.bar == bar + barOffset - 1 &&
+                        note_1.noteOn.noteNumber == noteNumber) {
                         numMatch += 1;
-                        midiToGraphical[note.id] = { element: element, musicSystem: parentMusicSystem };
-                        graphicalToMidi[element.id] = note;
+                        midiToGraphical[note_1.id] = { element: element, musicSystem: parentMusicSystem };
+                        graphicalToMidi[element.id] = note_1;
                         // filtered.splice(j, 1);
                         break;
                     }
