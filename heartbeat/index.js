@@ -21475,4 +21475,4 @@ function initSequencer() {
 initSequencer();
 
 // hail hail esnext!
-export { sequencer };
+export default sequencer;

@@ -1,0 +1,90 @@
+{
+    "name": "webdaw-modules",
+    "version": "0.0.16",
+    "description": "a set of modules for building a web-based DAW",
+    "main": "./publish/src/index.js",
+    "dependencies": {
+        "@types/ramda": "^0.27.32",
+        "@types/uniqid": "^4.1.3",
+        "@types/webmidi": "^2.0.4",
+        "opensheetmusicdisplay": "0.8.7",
+        "ramda": "^0.27.1",
+        "rxjs": "^6.6.3",
+        "uniqid": "^5.2.0"
+    },
+    "devDependencies": {
+        "@amjs/create-index": "^0.1.4",
+        "@typescript-eslint/eslint-plugin": "^2.30.0",
+        "@typescript-eslint/parser": "^2.30.0",
+        "eslint": "^6.8.0",
+        "eslint-config-prettier": "^6.11.0",
+        "eslint-plugin-prettier": "^3.1.3",
+        "prettier": "^1.19.1",
+        "typescript": "^3.8.3"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "tsc": "node_modules/.bin/tsc",
+        "clean": "rm -rf ./publish",
+        "clean2": "rm -rf ./publish/**/*",
+        "index": "node node_modules/@amjs/create-index ./src",
+        "prepublishOnly": "npm run tsc"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/abudaan/webdaw-modules.git"
+    },
+    "keywords": [
+        "MIDI",
+        "audio",
+        "web",
+        "MPE"
+    ],
+    "author": "abudaan",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/abudaan/webdaw-modules/issues"
+    },
+    "homepage": "https://github.com/abudaan/webdaw-modules#readme",
+    "prettier": {
+        "semi": true,
+        "trailingComma": "es5",
+        "printWidth": 100,
+        "overrides": [
+            {
+                "files": ".scss",
+                "options": {
+                    "parser": "scss"
+                }
+            }
+        ]
+    },
+    "eslintConfig": {
+        "root": true,
+        "env": {
+            "node": true,
+            "browser": true,
+            "es6": true
+        },
+        "globals": {},
+        "extends": [
+            "eslint:recommended",
+            "plugin:@typescript-eslint/recommended",
+            "prettier"
+        ],
+        "rules": {
+            "prettier/prettier": "error",
+            "no-dupe-class-members": "off",
+            "@typescript-eslint/no-unused-vars": "warn",
+            "@typescript-eslint/no-explicit-any": "warn",
+            "@typescript-eslint/no-inferrable-types": "off",
+            "@typescript-eslint/no-empty-function": "off",
+            "@typescript-eslint/interface-name-prefix": "off"
+        },
+        "parser": "@typescript-eslint/parser",
+        "plugins": [
+            "prettier",
+            "react/recommended"
+        ]
+    }
+}

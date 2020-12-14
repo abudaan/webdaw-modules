@@ -1,6 +1,6 @@
 /// <reference types="webmidi" />
 
-declare module Heartbeat {
+export module Heartbeat {
   export interface SongPosition {
     bar?: number;
     beat?: number;
@@ -16,7 +16,7 @@ declare module Heartbeat {
     [key: string]: any;
   };
 
-  export type Song = {
+  export interface Song {
     ppq: number;
     nominator: number;
     denominator: number;
@@ -79,7 +79,7 @@ declare module Heartbeat {
     playing: boolean;
     setPlayhead: (type: string, value: number) => void;
     playhead: Playhead;
-  };
+  }
 
   export interface Playhead {
     data: {

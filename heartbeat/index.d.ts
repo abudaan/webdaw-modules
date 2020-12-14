@@ -16,7 +16,7 @@ declare module Heartbeat {
     [key: string]: any;
   };
 
-  export type Song = {
+  export interface Song {
     ppq: number;
     nominator: number;
     denominator: number;
@@ -79,7 +79,7 @@ declare module Heartbeat {
     playing: boolean;
     setPlayhead: (type: string, value: number) => void;
     playhead: Playhead;
-  };
+  }
 
   export interface Playhead {
     data: {
@@ -362,37 +362,3 @@ declare module Heartbeat {
     midiOutputs: WebMidi.MIDIOutput[];
   };
 }
-
-export function createSong(config: any): Heartbeat.Song;
-export function createTrack(name: string): Heartbeat.Track;
-export function createPart(name?: string): Heartbeat.Part;
-export function createKeyEditor(song: Heartbeat.Song, config: any): Heartbeat.KeyEditor;
-export function getMidiFiles(): Heartbeat.MIDIFileJSON[];
-export function getAudioContext(): AudioContext;
-export function getMasterGainNode(): GainNode;
-export function createAudioEvent(config: any): Heartbeat.AudioEvent;
-export function addMidiFile(
-  args: { url?: string; arraybuffer?: ArrayBuffer },
-  callback: (mf: Heartbeat.MIDIFileJSON) => void
-): void;
-export function addAssetPack(ap: Heartbeat.AssetPack, callback: () => void): void;
-export function getInstruments(): Heartbeat.Instrument[];
-export function ready(): Promise<boolean>;
-export function getNoteNumber(step: string, octave: number): number;
-export function createMidiEvent(
-  ticks: number,
-  type: number,
-  data1: number,
-  data2?: number
-): Heartbeat.MIDIEvent;
-export function processEvent(event: Heartbeat.MIDIEvent, instrument: string): void;
-export function processEvent(event: Heartbeat.MIDIEvent[], instrument: string): void;
-export function stopProcessEvents(): void;
-export function getMidiFile(id: string): Heartbeat.MIDIFileJSON;
-export function getSnapshot(song: Heartbeat.Song, id?: string): Heartbeat.SnapShot;
-export const browser: string;
-export const midiInputs: WebMidi.MIDIInput[];
-export const midiOutputs: WebMidi.MIDIOutput[];
-
-// export default sequencer;
-export declare var sequencer: Heartbeat.Sequencer;

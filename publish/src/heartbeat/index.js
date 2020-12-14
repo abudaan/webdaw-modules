@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.sequencer = void 0;
 var sequencer;
+exports.sequencer = sequencer;
 // import { version } from "../package.json";
 var version = "0.0.25";
 function openModule() {
@@ -95,7 +97,7 @@ function openModule() {
     /**
         @namespace sequencer
     */
-    sequencer = {
+    exports.sequencer = sequencer = {
         name: "qambi",
         version: version,
         protectedScope: protectedScope,
@@ -17772,6 +17774,4 @@ function initSequencer() {
     closeModule();
 }
 initSequencer();
-// hail hail esnext!
-exports.default = sequencer;
 //# sourceMappingURL=index.js.map

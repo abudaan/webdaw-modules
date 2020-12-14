@@ -1,1 +1,0 @@
-declare function assetPack(): void;

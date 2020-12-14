@@ -1,2 +1,0 @@
-/*! @source http://purl.eligrey.com/github/FileSaver.js/blob/master/FileSaver.js */
-declare var saveAs: any;

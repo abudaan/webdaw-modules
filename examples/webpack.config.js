@@ -7,9 +7,9 @@ const webpack = require("webpack");
 
 module.exports = {
   entry: {
-    "basic/index": "./basic/index.ts",
-    "basic2/index": "./basic2/index.ts",
-    "musicxml/index": "./musicxml/index.ts",
+    // "basic/index": "./basic/index.ts",
+    // "basic2/index": "./basic2/index.ts",
+    // "musicxml/index": "./musicxml/index.ts",
     "scoreviewer/index": "./scoreviewer/index.ts",
   },
   devtool: "inline-source-map",
