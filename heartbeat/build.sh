@@ -49,6 +49,7 @@ files="
     ./close_module.js"
 
 cat $files >./index.js
-# cp ../build/index.js ../build/heartbeat.js # for legacy examples
+cp ./index.js ../publish/src/heartbeat/index.js
+cp ./index.js ../src/heartbeat/index.js
 # uglifyjs ../build/heartbeat.js -c > ../build/heartbeat.min.js
 #echo $files

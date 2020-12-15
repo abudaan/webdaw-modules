@@ -1,5 +1,4 @@
 import { Heartbeat } from "./heartbeat";
-export { Heartbeat };
 declare const heartbeat: Heartbeat.Sequencer;
 export { heartbeat };
 export * from "./musicxml/parser";

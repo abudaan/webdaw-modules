@@ -1,15 +1,13 @@
-import { BoundingBoxMeasure } from "webdaw-modules";
-import sequencer from "../../publish/src/heartbeat";
-// import { Heartbeat } from "../../src/heartbeat/heartbeat";
+import { heartbeat as sequencer, Heartbeat } from "webdaw-modules";
 import { updateBar } from "./actions/updateBar";
-import { loadJSON, addAssetPack, loadMIDIFile } from "./utils/heartbeat-utils";
+import { loadJSON, addAssetPack, loadMIDIFile } from "../../src/heartbeat/utils/heartbeat-utils";
 import { store } from "./store";
 import { setSongPosition } from "./actions/setSongPosition";
 import { songPositionFromScore } from "./utils/songPositionFromScore";
 
 const instrumentName = "TP00-PianoStereo";
-const instrumentOgg = `./assets/${instrumentName}.ogg.json`;
-const instrumentMp3 = `./assets/${instrumentName}.mp3.json`;
+const instrumentOgg = `../assets/${instrumentName}.ogg.json`;
+const instrumentMp3 = `../assets/${instrumentName}.mp3.json`;
 console.log(sequencer);
 
 let raqId: number;

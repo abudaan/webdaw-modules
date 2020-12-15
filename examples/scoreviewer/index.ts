@@ -1,18 +1,5 @@
 import "./style/index.styl";
-import { getVersion, heartbeat as sequencer, Heartbeat } from "webdaw-modules";
-// import sequencer from "../../publish/src/heartbeat";
-sequencer.ready();
-console.log(sequencer);
-
-// const seq = (sequencer as unknown) as Heartbeat.Heartbeat.Sequencer;
-// console.log(sequencer);
-const s: Heartbeat.Song = null;
-
-// sequencer.ready().then(() => {
-//   console.log("READY", sequencer);
-// });
-
-/*
+import { getVersion } from "webdaw-modules";
 import { store } from "./store";
 import { setup as setupSong } from "./songWrapper";
 import { setup as setupScore } from "./scoreWrapper";
@@ -93,4 +80,3 @@ const init = async () => {
 };
 
 init();
-*/

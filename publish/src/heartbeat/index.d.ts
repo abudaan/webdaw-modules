@@ -1,6 +1,6 @@
 /// <reference types="webmidi" />
 
-declare module Heartbeat {
+export module Heartbeat {
   export interface SongPosition {
     bar?: number;
     beat?: number;
@@ -16,7 +16,7 @@ declare module Heartbeat {
     [key: string]: any;
   };
 
-  export type Song = {
+  export interface Song {
     ppq: number;
     nominator: number;
     denominator: number;
@@ -79,7 +79,7 @@ declare module Heartbeat {
     playing: boolean;
     setPlayhead: (type: string, value: number) => void;
     playhead: Playhead;
-  };
+  }
 
   export interface Playhead {
     data: {
@@ -342,6 +342,7 @@ declare module Heartbeat {
       args: { url?: string; arraybuffer?: ArrayBuffer },
       callback: (mf: Heartbeat.MIDIFileJSON) => void
     ): void;
+    createMidiFile(args: any): any;
     addAssetPack(ap: Heartbeat.AssetPack, callback: () => void): void;
     getInstruments(): Heartbeat.Instrument[];
     ready(): Promise<boolean>;
@@ -375,6 +376,7 @@ export function addMidiFile(
   args: { url?: string; arraybuffer?: ArrayBuffer },
   callback: (mf: Heartbeat.MIDIFileJSON) => void
 ): void;
+export function createMidiFile(args: any): any;
 export function addAssetPack(ap: Heartbeat.AssetPack, callback: () => void): void;
 export function getInstruments(): Heartbeat.Instrument[];
 export function ready(): Promise<boolean>;
@@ -394,5 +396,5 @@ export const browser: string;
 export const midiInputs: WebMidi.MIDIInput[];
 export const midiOutputs: WebMidi.MIDIOutput[];
 
-// export default sequencer;
+export default sequencer;
 export declare var sequencer: Heartbeat.Sequencer;

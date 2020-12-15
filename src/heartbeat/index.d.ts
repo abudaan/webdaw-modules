@@ -342,6 +342,7 @@ export module Heartbeat {
       args: { url?: string; arraybuffer?: ArrayBuffer },
       callback: (mf: Heartbeat.MIDIFileJSON) => void
     ): void;
+    createMidiFile(args: any): any;
     addAssetPack(ap: Heartbeat.AssetPack, callback: () => void): void;
     getInstruments(): Heartbeat.Instrument[];
     ready(): Promise<boolean>;
@@ -375,6 +376,7 @@ export function addMidiFile(
   args: { url?: string; arraybuffer?: ArrayBuffer },
   callback: (mf: Heartbeat.MIDIFileJSON) => void
 ): void;
+export function createMidiFile(args: any): any;
 export function addAssetPack(ap: Heartbeat.AssetPack, callback: () => void): void;
 export function getInstruments(): Heartbeat.Instrument[];
 export function ready(): Promise<boolean>;
@@ -394,5 +396,5 @@ export const browser: string;
 export const midiInputs: WebMidi.MIDIInput[];
 export const midiOutputs: WebMidi.MIDIOutput[];
 
-// export default sequencer;
+export default sequencer;
 export declare var sequencer: Heartbeat.Sequencer;

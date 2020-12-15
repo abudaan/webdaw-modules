@@ -1,6 +1,6 @@
-export const midiFileName = 'mozk545a_musescore';
-export const midiFile = './assets/mozk545a_musescore.mid';
-export const mxmlFile = './assets/mozk545a_musescore.musicxml';
+export const midiFileName = "mozk545a_musescore";
+export const midiFile = "../assets/mozk545a_musescore.mid";
+export const mxmlFile = "../assets/mozk545a_musescore.musicxml";
 // const midiFileName = 'spring';
 // const midiFile = '../assets/spring.mid';
 // const mxmlFile = '../assets/spring.xml';
