@@ -12,7 +12,7 @@ const render = (o: OpenSheetMusicDisplay) => {
   store.setState({ offset: { x: scoreDiv.offsetLeft, y: scoreDiv.offsetTop } });
 };
 
-export const getOSMD = (): OpenSheetMusicDisplay => osmd;
+export const getOSMD = (): OpenSheetMusicDisplay => (osmd as unknown) as OpenSheetMusicDisplay;
 
 export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => void }> => {
   scoreDiv = divElem;

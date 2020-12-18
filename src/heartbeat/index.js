@@ -21735,7 +21735,7 @@ function transpose() {
 var label = "heartbeat " + version + ", initializing took";
 
 function initSequencer() {
-  console.time(label);
+  // console.time(label);
   openModule();
   assetManager();
   assetPack();

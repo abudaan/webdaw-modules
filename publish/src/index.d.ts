@@ -1,6 +1,8 @@
 import { Heartbeat } from "./heartbeat";
+export { Heartbeat };
 declare const heartbeat: Heartbeat.Sequencer;
 export { heartbeat };
+export * from "./heartbeat/utils";
 export * from "./musicxml/parser";
 export * from "./musicxml/parsedMusicXMLToSong";
 export * from "./musicxml/loadMusicXMLFile";

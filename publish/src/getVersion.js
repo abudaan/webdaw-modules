@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getVersion = void 0;
-// export const getVersion = (): string => version;
-exports.getVersion = function () { return "0.0.16"; };
+var package_json_1 = require("../package.json");
+exports.getVersion = function () { return package_json_1.version; };
+// export const getVersion = (): string => "0.0.16";
 //# sourceMappingURL=getVersion.js.map

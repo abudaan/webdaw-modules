@@ -1,14 +1,14 @@
-import { heartbeat as sequencer, Heartbeat } from "webdaw-modules";
+import { heartbeat as sequencer, Heartbeat, heartbeat_utils } from "webdaw-modules";
 import { updateBar } from "./actions/updateBar";
-import { loadJSON, addAssetPack, loadMIDIFile } from "../../src/heartbeat/utils/heartbeat-utils";
 import { store } from "./store";
 import { setSongPosition } from "./actions/setSongPosition";
 import { songPositionFromScore } from "./utils/songPositionFromScore";
+const { loadJSON, addAssetPack, loadMIDIFile } = heartbeat_utils;
 
 const instrumentName = "TP00-PianoStereo";
 const instrumentOgg = `../assets/${instrumentName}.ogg.json`;
 const instrumentMp3 = `../assets/${instrumentName}.mp3.json`;
-console.log(sequencer);
+// console.log(sequencer.ready);
 
 let raqId: number;
 let song: Heartbeat.Song;

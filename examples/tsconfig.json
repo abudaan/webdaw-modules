@@ -17,6 +17,6 @@
     "typeRoots": ["./node_modules/@types"],
     "declaration": false
   },
-  "include": ["./**/*.ts"],
+  "include": ["./**/*.ts", "../src/heartbeat/utils/heartbeat_utils.ts"],
   "exclude": ["dist", "node_modules", ".cache"]
 }

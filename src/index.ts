@@ -1,16 +1,16 @@
 // /// <reference types="./heartbeat/" />
 
 import { Heartbeat } from "./heartbeat";
-// export { Heartbeat };
+export { Heartbeat };
 
 import * as sequencer from "./heartbeat/index";
-const heartbeat: Heartbeat.Sequencer = sequencer.sequencer as Heartbeat.Sequencer;
+const heartbeat: Heartbeat.Sequencer = sequencer.default as Heartbeat.Sequencer;
 export { heartbeat };
-// import Heartbeat from "./heartbeat/typings";
-// export { Heartbeat };
-// import * as heartbeat from "./heartbeat/index";
 
-// export * from "./import_heartbeat";
+// import { heartbeat_utils } from "./heartbeat/utils";
+// export { heartbeat_utils };
+export * from "./heartbeat/utils";
+
 export * from "./musicxml/parser";
 export * from "./musicxml/parsedMusicXMLToSong";
 export * from "./musicxml/loadMusicXMLFile";

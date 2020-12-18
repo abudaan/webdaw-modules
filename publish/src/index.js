@@ -24,14 +24,12 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.heartbeat = void 0;
-// export { Heartbeat };
 var sequencer = __importStar(require("./heartbeat/index"));
-var heartbeat = sequencer.sequencer;
+var heartbeat = sequencer.default;
 exports.heartbeat = heartbeat;
-// import Heartbeat from "./heartbeat/typings";
-// export { Heartbeat };
-// import * as heartbeat from "./heartbeat/index";
-// export * from "./import_heartbeat";
+// import { heartbeat_utils } from "./heartbeat/utils";
+// export { heartbeat_utils };
+__exportStar(require("./heartbeat/utils"), exports);
 __exportStar(require("./musicxml/parser"), exports);
 __exportStar(require("./musicxml/parsedMusicXMLToSong"), exports);
 __exportStar(require("./musicxml/loadMusicXMLFile"), exports);
