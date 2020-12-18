@@ -275,6 +275,14 @@ var loadMIDIFile = function (url) {
         });
     });
 };
+var getBarInfo = function (song, bar) {
+    var startMillis = song.getPosition("barsandbeats", bar, 0, 0, 0).millis;
+    var endMillis = song.getPosition("barsandbeats", bar + 1, 0, 0, 0).millis;
+    return {
+        durationMillis: endMillis - startMillis,
+        startMillis: startMillis,
+    };
+};
 exports.heartbeat_utils = {
     initSequencer: initSequencer,
     getBrowser: getBrowser,
@@ -292,5 +300,6 @@ exports.heartbeat_utils = {
     getHighestNote: getHighestNote,
     getAverageNote: getAverageNote,
     loadMIDIFile: loadMIDIFile,
+    getBarInfo: getBarInfo,
 };
 //# sourceMappingURL=utils.js.map

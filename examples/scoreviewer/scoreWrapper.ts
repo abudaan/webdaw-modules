@@ -1,7 +1,6 @@
 import { OpenSheetMusicDisplay } from "opensheetmusicdisplay";
-import { parseMusicXML, loadMusicXMLFile } from "webdaw-modules";
+import { parseMusicXML, loadMusicXMLFile, getBoundingBoxMeasureAll } from "webdaw-modules";
 import { store } from "./store";
-import { getBoundingBoxMeasureAll } from "./utils/getBoundingBoxMeasure";
 
 let scoreDiv: HTMLDivElement;
 let osmd: OpenSheetMusicDisplay;

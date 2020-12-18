@@ -24,5 +24,9 @@ export declare const heartbeat_utils: {
     getHighestNote: (events: Heartbeat.MIDIEvent[]) => Heartbeat.MIDIEvent;
     getAverageNote: (events: Heartbeat.MIDIEvent[]) => number;
     loadMIDIFile: (url: string) => Promise<void>;
+    getBarInfo: (song: Heartbeat.Song, bar: number) => {
+        durationMillis: number;
+        startMillis: any;
+    };
 };
 export {};

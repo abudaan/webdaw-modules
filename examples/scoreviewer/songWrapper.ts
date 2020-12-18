@@ -1,8 +1,12 @@
-import { heartbeat as sequencer, Heartbeat, heartbeat_utils } from "webdaw-modules";
+import {
+  heartbeat as sequencer,
+  Heartbeat,
+  heartbeat_utils,
+  songPositionFromScore,
+} from "webdaw-modules";
 import { updateBar } from "./actions/updateBar";
 import { store } from "./store";
 import { setSongPosition } from "./actions/setSongPosition";
-import { songPositionFromScore } from "./utils/songPositionFromScore";
 const { loadJSON, addAssetPack, loadMIDIFile } = heartbeat_utils;
 
 const instrumentName = "TP00-PianoStereo";

@@ -1,10 +1,13 @@
-import { songPositionFromScore } from '../utils/songPositionFromScore';
-import { getBarInfo } from '../utils/getBarInfo';
-import { getBoundingBoxMeasureAll } from '../utils/getBoundingBoxMeasure';
-import { getMeasureAtPoint } from '../utils/getMeasureAtPoint';
-import { getSong } from '../songWrapper';
-import { store } from '../store';
-import { getOSMD } from '../scoreWrapper';
+import {
+  songPositionFromScore,
+  getBoundingBoxMeasureAll,
+  getMeasureAtPoint,
+  heartbeat_utils,
+} from "webdaw-modules";
+import { getSong } from "../songWrapper";
+import { store } from "../store";
+import { getOSMD } from "../scoreWrapper";
+const { getBarInfo } = heartbeat_utils;
 
 const debug = ({
   x,
@@ -17,8 +20,8 @@ const debug = ({
   width: number;
   height: number;
 }) => {
-  const d = document.createElement('div');
-  d.className = 'debug fadeOut';
+  const d = document.createElement("div");
+  d.className = "debug fadeOut";
   d.style.top = `${y}px`;
   d.style.left = `${x}px`;
   d.style.width = `${width}px`;
@@ -64,7 +67,7 @@ export const setPlayhead = (e: PointerEvent) => {
 
     debug({ x: x + offsetX, y: y + offsetY, height, width });
 
-    song.setPlayhead('millis', songPositionMillis);
+    song.setPlayhead("millis", songPositionMillis);
 
     store.setState({
       pixelsPerMillisecond,

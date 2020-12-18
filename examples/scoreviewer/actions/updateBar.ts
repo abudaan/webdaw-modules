@@ -1,8 +1,7 @@
-import { getBarInfo } from '../utils/getBarInfo';
-import { getSong } from '../songWrapper';
-import { store } from '../store';
-import { scorePositionFromSong } from '../utils/scorePositionFromSong';
-
+import { scorePositionFromSong, heartbeat_utils } from "webdaw-modules";
+import { getSong } from "../songWrapper";
+import { store } from "../store";
+const { getBarInfo } = heartbeat_utils;
 /**
  * The song playhead enters a new bar
  */
@@ -22,7 +21,7 @@ export const updateBar = () => {
     song.bar
   );
 
-  console.log('updateBar', hasRepeatedClone, 'song', song.bar, 'score', bar);
+  // console.log("updateBar", hasRepeatedClone, "song", song.bar, "score", bar);
 
   const { x, y, width, height } = boundingBoxesMeasures[bar - 1];
   const { durationMillis, startMillis } = getBarInfo(song, song.bar);
