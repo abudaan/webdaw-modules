@@ -83,7 +83,7 @@ function closeModule(cb) {
         cb();
       });
       ready = true;
-      console.timeEnd(label);
+      // console.timeEnd(label);
       // }, 4000)
     },
     false

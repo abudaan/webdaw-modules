@@ -21723,7 +21723,7 @@ function transpose() {
         cb();
       });
       ready = true;
-      console.timeEnd(label);
+      // console.timeEnd(label);
       // }, 4000)
     },
     false
