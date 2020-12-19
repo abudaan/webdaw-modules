@@ -28,7 +28,7 @@
     "clean": "rm -rf ./publish",
     "clean2": "rm -rf ./publish/**/*",
     "index": "node node_modules/@amjs/create-index ./src",
-    "prepublishOnly": "npm run tsc",
+    "prepublishOnly": "npm run compile",
     "build-heartbeat": "cd ./heartbeat && pwd && ./build.sh",
     "copy-declaration": "cp ./src/heartbeat/index.d.ts ./publish/src/heartbeat/index.d.ts",
     "compile": "npm run build-heartbeat && npm run tsc && npm run copy-declaration"
