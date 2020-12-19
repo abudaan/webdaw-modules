@@ -19,7 +19,7 @@ My goal is to create modules that will be basically just functions that transfor
 Here is a quick draft of the order in which I will build the new modules:
 
 - [x] MIDI file parser
-- [ ] MusicXML file parser
+- [x] MusicXML file parser
 - [x] event scheduler
 - [ ] support for loops in event scheduler
 - [ ] simple synthesizer
@@ -40,6 +40,21 @@ Here is a quick draft of the order in which I will build the new modules:
 
 See [index.d.ts](https://github.com/abudaan/webdaw-modules/blob/master/index.d.ts). -->
 
+## Integration of heartbeat
+
+To make it easier to use WebDAW together with heartbeat I have added the heartbeat code to WebDAW. You can now use heartbeat as a WebDAW module. I will gradually move functionality out of heartbeat into separate WebDAW modules. If you want to use heartbeat in your project you can simply do this like so:
+
+```typescript
+import { heartbeat, Heartbeat } from 'webdaw-modules';
+
+heartbeat.ready().then(() => {
+  const song: Heartbeat.Song = heartbeat.createSong();
+})
+
+```
+So `heartbeat` (all lowercase) is the module and `Heartbeat` (with capital) is the namespace where all heartbeat typings live.
+
+
 ## About the name
 
 I have deliberately chosen a descriptive name instead of a more 'poetic' name such as heartbeat and qambi because the project is basically just a set of building blocks, not a complete product; I think a poetic name is more something that you put on a completely working DAW (that may or may not use the modules in this project).
@@ -52,6 +67,7 @@ Also I think the term webdaw, or cased like WebDAW, describes a concept, a way o
 
 - [basic](https://abudaan.github.io/webdaw-modules/examples/basic)
 - [musicxml](https://abudaan.github.io/webdaw-modules/examples/musicxml)
+- [scoreviewer (with OSMD)](https://abudaan.github.io/webdaw-modules/examples/scoreviewer)
 
 ## Webpack
 
