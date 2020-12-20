@@ -45,3 +45,34 @@ export const getBoundingBoxMeasure = (
 
 export const getBoundingBoxMeasureAll = (osmd: OpenSheetMusicDisplay): BoundingBox[] =>
   osmd.GraphicSheet.MeasureList.map(staves => calculateBoundingBoxMeasure(staves));
+
+export const getStaveAtPoint = (e: PointerEvent, osmd: OpenSheetMusicDisplay) => {
+  const offsetX = osmd["container"].offsetLeft;
+  const offsetY = osmd["container"].offsetTop;
+  const scrollPosX = window.scrollX;
+  const scrollPosY = window.scrollY;
+  // const x = e.clientX + offsetX + scrollPosX;
+  // const y = e.clientY + offsetY + scrollPosY;
+  const x = e.clientX - offsetX + scrollPosX;
+  const y = e.clientY - offsetY + scrollPosY;
+  // console.log(offsetY, scrollPosY, x, y);
+
+  const refClick = {
+    top: y,
+    bottom: y + 2,
+    left: x,
+    right: x + 2,
+    x,
+    y,
+    width: 2,
+    height: 2,
+  };
+
+  console.log(osmd);
+
+  // osmd.GraphicSheet.MeasureList.map(staves => {
+  //   staves.forEach(stave => {
+  //     console.log(stave);
+  //   });
+  // });
+};

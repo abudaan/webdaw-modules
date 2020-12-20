@@ -6,7 +6,7 @@ import { getBoundingBoxMeasureAll } from "./getBoundingBoxMeasure";
 type Result = { bbox: BoundingBox; measureNumber: number; offset: number } | null;
 
 export const getMeasureAtPoint = (
-  e: MouseEvent,
+  e: PointerEvent,
   osmd: OpenSheetMusicDisplay,
   bboxes?: BoundingBox[]
 ): Result => {

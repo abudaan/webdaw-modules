@@ -1,6 +1,6 @@
-export const midiFileName = "ä¸ç©çæº4";
-export const midiFile = "../assets/ä¸ç©çæº4.mid";
-export const mxmlFile = "../assets/ä¸ç©çæº4.musicxml";
+export const midiFileName = "Dona Nobis Pacem";
+export const midiFile = "../assets/Dona Nobis Pacem.mid";
+export const mxmlFile = "../assets/Dona Nobis Pacem.musicxml";
 
 // export const midiFileName = "mozk545a_musescore";
 // export const midiFile = "../assets/mozk545a_musescore.mid";

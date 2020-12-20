@@ -1,5 +1,5 @@
 import "./style/index.styl";
-import { getVersion } from "webdaw-modules";
+import { getStaveAtPoint, getVersion } from "webdaw-modules";
 import { store } from "./store";
 import { setup as setupSong } from "./songWrapper";
 import { setup as setupScore } from "./scoreWrapper";
@@ -9,6 +9,7 @@ import { setup as setupPlayhead } from "./playhead";
 import { setup as setupDrawLoop } from "./drawLoop";
 import { setup as setupDrawSelection, startSelect } from "./drawSelection";
 import { setPlayhead } from "./actions/setPlayhead";
+import { getOSMD } from "./scoreWrapper";
 
 const scoreDiv = document.getElementById("score") as HTMLDivElement;
 const loadingDiv = document.getElementById("loading");
@@ -59,6 +60,7 @@ const init = async () => {
     if (e.ctrlKey) {
       startSelect(e);
     } else {
+      getStaveAtPoint(e as PointerEvent, getOSMD());
       setPlayhead(e as PointerEvent);
     }
   });

@@ -3,6 +3,8 @@ export { Heartbeat };
 declare const heartbeat: Heartbeat.Sequencer;
 export { heartbeat };
 export * from "./heartbeat/utils";
+import { OpenSheetMusicDisplay } from "opensheetmusicdisplay";
+export { OpenSheetMusicDisplay };
 export * from "./musicxml/parser";
 export * from "./musicxml/parsedMusicXMLToSong";
 export * from "./musicxml/loadMusicXMLFile";

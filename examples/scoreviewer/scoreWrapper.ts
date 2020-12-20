@@ -1,17 +1,20 @@
-import { OpenSheetMusicDisplay } from "opensheetmusicdisplay";
-import { parseMusicXML, loadMusicXMLFile, getBoundingBoxMeasureAll } from "webdaw-modules";
+import {
+  parseMusicXML,
+  loadMusicXMLFile,
+  getBoundingBoxMeasureAll,
+  OpenSheetMusicDisplay,
+} from "webdaw-modules";
 import { store } from "./store";
 
 let scoreDiv: HTMLDivElement;
 let osmd: OpenSheetMusicDisplay;
 
-const render = (o: OpenSheetMusicDisplay) => {
-  osmd = o;
+const render = (osmd: OpenSheetMusicDisplay) => {
   osmd.render();
   store.setState({ offset: { x: scoreDiv.offsetLeft, y: scoreDiv.offsetTop } });
 };
 
-export const getOSMD = (): OpenSheetMusicDisplay => (osmd as unknown) as OpenSheetMusicDisplay;
+export const getOSMD = (): OpenSheetMusicDisplay => osmd;
 
 export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => void }> => {
   scoreDiv = divElem;

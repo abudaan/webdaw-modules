@@ -5,5 +5,5 @@ declare type Result = {
     measureNumber: number;
     offset: number;
 } | null;
-export declare const getMeasureAtPoint: (e: MouseEvent, osmd: OpenSheetMusicDisplay, bboxes?: BoundingBox[] | undefined) => Result;
+export declare const getMeasureAtPoint: (e: PointerEvent, osmd: OpenSheetMusicDisplay, bboxes?: BoundingBox[] | undefined) => Result;
 export {};

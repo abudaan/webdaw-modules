@@ -20,7 +20,7 @@ var __spread = (this && this.__spread) || function () {
     return ar;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getBoundingBoxMeasureAll = exports.getBoundingBoxMeasure = exports.calculateBoundingBoxMeasure = void 0;
+exports.getStaveAtPoint = exports.getBoundingBoxMeasureAll = exports.getBoundingBoxMeasure = exports.calculateBoundingBoxMeasure = void 0;
 // generic util methods, will become part of WebDAW
 exports.calculateBoundingBoxMeasure = function (staves) {
     var x = 0;
@@ -58,5 +58,32 @@ exports.getBoundingBoxMeasure = function (osmd, measureNumber) {
 };
 exports.getBoundingBoxMeasureAll = function (osmd) {
     return osmd.GraphicSheet.MeasureList.map(function (staves) { return exports.calculateBoundingBoxMeasure(staves); });
+};
+exports.getStaveAtPoint = function (e, osmd) {
+    var offsetX = osmd["container"].offsetLeft;
+    var offsetY = osmd["container"].offsetTop;
+    var scrollPosX = window.scrollX;
+    var scrollPosY = window.scrollY;
+    // const x = e.clientX + offsetX + scrollPosX;
+    // const y = e.clientY + offsetY + scrollPosY;
+    var x = e.clientX - offsetX + scrollPosX;
+    var y = e.clientY - offsetY + scrollPosY;
+    // console.log(offsetY, scrollPosY, x, y);
+    var refClick = {
+        top: y,
+        bottom: y + 2,
+        left: x,
+        right: x + 2,
+        x: x,
+        y: y,
+        width: 2,
+        height: 2,
+    };
+    console.log(osmd);
+    // osmd.GraphicSheet.MeasureList.map(staves => {
+    //   staves.forEach(stave => {
+    //     console.log(stave);
+    //   });
+    // });
 };
 //# sourceMappingURL=getBoundingBoxMeasure.js.map

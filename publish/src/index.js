@@ -23,13 +23,15 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !exports.hasOwnProperty(p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.heartbeat = void 0;
+exports.OpenSheetMusicDisplay = exports.heartbeat = void 0;
 var sequencer = __importStar(require("./heartbeat/index"));
 var heartbeat = sequencer.default;
 exports.heartbeat = heartbeat;
 // import { heartbeat_utils } from "./heartbeat/utils";
 // export { heartbeat_utils };
 __exportStar(require("./heartbeat/utils"), exports);
+var opensheetmusicdisplay_1 = require("opensheetmusicdisplay");
+Object.defineProperty(exports, "OpenSheetMusicDisplay", { enumerable: true, get: function () { return opensheetmusicdisplay_1.OpenSheetMusicDisplay; } });
 __exportStar(require("./musicxml/parser"), exports);
 __exportStar(require("./musicxml/parsedMusicXMLToSong"), exports);
 __exportStar(require("./musicxml/loadMusicXMLFile"), exports);

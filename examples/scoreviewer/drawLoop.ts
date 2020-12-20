@@ -3,7 +3,6 @@ import {
   getBoundingBoxesOfSelectedMeasures,
   getSelectedMeasures,
 } from "webdaw-modules";
-// import { OpenSheetMusicDisplay } from "opensheetmusicdisplay";
 import { getOSMD } from "./scoreWrapper";
 import { store } from "./store";
 
