@@ -30,7 +30,7 @@ const init = async () => {
   await setupSong();
   await setupScore(scoreDiv);
   setupControls();
-  setupDebug();
+  // setupDebug();
   setupPlayhead();
   setupDrawLoop();
   setupDrawSelection();
@@ -56,7 +56,7 @@ const init = async () => {
   });
 
   scoreDiv.addEventListener("mousedown", (e) => {
-    if (e.ctrlKey) {
+    if (e.altKey) {
       startSelect(e);
     } else {
       setPlayhead(e as PointerEvent);

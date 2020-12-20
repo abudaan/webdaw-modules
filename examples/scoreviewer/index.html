@@ -14,9 +14,20 @@
     <div id="blend">
       <div id="playhead"></div>
       <div id="controls">
-        <button id="play" disabled>play</button>
-        <button id="stop" disabled>stop</button>
-        <button id="reset" disabled>reset</button>
+        <div>
+          <button id="play" disabled>play</button>
+          <button id="stop" disabled>stop</button>
+          <!-- <button id="reset" disabled>reset</button> -->
+        </div>
+        <div>
+          [spacebar] : play/pause<br />
+          [enter]: play<br />
+          [numpad 0]: stop<br />
+        </div>
+        <div>
+          [alt + drag] : create selection to set a loop<br />
+          [alt + click] (on selection) : remove selection<br />
+        </div>
       </div>
       <div id="score" class="unselectable"></div>
       <div id="loading"><br />loading... (this takes a while)</div>

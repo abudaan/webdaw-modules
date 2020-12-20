@@ -1,12 +1,19 @@
+// export const midiFileName = "ä¸ç©çæº4";
+// export const midiFile = "../assets/ä¸ç©çæº4.mid";
+// export const mxmlFile = "../assets/ä¸ç©çæº4.musicxml";
+
 export const midiFileName = "mozk545a_musescore";
 export const midiFile = "../assets/mozk545a_musescore.mid";
 export const mxmlFile = "../assets/mozk545a_musescore.musicxml";
+
 // const midiFileName = 'spring';
 // const midiFile = '../assets/spring.mid';
 // const mxmlFile = '../assets/spring.xml';
+
 // export const midiFileName = 'mozk545a_2-bars';
 // export const midiFile = '../assets/mozk545a_2-bars.mid';
 // export const mxmlFile = '../assets/mozk545a_2-bars.musicxml';
+
 // export const midiFileName = 'Canon_in_D__Pachelbel__Guitar_Tab';
 // export const midiFile = '../assets/Canon_in_D__Pachelbel__Guitar_Tab.mid';
 // export const mxmlFile = '../assets/Canon_in_D__Pachelbel__Guitar_Tab.musicxml';
