@@ -1,5 +1,5 @@
 import "./style/index.styl";
-import { getStaveAtPoint, getVersion } from "webdaw-modules";
+import { getMeasureAndStaveAtPoint, getVersion } from "webdaw-modules";
 import { store } from "./store";
 import { setup as setupSong } from "./songWrapper";
 import { setup as setupScore } from "./scoreWrapper";
@@ -60,7 +60,7 @@ const init = async () => {
     if (e.ctrlKey) {
       startSelect(e);
     } else {
-      getStaveAtPoint(e as PointerEvent, getOSMD());
+      getMeasureAndStaveAtPoint(e as PointerEvent, getOSMD());
       setPlayhead(e as PointerEvent);
     }
   });

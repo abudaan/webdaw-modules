@@ -40,6 +40,7 @@ __exportStar(require("./osmd/getBoundingBoxesOfSelectedMeasures"), exports);
 __exportStar(require("./osmd/getBoundingBoxMeasure"), exports);
 __exportStar(require("./osmd/getGraphicalNotesPerMeasure"), exports);
 __exportStar(require("./osmd/getGraphicalNotesPerMeasurePerTrack"), exports);
+__exportStar(require("./osmd/getMeasureAndStaveAtPoint"), exports);
 __exportStar(require("./osmd/getMeasureAtPoint"), exports);
 __exportStar(require("./osmd/getMusicSystemMeasureBoundingBox"), exports);
 __exportStar(require("./osmd/getSelectedMeasures"), exports);

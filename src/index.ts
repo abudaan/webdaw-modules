@@ -22,6 +22,7 @@ export * from "./osmd/getBoundingBoxesOfSelectedMeasures";
 export * from "./osmd/getBoundingBoxMeasure";
 export * from "./osmd/getGraphicalNotesPerMeasure";
 export * from "./osmd/getGraphicalNotesPerMeasurePerTrack";
+export * from "./osmd/getMeasureAndStaveAtPoint";
 export * from "./osmd/getMeasureAtPoint";
 export * from "./osmd/getMusicSystemMeasureBoundingBox";
 export * from "./osmd/getSelectedMeasures";

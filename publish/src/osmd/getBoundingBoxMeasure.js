@@ -20,8 +20,7 @@ var __spread = (this && this.__spread) || function () {
     return ar;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getStaveAtPoint = exports.getBoundingBoxMeasureAll = exports.getBoundingBoxMeasure = exports.calculateBoundingBoxMeasure = void 0;
-var _2d_1 = require("../util/2d");
+exports.getBoundingBoxMeasureAll = exports.getBoundingBoxMeasure = exports.calculateBoundingBoxMeasure = void 0;
 // generic util methods, will become part of WebDAW
 exports.calculateBoundingBoxMeasure = function (staves) {
     var x = 0;
@@ -60,47 +59,54 @@ exports.getBoundingBoxMeasure = function (osmd, measureNumber) {
 exports.getBoundingBoxMeasureAll = function (osmd) {
     return osmd.GraphicSheet.MeasureList.map(function (staves) { return exports.calculateBoundingBoxMeasure(staves); });
 };
-exports.getStaveAtPoint = function (e, osmd) {
-    var offsetX = osmd["container"].offsetLeft;
-    var offsetY = osmd["container"].offsetTop;
-    var scrollPosX = window.scrollX;
-    var scrollPosY = window.scrollY;
-    // const x = e.clientX + offsetX + scrollPosX;
-    // const y = e.clientY + offsetY + scrollPosY;
-    var x = e.clientX - offsetX + scrollPosX;
-    var y = e.clientY - offsetY + scrollPosY;
-    // console.log(offsetY, scrollPosY, x, y);
-    var refClick = {
-        top: y,
-        bottom: y + 2,
+/*
+export const getStaveAtPoint = (e: PointerEvent, osmd: OpenSheetMusicDisplay) => {
+  const offsetX = osmd["container"].offsetLeft;
+  const offsetY = osmd["container"].offsetTop;
+  const scrollPosX = window.scrollX;
+  const scrollPosY = window.scrollY;
+  // const x = e.clientX + offsetX + scrollPosX;
+  // const y = e.clientY + offsetY + scrollPosY;
+  const x = e.clientX - offsetX + scrollPosX;
+  const y = e.clientY - offsetY + scrollPosY;
+  // console.log(offsetY, scrollPosY, x, y);
+
+  const refClick = {
+    top: y,
+    bottom: y + 2,
+    left: x,
+    right: x + 2,
+    x,
+    y,
+    width: 2,
+    height: 2,
+  };
+
+  console.log(osmd);
+
+  osmd.GraphicSheet.MeasureList.map(staves => {
+    staves.forEach((stave, i) => {
+      const {
+        stave: { x, y, width, height },
+      } = stave as any;
+      const refStave = {
+        x,
+        y,
+        width,
+        height,
         left: x,
-        right: x + 2,
-        x: x,
-        y: y,
-        width: 2,
-        height: 2,
-    };
-    console.log(osmd);
-    osmd.GraphicSheet.MeasureList.map(function (staves) {
-        staves.forEach(function (stave, i) {
-            var _a = stave.stave, x = _a.x, y = _a.y, width = _a.width, height = _a.height;
-            var refStave = {
-                x: x,
-                y: y,
-                width: width,
-                height: height,
-                left: x,
-                right: x + width,
-                top: y,
-                bottom: y + height,
-            };
-            if (_2d_1.hasOverlap(refClick, refStave)) {
-                // console.log("stave", i, refClick.x, refClick.y, x, y, width, height);
-                console.log("hit", i, refStave, refClick);
-                // } else {
-                //   console.log("no hit", i, refStave, refClick);
-            }
-        });
+        right: x + width,
+        top: y,
+        bottom: y + height,
+      };
+      if (hasOverlap(refClick, refStave)) {
+        // console.log("stave", i, refClick.x, refClick.y, x, y, width, height);
+        console.log("hit", i, refStave, refClick);
+        // } else {
+        //   console.log("no hit", i, refStave, refClick);
+      }
     });
+  });
 };
+*/
 //# sourceMappingURL=getBoundingBoxMeasure.js.map
