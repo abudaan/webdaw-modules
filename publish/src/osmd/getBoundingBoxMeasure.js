@@ -21,6 +21,7 @@ var __spread = (this && this.__spread) || function () {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getStaveAtPoint = exports.getBoundingBoxMeasureAll = exports.getBoundingBoxMeasure = exports.calculateBoundingBoxMeasure = void 0;
+var _2d_1 = require("../util/2d");
 // generic util methods, will become part of WebDAW
 exports.calculateBoundingBoxMeasure = function (staves) {
     var x = 0;
@@ -80,10 +81,26 @@ exports.getStaveAtPoint = function (e, osmd) {
         height: 2,
     };
     console.log(osmd);
-    // osmd.GraphicSheet.MeasureList.map(staves => {
-    //   staves.forEach(stave => {
-    //     console.log(stave);
-    //   });
-    // });
+    osmd.GraphicSheet.MeasureList.map(function (staves) {
+        staves.forEach(function (stave, i) {
+            var _a = stave.stave, x = _a.x, y = _a.y, width = _a.width, height = _a.height;
+            var refStave = {
+                x: x,
+                y: y,
+                width: width,
+                height: height,
+                left: x,
+                right: x + width,
+                top: y,
+                bottom: y + height,
+            };
+            if (_2d_1.hasOverlap(refClick, refStave)) {
+                // console.log("stave", i, refClick.x, refClick.y, x, y, width, height);
+                console.log("hit", i, refStave, refClick);
+                // } else {
+                //   console.log("no hit", i, refStave, refClick);
+            }
+        });
+    });
 };
 //# sourceMappingURL=getBoundingBoxMeasure.js.map

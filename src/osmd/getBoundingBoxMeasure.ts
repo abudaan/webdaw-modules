@@ -1,4 +1,5 @@
 import { GraphicalMeasure, OpenSheetMusicDisplay } from "opensheetmusicdisplay";
+import { hasOverlap } from "../util/2d";
 import { BoundingBox } from "../types";
 
 // generic util methods, will become part of WebDAW
@@ -70,9 +71,27 @@ export const getStaveAtPoint = (e: PointerEvent, osmd: OpenSheetMusicDisplay) =>
 
   console.log(osmd);
 
-  // osmd.GraphicSheet.MeasureList.map(staves => {
-  //   staves.forEach(stave => {
-  //     console.log(stave);
-  //   });
-  // });
+  osmd.GraphicSheet.MeasureList.map(staves => {
+    staves.forEach((stave, i) => {
+      const {
+        stave: { x, y, width, height },
+      } = stave as any;
+      const refStave = {
+        x,
+        y,
+        width,
+        height,
+        left: x,
+        right: x + width,
+        top: y,
+        bottom: y + height,
+      };
+      if (hasOverlap(refClick, refStave)) {
+        // console.log("stave", i, refClick.x, refClick.y, x, y, width, height);
+        console.log("hit", i, refStave, refClick);
+        // } else {
+        //   console.log("no hit", i, refStave, refClick);
+      }
+    });
+  });
 };
