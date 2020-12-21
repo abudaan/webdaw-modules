@@ -14,8 +14,8 @@ exports.getMeasureBoundingBoxesInStave = function (staveIndex, osmd) {
         var m = osmd.GraphicSheet.MeasureList[i];
         var stave = m[staveIndex];
         var _a = stave.stave, x = _a.x, y = _a.y, width = _a.width, height = _a.height;
-        x = x + offsetX + scrollPosX;
-        y = y + offsetY + scrollPosY;
+        x = x + offsetX; // + scrollPosX;
+        y = y + offsetY; // + scrollPosY;
         boundingBoxes.push({
             x: x,
             y: y,

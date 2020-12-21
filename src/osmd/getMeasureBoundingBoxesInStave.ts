@@ -19,8 +19,8 @@ export const getMeasureBoundingBoxesInStave = (
     let {
       stave: { x, y, width, height },
     } = stave as any;
-    x = x + offsetX + scrollPosX;
-    y = y + offsetY + scrollPosY;
+    x = x + offsetX; // + scrollPosX;
+    y = y + offsetY; // + scrollPosY;
 
     boundingBoxes.push({
       x,
