@@ -1,5 +1,10 @@
 import "./style/index.styl";
-import { getMeasureAndStaveAtPoint, getVersion } from "webdaw-modules";
+import {
+  getMeasureAndStaveAtPoint,
+  getMeasureBoundingBoxesInStave,
+  getVersion,
+  BoundingBox,
+} from "webdaw-modules";
 import { store } from "./store";
 import { setup as setupSong } from "./songWrapper";
 import { setup as setupScore } from "./scoreWrapper";
@@ -60,7 +65,24 @@ const init = async () => {
     if (e.ctrlKey) {
       startSelect(e);
     } else {
-      getMeasureAndStaveAtPoint(e as PointerEvent, getOSMD());
+      const { staveIndex } = getMeasureAndStaveAtPoint(e as PointerEvent, getOSMD());
+      const bboxes = getMeasureBoundingBoxesInStave(staveIndex, getOSMD());
+      const container = document.createElement("selected");
+      bboxes.forEach((bbox: BoundingBox) => {
+        const div = document.createElement("div");
+        div.style.position = "absolute";
+        div.style.backgroundColor = "rgba(0, 255, 0, 0.3)";
+        div.style.top = `${bbox.top}px`;
+        div.style.left = `${bbox.left}px`;
+        div.style.width = `${bbox.width}px`;
+        div.style.height = `${bbox.height}px`;
+        // getOSMD()["container"].appendChild(div);
+        container.appendChild(div);
+      });
+      container.addEventListener("click", () => {
+        document.body.removeChild(container);
+      });
+      document.body.appendChild(container);
       setPlayhead(e as PointerEvent);
     }
   });

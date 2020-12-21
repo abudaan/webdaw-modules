@@ -48,7 +48,7 @@ export const setup = async (): Promise<{ cleanup: () => void }> => {
   }
   const json = await loadJSON(url);
   await addAssetPack(json);
-  song.tracks.forEach((track) => {
+  song.tracks.forEach((track: any) => {
     // console.log(track.id);
     track.setInstrument(instrumentName);
   });

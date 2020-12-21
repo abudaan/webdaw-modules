@@ -42,6 +42,7 @@ __exportStar(require("./osmd/getGraphicalNotesPerMeasure"), exports);
 __exportStar(require("./osmd/getGraphicalNotesPerMeasurePerTrack"), exports);
 __exportStar(require("./osmd/getMeasureAndStaveAtPoint"), exports);
 __exportStar(require("./osmd/getMeasureAtPoint"), exports);
+__exportStar(require("./osmd/getMeasureBoundingBoxesInStave"), exports);
 __exportStar(require("./osmd/getMusicSystemMeasureBoundingBox"), exports);
 __exportStar(require("./osmd/getSelectedMeasures"), exports);
 __exportStar(require("./osmd/mapMIDINoteIdToGraphicalNote"), exports);

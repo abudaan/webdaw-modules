@@ -24,6 +24,7 @@ export * from "./osmd/getGraphicalNotesPerMeasure";
 export * from "./osmd/getGraphicalNotesPerMeasurePerTrack";
 export * from "./osmd/getMeasureAndStaveAtPoint";
 export * from "./osmd/getMeasureAtPoint";
+export * from "./osmd/getMeasureBoundingBoxesInStave";
 export * from "./osmd/getMusicSystemMeasureBoundingBox";
 export * from "./osmd/getSelectedMeasures";
 export * from "./osmd/mapMIDINoteIdToGraphicalNote";
