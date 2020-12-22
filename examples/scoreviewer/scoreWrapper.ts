@@ -4,6 +4,7 @@ import {
   getBoundingBoxMeasureAll,
   OpenSheetMusicDisplay,
 } from "webdaw-modules";
+import { updateBoundingBoxMeasures } from "./actions/updateBoundingBoxMeasures";
 import { store } from "./store";
 
 let scoreDiv: HTMLDivElement;
@@ -39,13 +40,13 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
   const unsub1 = store.subscribe(
     () => {
       render(osmd);
-      store.getState().updateBoundingBoxMeasures(getBoundingBoxMeasureAll(osmd));
+      updateBoundingBoxMeasures(getBoundingBoxMeasureAll(osmd));
     },
     (state) => state.width
   );
 
   render(osmd);
-  store.getState().updateBoundingBoxMeasures(getBoundingBoxMeasureAll(osmd));
+  updateBoundingBoxMeasures(getBoundingBoxMeasureAll(osmd));
 
   return {
     cleanup: () => {

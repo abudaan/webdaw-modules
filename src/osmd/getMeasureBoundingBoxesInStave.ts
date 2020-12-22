@@ -10,8 +10,6 @@ export const getMeasureBoundingBoxesInStave = (
   }
   const offsetX = osmd["container"].offsetLeft;
   const offsetY = osmd["container"].offsetTop;
-  const scrollPosX = window.scrollX;
-  const scrollPosY = window.scrollY;
   const boundingBoxes: BoundingBox[] = [];
   for (let i = 0; i < osmd.GraphicSheet.MeasureList.length; i++) {
     const m = osmd.GraphicSheet.MeasureList[i];
@@ -19,8 +17,9 @@ export const getMeasureBoundingBoxesInStave = (
     let {
       stave: { x, y, width, height },
     } = stave as any;
-    x = x + offsetX; // + scrollPosX;
-    y = y + offsetY; // + scrollPosY;
+    x = x + offsetX;
+    y = y + offsetY;
+    height = (height / 5) * 4;
 
     boundingBoxes.push({
       x,

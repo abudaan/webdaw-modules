@@ -1,12 +1,12 @@
-import { BoundingBox } from 'webdaw-modules';
-import create from 'zustand/vanilla';
-import { midiFileName, midiFile, mxmlFile } from './files';
+import { BoundingBox } from "webdaw-modules";
+import create from "zustand/vanilla";
+import { midiFileName, midiFile, mxmlFile } from "./files";
 
 export type State = {
   offset: { x: number; y: number };
   scrollPos: { x: number; y: number };
   selection: number[];
-  songState: 'play' | 'pause' | 'stop';
+  songState: "play" | "pause" | "stop";
   midiFileName: string;
   midiFile: string;
   mxmlFile: string;
@@ -37,7 +37,6 @@ export type State = {
 
 export type Reducers = {
   toggleSongState: () => void;
-  updateBoundingBoxMeasures: (bbox: BoundingBox[]) => void;
 };
 
 export type Store = State & Reducers;
@@ -47,7 +46,7 @@ export const store = create<Store>((set, get) => ({
   offset: { x: 0, y: 0 },
   scrollPos: { x: 0, y: 0 },
   selection: [],
-  songState: 'stop',
+  songState: "stop",
   midiFileName,
   midiFile,
   mxmlFile,
@@ -72,32 +71,13 @@ export const store = create<Store>((set, get) => ({
     height: 0,
   },
   toggleSongState: () => {
-    set(state => {
-      if (state.songState === 'play') {
-        return { songState: 'pause' };
+    set((state) => {
+      if (state.songState === "play") {
+        return { songState: "pause" };
         // } else if (state.songState === 'pause') {
         //   return { songState: 'stop' };
       }
-      return { songState: 'play' };
-    });
-  },
-  updateBoundingBoxMeasures: boundingBoxesMeasures => {
-    set(state => {
-      const {
-        playhead: { width },
-        currentBarScore,
-        offset: { x: offsetX, y: offsetY },
-      } = state;
-      const { x, y, height } = boundingBoxesMeasures[currentBarScore - 1];
-      return {
-        boundingBoxesMeasures,
-        playhead: {
-          x: x + offsetX,
-          y: y + offsetY,
-          width,
-          height,
-        },
-      };
+      return { songState: "play" };
     });
   },
   boundingBoxesMeasures: [],

@@ -37,6 +37,7 @@ exports.calculateBoundingBoxMeasure = function (staves) {
         });
         var yMin = Math.min.apply(Math, __spread(yPos_1));
         var yMax = Math.max.apply(Math, __spread(yPos_1));
+        height = (height / 5) * 4;
         height += yMax - yMin;
         // console.log(yMax, yMin, height, yMax - yMin + height);
         return {

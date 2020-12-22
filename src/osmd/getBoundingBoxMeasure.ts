@@ -20,6 +20,7 @@ export const calculateBoundingBoxMeasure = (staves?: GraphicalMeasure[]): Boundi
 
     const yMin = Math.min(...yPos);
     const yMax = Math.max(...yPos);
+    height = (height / 5) * 4;
     height += yMax - yMin;
     // console.log(yMax, yMin, height, yMax - yMin + height);
     return {
