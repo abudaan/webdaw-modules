@@ -10,7 +10,7 @@ module.exports = {
     // "basic/index": "./basic/index.ts",
     // "basic2/index": "./basic2/index.ts",
     // "musicxml/index": "./musicxml/index.ts",
-    // "scoreviewer/index": "./scoreviewer/index.ts",
+    "scoreviewer/index": "./scoreviewer/index.ts",
     "scoreviewer2/index": "./scoreviewer2/index.ts",
   },
   devtool: "inline-source-map",
