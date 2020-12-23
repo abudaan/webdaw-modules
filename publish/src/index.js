@@ -45,6 +45,7 @@ __exportStar(require("./osmd/getMeasureAtPoint"), exports);
 __exportStar(require("./osmd/getMeasureBoundingBoxesInStave"), exports);
 __exportStar(require("./osmd/getMusicSystemMeasureBoundingBox"), exports);
 __exportStar(require("./osmd/getSelectedMeasures"), exports);
+__exportStar(require("./osmd/mapEntityToNote"), exports);
 __exportStar(require("./osmd/mapMIDINoteIdToGraphicalNote"), exports);
 __exportStar(require("./osmd/mapMIDINoteIdToGraphicalNotePerTrack"), exports);
 __exportStar(require("./osmd/scorePositionFromSong"), exports);

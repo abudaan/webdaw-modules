@@ -1,9 +1,9 @@
-import { Note, Cursor } from "opensheetmusicdisplay";
 import {
   parseMusicXML,
   loadMusicXMLFile,
   getBoundingBoxMeasureAll,
   OpenSheetMusicDisplay,
+  mapEntityToNote,
 } from "webdaw-modules";
 import { store } from "./store";
 
@@ -37,15 +37,6 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
 
   await osmd.load(xmlDoc);
 
-  // osmd.GraphicSheet.MeasureList.forEach((measure, m) => {
-  //   measure.forEach((stave, s) => {
-  //     console.log(m, s, stave.staffEntries);
-  //   });
-  // });
-
-  // console.log(osmd);
-  // console.log(osmd.GraphicSheet);
-
   const unsub1 = store.subscribe(
     () => {
       render(osmd);
@@ -55,28 +46,43 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
   );
 
   render(osmd);
-  console.log(osmd.GraphicSheet);
-  console.log(osmd.Sheet);
-  // osmd.cursor.show();
-  // osmd.cursor.next();
-  // console.log(osmd.cursor.NotesUnderCursor());
-  store.getState().updateBoundingBoxMeasures(getBoundingBoxMeasureAll(osmd));
+  console.log(osmd);
+  const entityData = mapEntityToNote(osmd);
+  const container = document.createElement("div");
+  container.id = "container-staffentries";
+  const offsetX = osmd["container"].offsetLeft;
+  const offsetY = osmd["container"].offsetTop;
 
-  document.addEventListener("click", (e: MouseEvent) => {
-    const offsetX = osmd["container"].offsetLeft;
-    const offsetY = osmd["container"].offsetTop;
-    const scrollPosX = window.scrollX;
-    const scrollPosY = window.scrollY;
-    // const x = e.clientX + offsetX + scrollPosX;
-    // const y = e.clientY + offsetY + scrollPosY;
-    const x = e.clientX - offsetX + scrollPosX; // / 10;
-    const y = e.clientY - offsetY + scrollPosY; // / 10;
-    const ToString = () => `${x}-${y}`;
-    const obj = osmd.GraphicSheet.getClickedObjectOfType<Note>({ x, y, ToString });
-    const obj2 = osmd.GraphicSheet.GetNearestNote({ x, y, ToString }, { x: 1, y: 1, ToString });
-    // console.log(1, obj, x, y);
-    console.log(2, obj2, x, y);
+  entityData.forEach((data, i) => {
+    const { boundingBox, sourceNote, ticks, noteNumber, bar } = data;
+    const {
+      dataObject: {
+        parentVoiceEntry: { boundingBox: boundingBoxParent },
+      },
+    } = boundingBox as any;
+    let { borderLeft, borderRight, borderTop, borderBottom } = boundingBoxParent;
+    if (borderLeft === 0 && borderRight === 0 && borderTop === 0 && borderBottom === 0) {
+      borderLeft = -0.8;
+      borderRight = 0.4;
+      borderTop = 0;
+      borderBottom = 6;
+    }
+    console.log(i, boundingBox);
+    console.log(borderLeft, borderRight, borderTop, borderBottom, boundingBoxParent);
+    const div = document.createElement("div");
+    div.style.position = "absolute";
+    div.style.background = "rgba(0, 255, 255, 0.3)";
+    div.style.left = `${(boundingBox.AbsolutePosition.x + borderLeft) * 10 + offsetX}px`;
+    div.style.top = `${(boundingBox.AbsolutePosition.y + borderTop) * 10 + offsetY}px`;
+    div.style.width = `${(borderRight - borderLeft) * 10}px`;
+    div.style.height = `${(borderBottom - borderTop) * 10}px`;
+    div.addEventListener("click", () => {
+      console.log(`ticks:  ${ticks} noteNumber: ${noteNumber} bar: ${bar}`);
+    });
+    container.appendChild(div);
   });
+  document.body.appendChild(container);
+  store.getState().updateBoundingBoxMeasures(getBoundingBoxMeasureAll(osmd));
 
   return {
     cleanup: () => {

@@ -27,6 +27,7 @@ export * from "./osmd/getMeasureAtPoint";
 export * from "./osmd/getMeasureBoundingBoxesInStave";
 export * from "./osmd/getMusicSystemMeasureBoundingBox";
 export * from "./osmd/getSelectedMeasures";
+export * from "./osmd/mapEntityToNote";
 export * from "./osmd/mapMIDINoteIdToGraphicalNote";
 export * from "./osmd/mapMIDINoteIdToGraphicalNotePerTrack";
 export * from "./osmd/scorePositionFromSong";
