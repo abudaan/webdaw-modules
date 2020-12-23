@@ -1,0 +1,1020 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE score-partwise PUBLIC "-//Recordare//DTD MusicXML 3.0 Partwise//EN" "http://www.musicxml.org/dtds/partwise.dtd">
+<score-partwise version="3.0">
+	<work>
+		<work-number/>
+		<work-title>花非花</work-title>
+	</work>
+	<identification>
+		<creator type="composer">作曲:黃自
+唐詞:白居易</creator>
+		<creator type="poet"/>
+		<creator type="arranger"/>
+		<rights/>
+		<encoding>
+			<software>FORTE 9 Premium</software>
+			<supports attribute="new-system" element="print" type="yes" value="yes"/>
+			<supports attribute="new-page" element="print" type="yes" value="yes"/>
+		</encoding>
+	</identification>
+	<defaults>
+		<scaling>
+			<millimeters>2.31069</millimeters>
+			<tenths>10</tenths>
+		</scaling>
+		<page-layout>
+			<page-height>1209.16</page-height>
+			<page-width>934.351</page-width>
+			<page-margins type="odd">
+				<left-margin>64.8855</left-margin>
+				<right-margin>64.8855</right-margin>
+				<top-margin>104.885</top-margin>
+				<bottom-margin>64.8855</bottom-margin>
+			</page-margins>
+			<page-margins type="even">
+				<left-margin>64.8855</left-margin>
+				<right-margin>64.8855</right-margin>
+				<top-margin>104.885</top-margin>
+				<bottom-margin>64.8855</bottom-margin>
+			</page-margins>
+		</page-layout>
+		<system-layout>
+			<system-margins>
+				<left-margin>0</left-margin>
+				<right-margin>0</right-margin>
+			</system-margins>
+			<system-distance>187.481</system-distance>
+		</system-layout>
+		<staff-layout>
+			<staff-distance>80</staff-distance>
+		</staff-layout>
+	</defaults>
+	<credit page="1">
+		<credit-type>title</credit-type>
+		<credit-words default-x="467.176" default-y="1144.27" font-family="Arial" font-size="24" justify="center" valign="top">花非花</credit-words>
+	</credit>
+	<credit page="1">
+		<credit-type>composer</credit-type>
+		<credit-words default-x="869.466" default-y="1079.62" font-family="Arial" font-size="10" justify="right" valign="top">作曲:黃自
+唐詞:白居易</credit-words>
+	</credit>
+	<part-list>
+		<score-part id="P1">
+			<part-name font-family="Arial" font-size="10" justify="right">Voice</part-name>
+			<score-instrument id="P1-I1">
+				<instrument-name/>
+			</score-instrument>
+			<midi-instrument id="P1-I1">
+				<midi-channel>1</midi-channel>
+				<midi-bank>1</midi-bank>
+				<midi-program>1</midi-program>
+				<volume>100</volume>
+				<pan>0</pan>
+			</midi-instrument>
+		</score-part>
+	</part-list>
+	<part id="P1">
+		<measure number="1">
+			<print page-number="1">
+				<system-layout>
+					<system-margins>
+						<left-margin>0</left-margin>
+						<right-margin>0</right-margin>
+					</system-margins>
+					<top-system-distance>129.389</top-system-distance>
+				</system-layout>
+			</print>
+			<attributes>
+				<divisions>480</divisions>
+				<key>
+					<fifths>2</fifths>
+					<mode>major</mode>
+				</key>
+				<time>
+					<beats>4</beats>
+					<beat-type>4</beat-type>
+				</time>
+				<clef>
+					<sign>G</sign>
+					<line>2</line>
+				</clef>
+			</attributes>
+			<direction>
+				<direction-type>
+					<words font-family="Verdana" font-size="9" justify="left" font-style="italic" valign="top">dolce</words>
+				</direction-type>
+				<offset>20</offset>
+			</direction>
+			<direction placement="below">
+				<direction-type>
+					<dynamics>
+						<p/>
+					</dynamics>
+				</direction-type>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Times New Roman" font-size="9" justify="left" font-style="italic" valign="top">Andante</words>
+				</direction-type>
+				<direction-type>
+					<metronome>
+						<beat-unit>quarter</beat-unit>
+						<per-minute>80</per-minute>
+					</metronome>
+				</direction-type>
+				<sound tempo="80"/>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">s</words>
+				</direction-type>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">l</words>
+				</direction-type>
+				<offset>480</offset>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">s</words>
+				</direction-type>
+				<offset>720</offset>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">s</words>
+				</direction-type>
+				<offset>960</offset>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">m</words>
+				</direction-type>
+				<offset>1440</offset>
+			</direction>
+			<note>
+				<pitch>
+					<step>A</step>
+					<octave>4</octave>
+				</pitch>
+				<duration>480</duration>
+				<voice>1</voice>
+				<type>quarter</type>
+				<stem>up</stem>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="6">花</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>B</step>
+					<octave>4</octave>
+				</pitch>
+				<duration>240</duration>
+				<voice>1</voice>
+				<type>eighth</type>
+				<stem>up</stem>
+				<beam number="1">begin</beam>
+				<notations>
+					<slur type="start" placement="below" number="1"/>
+				</notations>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="6">非</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>A</step>
+					<octave>4</octave>
+				</pitch>
+				<duration>240</duration>
+				<voice>1</voice>
+				<type>eighth</type>
+				<stem>up</stem>
+				<beam number="1">end</beam>
+				<notations>
+					<slur type="stop" number="1"/>
+				</notations>
+			</note>
+			<note>
+				<pitch>
+					<step>A</step>
+					<octave>4</octave>
+				</pitch>
+				<duration>480</duration>
+				<voice>1</voice>
+				<type>quarter</type>
+				<stem>up</stem>
+				<notations>
+					<slur type="start" placement="below" number="2"/>
+				</notations>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="6">花 </text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>F</step>
+					<alter>1</alter>
+					<octave>4</octave>
+				</pitch>
+				<duration>480</duration>
+				<voice>1</voice>
+				<type>quarter</type>
+				<stem>up</stem>
+				<notations>
+					<slur type="stop" number="2"/>
+				</notations>
+			</note>
+		</measure>
+		<measure number="2">
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">d'</words>
+				</direction-type>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">r'</words>
+				</direction-type>
+				<offset>480</offset>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">d'</words>
+				</direction-type>
+				<offset>720</offset>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">d'</words>
+				</direction-type>
+				<offset>960</offset>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">l</words>
+				</direction-type>
+				<offset>1440</offset>
+			</direction>
+			<note>
+				<pitch>
+					<step>D</step>
+					<octave>5</octave>
+				</pitch>
+				<duration>480</duration>
+				<voice>1</voice>
+				<type>quarter</type>
+				<stem>down</stem>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="6">霧</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>E</step>
+					<octave>5</octave>
+				</pitch>
+				<duration>240</duration>
+				<voice>1</voice>
+				<type>eighth</type>
+				<stem>down</stem>
+				<beam number="1">begin</beam>
+				<notations>
+					<slur type="start" placement="above" number="3"/>
+				</notations>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="6">非</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>D</step>
+					<octave>5</octave>
+				</pitch>
+				<duration>240</duration>
+				<voice>1</voice>
+				<type>eighth</type>
+				<stem>down</stem>
+				<beam number="1">end</beam>
+				<notations>
+					<slur type="stop" number="3"/>
+				</notations>
+			</note>
+			<note>
+				<pitch>
+					<step>D</step>
+					<octave>5</octave>
+				</pitch>
+				<duration>480</duration>
+				<voice>1</voice>
+				<type>quarter</type>
+				<stem>down</stem>
+				<notations>
+					<slur type="start" placement="above" number="4"/>
+				</notations>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="6">霧:</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>B</step>
+					<octave>4</octave>
+				</pitch>
+				<duration>480</duration>
+				<voice>1</voice>
+				<type>quarter</type>
+				<stem>down</stem>
+				<notations>
+					<slur type="stop" number="4"/>
+				</notations>
+			</note>
+		</measure>
+		<measure number="3">
+			<print new-system="yes">
+				<system-layout>
+					<system-distance>187.481</system-distance>
+				</system-layout>
+			</print>
+			<direction placement="below">
+				<direction-type>
+					<wedge type="crescendo"/>
+				</direction-type>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<wedge type="stop"/>
+				</direction-type>
+				<offset>960</offset>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">s</words>
+				</direction-type>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">s</words>
+				</direction-type>
+				<offset>480</offset>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">d'</words>
+				</direction-type>
+				<offset>720</offset>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">l</words>
+				</direction-type>
+				<offset>960</offset>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">s</words>
+				</direction-type>
+				<offset>1680</offset>
+			</direction>
+			<note>
+				<pitch>
+					<step>A</step>
+					<octave>4</octave>
+				</pitch>
+				<duration>480</duration>
+				<voice>1</voice>
+				<type>quarter</type>
+				<stem>up</stem>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="6">夜</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>A</step>
+					<octave>4</octave>
+				</pitch>
+				<duration>240</duration>
+				<voice>1</voice>
+				<type>eighth</type>
+				<stem>down</stem>
+				<beam number="1">begin</beam>
+				<notations>
+					<slur type="start" placement="above" number="5"/>
+				</notations>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="6">半</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>D</step>
+					<octave>5</octave>
+				</pitch>
+				<duration>240</duration>
+				<voice>1</voice>
+				<type>eighth</type>
+				<stem>down</stem>
+				<beam number="1">end</beam>
+				<notations>
+					<slur type="stop" number="5"/>
+				</notations>
+			</note>
+			<note>
+				<pitch>
+					<step>B</step>
+					<octave>4</octave>
+				</pitch>
+				<duration>720</duration>
+				<voice>1</voice>
+				<type>quarter</type>
+				<dot/>
+				<stem>down</stem>
+				<notations>
+					<slur type="start" placement="above" number="6"/>
+				</notations>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="6">來 </text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>A</step>
+					<octave>4</octave>
+				</pitch>
+				<duration>240</duration>
+				<voice>1</voice>
+				<type>eighth</type>
+				<stem>up</stem>
+				<notations>
+					<slur type="stop" number="6"/>
+				</notations>
+			</note>
+		</measure>
+		<measure number="4">
+			<direction placement="below">
+				<direction-type>
+					<wedge type="diminuendo"/>
+				</direction-type>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<wedge type="stop"/>
+				</direction-type>
+				<offset>960</offset>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">m</words>
+				</direction-type>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">r</words>
+				</direction-type>
+				<offset>480</offset>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">d</words>
+				</direction-type>
+				<offset>720</offset>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">r</words>
+				</direction-type>
+				<offset>960</offset>
+			</direction>
+			<note>
+				<pitch>
+					<step>F</step>
+					<alter>1</alter>
+					<octave>4</octave>
+				</pitch>
+				<duration>480</duration>
+				<voice>1</voice>
+				<type>quarter</type>
+				<stem>up</stem>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="6">天</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>E</step>
+					<octave>4</octave>
+				</pitch>
+				<duration>240</duration>
+				<voice>1</voice>
+				<type>eighth</type>
+				<stem>up</stem>
+				<beam number="1">begin</beam>
+				<notations>
+					<slur type="start" placement="below" number="1"/>
+				</notations>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="6">明</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>D</step>
+					<octave>4</octave>
+				</pitch>
+				<duration>240</duration>
+				<voice>1</voice>
+				<type>eighth</type>
+				<stem>up</stem>
+				<beam number="1">end</beam>
+				<notations>
+					<slur type="stop" number="1"/>
+				</notations>
+			</note>
+			<note>
+				<pitch>
+					<step>E</step>
+					<octave>4</octave>
+				</pitch>
+				<duration>960</duration>
+				<voice>1</voice>
+				<type>half</type>
+				<stem>up</stem>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="6">去</text>
+				</lyric>
+			</note>
+		</measure>
+		<measure number="5">
+			<print new-system="yes">
+				<system-layout>
+					<system-distance>188.321</system-distance>
+				</system-layout>
+			</print>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">r</words>
+				</direction-type>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">m</words>
+				</direction-type>
+				<offset>480</offset>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">s</words>
+				</direction-type>
+				<offset>720</offset>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">l</words>
+				</direction-type>
+				<offset>960</offset>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">s</words>
+				</direction-type>
+				<offset>1440</offset>
+			</direction>
+			<note>
+				<pitch>
+					<step>E</step>
+					<octave>4</octave>
+				</pitch>
+				<duration>480</duration>
+				<voice>1</voice>
+				<type>quarter</type>
+				<stem>up</stem>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="6">來</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>F</step>
+					<alter>1</alter>
+					<octave>4</octave>
+				</pitch>
+				<duration>240</duration>
+				<voice>1</voice>
+				<type>eighth</type>
+				<stem>up</stem>
+				<beam number="1">begin</beam>
+				<notations>
+					<slur type="start" placement="below" number="2"/>
+				</notations>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="6">如</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>A</step>
+					<octave>4</octave>
+				</pitch>
+				<duration>240</duration>
+				<voice>1</voice>
+				<type>eighth</type>
+				<stem>up</stem>
+				<beam number="1">end</beam>
+				<notations>
+					<slur type="stop" number="2"/>
+				</notations>
+			</note>
+			<note>
+				<pitch>
+					<step>B</step>
+					<octave>4</octave>
+				</pitch>
+				<duration>480</duration>
+				<voice>1</voice>
+				<type>quarter</type>
+				<stem>down</stem>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="6">春</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>A</step>
+					<octave>4</octave>
+				</pitch>
+				<duration>480</duration>
+				<voice>1</voice>
+				<type>quarter</type>
+				<stem>up</stem>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="6">夢</text>
+				</lyric>
+			</note>
+		</measure>
+		<measure number="6">
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">s</words>
+				</direction-type>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">r'</words>
+				</direction-type>
+				<offset>480</offset>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">d'</words>
+				</direction-type>
+				<offset>720</offset>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">l</words>
+				</direction-type>
+				<offset>960</offset>
+			</direction>
+			<note>
+				<pitch>
+					<step>A</step>
+					<octave>4</octave>
+				</pitch>
+				<duration>480</duration>
+				<voice>1</voice>
+				<type>quarter</type>
+				<stem>up</stem>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="6">不</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>E</step>
+					<octave>5</octave>
+				</pitch>
+				<duration>240</duration>
+				<voice>1</voice>
+				<type>eighth</type>
+				<stem>down</stem>
+				<beam number="1">begin</beam>
+				<notations>
+					<slur type="start" placement="above" number="3"/>
+				</notations>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="6">多</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>D</step>
+					<octave>5</octave>
+				</pitch>
+				<duration>240</duration>
+				<voice>1</voice>
+				<type>eighth</type>
+				<stem>down</stem>
+				<beam number="1">end</beam>
+				<notations>
+					<slur type="stop" number="3"/>
+				</notations>
+			</note>
+			<note>
+				<pitch>
+					<step>B</step>
+					<octave>4</octave>
+				</pitch>
+				<duration>960</duration>
+				<voice>1</voice>
+				<type>half</type>
+				<stem>down</stem>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="6">時</text>
+				</lyric>
+			</note>
+		</measure>
+		<measure number="7">
+			<print new-system="yes">
+				<system-layout>
+					<system-distance>187.557</system-distance>
+				</system-layout>
+			</print>
+			<direction placement="below">
+				<direction-type>
+					<wedge type="diminuendo"/>
+				</direction-type>
+				<offset>1440</offset>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Times New Roman" font-size="9" justify="left" font-style="italic" valign="top">rit.</words>
+				</direction-type>
+				<direction-type>
+					<dashes type="start"/>
+				</direction-type>
+				<offset>960</offset>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">d'</words>
+				</direction-type>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">l</words>
+				</direction-type>
+				<offset>480</offset>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">d'</words>
+				</direction-type>
+				<offset>720</offset>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">s</words>
+				</direction-type>
+				<offset>960</offset>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">m</words>
+				</direction-type>
+				<offset>1440</offset>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">s</words>
+				</direction-type>
+				<offset>1680</offset>
+			</direction>
+			<note>
+				<pitch>
+					<step>D</step>
+					<octave>5</octave>
+				</pitch>
+				<duration>480</duration>
+				<voice>1</voice>
+				<type>quarter</type>
+				<stem>down</stem>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="6">去</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>B</step>
+					<octave>4</octave>
+				</pitch>
+				<duration>240</duration>
+				<voice>1</voice>
+				<type>eighth</type>
+				<stem>down</stem>
+				<beam number="1">begin</beam>
+				<notations>
+					<slur type="start" placement="above" number="4"/>
+				</notations>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="6">似</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>D</step>
+					<octave>5</octave>
+				</pitch>
+				<duration>240</duration>
+				<voice>1</voice>
+				<type>eighth</type>
+				<stem>down</stem>
+				<beam number="1">end</beam>
+				<notations>
+					<slur type="stop" number="4"/>
+				</notations>
+			</note>
+			<note>
+				<pitch>
+					<step>A</step>
+					<octave>4</octave>
+				</pitch>
+				<duration>480</duration>
+				<voice>1</voice>
+				<type>quarter</type>
+				<stem>up</stem>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="6">朝</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>F</step>
+					<alter>1</alter>
+					<octave>4</octave>
+				</pitch>
+				<duration>240</duration>
+				<voice>1</voice>
+				<type>eighth</type>
+				<stem>up</stem>
+				<beam number="1">begin</beam>
+				<notations>
+					<slur type="start" placement="below" number="5"/>
+				</notations>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="6">雲</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>A</step>
+					<octave>4</octave>
+				</pitch>
+				<duration>240</duration>
+				<voice>1</voice>
+				<type>eighth</type>
+				<stem>up</stem>
+				<beam number="1">end</beam>
+			</note>
+		</measure>
+		<measure number="8">
+			<direction placement="above">
+				<direction-type>
+					<wedge type="stop"/>
+				</direction-type>
+				<offset>900</offset>
+			</direction>
+			<direction placement="below">
+				<direction-type>
+					<dynamics>
+						<pp/>
+					</dynamics>
+				</direction-type>
+				<offset>1020</offset>
+			</direction>
+			<direction>
+				<direction-type>
+					<dashes type="stop"/>
+				</direction-type>
+				<offset>900</offset>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">l,</words>
+				</direction-type>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">r</words>
+				</direction-type>
+				<offset>480</offset>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">m</words>
+				</direction-type>
+				<offset>840</offset>
+			</direction>
+			<direction placement="above">
+				<direction-type>
+					<words font-family="Arial" font-size="18" justify="left" valign="top">d</words>
+				</direction-type>
+				<offset>960</offset>
+			</direction>
+			<note>
+				<pitch>
+					<step>B</step>
+					<octave>3</octave>
+				</pitch>
+				<duration>480</duration>
+				<voice>1</voice>
+				<type>quarter</type>
+				<stem>up</stem>
+				<notations>
+					<slur type="stop" number="5"/>
+				</notations>
+			</note>
+			<note>
+				<pitch>
+					<step>E</step>
+					<octave>4</octave>
+				</pitch>
+				<duration>360</duration>
+				<voice>1</voice>
+				<type>eighth</type>
+				<dot/>
+				<stem>up</stem>
+				<beam number="1">begin</beam>
+				<notations>
+					<fermata type="upright"/>
+				</notations>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="6">無</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>F</step>
+					<alter>1</alter>
+					<octave>4</octave>
+				</pitch>
+				<duration>120</duration>
+				<voice>1</voice>
+				<type>16th</type>
+				<stem>up</stem>
+				<beam number="1">end</beam>
+				<beam number="2">backward hook</beam>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="6">覓</text>
+				</lyric>
+			</note>
+			<note>
+				<pitch>
+					<step>D</step>
+					<octave>4</octave>
+				</pitch>
+				<duration>960</duration>
+				<voice>1</voice>
+				<type>half</type>
+				<stem>up</stem>
+				<notations>
+					<fermata type="upright"/>
+				</notations>
+				<lyric number="1" justify="center">
+					<syllabic>single</syllabic>
+					<text font-family="Arial" font-size="6">處</text>
+				</lyric>
+			</note>
+			<barline location="right">
+				<bar-style>light-heavy</bar-style>
+			</barline>
+		</measure>
+	</part>
+</score-partwise>
