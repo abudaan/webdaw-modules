@@ -37,7 +37,7 @@ const init = async () => {
   await setupScore(scoreDiv);
   setupControls();
   // setupDebug();
-  setupPlayhead();
+  // setupPlayhead();
   setupDrawLoop();
   setupDrawSelection();
 
@@ -76,14 +76,17 @@ const init = async () => {
         div.style.left = `${bbox.left}px`;
         div.style.width = `${bbox.width}px`;
         div.style.height = `${bbox.height}px`;
-        // getOSMD()["container"].appendChild(div);
         container.appendChild(div);
       });
       container.addEventListener("click", () => {
         document.body.removeChild(container);
       });
-      document.body.appendChild(container);
-      setPlayhead(e as PointerEvent);
+      container.style.position = "absolute";
+      container.style.top = "0px";
+      container.style.left = "0px";
+      container.style.zIndex = "-1";
+      // document.body.appendChild(container);
+      // setPlayhead(e as PointerEvent);
     }
   });
 
