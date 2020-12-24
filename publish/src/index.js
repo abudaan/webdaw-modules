@@ -35,6 +35,7 @@ Object.defineProperty(exports, "OpenSheetMusicDisplay", { enumerable: true, get:
 __exportStar(require("./musicxml/parser"), exports);
 __exportStar(require("./musicxml/parsedMusicXMLToSong"), exports);
 __exportStar(require("./musicxml/loadMusicXMLFile"), exports);
+__exportStar(require("./osmd/getBoundingBoxesAtPoint"), exports);
 __exportStar(require("./osmd/getBoundingBoxesOfGraphicalMeasures"), exports);
 __exportStar(require("./osmd/getBoundingBoxesOfSelectedMeasures"), exports);
 __exportStar(require("./osmd/getBoundingBoxMeasure"), exports);
@@ -43,6 +44,7 @@ __exportStar(require("./osmd/getGraphicalNotesPerMeasurePerTrack"), exports);
 __exportStar(require("./osmd/getMeasureAndStaveAtPoint"), exports);
 __exportStar(require("./osmd/getMeasureAtPoint"), exports);
 __exportStar(require("./osmd/getMeasureBoundingBoxesInStave"), exports);
+__exportStar(require("./osmd/getBoundingBoxesAtPoint"), exports);
 __exportStar(require("./osmd/getMusicSystemMeasureBoundingBox"), exports);
 __exportStar(require("./osmd/getSelectedMeasures"), exports);
 __exportStar(require("./osmd/mapEntityToNote"), exports);

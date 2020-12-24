@@ -5,6 +5,7 @@ import {
   getBoundingBoxMeasureAll,
   OpenSheetMusicDisplay,
   mapEntityToNote,
+  getBoundingBoxesAtPoint,
 } from "webdaw-modules";
 import { store } from "./store";
 
@@ -108,6 +109,27 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
       // console.log((svgDoc as any).createSVGPoint());
     }
   }
+  document.addEventListener("click", (e: MouseEvent) => {
+    const boxes = getBoundingBoxesAtPoint(e as PointerEvent, osmd);
+    console.log(boxes);
+
+    boxes.forEach((bbox) => {
+      const div = document.createElement("div");
+      div.style.position = "absolute";
+      div.style.backgroundColor = "rgba(0,255,0,0.5)";
+      div.style.border = "1px dotted green";
+      div.style.width = `${bbox.width}px`;
+      div.style.height = `${bbox.height}px`;
+      div.style.left = `${bbox.x + offsetX}px`;
+      div.style.top = `${bbox.y + offsetY}px`;
+      container.appendChild(div);
+      div.addEventListener("click", (e) => {
+        e.stopImmediatePropagation();
+        // console.log("click");
+        container.removeChild(div);
+      });
+    });
+  });
 
   // document.addEventListener("click", (e: MouseEvent) => {
   //   const offsetX = osmd["container"].offsetLeft;
@@ -129,34 +151,34 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
   //   // console.log(2, obj2, x, y);
   // });
 
-  osmd.GraphicSheet.MeasureList.forEach((measure, measureIndex) => {
-    measure.forEach((stave) => {
-      const {
-        boundingBox: { childElements },
-      } = stave as any;
-      // console.log(measureIndex, childElements);
-      childElements.forEach((bbox: BoundingBox) => {
-        let { borderLeft, borderRight, borderTop, borderBottom, borderMarginLeft } = bbox as any;
-        if (borderLeft === 0 && borderRight === 0 && borderTop === 0 && borderBottom === 0) {
-          borderLeft = -0.8;
-          borderRight = 0.4;
-          borderTop = 0;
-          borderBottom = 6;
-        }
-        const div = document.createElement("div");
-        div.style.position = "absolute";
-        div.style.backgroundColor = "red";
-        div.style.width = "1px";
-        div.style.height = "40px";
-        div.style.left = `${
-          (bbox.AbsolutePosition.x + borderLeft + borderMarginLeft) * 10 + offsetX
-        }px`;
-        div.style.top = `${bbox.AbsolutePosition.y * 10 + offsetY}px`;
-        container.appendChild(div);
-      });
-    });
-  });
-  container.style.zIndex = "-100";
+  // osmd.GraphicSheet.MeasureList.forEach((measure, measureIndex) => {
+  //   measure.forEach((stave) => {
+  //     const {
+  //       boundingBox: { childElements },
+  //     } = stave as any;
+  //     // console.log(measureIndex, childElements);
+  //     childElements.forEach((bbox: BoundingBox) => {
+  //       let { borderLeft, borderRight, borderTop, borderBottom, borderMarginLeft } = bbox as any;
+  //       if (borderLeft === 0 && borderRight === 0 && borderTop === 0 && borderBottom === 0) {
+  //         borderLeft = -0.8;
+  //         borderRight = 0.4;
+  //         borderTop = 0;
+  //         borderBottom = 6;
+  //       }
+  //       const div = document.createElement("div");
+  //       div.style.position = "absolute";
+  //       div.style.backgroundColor = "red";
+  //       div.style.width = "1px";
+  //       div.style.height = "40px";
+  //       div.style.left = `${
+  //         (bbox.AbsolutePosition.x + borderLeft + borderMarginLeft) * 10 + offsetX
+  //       }px`;
+  //       div.style.top = `${bbox.AbsolutePosition.y * 10 + offsetY}px`;
+  //       container.appendChild(div);
+  //     });
+  //   });
+  // });
+  // container.style.zIndex = "-100";
   document.body.appendChild(container);
 
   // entityData.forEach((data, i) => {
