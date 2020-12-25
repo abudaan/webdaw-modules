@@ -1,4 +1,10 @@
-import { BoundingBox, Note } from "opensheetmusicdisplay";
+import {
+  BoundingBox,
+  GraphicalMeasure,
+  GraphicalStaffEntry,
+  GraphicalVoiceEntry,
+  Note,
+} from "opensheetmusicdisplay";
 import {
   parseMusicXML,
   loadMusicXMLFile,
@@ -13,9 +19,30 @@ import { store } from "./store";
 let scoreDiv: HTMLDivElement;
 let osmd: OpenSheetMusicDisplay;
 
+const match = (a: number, b: number, margin: number = 1): boolean => {
+  // console.log(a, b);
+  // console.log(Math.abs(a - b) < margin);
+  // console.log("---");
+  if (a === b) {
+    return true;
+  }
+  if (Math.abs(a - b) <= margin) {
+    return true;
+  }
+  return false;
+};
+
 const render = (osmd: OpenSheetMusicDisplay) => {
   osmd.render();
   store.setState({ offset: { x: scoreDiv.offsetLeft, y: scoreDiv.offsetTop } });
+};
+
+const getRandomColor = (alpha: number = 0.3) => {
+  const color = [];
+  for (var i = 0; i < 3; i++) {
+    color.push(Math.floor(Math.random() * 200));
+  }
+  return `rgba(${color.join(", ")}, ${alpha}`;
 };
 
 export const getOSMD = (): OpenSheetMusicDisplay => osmd;
@@ -82,81 +109,215 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
     }
   };
 
+  const loop2 = (elem: SVGElement, type: string, opacity: string) => {
+    if (elem.hasChildNodes()) {
+      elem.childNodes.forEach((child) => {
+        const c = child as SVGElement;
+        if (c.tagName && c.tagName.toLowerCase() === type) {
+          (c as SVGElement).setAttribute("opacity", opacity);
+        }
+        if (c.hasChildNodes()) {
+          loop(c, type, opacity);
+        }
+      });
+    }
+  };
+
   if (document !== null) {
     const svgDoc = document.getElementById("osmdSvgPage1");
     if (svgDoc !== null) {
-      const notes = document.querySelectorAll(".vf-stavenote");
+      const notes = document.querySelectorAll(".vf-notehead");
       const tabs = document.querySelectorAll(".vf-tabnote");
+      const elementData: [SVGElement, DOMRect][] = [];
+      // const
       // console.log(tabs);
       tabs.forEach((tab) => {
-        let elem = tab as SVGElement;
+        const elem = tab as SVGElement;
+        loop2(elem, "path", "0.6");
         // loop(elem, "text", "red");
-        tab.addEventListener("click", (e) => {
-          console.log(tab);
-        });
+        const bbox = elem.getBoundingClientRect();
+        elementData.push([elem, bbox]);
+        const div = document.createElement("div");
+        div.style.position = "absolute";
+        div.style.backgroundColor = getRandomColor(0.6);
+        div.style.border = "1px dotted red";
+        div.style.width = `${bbox.width}px`;
+        // div.style.width = `1px`;
+        div.style.height = `${bbox.height}px`;
+        div.style.left = `${bbox.x}px`;
+        div.style.top = `${bbox.y}px`;
+        container.appendChild(div);
+
+        // tab.addEventListener("click", (e) => {
+        //   console.log(tab);
+        // });
       });
+
+      // t.sort((a: SVGElement, b: SVGElement) => {
+      //   const bboxA = a.getBoundingClientRect();
+      //   const bboxB = b.getBoundingClientRect();
+      //   // console.log(a.parentElement?.getBoundingClientRect().y);
+
+      //   if (bboxA.x < bboxB.x) return 1;
+      //   if (bboxA.x > bboxB.x) return -1;
+      //   return 0;
+      // });
+      // console.log(t);
       // console.log(notes);
       notes.forEach((note) => {
-        let elem = note as SVGElement;
+        const elem = note as SVGElement;
         // loop(elem, "path", "red");
-        note.addEventListener(
-          "click",
-          (e) => {
-            console.log(note);
-          },
-          true
-        );
+        loop2(elem, "path", "0.6");
+        const bbox = elem.getBoundingClientRect();
+        elementData.push([elem, bbox]);
+        const div = document.createElement("div");
+        div.style.position = "absolute";
+        div.style.backgroundColor = getRandomColor(0.6);
+        div.style.border = "1px dotted red";
+        div.style.boxSizing = "border-box";
+
+        div.style.width = `${bbox.width}px`;
+        // div.style.width = `1px`;
+        div.style.height = `${bbox.height}px`;
+        div.style.left = `${bbox.x}px`;
+        div.style.top = `${bbox.y}px`;
+        // container.appendChild(div);
+
+        // note.addEventListener(
+        //   "click",
+        //   (e) => {
+        //     console.log(note);
+        //   },
+        //   true
+        // );
       });
       // console.log((svgDoc as any).createSVGPoint());
+      const voiceEntries: GraphicalVoiceEntry[] = [];
+      console.log(osmd.GraphicSheet);
+      osmd.GraphicSheet.MeasureList.forEach((m: GraphicalMeasure[]) => {
+        m.forEach((m1: GraphicalMeasure) => {
+          // staffEntry.forEach((m: GraphicalMeasure) => {});
+          m1.staffEntries.forEach((e) => {
+            e.graphicalVoiceEntries.forEach((ve) => {
+              voiceEntries.push(ve);
+            });
+          });
+        });
+      });
+
+      let m = 0;
+      const voiceEntryData: { x: number; y: number; ve: GraphicalVoiceEntry }[] = [];
+      voiceEntries.forEach((ve, i) => {
+        let {
+          boundingBox: {
+            absolutePosition: { x, y },
+            borderLeft,
+          },
+        } = ve as any;
+
+        x += borderLeft;
+        y += 2.5;
+        x *= 10;
+        y *= 10;
+        voiceEntryData.push({ x, y, ve });
+
+        const div = document.createElement("div");
+        const span = document.createElement("span");
+        // span.innerHTML = `${i}`;
+        div.appendChild(span);
+        div.style.position = "absolute";
+        div.style.backgroundColor = getRandomColor(0.6);
+        div.style.border = "1px dotted red";
+        div.style.boxSizing = "border-box";
+
+        div.style.width = `${1}px`;
+        // div.style.width = `1px`;
+        div.style.height = `${60}px`;
+        div.style.left = `${x}px`;
+        div.style.top = `${y}px`;
+        container.appendChild(div);
+      });
+
+      let matches = 0;
+      for (let v = 0; v < voiceEntryData.length; v++) {
+        const curr = voiceEntryData[v];
+        for (let d = 0; d < elementData.length; d++) {
+          const [elem, box] = elementData[d];
+          // console.log(curr.x, curr.y, box.x, box.y, osmd["container"].offsetTop);
+          // if (match(box.x, curr.x, 2) && match(box.y, curr.y, 30)) {
+          if (match(box.x, curr.x, 25) && match(box.y, curr.y, 60)) {
+            matches++;
+            const div = document.createElement("div");
+            div.innerHTML = `${curr.ve.notes[0].sourceNote.halfTone}`;
+            div.style.position = "absolute";
+            // div.style.backgroundColor = getRandomColor(0.6);
+            div.style.border = "1px dotted red";
+            div.style.boxSizing = "border-box";
+
+            div.style.width = `${10}px`;
+            div.style.height = `${10}px`;
+            div.style.left = `${box.x}px`;
+            div.style.top = `${box.y + 15}px`;
+            container.appendChild(div);
+
+            elem.addEventListener("click", (e) => {
+              console.log(curr.ve.notes[0].sourceNote.halfTone);
+            });
+            break;
+          }
+        }
+      }
+      console.log(matches, voiceEntryData.length);
     }
   }
-  document.addEventListener("click", (e: MouseEvent) => {
-    // const boxes = getBoundingBoxesAtPoint(e as PointerEvent, osmd);
-    const [boxesLevel1, boxesLevel2] = getVerticalStaffEntryContainers(e as PointerEvent, osmd);
-    // console.log(boxesLevel1, boxesLevel2);
-    const colors = ["rgba(0,255,0,0.5)", "rgba(0,255,255,0.5)"];
-    boxesLevel1.forEach((bbox, i) => {
-      const div = document.createElement("div");
-      div.style.position = "absolute";
-      div.style.backgroundColor = colors[i % 2 === 0 ? 0 : 1];
-      // div.style.border = "1px dotted green";
-      div.style.width = `${bbox.width}px`;
-      div.style.height = `${bbox.height}px`;
-      div.style.left = `${bbox.x + offsetX}px`;
-      div.style.top = `${bbox.y + offsetY}px`;
-      container.appendChild(div);
-      div.addEventListener("click", (e) => {
-        e.stopImmediatePropagation();
-        // console.log("click");
-        container.removeChild(div);
-      });
-    });
 
-    let colorIndex = -1;
-    const colors2: string[] = ["rgba(200,0,0,0.5)", "rgba(0,200,0,0.5)", "rgba(0,0,200,0.5)"];
-    boxesLevel2.forEach((bbox) => {
-      const color = colors2[colorIndex++];
-      const div = document.createElement("div");
-      div.style.position = "absolute";
-      div.style.backgroundColor = color;
-      // div.style.border = "1px dotted green";
-      div.style.width = `${bbox.width}px`;
-      div.style.height = `${bbox.height}px`;
-      div.style.left = `${bbox.x + offsetX}px`;
-      div.style.top = `${bbox.y + offsetY}px`;
-      container.appendChild(div);
-      div.addEventListener("click", (e) => {
-        e.stopImmediatePropagation();
-        // console.log("click");
-        container.removeChild(div);
-      });
-      if (colorIndex === colors2.length) {
-        colorIndex = 0;
-      }
-    });
+  // document.addEventListener("click", (e: MouseEvent) => {
+  //   // const boxes = getBoundingBoxesAtPoint(e as PointerEvent, osmd);
+  //   const [boxesLevel1, boxesLevel2] = getVerticalStaffEntryContainers(e as PointerEvent, osmd);
+  //   // console.log(boxesLevel1, boxesLevel2);
+  //   const colors = ["rgba(0,255,0,0.5)", "rgba(0,255,255,0.5)"];
+  //   boxesLevel1.forEach((bbox, i) => {
+  //     const div = document.createElement("div");
+  //     div.style.position = "absolute";
+  //     div.style.backgroundColor = colors[i % 2 === 0 ? 0 : 1];
+  //     // div.style.border = "1px dotted green";
+  //     div.style.width = `${bbox.width}px`;
+  //     div.style.height = `${bbox.height}px`;
+  //     div.style.left = `${bbox.x + offsetX}px`;
+  //     div.style.top = `${bbox.y + offsetY}px`;
+  //     container.appendChild(div);
+  //     div.addEventListener("click", (e) => {
+  //       e.stopImmediatePropagation();
+  //       // console.log("click");
+  //       container.removeChild(div);
+  //     });
+  //   });
 
-    // console.log(container.childNodes);
-  });
+  //   let colorIndex = -1;
+  //   const colors2: string[] = ["rgba(200,0,0,0.5)", "rgba(0,200,0,0.5)", "rgba(0,0,200,0.5)"];
+  //   boxesLevel2.forEach((bbox) => {
+  //     const color = colors2[colorIndex++];
+  //     const div = document.createElement("div");
+  //     div.style.position = "absolute";
+  //     div.style.backgroundColor = color;
+  //     // div.style.border = "1px dotted green";
+  //     div.style.width = `${bbox.width}px`;
+  //     div.style.height = `${bbox.height}px`;
+  //     div.style.left = `${bbox.x + offsetX}px`;
+  //     div.style.top = `${bbox.y + offsetY}px`;
+  //     container.appendChild(div);
+  //     div.addEventListener("click", (e) => {
+  //       e.stopImmediatePropagation();
+  //       // console.log("click");
+  //       container.removeChild(div);
+  //     });
+  //     if (colorIndex === colors2.length) {
+  //       colorIndex = 0;
+  //     }
+  //   });
+
+  //   // console.log(container.childNodes);
+  // });
 
   // document.addEventListener("click", (e: MouseEvent) => {
   //   const offsetX = osmd["container"].offsetLeft;
@@ -206,7 +367,7 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
   //   });
   // });
   // container.style.zIndex = "-100";
-  document.body.appendChild(container);
+  // document.body.appendChild(container);
 
   // entityData.forEach((data, i) => {
   //   const { boundingBox, sourceNote, ticks, noteNumber, bar } = data;
@@ -236,7 +397,7 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
   //   });
   //   container.appendChild(div);
   // });
-  // document.body.appendChild(container);
+  document.body.appendChild(container);
 
   store.getState().updateBoundingBoxMeasures(getBoundingBoxMeasureAll(osmd));
 

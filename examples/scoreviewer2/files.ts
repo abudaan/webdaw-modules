@@ -1,10 +1,10 @@
-export const midiFileName = "Snare_drum_solo";
-export const midiFile = "../assets/Snare_drum_solo.mid";
-export const mxmlFile = "../assets/Snare_drum_solo.xml";
+// export const midiFileName = "Snare_drum_solo";
+// export const midiFile = "../assets/Snare_drum_solo.mid";
+// export const mxmlFile = "../assets/Snare_drum_solo.xml";
 
-// export const midiFileName = "Canon_in_D__Pachelbel__Guitar_Tab";
-// export const midiFile = "../assets/Canon_in_D__Pachelbel__Guitar_Tab.mid";
-// export const mxmlFile = "../assets/Canon_in_D__Pachelbel__Guitar_Tab.musicxml";
+export const midiFileName = "Canon_in_D__Pachelbel__Guitar_Tab";
+export const midiFile = "../assets/Canon_in_D__Pachelbel__Guitar_Tab.mid";
+export const mxmlFile = "../assets/Canon_in_D__Pachelbel__Guitar_Tab.musicxml";
 
 // export const midiFileName = "osmd_test";
 // export const midiFile = "../assets/osmd_test.mid";
