@@ -2,9 +2,14 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getBoundingBoxesAtPoint = void 0;
 var _2d_1 = require("../util/2d");
+var t = 0;
 var getBoundingBox = function (boundingBox) {
+    if (t === 0) {
+        console.log(boundingBox);
+        t++;
+    }
     var _a = boundingBox, _b = _a.absolutePosition, x = _b.x, y = _b.y, borderLeft = _a.borderLeft, borderRight = _a.borderRight, borderTop = _a.borderTop, borderBottom = _a.borderBottom;
-    var width = borderRight - borderLeft;
+    var width = borderRight - (x + borderLeft);
     var height = borderBottom - borderTop;
     // console.log(width, height);
     x += borderLeft;
@@ -27,6 +32,33 @@ var getBoundingBox = function (boundingBox) {
         bottom: y + height,
     };
     return bbox;
+};
+var checkBoundingBox2 = function (boxes, refClick, result) {
+    for (var i = 0; i < boxes.length; i++) {
+        var box = boxes[i];
+        var b = getBoundingBox(box);
+        if (_2d_1.hasOverlap(refClick, b)) {
+            console.log("add 1", b);
+            result.push(b);
+        }
+        if (box.ChildElements.length &&
+            box.ChildElements[0].ChildElements &&
+            box.ChildElements[0].ChildElements.length !== 0) {
+            checkBoundingBox2(box.ChildElements, refClick, result);
+        }
+        else {
+            var b_1 = getBoundingBox(box);
+            var o = _2d_1.hasOverlap(refClick, b_1);
+            if (b_1.width !== 0 && b_1.height !== 0) {
+                // console.log(o);
+                if (o) {
+                    // console.log(hasOverlap(refClick, b));
+                    result.push(b_1);
+                    console.log("add 2", b_1);
+                }
+            }
+        }
+    }
 };
 var checkBoundingBox = function (boxes, refClick) {
     // console.log(boxes);
@@ -73,6 +105,24 @@ exports.getBoundingBoxesAtPoint = function (e, osmd) {
         width: 2,
         height: 2,
     };
+    // for (let i = 0; i < osmd.GraphicSheet.MeasureList.length; i++) {
+    //   const m = osmd.GraphicSheet.MeasureList[i];
+    //   for (let j = 0; j < m.length; j++) {
+    //     const stave = m[j];
+    //     const { staffEntries } = stave;
+    //     for (let k = 0; k < staffEntries.length; k++) {
+    //       const staffEntry = staffEntries[k];
+    //       const boundingBox: BoundingBox = (staffEntry as any).boundingBox;
+    //       const result = checkBoundingBox([boundingBox], refClick);
+    //       // console.log(k, result);
+    //       if (result.length) {
+    //         return result;
+    //       }
+    //     }
+    //   }
+    // }
+    // return [];
+    var result = [];
     for (var i = 0; i < osmd.GraphicSheet.MeasureList.length; i++) {
         var m = osmd.GraphicSheet.MeasureList[i];
         for (var j = 0; j < m.length; j++) {
@@ -81,14 +131,10 @@ exports.getBoundingBoxesAtPoint = function (e, osmd) {
             for (var k = 0; k < staffEntries.length; k++) {
                 var staffEntry = staffEntries[k];
                 var boundingBox = staffEntry.boundingBox;
-                var result = checkBoundingBox([boundingBox], refClick);
-                // console.log(k, result);
-                if (result.length) {
-                    return result;
-                }
+                checkBoundingBox2([boundingBox], refClick, result);
             }
         }
     }
-    return [];
+    return result;
 };
 //# sourceMappingURL=getBoundingBoxesAtPoint.js.map

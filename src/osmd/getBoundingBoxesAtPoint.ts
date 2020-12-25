@@ -3,7 +3,12 @@ import { hasOverlap } from "../util/2d";
 import { BoundingBox as BoundingBox2 } from "../types";
 import { has } from "ramda";
 
+let t = 0;
 const getBoundingBox = (boundingBox: BoundingBox): BoundingBox2 => {
+  if (t === 0) {
+    console.log(boundingBox);
+    t++;
+  }
   let {
     absolutePosition: { x, y },
     borderLeft,
@@ -12,7 +17,7 @@ const getBoundingBox = (boundingBox: BoundingBox): BoundingBox2 => {
     borderBottom,
   } = boundingBox as any;
 
-  let width = borderRight - borderLeft;
+  let width = borderRight - (x + borderLeft);
   let height = borderBottom - borderTop;
   // console.log(width, height);
   x += borderLeft;
@@ -35,6 +40,40 @@ const getBoundingBox = (boundingBox: BoundingBox): BoundingBox2 => {
     bottom: y + height,
   };
   return bbox;
+};
+
+const checkBoundingBox2 = (
+  boxes: BoundingBox[],
+  refClick: BoundingBox2,
+  result: BoundingBox2[]
+) => {
+  for (let i = 0; i < boxes.length; i++) {
+    const box = boxes[i];
+    const b = getBoundingBox(box);
+    if (hasOverlap(refClick, b)) {
+      console.log("add 1", b);
+      result.push(b);
+    }
+
+    if (
+      box.ChildElements.length &&
+      box.ChildElements[0].ChildElements &&
+      box.ChildElements[0].ChildElements.length !== 0
+    ) {
+      checkBoundingBox2(box.ChildElements, refClick, result);
+    } else {
+      const b = getBoundingBox(box);
+      const o = hasOverlap(refClick, b);
+      if (b.width !== 0 && b.height !== 0) {
+        // console.log(o);
+        if (o) {
+          // console.log(hasOverlap(refClick, b));
+          result.push(b);
+          console.log("add 2", b);
+        }
+      }
+    }
+  }
 };
 
 const checkBoundingBox = (boxes: BoundingBox[], refClick: BoundingBox2): BoundingBox2[] => {
@@ -89,6 +128,25 @@ export const getBoundingBoxesAtPoint = (
     height: 2,
   };
 
+  // for (let i = 0; i < osmd.GraphicSheet.MeasureList.length; i++) {
+  //   const m = osmd.GraphicSheet.MeasureList[i];
+  //   for (let j = 0; j < m.length; j++) {
+  //     const stave = m[j];
+  //     const { staffEntries } = stave;
+  //     for (let k = 0; k < staffEntries.length; k++) {
+  //       const staffEntry = staffEntries[k];
+  //       const boundingBox: BoundingBox = (staffEntry as any).boundingBox;
+  //       const result = checkBoundingBox([boundingBox], refClick);
+  //       // console.log(k, result);
+  //       if (result.length) {
+  //         return result;
+  //       }
+  //     }
+  //   }
+  // }
+  // return [];
+
+  const result: BoundingBox2[] = [];
   for (let i = 0; i < osmd.GraphicSheet.MeasureList.length; i++) {
     const m = osmd.GraphicSheet.MeasureList[i];
     for (let j = 0; j < m.length; j++) {
@@ -97,13 +155,9 @@ export const getBoundingBoxesAtPoint = (
       for (let k = 0; k < staffEntries.length; k++) {
         const staffEntry = staffEntries[k];
         const boundingBox: BoundingBox = (staffEntry as any).boundingBox;
-        const result = checkBoundingBox([boundingBox], refClick);
-        // console.log(k, result);
-        if (result.length) {
-          return result;
-        }
+        checkBoundingBox2([boundingBox], refClick, result);
       }
     }
   }
-  return [];
+  return result;
 };

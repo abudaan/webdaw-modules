@@ -5,6 +5,7 @@ import {
   getBoundingBoxMeasureAll,
   OpenSheetMusicDisplay,
   mapEntityToNote,
+  getVerticalStaffEntryContainers,
   getBoundingBoxesAtPoint,
 } from "webdaw-modules";
 import { store } from "./store";
@@ -89,7 +90,7 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
       // console.log(tabs);
       tabs.forEach((tab) => {
         let elem = tab as SVGElement;
-        loop(elem, "text", "red");
+        // loop(elem, "text", "red");
         tab.addEventListener("click", (e) => {
           console.log(tab);
         });
@@ -97,7 +98,7 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
       // console.log(notes);
       notes.forEach((note) => {
         let elem = note as SVGElement;
-        loop(elem, "path", "red");
+        // loop(elem, "path", "red");
         note.addEventListener(
           "click",
           (e) => {
@@ -110,14 +111,15 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
     }
   }
   document.addEventListener("click", (e: MouseEvent) => {
-    const boxes = getBoundingBoxesAtPoint(e as PointerEvent, osmd);
-    console.log(boxes);
-
-    boxes.forEach((bbox) => {
+    // const boxes = getBoundingBoxesAtPoint(e as PointerEvent, osmd);
+    const [boxesLevel1, boxesLevel2] = getVerticalStaffEntryContainers(e as PointerEvent, osmd);
+    // console.log(boxesLevel1, boxesLevel2);
+    const colors = ["rgba(0,255,0,0.5)", "rgba(0,255,255,0.5)"];
+    boxesLevel1.forEach((bbox, i) => {
       const div = document.createElement("div");
       div.style.position = "absolute";
-      div.style.backgroundColor = "rgba(0,255,0,0.5)";
-      div.style.border = "1px dotted green";
+      div.style.backgroundColor = colors[i % 2 === 0 ? 0 : 1];
+      // div.style.border = "1px dotted green";
       div.style.width = `${bbox.width}px`;
       div.style.height = `${bbox.height}px`;
       div.style.left = `${bbox.x + offsetX}px`;
@@ -129,6 +131,31 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
         container.removeChild(div);
       });
     });
+
+    let colorIndex = -1;
+    const colors2: string[] = ["rgba(200,0,0,0.5)", "rgba(0,200,0,0.5)", "rgba(0,0,200,0.5)"];
+    boxesLevel2.forEach((bbox) => {
+      const color = colors2[colorIndex++];
+      const div = document.createElement("div");
+      div.style.position = "absolute";
+      div.style.backgroundColor = color;
+      // div.style.border = "1px dotted green";
+      div.style.width = `${bbox.width}px`;
+      div.style.height = `${bbox.height}px`;
+      div.style.left = `${bbox.x + offsetX}px`;
+      div.style.top = `${bbox.y + offsetY}px`;
+      container.appendChild(div);
+      div.addEventListener("click", (e) => {
+        e.stopImmediatePropagation();
+        // console.log("click");
+        container.removeChild(div);
+      });
+      if (colorIndex === colors2.length) {
+        colorIndex = 0;
+      }
+    });
+
+    // console.log(container.childNodes);
   });
 
   // document.addEventListener("click", (e: MouseEvent) => {

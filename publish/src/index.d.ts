@@ -20,6 +20,7 @@ export * from "./osmd/getMeasureBoundingBoxesInStave";
 export * from "./osmd/getBoundingBoxesAtPoint";
 export * from "./osmd/getMusicSystemMeasureBoundingBox";
 export * from "./osmd/getSelectedMeasures";
+export * from "./osmd/getVerticalStaffEntryContainers";
 export * from "./osmd/mapEntityToNote";
 export * from "./osmd/mapMIDINoteIdToGraphicalNote";
 export * from "./osmd/mapMIDINoteIdToGraphicalNotePerTrack";
