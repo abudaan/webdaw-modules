@@ -260,8 +260,15 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
             div.style.top = `${box.y + 15}px`;
             container.appendChild(div);
 
+            const sourceNote = curr.ve.notes[0].sourceNote;
+            const sourceMeasure = (sourceNote as any).sourceMeasure;
+            // console.log(sourceMeasure.measureNumber);
+            // console.log((sourceNote as any).voiceEntry.timestamp.relPosInMeasure);
+            const ticks =
+              sourceMeasure.measureNumber * ppq * 4 +
+              (sourceNote as any).voiceEntry.timestamp.realValue * ppq * 4;
             elem.addEventListener("click", (e) => {
-              console.log(curr.ve.notes[0].sourceNote.halfTone);
+              console.log(sourceNote.halfTone, ticks);
             });
             break;
           }

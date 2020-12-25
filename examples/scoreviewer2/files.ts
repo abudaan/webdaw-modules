@@ -2,17 +2,17 @@
 // export const midiFile = "../assets/Snare_drum_solo.mid";
 // export const mxmlFile = "../assets/Snare_drum_solo.xml";
 
-export const midiFileName = "Canon_in_D__Pachelbel__Guitar_Tab";
-export const midiFile = "../assets/Canon_in_D__Pachelbel__Guitar_Tab.mid";
-export const mxmlFile = "../assets/Canon_in_D__Pachelbel__Guitar_Tab.musicxml";
+// export const midiFileName = "Canon_in_D__Pachelbel__Guitar_Tab";
+// export const midiFile = "../assets/Canon_in_D__Pachelbel__Guitar_Tab.mid";
+// export const mxmlFile = "../assets/Canon_in_D__Pachelbel__Guitar_Tab.musicxml";
 
 // export const midiFileName = "osmd_test";
 // export const midiFile = "../assets/osmd_test.mid";
 // export const mxmlFile = "../assets/osmd_test.xml";
 
-// export const midiFileName = "Dona Nobis Pacem";
-// export const midiFile = "../assets/Dona Nobis Pacem.mid";
-// export const mxmlFile = "../assets/Dona Nobis Pacem.musicxml";
+export const midiFileName = "Dona Nobis Pacem";
+export const midiFile = "../assets/Dona Nobis Pacem.mid";
+export const mxmlFile = "../assets/Dona Nobis Pacem.musicxml";
 
 // export const midiFileName = "04 3b中華色彩s-花非花 (vocal score)";
 // export const midiFile = "../assets/04 3b中華色彩s-花非花 (vocal score).mid";
