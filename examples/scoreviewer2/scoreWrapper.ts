@@ -11,6 +11,8 @@ import {
   getRandomColor,
   entityMapper,
   getEntries,
+  MeasureData,
+  OSMDEntityData,
 } from "webdaw-modules";
 import { store } from "./store";
 
@@ -78,7 +80,7 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
     container.appendChild(div);
   };
 
-  const entityData = getEntries(osmd);
+  const entityData: OSMDEntityData[] = getEntries(osmd);
   console.log(entityData);
   // const staves = noteData.reduce(
   //   (
@@ -95,18 +97,20 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
   //   },
   //   {}
   // );
-  entityData.forEach(({ measure }) => {
-    const div = document.createElement("div");
-    div.style.position = "absolute";
-    div.style.backgroundColor = getRandomColor(0.6);
-    div.style.border = "1px dotted red";
-    div.style.boxSizing = "border-box";
+  entityData.forEach(({ measures }) => {
+    measures.forEach((measure: MeasureData) => {
+      const div = document.createElement("div");
+      div.style.position = "absolute";
+      div.style.backgroundColor = "rgba(0, 255, 0, 0.1)"; //getRandomColor(0.1);
+      div.style.border = "1px dotted red";
+      div.style.boxSizing = "border-box";
 
-    div.style.width = `${measure.width}px`;
-    div.style.height = `${measure.height}px`;
-    div.style.left = `${measure.x + offsetX}px`;
-    div.style.top = `${measure.y + offsetY}px`;
-    container.appendChild(div);
+      div.style.width = `${measure.width}px`;
+      div.style.height = `${measure.height}px`;
+      div.style.left = `${measure.x + offsetX}px`;
+      div.style.top = `${measure.y + offsetY}px`;
+      container.appendChild(div);
+    });
   });
   // console.log(noteData);
   // entityMapper(osmd, noteData);

@@ -7,7 +7,14 @@ export declare type GenericData = {
     height: number;
 };
 export declare type MeasureData = GenericData;
-export declare type StaveData = GenericData;
+export declare type StaveData = {
+    index: number;
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    notes: NoteData[];
+};
 export declare type MusicSystemData = GenericData;
 export declare type NoteData = {
     x: number;
@@ -29,8 +36,8 @@ export declare type NoteData = {
 export declare type OSMDEntityData = {
     containerIndex: number;
     notes: NoteData[];
-    measure: MeasureData;
-    stave: StaveData;
+    measures: MeasureData[];
+    staves: StaveData[];
     musicSystem: MusicSystemData;
 };
 export declare const getEntries: (osmd: OpenSheetMusicDisplay, ppq?: number) => OSMDEntityData[];
