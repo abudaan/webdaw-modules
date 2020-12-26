@@ -22,6 +22,7 @@ export * from "./osmd/getBoundingBoxesAtPoint";
 export * from "./osmd/getBoundingBoxesOfGraphicalMeasures";
 export * from "./osmd/getBoundingBoxesOfSelectedMeasures";
 export * from "./osmd/getBoundingBoxMeasure";
+export * from "./osmd/getEntities";
 export * from "./osmd/getGraphicalNotesPerMeasure";
 export * from "./osmd/getGraphicalNotesPerMeasurePerTrack";
 export * from "./osmd/getMeasureAndStaveAtPoint";

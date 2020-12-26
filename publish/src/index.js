@@ -40,6 +40,7 @@ __exportStar(require("./osmd/getBoundingBoxesAtPoint"), exports);
 __exportStar(require("./osmd/getBoundingBoxesOfGraphicalMeasures"), exports);
 __exportStar(require("./osmd/getBoundingBoxesOfSelectedMeasures"), exports);
 __exportStar(require("./osmd/getBoundingBoxMeasure"), exports);
+__exportStar(require("./osmd/getEntities"), exports);
 __exportStar(require("./osmd/getGraphicalNotesPerMeasure"), exports);
 __exportStar(require("./osmd/getGraphicalNotesPerMeasurePerTrack"), exports);
 __exportStar(require("./osmd/getMeasureAndStaveAtPoint"), exports);

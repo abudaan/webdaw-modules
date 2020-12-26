@@ -8,8 +8,21 @@ export declare type OSMDNoteData = {
     };
     ticks: number;
     noteNumber: number;
-    measureIndex: number;
+    measure: {
+        index: number;
+        x: number;
+        y: number;
+        width: number;
+        height: number;
+    };
     stave: {
+        index: number;
+        x: number;
+        y: number;
+        width: number;
+        height: number;
+    };
+    parentMusicSystem: {
         index: number;
         x: number;
         y: number;
@@ -22,13 +35,6 @@ export declare type OSMDNoteData = {
         denominator: number;
         wholeValue: number;
         realValue: number;
-    };
-    parentMusicSystem: {
-        index: number;
-        x: number;
-        y: number;
-        width: number;
-        height: number;
     };
 };
 export declare const getNoteEntriesPerStave: (osmd: OpenSheetMusicDisplay, ppq?: number) => OSMDNoteData[];

@@ -12,8 +12,21 @@ export type OSMDNoteData = {
   center: { x: number; y: number };
   ticks: number;
   noteNumber: number;
-  measureIndex: number;
+  measure: {
+    index: number;
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  };
   stave: {
+    index: number;
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  };
+  parentMusicSystem: {
     index: number;
     x: number;
     y: number;
@@ -22,13 +35,6 @@ export type OSMDNoteData = {
   };
   isRestFlag: boolean;
   noteLength: { numerator: number; denominator: number; wholeValue: number; realValue: number };
-  parentMusicSystem: {
-    index: number;
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-  };
 };
 
 export const getNoteEntriesPerStave = (
@@ -41,6 +47,7 @@ export const getNoteEntriesPerStave = (
       const {
         boundingBox: {
           absolutePosition: { x: mx, y: my },
+          size: { width: mwidth, height: mheight },
           borderLeft,
           borderBottom,
         },
@@ -49,8 +56,13 @@ export const getNoteEntriesPerStave = (
           boundingBox: { x: px, y: py, width: pwidth, height: pheight },
         },
       } = measure as any;
-      let bbox: { x: number; y: number; width: number; height: number }[] = [];
-      console.log(measure, mx, my);
+      const measureData: { index: number; x: number; y: number; width: number; height: number } = {
+        index: measureIndex,
+        x: mx,
+        y: my,
+        width: mwidth,
+        height: mheight,
+      };
       measure.staffEntries.forEach((staffEntry: GraphicalStaffEntry) => {
         let data: OSMDNoteData;
         const tmpDatas: OSMDNoteData[] = [];
@@ -77,7 +89,9 @@ export const getNoteEntriesPerStave = (
               y: y * 10,
               ticks: measureIndex * ppq * 4 + realValue * ppq * 4,
               noteNumber: sourceNote.halfTone + 12,
-              measureIndex,
+              isRestFlag: sourceNote.isRestFlag,
+              noteLength: { numerator, denominator, wholeValue, realValue },
+              measure: measureData,
               stave: {
                 index: staveIndex,
                 x: 0,
@@ -85,8 +99,6 @@ export const getNoteEntriesPerStave = (
                 width: 0,
                 height: 0,
               },
-              isRestFlag: sourceNote.isRestFlag,
-              noteLength: { numerator, denominator, wholeValue, realValue },
               parentMusicSystem: {
                 index: pid,
                 x: px,

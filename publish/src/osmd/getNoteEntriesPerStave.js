@@ -6,9 +6,14 @@ exports.getNoteEntriesPerStave = function (osmd, ppq) {
     var noteData = [];
     osmd.GraphicSheet.MeasureList.forEach(function (staves, measureIndex) {
         staves.forEach(function (measure, staveIndex) {
-            var _a = measure, _b = _a.boundingBox, _c = _b.absolutePosition, mx = _c.x, my = _c.y, borderLeft = _b.borderLeft, borderBottom = _b.borderBottom, _d = _a.parentMusicSystem, pid = _d.id, _e = _d.boundingBox, px = _e.x, py = _e.y, pwidth = _e.width, pheight = _e.height;
-            var bbox = [];
-            console.log(measure, mx, my);
+            var _a = measure, _b = _a.boundingBox, _c = _b.absolutePosition, mx = _c.x, my = _c.y, _d = _b.size, mwidth = _d.width, mheight = _d.height, borderLeft = _b.borderLeft, borderBottom = _b.borderBottom, _e = _a.parentMusicSystem, pid = _e.id, _f = _e.boundingBox, px = _f.x, py = _f.y, pwidth = _f.width, pheight = _f.height;
+            var measureData = {
+                index: measureIndex,
+                x: mx,
+                y: my,
+                width: mwidth,
+                height: mheight,
+            };
             measure.staffEntries.forEach(function (staffEntry) {
                 var data;
                 var tmpDatas = [];
@@ -25,7 +30,9 @@ exports.getNoteEntriesPerStave = function (osmd, ppq) {
                             y: y * 10,
                             ticks: measureIndex * ppq * 4 + realValue * ppq * 4,
                             noteNumber: sourceNote.halfTone + 12,
-                            measureIndex: measureIndex,
+                            isRestFlag: sourceNote.isRestFlag,
+                            noteLength: { numerator: numerator, denominator: denominator, wholeValue: wholeValue, realValue: realValue },
+                            measure: measureData,
                             stave: {
                                 index: staveIndex,
                                 x: 0,
@@ -33,8 +40,6 @@ exports.getNoteEntriesPerStave = function (osmd, ppq) {
                                 width: 0,
                                 height: 0,
                             },
-                            isRestFlag: sourceNote.isRestFlag,
-                            noteLength: { numerator: numerator, denominator: denominator, wholeValue: wholeValue, realValue: realValue },
                             parentMusicSystem: {
                                 index: pid,
                                 x: px,
