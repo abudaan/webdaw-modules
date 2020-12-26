@@ -13,6 +13,7 @@ import {
   mapEntityToNote,
   getVerticalStaffEntryContainers,
   getBoundingBoxesAtPoint,
+  getNoteEntriesPerStave,
 } from "webdaw-modules";
 import { store } from "./store";
 
@@ -123,6 +124,8 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
     }
   };
 
+  getNoteEntriesPerStave(osmd);
+  /*
   if (document !== null) {
     const svgDoc = document.getElementById("osmdSvgPage1");
     if (svgDoc !== null) {
@@ -146,7 +149,7 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
         div.style.height = `${bbox.height}px`;
         div.style.left = `${bbox.x}px`;
         div.style.top = `${bbox.y}px`;
-        container.appendChild(div);
+        // container.appendChild(div);
 
         // tab.addEventListener("click", (e) => {
         //   console.log(tab);
@@ -245,7 +248,7 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
           const [elem, box] = elementData[d];
           // console.log(curr.x, curr.y, box.x, box.y, osmd["container"].offsetTop);
           // if (match(box.x, curr.x, 2) && match(box.y, curr.y, 30)) {
-          if (match(box.x, curr.x, 25) && match(box.y, curr.y, 60)) {
+          if (match(box.x, curr.x, 20) && match(box.y, curr.y, 60)) {
             matches++;
             const div = document.createElement("div");
             div.innerHTML = `${curr.ve.notes[0].sourceNote.halfTone}`;
@@ -277,7 +280,7 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
       console.log(matches, voiceEntryData.length);
     }
   }
-
+*/
   // document.addEventListener("click", (e: MouseEvent) => {
   //   // const boxes = getBoundingBoxesAtPoint(e as PointerEvent, osmd);
   //   const [boxesLevel1, boxesLevel2] = getVerticalStaffEntryContainers(e as PointerEvent, osmd);
