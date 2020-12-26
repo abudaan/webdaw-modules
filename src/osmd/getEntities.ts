@@ -42,6 +42,40 @@ export type OSMDEntityData = {
   musicSystem: MusicSystemData;
 };
 
+export type NoteData2 = {
+  index: number;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  center: { x: number; y: number };
+  ticks: number;
+  noteNumber: number;
+  isRestFlag: boolean;
+  noteLength: { numerator: number; denominator: number; wholeValue: number; realValue: number };
+  measureIndex: number;
+  staveIndex: number;
+  containerIndex: number;
+};
+
+export type StaveData2 = {
+  index: number;
+  notes: NoteData2[];
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+};
+
+export type OSMDEntityData2 = {
+  measureIndex: number;
+  containerIndex: number;
+  startX: number; // smallest x-position of all notes in this container
+  notes: NoteData2[]; //
+  staves: StaveData[];
+  musicSystem: MusicSystemData;
+};
+
 const ppq = 960;
 
 const getMusicSystemData = (

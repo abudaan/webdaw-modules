@@ -97,23 +97,35 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
   //   },
   //   {}
   // );
-  entityData.forEach(({ measures }) => {
-    measures.forEach((measure: MeasureData) => {
-      const div = document.createElement("div");
-      div.style.position = "absolute";
-      div.style.backgroundColor = "rgba(0, 255, 0, 0.1)"; //getRandomColor(0.1);
-      div.style.border = "1px dotted red";
-      div.style.boxSizing = "border-box";
 
-      div.style.width = `${measure.width}px`;
-      div.style.height = `${measure.height}px`;
-      div.style.left = `${measure.x + offsetX}px`;
-      div.style.top = `${measure.y + offsetY}px`;
-      container.appendChild(div);
-    });
-  });
+  // entityData.forEach(({ measures }) => {
+  //   measures.forEach((measure: MeasureData) => {
+  //     const div = document.createElement("div");
+  //     div.style.position = "absolute";
+  //     div.style.backgroundColor = "rgba(0, 255, 0, 0.1)"; //getRandomColor(0.1);
+  //     div.style.border = "1px dotted red";
+  //     div.style.boxSizing = "border-box";
+
+  //     div.style.width = `${measure.width}px`;
+  //     div.style.height = `${measure.height}px`;
+  //     div.style.left = `${measure.x + offsetX}px`;
+  //     div.style.top = `${measure.y + offsetY}px`;
+  //     container.appendChild(div);
+  //   });
+  // });
+
   // console.log(noteData);
-  // entityMapper(osmd, noteData);
+  // entityMapper(osmd, entityData);
+
+  entityData.forEach((data, i) => {
+    const xs = data.staves.map((s) => {
+      if (s) {
+        return s.x;
+      }
+      return -1;
+    });
+    console.log(i, xs.join(" "));
+  });
 
   store.getState().updateBoundingBoxMeasures(getBoundingBoxMeasureAll(osmd));
 

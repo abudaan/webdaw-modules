@@ -1,3 +1,3 @@
 import { OpenSheetMusicDisplay } from "opensheetmusicdisplay";
-import { OSMDNoteData } from "./getNoteEntriesPerStave";
-export declare const entityMapper: (osmd: OpenSheetMusicDisplay, noteData: OSMDNoteData[]) => void;
+import { OSMDEntityData } from "./getEntities";
+export declare const entityMapper: (osmd: OpenSheetMusicDisplay, entityData: OSMDEntityData[]) => void;
