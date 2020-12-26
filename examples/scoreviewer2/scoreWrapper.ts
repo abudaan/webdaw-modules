@@ -78,8 +78,35 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
   };
 
   const noteData = getNoteEntriesPerStave(osmd);
-  noteData.forEach((data) => createDiv(data));
-  console.log(noteData);
+  const staves = noteData.reduce(
+    (
+      acc: {
+        [index: number]: { index: number; x: number; y: number; width: number; height: number };
+      },
+      val: OSMDNoteData
+    ) => {
+      const stave = val.stave;
+      if (typeof acc[stave.index] === "undefined") {
+        acc[stave.index] = stave;
+      }
+      return acc;
+    },
+    {}
+  );
+  Object.values(staves).forEach((stave) => {
+    const div = document.createElement("div");
+    div.style.position = "absolute";
+    div.style.backgroundColor = getRandomColor(0.6);
+    div.style.border = "1px dotted red";
+    div.style.boxSizing = "border-box";
+
+    div.style.width = `${stave.width}px`;
+    div.style.height = `${stave.height}px`;
+    div.style.left = `${stave.x + offsetX}px`;
+    div.style.top = `${stave.y + offsetY}px`;
+    container.appendChild(div);
+  });
+  // console.log(noteData);
   entityMapper(osmd, noteData);
 
   store.getState().updateBoundingBoxMeasures(getBoundingBoxMeasureAll(osmd));

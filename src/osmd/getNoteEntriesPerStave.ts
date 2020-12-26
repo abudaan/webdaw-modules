@@ -23,7 +23,7 @@ export type OSMDNoteData = {
   isRestFlag: boolean;
   noteLength: { numerator: number; denominator: number; wholeValue: number; realValue: number };
   parentMusicSystem: {
-    id: number;
+    index: number;
     x: number;
     y: number;
     width: number;
@@ -38,16 +38,20 @@ export const getNoteEntriesPerStave = (
   const noteData: OSMDNoteData[] = [];
   osmd.GraphicSheet.MeasureList.forEach((staves: GraphicalMeasure[], measureIndex: number) => {
     staves.forEach((measure: GraphicalMeasure, staveIndex: number) => {
+      const {
+        boundingBox: {
+          absolutePosition: { x: mx, y: my },
+          borderLeft,
+          borderBottom,
+        },
+        parentMusicSystem: {
+          id: pid,
+          boundingBox: { x: px, y: py, width: pwidth, height: pheight },
+        },
+      } = measure as any;
+      let bbox: { x: number; y: number; width: number; height: number }[] = [];
+      console.log(measure, mx, my);
       measure.staffEntries.forEach((staffEntry: GraphicalStaffEntry) => {
-        let sx: number[] = [];
-        let sy: number[] = [];
-        const {
-          boundingBox: { borderLeft },
-          parentMusicSystem: {
-            id,
-            boundingBox: { x: px, y: py, width: pwidth, height: pheight },
-          },
-        } = staffEntry as any;
         let data: OSMDNoteData;
         const tmpDatas: OSMDNoteData[] = [];
         staffEntry.graphicalVoiceEntries.forEach((voiceEntry: GraphicalVoiceEntry) => {
@@ -58,8 +62,8 @@ export const getNoteEntriesPerStave = (
               },
               sourceNote,
             } = note as any;
-            sx.push(x);
-            sy.push(y);
+            // sx.push(x * 10);
+            // sy.push(y * 10);
             // console.log((note as any).boundingBox);
             const {
               numerator,
@@ -84,7 +88,7 @@ export const getNoteEntriesPerStave = (
               isRestFlag: sourceNote.isRestFlag,
               noteLength: { numerator, denominator, wholeValue, realValue },
               parentMusicSystem: {
-                id,
+                index: pid,
                 x: px,
                 y: py,
                 width: pwidth,
@@ -95,15 +99,17 @@ export const getNoteEntriesPerStave = (
             // console.log(note);
           });
         });
-        const minX = Math.min(...sx);
-        const maxX = Math.max(...sx);
-        const minY = Math.min(...sy);
-        const maxY = Math.max(...sy);
+        // console.log("SX", sx);
+        // console.log("SY", sy);
+        // const minX = Math.min(...sx);
+        // const maxX = Math.max(...sx);
+        // const minY = Math.min(...sy);
+        // const maxY = Math.max(...sy);
         tmpDatas.forEach(data => {
-          data.stave.x = minX;
-          data.stave.y = minY;
-          data.stave.width = maxX - minX;
-          data.stave.height = maxY - minY;
+          // data.stave.x = minX;
+          // data.stave.y = minY;
+          // data.stave.width = maxX - minX;
+          // data.stave.height = maxY - minY;
           noteData.push(data);
         });
       });

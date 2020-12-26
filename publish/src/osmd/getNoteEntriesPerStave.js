@@ -1,24 +1,4 @@
 "use strict";
-var __read = (this && this.__read) || function (o, n) {
-    var m = typeof Symbol === "function" && o[Symbol.iterator];
-    if (!m) return o;
-    var i = m.call(o), r, ar = [], e;
-    try {
-        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-    }
-    catch (error) { e = { error: error }; }
-    finally {
-        try {
-            if (r && !r.done && (m = i["return"])) m.call(i);
-        }
-        finally { if (e) throw e.error; }
-    }
-    return ar;
-};
-var __spread = (this && this.__spread) || function () {
-    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
-    return ar;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getNoteEntriesPerStave = void 0;
 exports.getNoteEntriesPerStave = function (osmd, ppq) {
@@ -26,17 +6,17 @@ exports.getNoteEntriesPerStave = function (osmd, ppq) {
     var noteData = [];
     osmd.GraphicSheet.MeasureList.forEach(function (staves, measureIndex) {
         staves.forEach(function (measure, staveIndex) {
+            var _a = measure, _b = _a.boundingBox, _c = _b.absolutePosition, mx = _c.x, my = _c.y, borderLeft = _b.borderLeft, borderBottom = _b.borderBottom, _d = _a.parentMusicSystem, pid = _d.id, _e = _d.boundingBox, px = _e.x, py = _e.y, pwidth = _e.width, pheight = _e.height;
+            var bbox = [];
+            console.log(measure, mx, my);
             measure.staffEntries.forEach(function (staffEntry) {
-                var sx = [];
-                var sy = [];
-                var _a = staffEntry, borderLeft = _a.boundingBox.borderLeft, _b = _a.parentMusicSystem, id = _b.id, _c = _b.boundingBox, px = _c.x, py = _c.y, pwidth = _c.width, pheight = _c.height;
                 var data;
                 var tmpDatas = [];
                 staffEntry.graphicalVoiceEntries.forEach(function (voiceEntry) {
                     voiceEntry.notes.forEach(function (note) {
                         var _a = note, _b = _a.boundingBox.absolutePosition, x = _b.x, y = _b.y, sourceNote = _a.sourceNote;
-                        sx.push(x);
-                        sy.push(y);
+                        // sx.push(x * 10);
+                        // sy.push(y * 10);
                         // console.log((note as any).boundingBox);
                         var _c = note.graphicalNoteLength, numerator = _c.numerator, denominator = _c.denominator, wholeValue = _c.wholeValue, realValue = _c.realValue;
                         data = {
@@ -56,7 +36,7 @@ exports.getNoteEntriesPerStave = function (osmd, ppq) {
                             isRestFlag: sourceNote.isRestFlag,
                             noteLength: { numerator: numerator, denominator: denominator, wholeValue: wholeValue, realValue: realValue },
                             parentMusicSystem: {
-                                id: id,
+                                index: pid,
                                 x: px,
                                 y: py,
                                 width: pwidth,
@@ -67,15 +47,17 @@ exports.getNoteEntriesPerStave = function (osmd, ppq) {
                         // console.log(note);
                     });
                 });
-                var minX = Math.min.apply(Math, __spread(sx));
-                var maxX = Math.max.apply(Math, __spread(sx));
-                var minY = Math.min.apply(Math, __spread(sy));
-                var maxY = Math.max.apply(Math, __spread(sy));
+                // console.log("SX", sx);
+                // console.log("SY", sy);
+                // const minX = Math.min(...sx);
+                // const maxX = Math.max(...sx);
+                // const minY = Math.min(...sy);
+                // const maxY = Math.max(...sy);
                 tmpDatas.forEach(function (data) {
-                    data.stave.x = minX;
-                    data.stave.y = minY;
-                    data.stave.width = maxX - minX;
-                    data.stave.height = maxY - minY;
+                    // data.stave.x = minX;
+                    // data.stave.y = minY;
+                    // data.stave.width = maxX - minX;
+                    // data.stave.height = maxY - minY;
                     noteData.push(data);
                 });
             });
