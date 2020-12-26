@@ -2,7 +2,6 @@ import {
   OpenSheetMusicDisplay,
   GraphicalMeasure,
   GraphicalStaffEntry,
-  VerticalGraphicalStaffEntryContainer,
   GraphicalVoiceEntry,
   GraphicalNote,
 } from "opensheetmusicdisplay";
@@ -14,10 +13,15 @@ export type OSMDNoteData = {
   noteNumber: number;
   measureIndex: number;
   staveIndex: number;
+  isRestFlag: boolean;
+  noteLength: { numerator: number; denominator: number; wholeValue: number; realValue: number };
 };
 
-export const getNoteEntriesPerStave = (osmd: OpenSheetMusicDisplay, ppq: number = 960) => {
-  console.log;
+export const getNoteEntriesPerStave = (
+  osmd: OpenSheetMusicDisplay,
+  ppq: number = 960
+): OSMDNoteData[] => {
+  const noteData: OSMDNoteData[] = [];
   osmd.GraphicSheet.MeasureList.forEach((staves: GraphicalMeasure[], measureIndex: number) => {
     staves.forEach((measure: GraphicalMeasure, staveIndex: number) => {
       measure.staffEntries.forEach((staffEntry: GraphicalStaffEntry) => {
@@ -29,19 +33,28 @@ export const getNoteEntriesPerStave = (osmd: OpenSheetMusicDisplay, ppq: number 
               },
               sourceNote,
             } = note as any;
-            const relPosInMeasure = sourceNote.voiceEntry.timestamp.realValue;
+            const {
+              numerator,
+              denominator,
+              wholeValue,
+              realValue,
+            } = note.graphicalNoteLength as any;
             const data: OSMDNoteData = {
               x,
               y,
-              ticks: measureIndex * ppq * 4 + relPosInMeasure * ppq * 4,
+              ticks: measureIndex * ppq * 4 + realValue * ppq * 4,
               noteNumber: sourceNote.halfTone + 12,
               measureIndex,
               staveIndex,
+              isRestFlag: sourceNote.isRestFlag,
+              noteLength: { numerator, denominator, wholeValue, realValue },
             };
-            console.log(data, note);
+            noteData.push(data);
+            // console.log(note);
           });
         });
       });
     });
   });
+  return noteData;
 };

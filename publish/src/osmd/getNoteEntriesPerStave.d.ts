@@ -6,5 +6,12 @@ export declare type OSMDNoteData = {
     noteNumber: number;
     measureIndex: number;
     staveIndex: number;
+    isRestFlag: boolean;
+    noteLength: {
+        numerator: number;
+        denominator: number;
+        wholeValue: number;
+        realValue: number;
+    };
 };
-export declare const getNoteEntriesPerStave: (osmd: OpenSheetMusicDisplay, ppq?: number) => void;
+export declare const getNoteEntriesPerStave: (osmd: OpenSheetMusicDisplay, ppq?: number) => OSMDNoteData[];

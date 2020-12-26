@@ -124,7 +124,8 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
     }
   };
 
-  getNoteEntriesPerStave(osmd);
+  const noteData = getNoteEntriesPerStave(osmd);
+  console.log(noteData);
   /*
   if (document !== null) {
     const svgDoc = document.getElementById("osmdSvgPage1");
