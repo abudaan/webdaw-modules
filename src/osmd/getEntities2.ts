@@ -7,13 +7,42 @@ import {
   VerticalGraphicalStaffEntryContainer,
 } from "opensheetmusicdisplay";
 
-export type MusicSystemData = {
+export type GenericData = {
   index: number;
   x: number;
   y: number;
+  width: number;
+  height: number;
+};
+export type MeasureData = GenericData;
+export type StaveData = {
+  index: number;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  notes: NoteData[];
+};
+export type MusicSystemData = GenericData;
+export type NoteData = {
+  x: number;
+  y: number;
+  center: { x: number; y: number };
+  ticks: number;
+  noteNumber: number;
+  isRestFlag: boolean;
+  noteLength: { numerator: number; denominator: number; wholeValue: number; realValue: number };
 };
 
-export type NoteData = {
+export type OSMDEntityData = {
+  containerIndex: number;
+  notes: NoteData[];
+  measures: MeasureData[];
+  staves: StaveData[];
+  musicSystem: MusicSystemData;
+};
+
+export type NoteData2 = {
   index: number;
   x: number;
   y: number;
@@ -29,9 +58,9 @@ export type NoteData = {
   containerIndex: number;
 };
 
-export type StaveData = {
+export type StaveData2 = {
   index: number;
-  notes: NoteData[];
+  notes: NoteData2[];
   x: number;
   y: number;
   width: number;
@@ -42,7 +71,7 @@ export type OSMDEntityData2 = {
   measureIndex: number;
   containerIndex: number;
   startX: number; // smallest x-position of all notes in this container
-  notes: NoteData[]; //
+  notes: NoteData2[]; //
   staves: StaveData[];
   musicSystem: MusicSystemData;
 };
