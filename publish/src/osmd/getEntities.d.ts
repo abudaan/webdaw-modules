@@ -14,6 +14,7 @@ export declare type MeasureData = {
     width: number;
 };
 export declare type NoteData = {
+    id: string;
     index: number;
     x: number;
     y: number;

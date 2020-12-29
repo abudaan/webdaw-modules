@@ -6,6 +6,7 @@ import {
   GraphicalNote,
   VerticalGraphicalStaffEntryContainer,
 } from "opensheetmusicdisplay";
+import uniqid from "uniqid";
 
 export type MusicSystemData = {
   index: number;
@@ -24,6 +25,7 @@ export type MeasureData = {
 };
 
 export type NoteData = {
+  id: string;
   index: number;
   x: number;
   y: number;
@@ -149,6 +151,7 @@ const getNoteData = ({
   } = sourceNote;
 
   const data: NoteData = {
+    id: `note-${uniqid()}`,
     index: noteIndex,
     center: { x: x * 10, y: 0 },
     x: (x + borderLeft) * 10,

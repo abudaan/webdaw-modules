@@ -67,6 +67,8 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
 
   const offsetX = osmd["container"].offsetLeft;
   const offsetY = osmd["container"].offsetTop;
+  const scrollPosX = window.scrollX;
+  const scrollPosY = window.scrollY;
 
   const createDiv = (bbox: DOMRect): void => {
     const div = document.createElement("div");
@@ -78,8 +80,8 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
 
     div.style.width = `${bbox.width}px`;
     div.style.height = `${bbox.height}px`;
-    div.style.left = `${bbox.x + offsetX}px`;
-    div.style.top = `${bbox.y + offsetY}px`;
+    div.style.left = `${bbox.x + offsetX + scrollPosX}px`;
+    div.style.top = `${bbox.y + offsetY + scrollPosY}px`;
     div.addEventListener("click", () => {
       console.log(div);
     });
@@ -87,20 +89,23 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
   };
 
   const entryData: StaveData[][] = firstTest(osmd);
-  const noteHeads: { element: SVGElement; bbox: DOMRect }[] = [];
+  console.log(entryData);
+  const noteHeads: { element: SVGElement; bbox: DOMRect; id: string }[] = [];
   const t = document.querySelectorAll(".vf-notehead");
-  t.forEach((a) => {
+  t.forEach((a, i) => {
+    setAttibuteSVGElement(a as SVGElement, "path", "opacity", "0.2");
     const bbox = a.getBoundingClientRect();
     bbox.x -= offsetX;
     bbox.y -= offsetY;
     createDiv(bbox);
-    noteHeads.push({ element: a as SVGElement, bbox });
+    noteHeads.push({ element: a as SVGElement, bbox, id: `notehead-${i}` });
   });
 
+  console.time("start");
   for (let i = 0; i < entryData.length; i++) {
-    if (i === 60) {
-      break;
-    }
+    // if (i === 14) {
+    //   break;
+    // }
     const entry = entryData[i];
 
     for (let j = 0; j < entry.length; j++) {
@@ -128,41 +133,58 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
         }, 0);
         const matches: {
           notes: NoteData[];
-          graphicalNotes: { element: SVGElement; bbox: DOMRect }[];
+          graphicalNotes: { element: SVGElement; bbox: DOMRect; id: string }[];
         } = {
           notes: [],
           graphicalNotes: [],
         };
 
-        stave.notes.forEach((note) => {
-          if (note.isRestFlag === false) {
-            for (let k = 0; k < noteHeads.length; k++) {
-              const { element, bbox } = noteHeads[k];
+        for (let s = 0; s < stave.notes.length; s++) {
+          const note = stave.notes[s];
+
+          for (let k = 0; k < noteHeads.length; k++) {
+            const noteHead = noteHeads[k];
+            const { element, bbox } = noteHead;
+
+            if (note.isRestFlag === false) {
               if (
                 match(bbox.x, stave.x, 10) &&
                 bbox.y >= stave.y - 5 &&
                 bbox.bottom <= stave.y + stave.height + 5
               ) {
                 matches.notes.push(note);
-                matches.graphicalNotes.push({ element, bbox });
+                matches.graphicalNotes.push(noteHead);
                 if (matches.notes.length === maxMatches) {
-                  console.log("reaping done!", maxMatches);
+                  // console.log("reaping done!", k);
                   break;
                 }
               }
             }
           }
-        });
-
-        if (maxMatches === 1) {
+        }
+        if (matches.notes.length === 1) {
           const note = matches.notes[0];
           const elem = matches.graphicalNotes[0].element;
           setAttibuteSVGElement(elem, "path", "fill", "red");
           elem.addEventListener("click", () => {
             console.log(note.measureIndex, note.staffIndex, note.noteNumber);
           });
-        } else if (maxMatches > 1) {
-          // matches.notes = matches.notes.filter((a, b) => {
+        } else if (matches.notes.length > 1) {
+          let { notes, graphicalNotes } = matches;
+          const notesById: { [id: string]: NoteData } = {};
+          const graphicalNotesById: {
+            [id: string]: { element: SVGElement; bbox: DOMRect; id: string };
+          } = {};
+          notes.forEach((note) => {
+            notesById[note.id] = note;
+          });
+          notes = Object.values(notesById);
+          graphicalNotes.forEach((note) => {
+            graphicalNotesById[note.id] = note;
+          });
+          graphicalNotes = Object.values(graphicalNotesById);
+
+          // notes.sort((a, b) => {
           //   if (a.noteNumber > b.noteNumber) {
           //     return -1;
           //   } else if (a.noteNumber > b.noteNumber) {
@@ -170,29 +192,32 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
           //   }
           //   return 0;
           // });
-          matches.notes.sort((a, b) => {
-            if (a.noteNumber > b.noteNumber) {
-              return -1;
-            } else if (a.noteNumber > b.noteNumber) {
-              return 1;
-            }
-            return 0;
-          });
-          console.log(matches);
-          // matches.graphical.sort((a, b) => {
+          // graphicalNotes = graphicalNotes.sort((a, b) => {
           //   if (a.bbox.y > b.bbox.y) {
-          //     return -1;
-          //   } else if (a.bbox.y > b.bbox.y) {
           //     return 1;
+          //   } else if (a.bbox.y < b.bbox.y) {
+          //     return -1;
           //   }
           //   return 0;
           // });
+          console.log(notes);
+          console.log(graphicalNotes);
+
+          for (let i = 0; i < notes.length; i++) {
+            const note = notes[i];
+            const { element } = graphicalNotes[i];
+            setAttibuteSVGElement(element, "path", "fill", "red");
+            element.addEventListener("click", () => {
+              console.log(note.measureIndex, note.staffIndex, note.noteNumber);
+            });
+          }
         }
 
         // console.log(stave.measureIndex, stave.index, maxMatches, matches);
       }
     }
   }
+  console.timeEnd("start");
 
   // entityMapper(osmd, entityData);
   store.getState().updateBoundingBoxMeasures(getBoundingBoxMeasureAll(osmd));

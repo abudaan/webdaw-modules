@@ -1,6 +1,10 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.firstTest = void 0;
+var uniqid_1 = __importDefault(require("uniqid"));
 var ppq = 960;
 var getMusicSystemData = function (entryContainer) {
     // console.log(entryContainer);
@@ -40,6 +44,7 @@ var getNoteData = function (_a) {
     var relPosInMeasure = note.sourceNote.voiceEntry.timestamp.realValue;
     var multipleRestMeasures = sourceNote.sourceMeasure.multipleRestMeasures;
     var data = {
+        id: "note-" + uniqid_1.default(),
         index: noteIndex,
         center: { x: x * 10, y: 0 },
         x: (x + borderLeft) * 10,
