@@ -25,20 +25,27 @@ export type NoteData = {
   isRestFlag: boolean;
   noteLength: { numerator: number; denominator: number; wholeValue: number; realValue: number };
   measureIndex: number;
-  staveIndex: number;
+  staffIndex: number;
   containerIndex: number;
 };
 
 export type StaveData = {
   index: number;
-  notes: NoteData[];
+  timeStamp: {
+    numerator: number;
+    denominator: number;
+    wholeValue: number;
+    realValue: number;
+  };
+  ticks: number;
   x: number;
   y: number;
   width: number;
   height: number;
+  notes: NoteData[];
 };
 
-export type OSMDEntityData2 = {
+export type OSMDEntityData = {
   measureIndex: number;
   containerIndex: number;
   startX: number; // smallest x-position of all notes in this container
@@ -136,7 +143,10 @@ const getNoteData = (entryContainer: VerticalGraphicalStaffEntryContainer): Note
   return notes;
 };
 
-const getStaveData = (entryContainer: VerticalGraphicalStaffEntryContainer): StaveData[] => {
+const getStaveData = (
+  entryContainer: VerticalGraphicalStaffEntryContainer,
+  containerIndex: number
+): StaveData[] => {
   const staveData = (entryContainer as any).staffEntries.map(
     (staffEntry: GraphicalStaffEntry, staffIndex: number) => {
       const {
@@ -145,16 +155,19 @@ const getStaveData = (entryContainer: VerticalGraphicalStaffEntryContainer): Sta
           size: { width, height },
           borderTop,
           borderBottom,
+          borderLeft,
         },
       } = staffEntry as any;
       const notes: NoteData[] = [];
+      let measureIndex = -1;
 
       staffEntry.graphicalVoiceEntries.forEach(voiceEntry => {
-        const measureIndex = (voiceEntry.parentStaffEntry.parentMeasure as any).measureNumber;
-        voiceEntry.notes.forEach((note: GraphicalNote) => {
+        measureIndex = (voiceEntry.parentStaffEntry.parentMeasure as any).measureNumber;
+        voiceEntry.notes.forEach((note: GraphicalNote, noteIndex: number) => {
           const {
             boundingBox: {
               absolutePosition: { x, y },
+              size: { width, height },
               borderLeft,
             },
             sourceNote,
@@ -163,23 +176,30 @@ const getStaveData = (entryContainer: VerticalGraphicalStaffEntryContainer): Sta
           const relPosInMeasure = (note.sourceNote as any).voiceEntry.timestamp.realValue;
 
           const data: NoteData = {
+            index: noteIndex,
             center: { x: x * 10, y: 0 },
             x: (x + borderLeft) * 10,
             y: y * 10,
+            width: width * 10,
+            height: height * 10,
             ticks: measureIndex * ppq * 4 + relPosInMeasure * ppq * 4,
             noteNumber: sourceNote.halfTone + 12,
             isRestFlag: sourceNote.isRestFlag,
             noteLength: { numerator, denominator, wholeValue, realValue },
+            staffIndex,
+            measureIndex,
+            containerIndex,
           };
           notes.push(data);
         });
       });
-
       return {
         notes,
         index: staffIndex,
-        x: x * 10,
-        y: y * 10,
+        measureIndex,
+        containerIndex,
+        x: (x + borderLeft) * 10,
+        y: (y + borderTop) * 10,
         width: width * 10,
         height: height * 10,
       };
@@ -206,4 +226,15 @@ export const getEntries = (osmd: OpenSheetMusicDisplay, ppq: number = 960): OSMD
     }
   );
   return entityData;
+};
+
+export const firstTest = (osmd: OpenSheetMusicDisplay, ppq: number = 960): StaveData[][] => {
+  const entries: StaveData[][] = [];
+  osmd.GraphicSheet.VerticalGraphicalStaffEntryContainers.forEach(
+    (entryContainer: VerticalGraphicalStaffEntryContainer, containerIndex: number) => {
+      const s = getStaveData(entryContainer, containerIndex);
+      entries.push(s);
+    }
+  );
+  return entries;
 };
