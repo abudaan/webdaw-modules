@@ -3,6 +3,15 @@ export declare type MusicSystemData = {
     index: number;
     x: number;
     y: number;
+    height: number;
+    width: number;
+};
+export declare type MeasureData = {
+    index: number;
+    x: number;
+    y: number;
+    height: number;
+    width: number;
 };
 export declare type NoteData = {
     index: number;
@@ -42,6 +51,7 @@ export declare type StaveData = {
     width: number;
     height: number;
     notes: NoteData[];
+    measureIndex: number;
 };
 export declare type OSMDEntityData = {
     measureIndex: number;
@@ -51,5 +61,4 @@ export declare type OSMDEntityData = {
     staves: StaveData[];
     musicSystem: MusicSystemData;
 };
-export declare const getEntries: (osmd: OpenSheetMusicDisplay, ppq?: number) => OSMDEntityData[];
 export declare const firstTest: (osmd: OpenSheetMusicDisplay, ppq?: number) => StaveData[][];

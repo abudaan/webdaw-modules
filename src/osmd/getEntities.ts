@@ -11,6 +11,16 @@ export type MusicSystemData = {
   index: number;
   x: number;
   y: number;
+  height: number;
+  width: number;
+};
+
+export type MeasureData = {
+  index: number;
+  x: number;
+  y: number;
+  height: number;
+  width: number;
 };
 
 export type NoteData = {
@@ -44,6 +54,7 @@ export type StaveData = {
   width: number;
   height: number;
   notes: NoteData[];
+  measureIndex: number;
 };
 
 export type OSMDEntityData = {
@@ -110,38 +121,51 @@ const getMeasureData = (entryContainer: VerticalGraphicalStaffEntryContainer): M
   return measureData;
 };
 
-const getNoteData = (entryContainer: VerticalGraphicalStaffEntryContainer): NoteData[] => {
-  const notes: NoteData[] = [];
-  (entryContainer as any).staffEntries.forEach(
-    (staffEntry: GraphicalStaffEntry, staffIndex: number) => {
-      staffEntry.graphicalVoiceEntries.forEach(voiceEntry => {
-        const measureIndex = (voiceEntry.parentStaffEntry.parentMeasure as any).measureNumber;
-        voiceEntry.notes.forEach((note: GraphicalNote) => {
-          const {
-            boundingBox: {
-              absolutePosition: { x, y },
-              borderLeft,
-            },
-            sourceNote,
-          } = note as any;
-          const { numerator, denominator, wholeValue, realValue } = note.graphicalNoteLength as any;
-          const relPosInMeasure = (note.sourceNote as any).voiceEntry.timestamp.realValue;
+const getNoteData = ({
+  note,
+  noteIndex,
+  staffIndex,
+  containerIndex,
+  measureIndex,
+}: {
+  note: GraphicalNote;
+  noteIndex: number;
+  staffIndex: number;
+  containerIndex: number;
+  measureIndex: number;
+}): NoteData => {
+  const {
+    boundingBox: {
+      absolutePosition: { x, y },
+      size: { width, height },
+      borderLeft,
+    },
+    sourceNote,
+  } = note as any;
+  const { numerator, denominator, wholeValue, realValue } = note.graphicalNoteLength as any;
+  const relPosInMeasure = (note.sourceNote as any).voiceEntry.timestamp.realValue;
+  const {
+    sourceMeasure: { multipleRestMeasures },
+  } = sourceNote;
 
-          const data: NoteData = {
-            center: { x: x * 10, y: 0 },
-            x: (x + borderLeft) * 10,
-            y: y * 10,
-            ticks: measureIndex * ppq * 4 + relPosInMeasure * ppq * 4,
-            noteNumber: sourceNote.halfTone + 12,
-            isRestFlag: sourceNote.isRestFlag,
-            noteLength: { numerator, denominator, wholeValue, realValue },
-          };
-          notes.push(data);
-        });
-      });
-    }
-  );
-  return notes;
+  const data: NoteData = {
+    index: noteIndex,
+    center: { x: x * 10, y: 0 },
+    x: (x + borderLeft) * 10,
+    y: y * 10,
+    width: width * 10,
+    height: height * 10,
+    ticks: measureIndex * ppq * 4 + relPosInMeasure * ppq * 4,
+    noteNumber: sourceNote.halfTone + 12,
+    isRestFlag: sourceNote.isRestFlag,
+    noteLength: { numerator, denominator, wholeValue, realValue },
+    staffIndex,
+    measureIndex,
+    multipleRestMeasures: multipleRestMeasures || 0,
+    containerIndex,
+  };
+
+  return data;
 };
 
 const getStaveData = (
@@ -165,37 +189,8 @@ const getStaveData = (
       staffEntry.graphicalVoiceEntries.forEach(voiceEntry => {
         measureIndex = (voiceEntry.parentStaffEntry.parentMeasure as any).measureNumber;
         voiceEntry.notes.forEach((note: GraphicalNote, noteIndex: number) => {
-          const {
-            boundingBox: {
-              absolutePosition: { x, y },
-              size: { width, height },
-              borderLeft,
-            },
-            sourceNote,
-          } = note as any;
-          const { numerator, denominator, wholeValue, realValue } = note.graphicalNoteLength as any;
-          const relPosInMeasure = (note.sourceNote as any).voiceEntry.timestamp.realValue;
-          const {
-            sourceMeasure: { multipleRestMeasures },
-          } = sourceNote;
-
-          const data: NoteData = {
-            index: noteIndex,
-            center: { x: x * 10, y: 0 },
-            x: (x + borderLeft) * 10,
-            y: y * 10,
-            width: width * 10,
-            height: height * 10,
-            ticks: measureIndex * ppq * 4 + relPosInMeasure * ppq * 4,
-            noteNumber: sourceNote.halfTone + 12,
-            isRestFlag: sourceNote.isRestFlag,
-            noteLength: { numerator, denominator, wholeValue, realValue },
-            staffIndex,
-            measureIndex,
-            multipleRestMeasures: multipleRestMeasures || 0,
-            containerIndex,
-          };
-          notes.push(data);
+          const n = getNoteData({ note, noteIndex, staffIndex, containerIndex, measureIndex });
+          notes.push(n);
         });
       });
       return {
@@ -213,33 +208,14 @@ const getStaveData = (
   return staveData;
 };
 
-const getData = (entryContainer: VerticalGraphicalStaffEntryContainer, containerIndex: number) => {
-  return {
-    containerIndex,
-    notes: getNoteData(entryContainer),
-    measures: getMeasureData(entryContainer),
-    staves: getStaveData(entryContainer),
-    musicSystem: getMusicSystemData(entryContainer),
-  };
-};
-
-export const getEntries = (osmd: OpenSheetMusicDisplay, ppq: number = 960): OSMDEntityData[] => {
-  const entityData: OSMDEntityData[] = [];
-  osmd.GraphicSheet.VerticalGraphicalStaffEntryContainers.forEach(
-    (entryContainer: VerticalGraphicalStaffEntryContainer, containerIndex: number) => {
-      entityData.push(getData(entryContainer, containerIndex));
-    }
-  );
-  return entityData;
-};
-
 export const firstTest = (osmd: OpenSheetMusicDisplay, ppq: number = 960): StaveData[][] => {
-  const entries: StaveData[][] = [];
+  const staveData: StaveData[][] = [];
   osmd.GraphicSheet.VerticalGraphicalStaffEntryContainers.forEach(
     (entryContainer: VerticalGraphicalStaffEntryContainer, containerIndex: number) => {
       const s = getStaveData(entryContainer, containerIndex);
-      entries.push(s);
+      staveData.push(s);
     }
   );
-  return entries;
+
+  return staveData;
 };

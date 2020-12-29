@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.firstTest = exports.getEntries = void 0;
+exports.firstTest = void 0;
 var ppq = 960;
 var getMusicSystemData = function (entryContainer) {
     // console.log(entryContainer);
@@ -33,29 +33,29 @@ var getMeasureData = function (entryContainer) {
     });
     return measureData;
 };
-var getNoteData = function (entryContainer) {
-    var notes = [];
-    entryContainer.staffEntries.forEach(function (staffEntry, staffIndex) {
-        staffEntry.graphicalVoiceEntries.forEach(function (voiceEntry) {
-            var measureIndex = voiceEntry.parentStaffEntry.parentMeasure.measureNumber;
-            voiceEntry.notes.forEach(function (note) {
-                var _a = note, _b = _a.boundingBox, _c = _b.absolutePosition, x = _c.x, y = _c.y, borderLeft = _b.borderLeft, sourceNote = _a.sourceNote;
-                var _d = note.graphicalNoteLength, numerator = _d.numerator, denominator = _d.denominator, wholeValue = _d.wholeValue, realValue = _d.realValue;
-                var relPosInMeasure = note.sourceNote.voiceEntry.timestamp.realValue;
-                var data = {
-                    center: { x: x * 10, y: 0 },
-                    x: (x + borderLeft) * 10,
-                    y: y * 10,
-                    ticks: measureIndex * ppq * 4 + relPosInMeasure * ppq * 4,
-                    noteNumber: sourceNote.halfTone + 12,
-                    isRestFlag: sourceNote.isRestFlag,
-                    noteLength: { numerator: numerator, denominator: denominator, wholeValue: wholeValue, realValue: realValue },
-                };
-                notes.push(data);
-            });
-        });
-    });
-    return notes;
+var getNoteData = function (_a) {
+    var note = _a.note, noteIndex = _a.noteIndex, staffIndex = _a.staffIndex, containerIndex = _a.containerIndex, measureIndex = _a.measureIndex;
+    var _b = note, _c = _b.boundingBox, _d = _c.absolutePosition, x = _d.x, y = _d.y, _e = _c.size, width = _e.width, height = _e.height, borderLeft = _c.borderLeft, sourceNote = _b.sourceNote;
+    var _f = note.graphicalNoteLength, numerator = _f.numerator, denominator = _f.denominator, wholeValue = _f.wholeValue, realValue = _f.realValue;
+    var relPosInMeasure = note.sourceNote.voiceEntry.timestamp.realValue;
+    var multipleRestMeasures = sourceNote.sourceMeasure.multipleRestMeasures;
+    var data = {
+        index: noteIndex,
+        center: { x: x * 10, y: 0 },
+        x: (x + borderLeft) * 10,
+        y: y * 10,
+        width: width * 10,
+        height: height * 10,
+        ticks: measureIndex * ppq * 4 + relPosInMeasure * ppq * 4,
+        noteNumber: sourceNote.halfTone + 12,
+        isRestFlag: sourceNote.isRestFlag,
+        noteLength: { numerator: numerator, denominator: denominator, wholeValue: wholeValue, realValue: realValue },
+        staffIndex: staffIndex,
+        measureIndex: measureIndex,
+        multipleRestMeasures: multipleRestMeasures || 0,
+        containerIndex: containerIndex,
+    };
+    return data;
 };
 var getStaveData = function (entryContainer, containerIndex) {
     var staveData = entryContainer.staffEntries.map(function (staffEntry, staffIndex) {
@@ -65,27 +65,8 @@ var getStaveData = function (entryContainer, containerIndex) {
         staffEntry.graphicalVoiceEntries.forEach(function (voiceEntry) {
             measureIndex = voiceEntry.parentStaffEntry.parentMeasure.measureNumber;
             voiceEntry.notes.forEach(function (note, noteIndex) {
-                var _a = note, _b = _a.boundingBox, _c = _b.absolutePosition, x = _c.x, y = _c.y, _d = _b.size, width = _d.width, height = _d.height, borderLeft = _b.borderLeft, sourceNote = _a.sourceNote;
-                var _e = note.graphicalNoteLength, numerator = _e.numerator, denominator = _e.denominator, wholeValue = _e.wholeValue, realValue = _e.realValue;
-                var relPosInMeasure = note.sourceNote.voiceEntry.timestamp.realValue;
-                var multipleRestMeasures = sourceNote.sourceMeasure.multipleRestMeasures;
-                var data = {
-                    index: noteIndex,
-                    center: { x: x * 10, y: 0 },
-                    x: (x + borderLeft) * 10,
-                    y: y * 10,
-                    width: width * 10,
-                    height: height * 10,
-                    ticks: measureIndex * ppq * 4 + relPosInMeasure * ppq * 4,
-                    noteNumber: sourceNote.halfTone + 12,
-                    isRestFlag: sourceNote.isRestFlag,
-                    noteLength: { numerator: numerator, denominator: denominator, wholeValue: wholeValue, realValue: realValue },
-                    staffIndex: staffIndex,
-                    measureIndex: measureIndex,
-                    multipleRestMeasures: multipleRestMeasures || 0,
-                    containerIndex: containerIndex,
-                };
-                notes.push(data);
+                var n = getNoteData({ note: note, noteIndex: noteIndex, staffIndex: staffIndex, containerIndex: containerIndex, measureIndex: measureIndex });
+                notes.push(n);
             });
         });
         return {
@@ -101,30 +82,13 @@ var getStaveData = function (entryContainer, containerIndex) {
     });
     return staveData;
 };
-var getData = function (entryContainer, containerIndex) {
-    return {
-        containerIndex: containerIndex,
-        notes: getNoteData(entryContainer),
-        measures: getMeasureData(entryContainer),
-        staves: getStaveData(entryContainer),
-        musicSystem: getMusicSystemData(entryContainer),
-    };
-};
-exports.getEntries = function (osmd, ppq) {
-    if (ppq === void 0) { ppq = 960; }
-    var entityData = [];
-    osmd.GraphicSheet.VerticalGraphicalStaffEntryContainers.forEach(function (entryContainer, containerIndex) {
-        entityData.push(getData(entryContainer, containerIndex));
-    });
-    return entityData;
-};
 exports.firstTest = function (osmd, ppq) {
     if (ppq === void 0) { ppq = 960; }
-    var entries = [];
+    var staveData = [];
     osmd.GraphicSheet.VerticalGraphicalStaffEntryContainers.forEach(function (entryContainer, containerIndex) {
         var s = getStaveData(entryContainer, containerIndex);
-        entries.push(s);
+        staveData.push(s);
     });
-    return entries;
+    return staveData;
 };
 //# sourceMappingURL=getEntities.js.map
