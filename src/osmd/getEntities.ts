@@ -35,6 +35,7 @@ export type NoteData = {
   ticks: number;
   noteNumber: number;
   isRestFlag: boolean;
+  isGraceNote: boolean;
   noteLength: { numerator: number; denominator: number; wholeValue: number; realValue: number };
   measureIndex: number;
   staffIndex: number;
@@ -160,7 +161,8 @@ const getNoteData = ({
     height: height * 10,
     ticks: measureIndex * ppq * 4 + relPosInMeasure * ppq * 4,
     noteNumber: sourceNote.halfTone + 12,
-    isRestFlag: sourceNote.isRestFlag,
+    isRestFlag: sourceNote.isRestFlag === true,
+    isGraceNote: sourceNote.IsGraceNote === true,
     noteLength: { numerator, denominator, wholeValue, realValue },
     staffIndex,
     measureIndex,

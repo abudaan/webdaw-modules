@@ -92,6 +92,7 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
   console.log(entryData);
   const noteHeads: { element: SVGElement; bbox: DOMRect; id: string }[] = [];
   const t = document.querySelectorAll(".vf-notehead");
+  // const t = document.querySelectorAll(".vf-tabnote");
   t.forEach((a, i) => {
     setAttibuteSVGElement(a as SVGElement, "path", "opacity", "0.2");
     const bbox = a.getBoundingClientRect();
@@ -102,10 +103,10 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
   });
 
   console.time("start");
-  for (let i = 0; i < entryData.length; i++) {
-    // if (i === 14) {
-    //   break;
-    // }
+  for (let i = 293; i < entryData.length; i++) {
+    if (i === 294) {
+      break;
+    }
     const entry = entryData[i];
 
     for (let j = 0; j < entry.length; j++) {

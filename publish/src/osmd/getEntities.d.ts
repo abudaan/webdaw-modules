@@ -27,6 +27,7 @@ export declare type NoteData = {
     ticks: number;
     noteNumber: number;
     isRestFlag: boolean;
+    isGraceNote: boolean;
     noteLength: {
         numerator: number;
         denominator: number;
