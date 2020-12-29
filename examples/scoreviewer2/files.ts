@@ -10,9 +10,14 @@
 // export const midiFile = "../assets/osmd_test.mid";
 // export const mxmlFile = "../assets/osmd_test.xml";
 
-export const midiFileName = "Dona Nobis Pacem";
-export const midiFile = "../assets/Dona Nobis Pacem.mid";
-export const mxmlFile = "../assets/Dona Nobis Pacem.musicxml";
+// export const midiFileName = "Dona Nobis Pacem";
+// export const midiFile = "../assets/Dona Nobis Pacem.mid";
+// export const mxmlFile = "../assets/Dona Nobis Pacem.musicxml";
+
+/* multiple-bar rest */
+export const midiFileName = "4a2s-瀰度山歌";
+export const midiFile = "../assets/4a2s-瀰度山歌 (full score).mid";
+export const mxmlFile = "../assets/4a2s-瀰度山歌 (vocal score).xml";
 
 // export const midiFileName = "04 3b中華色彩s-花非花 (vocal score)";
 // export const midiFile = "../assets/04 3b中華色彩s-花非花 (vocal score).mid";
@@ -34,9 +39,9 @@ export const mxmlFile = "../assets/Dona Nobis Pacem.musicxml";
 // const midiFile = '../assets/mozk545a_2-bars_2-tracks.mid';
 // const mxmlFile = '../assets/mozk545a_2-bars.musicxml';
 
-// const midiFileName = '3b中華色彩s-花非花 (full score)';
-// const midiFile = '../assets/3b中華色彩s-花非花 (full score).mid';
-// const mxmlFile = '../assets/3b中華色彩s-花非花 (vocal score).musicxml';
+// export const midiFileName = "3b中華色彩s-花非花 (full score)";
+// export const midiFile = "../assets/3b中華色彩s-花非花 (full score).mid";
+// export const mxmlFile = "../assets/3b中華色彩s-花非花 (vocal score).musicxml";
 
 // const midiFileName = 'full-score';
 // const midiFile = '../assets/full-score.mid';

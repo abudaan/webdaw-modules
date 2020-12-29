@@ -84,8 +84,8 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
     });
     container.appendChild(div);
   };
-
-  // firstTest(osmd);
+  console.log(firstTest(osmd));
+  /*
   const entryData: StaveData[][] = firstTest(osmd);
   const noteHeads: { elem: SVGElement; bbox: DOMRect }[] = [];
   const t = document.querySelectorAll(".vf-notehead");
@@ -153,7 +153,7 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
       }
     }
   }
-
+*/
   // console.log(noteData);
   // entityMapper(osmd, entityData);
   store.getState().updateBoundingBoxMeasures(getBoundingBoxMeasureAll(osmd));

@@ -26,6 +26,7 @@ export declare type NoteData = {
     measureIndex: number;
     staffIndex: number;
     containerIndex: number;
+    multipleRestMeasures: number;
 };
 export declare type StaveData = {
     index: number;

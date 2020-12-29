@@ -68,6 +68,7 @@ var getStaveData = function (entryContainer, containerIndex) {
                 var _a = note, _b = _a.boundingBox, _c = _b.absolutePosition, x = _c.x, y = _c.y, _d = _b.size, width = _d.width, height = _d.height, borderLeft = _b.borderLeft, sourceNote = _a.sourceNote;
                 var _e = note.graphicalNoteLength, numerator = _e.numerator, denominator = _e.denominator, wholeValue = _e.wholeValue, realValue = _e.realValue;
                 var relPosInMeasure = note.sourceNote.voiceEntry.timestamp.realValue;
+                var multipleRestMeasures = sourceNote.sourceMeasure.multipleRestMeasures;
                 var data = {
                     index: noteIndex,
                     center: { x: x * 10, y: 0 },
@@ -81,6 +82,7 @@ var getStaveData = function (entryContainer, containerIndex) {
                     noteLength: { numerator: numerator, denominator: denominator, wholeValue: wholeValue, realValue: realValue },
                     staffIndex: staffIndex,
                     measureIndex: measureIndex,
+                    multipleRestMeasures: multipleRestMeasures || 0,
                     containerIndex: containerIndex,
                 };
                 notes.push(data);

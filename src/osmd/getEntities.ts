@@ -27,6 +27,7 @@ export type NoteData = {
   measureIndex: number;
   staffIndex: number;
   containerIndex: number;
+  multipleRestMeasures: number;
 };
 
 export type StaveData = {
@@ -174,6 +175,9 @@ const getStaveData = (
           } = note as any;
           const { numerator, denominator, wholeValue, realValue } = note.graphicalNoteLength as any;
           const relPosInMeasure = (note.sourceNote as any).voiceEntry.timestamp.realValue;
+          const {
+            sourceMeasure: { multipleRestMeasures },
+          } = sourceNote;
 
           const data: NoteData = {
             index: noteIndex,
@@ -188,6 +192,7 @@ const getStaveData = (
             noteLength: { numerator, denominator, wholeValue, realValue },
             staffIndex,
             measureIndex,
+            multipleRestMeasures: multipleRestMeasures || 0,
             containerIndex,
           };
           notes.push(data);
