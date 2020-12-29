@@ -145,8 +145,8 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
               ) {
                 matches.notes.push(note);
                 matches.graphicalNotes.push({ element, bbox });
-                // console.log(elem);
                 if (matches.notes.length === maxMatches) {
+                  console.log("reaping done!", maxMatches);
                   break;
                 }
               }
@@ -162,8 +162,7 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
             console.log(note.measureIndex, note.staffIndex, note.noteNumber);
           });
         } else if (maxMatches > 1) {
-          console.log(matches);
-          // matches.notes.sort((a, b) => {
+          // matches.notes = matches.notes.filter((a, b) => {
           //   if (a.noteNumber > b.noteNumber) {
           //     return -1;
           //   } else if (a.noteNumber > b.noteNumber) {
@@ -171,6 +170,15 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
           //   }
           //   return 0;
           // });
+          matches.notes.sort((a, b) => {
+            if (a.noteNumber > b.noteNumber) {
+              return -1;
+            } else if (a.noteNumber > b.noteNumber) {
+              return 1;
+            }
+            return 0;
+          });
+          console.log(matches);
           // matches.graphical.sort((a, b) => {
           //   if (a.bbox.y > b.bbox.y) {
           //     return -1;
