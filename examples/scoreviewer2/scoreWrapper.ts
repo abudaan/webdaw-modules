@@ -103,10 +103,10 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
   });
 
   console.time("start");
-  for (let i = 293; i < entryData.length; i++) {
-    if (i === 294) {
-      break;
-    }
+  for (let i = 0; i < entryData.length; i++) {
+    // if (i === 354) {
+    //   break;
+    // }
     const entry = entryData[i];
 
     for (let j = 0; j < entry.length; j++) {
@@ -130,7 +130,7 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
           if (val.isRestFlag === false) {
             return acc + 1;
           }
-          return acc;
+          return acc + 1;
         }, 0);
         const matches: {
           notes: NoteData[];
@@ -147,29 +147,36 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
             const noteHead = noteHeads[k];
             const { element, bbox } = noteHead;
 
-            if (note.isRestFlag === false) {
-              if (
-                match(bbox.x, stave.x, 10) &&
-                bbox.y >= stave.y - 5 &&
-                bbox.bottom <= stave.y + stave.height + 5
-              ) {
-                matches.notes.push(note);
-                matches.graphicalNotes.push(noteHead);
-                if (matches.notes.length === maxMatches) {
-                  // console.log("reaping done!", k);
-                  break;
-                }
+            // if (note.isRestFlag === false) {
+            if (
+              // match(bbox.x, stave.x, 10) &&
+              bbox.x >= stave.x - 5 &&
+              bbox.right <= stave.x + stave.width + 5 &&
+              bbox.y >= stave.y - 5 &&
+              bbox.bottom <= stave.y + stave.height + 5
+            ) {
+              matches.notes.push(note);
+              matches.graphicalNotes.push(noteHead);
+              if (matches.notes.length === maxMatches) {
+                // console.log("reaping done!", k);
+                break;
               }
             }
+            // }
           }
         }
         if (matches.notes.length === 1) {
           const note = matches.notes[0];
-          const elem = matches.graphicalNotes[0].element;
-          setAttibuteSVGElement(elem, "path", "fill", "red");
-          elem.addEventListener("click", () => {
-            console.log(note.measureIndex, note.staffIndex, note.noteNumber);
-          });
+          const graphical = matches.graphicalNotes[0];
+          if (graphical) {
+            const { element } = graphical;
+            if (note.isRestFlag === false) {
+              setAttibuteSVGElement(element, "path", "fill", "red");
+              element.addEventListener("click", () => {
+                console.log(note.measureIndex, note.staffIndex, note.noteNumber);
+              });
+            }
+          }
         } else if (matches.notes.length > 1) {
           let { notes, graphicalNotes } = matches;
           const notesById: { [id: string]: NoteData } = {};
@@ -201,20 +208,24 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
           //   }
           //   return 0;
           // });
-          console.log(notes);
-          console.log(graphicalNotes);
-
           for (let i = 0; i < notes.length; i++) {
             const note = notes[i];
-            const { element } = graphicalNotes[i];
-            setAttibuteSVGElement(element, "path", "fill", "red");
-            element.addEventListener("click", () => {
-              console.log(note.measureIndex, note.staffIndex, note.noteNumber);
-            });
+            const graphical = graphicalNotes[i];
+            if (graphical) {
+              if (note.isRestFlag === false) {
+                const { element } = graphical;
+                setAttibuteSVGElement(element, "path", "fill", "red");
+                element.addEventListener("click", () => {
+                  console.log(note.measureIndex, note.staffIndex, note.noteNumber);
+                });
+              }
+            }
           }
         }
-
-        // console.log(stave.measureIndex, stave.index, maxMatches, matches);
+        console.log(stave.measureIndex, stave.containerIndex);
+        console.log(matches.notes);
+        console.log(matches.graphicalNotes);
+        console.log("----");
       }
     }
   }

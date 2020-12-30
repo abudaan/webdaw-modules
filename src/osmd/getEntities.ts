@@ -57,6 +57,7 @@ export type StaveData = {
   width: number;
   height: number;
   notes: NoteData[];
+  containerIndex: number;
   measureIndex: number;
 };
 
