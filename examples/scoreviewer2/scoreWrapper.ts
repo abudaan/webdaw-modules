@@ -146,14 +146,14 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
           for (let k = 0; k < noteHeads.length; k++) {
             const noteHead = noteHeads[k];
             const { element, bbox } = noteHead;
-
+            const margin = 5;
             // if (note.isRestFlag === false) {
             if (
               // match(bbox.x, stave.x, 10) &&
-              bbox.x >= stave.x - 5 &&
-              bbox.right <= stave.x + stave.width + 5 &&
-              bbox.y >= stave.y - 5 &&
-              bbox.bottom <= stave.y + stave.height + 5
+              bbox.x >= stave.x - margin &&
+              bbox.right <= stave.x + stave.width + margin &&
+              bbox.y >= stave.y - margin &&
+              bbox.bottom <= stave.y + stave.height + margin
             ) {
               matches.notes.push(note);
               matches.graphicalNotes.push(noteHead);

@@ -187,6 +187,8 @@ const getStaveData = (
           borderTop,
           borderBottom,
           borderLeft,
+          borderMarginTop,
+          borderMarginLeft,
         },
       } = staffEntry as any;
       const notes: NoteData[] = [];
@@ -204,6 +206,8 @@ const getStaveData = (
         index: staffIndex,
         measureIndex,
         containerIndex,
+        // x: (x + borderLeft - borderMarginLeft) * 10,
+        // y: (y + borderTop - borderMarginTop) * 10,
         x: (x + borderLeft) * 10,
         y: (y + borderTop) * 10,
         width: width * 10,

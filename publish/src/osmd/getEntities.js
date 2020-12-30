@@ -65,7 +65,7 @@ var getNoteData = function (_a) {
 };
 var getStaveData = function (entryContainer, containerIndex) {
     var staveData = entryContainer.staffEntries.map(function (staffEntry, staffIndex) {
-        var _a = staffEntry.boundingBox, _b = _a.absolutePosition, x = _b.x, y = _b.y, _c = _a.size, width = _c.width, height = _c.height, borderTop = _a.borderTop, borderBottom = _a.borderBottom, borderLeft = _a.borderLeft;
+        var _a = staffEntry.boundingBox, _b = _a.absolutePosition, x = _b.x, y = _b.y, _c = _a.size, width = _c.width, height = _c.height, borderTop = _a.borderTop, borderBottom = _a.borderBottom, borderLeft = _a.borderLeft, borderMarginTop = _a.borderMarginTop, borderMarginLeft = _a.borderMarginLeft;
         var notes = [];
         var measureIndex = -1;
         staffEntry.graphicalVoiceEntries.forEach(function (voiceEntry) {
@@ -80,6 +80,8 @@ var getStaveData = function (entryContainer, containerIndex) {
             index: staffIndex,
             measureIndex: measureIndex,
             containerIndex: containerIndex,
+            // x: (x + borderLeft - borderMarginLeft) * 10,
+            // y: (y + borderTop - borderMarginTop) * 10,
             x: (x + borderLeft) * 10,
             y: (y + borderTop) * 10,
             width: width * 10,
