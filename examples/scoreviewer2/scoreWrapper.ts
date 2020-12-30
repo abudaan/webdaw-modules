@@ -126,12 +126,13 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
         div.style.top = `${stave.y + offsetY}px`;
         container.appendChild(div);
 
-        const maxMatches = stave.notes.reduce((acc, val) => {
-          if (val.isRestFlag === false) {
-            return acc + 1;
-          }
-          return acc + 1;
-        }, 0);
+        // const maxMatches = stave.notes.reduce((acc, val) => {
+        //   if (val.isRestFlag === false) {
+        //     return acc + 1;
+        //   }
+        //   return acc;
+        // }, 0);
+        const maxMatches = stave.notes.length;
         const matches: {
           notes: NoteData[];
           graphicalNotes: { element: SVGElement; bbox: DOMRect; id: string }[];
