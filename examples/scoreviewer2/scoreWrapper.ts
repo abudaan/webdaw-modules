@@ -223,10 +223,10 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
             }
           }
         }
-        console.log(stave.measureIndex, stave.containerIndex);
-        console.log(matches.notes);
-        console.log(matches.graphicalNotes);
-        console.log("----");
+        // console.log(stave.measureIndex, stave.containerIndex);
+        // console.log(matches.notes);
+        // console.log(matches.graphicalNotes);
+        // console.log("----");
       }
     }
   }
