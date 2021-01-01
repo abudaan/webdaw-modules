@@ -36,6 +36,7 @@ __exportStar(require("./musicxml/parser"), exports);
 __exportStar(require("./musicxml/parsedMusicXMLToSong"), exports);
 __exportStar(require("./musicxml/loadMusicXMLFile"), exports);
 __exportStar(require("./osmd/entityMapper"), exports);
+__exportStar(require("./osmd/getBoundingBoxes"), exports);
 __exportStar(require("./osmd/getBoundingBoxesAtPoint"), exports);
 __exportStar(require("./osmd/getBoundingBoxesOfGraphicalMeasures"), exports);
 __exportStar(require("./osmd/getBoundingBoxesOfSelectedMeasures"), exports);

@@ -18,6 +18,7 @@ import {
   match,
   setAttibuteSVGElement,
   NoteData,
+  getSourceNotes,
 } from "webdaw-modules";
 import { store } from "./store";
 
@@ -88,8 +89,26 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
     container.appendChild(div);
   };
 
+  const createDiv2 = (bbox: { x: number; y: number; width: number; height: number }): void => {
+    const div = document.createElement("div");
+    div.style.position = "absolute";
+    div.style.zIndex = "-101";
+    div.style.backgroundColor = "rgba(0, 0, 255, 0.4)"; // getRandomColor(0.6);
+    div.style.border = "1px dotted blue";
+    div.style.boxSizing = "border-box";
+
+    div.style.width = `${bbox.width}px`;
+    div.style.height = `${bbox.height}px`;
+    div.style.left = `${bbox.x + offsetX + scrollPosX}px`;
+    div.style.top = `${bbox.y + offsetY + scrollPosY}px`;
+    div.addEventListener("click", () => {
+      console.log(div);
+    });
+    container.appendChild(div);
+  };
+
   const entryData: StaveData[][] = firstTest(osmd);
-  console.log(entryData);
+  // console.log(entryData);
   const noteHeads: { element: SVGElement; bbox: DOMRect; id: string }[] = [];
   const t = document.querySelectorAll(".vf-notehead");
   // const t = document.querySelectorAll(".vf-tabnote");
@@ -98,10 +117,28 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
     const bbox = a.getBoundingClientRect();
     bbox.x -= offsetX;
     bbox.y -= offsetY;
-    createDiv(bbox);
+    // createDiv(bbox);
     noteHeads.push({ element: a as SVGElement, bbox, id: `notehead-${i}` });
   });
 
+  const notes = getSourceNotes(osmd);
+  console.log(notes);
+  notes.forEach(({ graphicalNote }) => {
+    const {
+      absolutePosition: { x: xo, y: yo },
+      borderLeft,
+      borderRight,
+      borderTop,
+      borderBottom,
+    } = (graphicalNote.parentVoiceEntry as any).boundingBox;
+    const width = (borderRight - borderLeft) * 10;
+    const height = (borderBottom - borderTop) * 10;
+    const x = (xo + borderLeft) * 10;
+    const y = yo * 10;
+    createDiv2({ x, y, width, height });
+  });
+
+  /*
   console.time("start");
   for (let i = 0; i < entryData.length; i++) {
     // if (i === 354) {
@@ -231,7 +268,7 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
     }
   }
   console.timeEnd("start");
-
+*/
   // entityMapper(osmd, entityData);
   store.getState().updateBoundingBoxMeasures(getBoundingBoxMeasureAll(osmd));
 

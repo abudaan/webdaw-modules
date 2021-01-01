@@ -18,6 +18,7 @@ export * from "./musicxml/parser";
 export * from "./musicxml/parsedMusicXMLToSong";
 export * from "./musicxml/loadMusicXMLFile";
 export * from "./osmd/entityMapper";
+export * from "./osmd/getBoundingBoxes";
 export * from "./osmd/getBoundingBoxesAtPoint";
 export * from "./osmd/getBoundingBoxesOfGraphicalMeasures";
 export * from "./osmd/getBoundingBoxesOfSelectedMeasures";
