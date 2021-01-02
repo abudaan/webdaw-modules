@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.mapper3 = void 0;
-var getBoundingBoxData = function (bbox) {
+exports.mapper3 = exports.getBoundingBoxData = void 0;
+exports.getBoundingBoxData = function (bbox) {
     var _a = bbox.AbsolutePosition, x = _a.x, y = _a.y, BorderTop = bbox.BorderTop, BorderBottom = bbox.BorderBottom, BorderLeft = bbox.BorderLeft, BorderRight = bbox.BorderRight;
     // xAbs *= 10;
     // yAbs *= 10;
@@ -29,7 +29,7 @@ var getBoundingBox = function (boxes, result, drawer) {
         // console.log("SYMBOL", (box as any).isSymbol);
         // console.log("CHILDREN", box.ChildElements.length);
         if (box.isSymbol === true) {
-            result.push(getBoundingBoxData(box));
+            result.push(exports.getBoundingBoxData(box));
         }
         if (box.ChildElements.length) {
             getBoundingBox(box.ChildElements, result, drawer);
@@ -40,7 +40,7 @@ exports.mapper3 = function (osmd) {
     var bboxes = [];
     osmd.GraphicSheet.VerticalGraphicalStaffEntryContainers.forEach(function (container) {
         container.staffEntries.forEach(function (staffEntry) {
-            bboxes.push(getBoundingBoxData(staffEntry.boundingBox));
+            bboxes.push(exports.getBoundingBoxData(staffEntry.boundingBox));
         });
     });
     return bboxes;

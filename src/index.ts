@@ -33,6 +33,7 @@ export * from "./osmd/getBoundingBoxesAtPoint";
 export * from "./osmd/getMusicSystemMeasureBoundingBox";
 export * from "./osmd/getNoteEntriesPerStave";
 export * from "./osmd/getNotesInStaff";
+export * from "./osmd/getPlayheadAnchorTicks";
 export * from "./osmd/getSelectedMeasures";
 export * from "./osmd/getVerticalStaffEntryContainers";
 export * from "./osmd/mapEntityToNote";

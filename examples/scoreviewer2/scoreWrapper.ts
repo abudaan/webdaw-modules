@@ -5,6 +5,7 @@ import {
   OpenSheetMusicDisplay,
   mapper3,
   getNotesInStaff,
+  getPlayheadAnchorTicks,
 } from "webdaw-modules";
 import { store } from "./store";
 
@@ -82,6 +83,10 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
   // });
 
   console.log(getNotesInStaff(osmd, 0, 480, 10));
+  const anchors = getPlayheadAnchorTicks(osmd, 480);
+  anchors.forEach(({ bbox }) => {
+    createDiv(bbox);
+  });
 
   store.getState().updateBoundingBoxMeasures(getBoundingBoxMeasureAll(osmd));
 

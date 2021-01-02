@@ -8,14 +8,14 @@ import {
   // PointF2D,
 } from "opensheetmusicdisplay";
 
-type BoundingBox2 = {
+export type BoundingBox2 = {
   x: number;
   y: number;
   width: number;
   height: number;
 };
 
-const getBoundingBoxData = (bbox: BoundingBox): BoundingBox2 => {
+export const getBoundingBoxData = (bbox: BoundingBox): BoundingBox2 => {
   let {
     AbsolutePosition: { x, y },
     BorderTop,
