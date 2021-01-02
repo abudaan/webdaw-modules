@@ -3,8 +3,7 @@ import {
   loadMusicXMLFile,
   getBoundingBoxMeasureAll,
   OpenSheetMusicDisplay,
-  getSourceNotes,
-  mapper2,
+  mapper3,
 } from "webdaw-modules";
 import { store } from "./store";
 
@@ -75,7 +74,7 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
     container.appendChild(div);
   };
 
-  const bboxes = mapper2(osmd);
+  const bboxes = mapper3(osmd);
   console.log(bboxes);
   bboxes.forEach((bbox) => {
     createDiv(bbox);
