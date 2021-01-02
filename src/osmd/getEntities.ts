@@ -218,7 +218,7 @@ const getStaveData = (
   return staveData;
 };
 
-export const firstTest = (osmd: OpenSheetMusicDisplay, ppq: number = 960): StaveData[][] => {
+export const getEntities = (osmd: OpenSheetMusicDisplay, ppq: number = 960): StaveData[][] => {
   const staveData: StaveData[][] = [];
   osmd.GraphicSheet.VerticalGraphicalStaffEntryContainers.forEach(
     (entryContainer: VerticalGraphicalStaffEntryContainer, containerIndex: number) => {

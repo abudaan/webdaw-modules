@@ -64,4 +64,4 @@ export declare type OSMDEntityData = {
     staves: StaveData[];
     musicSystem: MusicSystemData;
 };
-export declare const firstTest: (osmd: OpenSheetMusicDisplay, ppq?: number) => StaveData[][];
+export declare const getEntities: (osmd: OpenSheetMusicDisplay, ppq?: number) => StaveData[][];

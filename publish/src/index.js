@@ -55,6 +55,8 @@ __exportStar(require("./osmd/getVerticalStaffEntryContainers"), exports);
 __exportStar(require("./osmd/mapEntityToNote"), exports);
 __exportStar(require("./osmd/mapMIDINoteIdToGraphicalNote"), exports);
 __exportStar(require("./osmd/mapMIDINoteIdToGraphicalNotePerTrack"), exports);
+__exportStar(require("./osmd/mapper1"), exports);
+__exportStar(require("./osmd/mapper2"), exports);
 __exportStar(require("./osmd/scorePositionFromSong"), exports);
 __exportStar(require("./osmd/setGraphicalNoteColor"), exports);
 __exportStar(require("./osmd/songPositionFromScore"), exports);

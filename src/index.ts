@@ -37,6 +37,8 @@ export * from "./osmd/getVerticalStaffEntryContainers";
 export * from "./osmd/mapEntityToNote";
 export * from "./osmd/mapMIDINoteIdToGraphicalNote";
 export * from "./osmd/mapMIDINoteIdToGraphicalNotePerTrack";
+export * from "./osmd/mapper1";
+export * from "./osmd/mapper2";
 export * from "./osmd/scorePositionFromSong";
 export * from "./osmd/setGraphicalNoteColor";
 export * from "./osmd/songPositionFromScore";

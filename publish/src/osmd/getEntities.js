@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.firstTest = void 0;
+exports.getEntities = void 0;
 var uniqid_1 = __importDefault(require("uniqid"));
 var ppq = 960;
 var getMusicSystemData = function (entryContainer) {
@@ -90,7 +90,7 @@ var getStaveData = function (entryContainer, containerIndex) {
     });
     return staveData;
 };
-exports.firstTest = function (osmd, ppq) {
+exports.getEntities = function (osmd, ppq) {
     if (ppq === void 0) { ppq = 960; }
     var staveData = [];
     osmd.GraphicSheet.VerticalGraphicalStaffEntryContainers.forEach(function (entryContainer, containerIndex) {
