@@ -4,6 +4,7 @@ import {
   getBoundingBoxMeasureAll,
   OpenSheetMusicDisplay,
   mapper3,
+  getNotesInStaff,
 } from "webdaw-modules";
 import { store } from "./store";
 
@@ -74,11 +75,13 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
     container.appendChild(div);
   };
 
-  const bboxes = mapper3(osmd);
-  console.log(bboxes);
-  bboxes.forEach((bbox) => {
-    createDiv(bbox);
-  });
+  // const bboxes = mapper3(osmd);
+  // console.log(bboxes);
+  // bboxes.forEach((bbox) => {
+  //   createDiv(bbox);
+  // });
+
+  console.log(getNotesInStaff(osmd, 0, 480, 10));
 
   store.getState().updateBoundingBoxMeasures(getBoundingBoxMeasureAll(osmd));
 

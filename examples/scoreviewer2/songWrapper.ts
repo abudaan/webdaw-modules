@@ -39,6 +39,7 @@ export const setup = async (): Promise<{ cleanup: () => void }> => {
   // load MIDI file and setup song
   await loadMIDIFile(midiFile);
   song = sequencer.createSong(sequencer.getMidiFile(midiFileName));
+  console.log(song);
   keyEditor = sequencer.createKeyEditor(song, {});
 
   // load instrument and setup all tracks

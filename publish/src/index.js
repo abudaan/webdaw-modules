@@ -50,6 +50,7 @@ __exportStar(require("./osmd/getMeasureBoundingBoxesInStave"), exports);
 __exportStar(require("./osmd/getBoundingBoxesAtPoint"), exports);
 __exportStar(require("./osmd/getMusicSystemMeasureBoundingBox"), exports);
 __exportStar(require("./osmd/getNoteEntriesPerStave"), exports);
+__exportStar(require("./osmd/getNotesInStaff"), exports);
 __exportStar(require("./osmd/getSelectedMeasures"), exports);
 __exportStar(require("./osmd/getVerticalStaffEntryContainers"), exports);
 __exportStar(require("./osmd/mapEntityToNote"), exports);
