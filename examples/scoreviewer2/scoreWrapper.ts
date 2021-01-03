@@ -38,8 +38,7 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
   });
 
   await osmd.load(xmlDoc);
-
-  console.log(getNotesInStaff(osmd, 0, 480, 10));
+  // console.log(getNotesInStaff(osmd, 0, 480, 10));
 
   const unsub1 = store.subscribe(
     () => {

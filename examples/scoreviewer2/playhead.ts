@@ -66,7 +66,8 @@ export const setup = (debug: boolean = true) => {
 
   const unsub4 = store.subscribe(
     () => {
-      const { playhead } = store.getState();
+      const { playhead, playheadAnchors } = store.getState();
+      playhead.x = playheadAnchors[0].bbox.x;
       draw(playhead);
       if (debug) {
         drawDebug(store.getState().playheadAnchors.map((d) => d.bbox));
