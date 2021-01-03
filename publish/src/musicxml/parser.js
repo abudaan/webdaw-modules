@@ -15,6 +15,10 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
+var __spread = (this && this.__spread) || function () {
+    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
+    return ar;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.parseMusicXML = void 0;
 var midi_1 = require("../util/midi");
@@ -246,6 +250,9 @@ var parsePartWise = function (xmlDoc, ppq) {
     }
     var repeats2 = [];
     var j = -1;
+    if (repeats.length && repeats[0].type !== "forward") {
+        repeats = __spread([{ type: "forward", bar: 1 }], repeats);
+    }
     // console.log(repeats);
     var filtered = [];
     for (var k = 0; k < repeats.length; k++) {

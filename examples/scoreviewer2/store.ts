@@ -37,6 +37,10 @@ export type State = {
     ticks: number;
     bbox: { x: number; y: number; width: number; height: number };
   }[];
+  currentPlayheadAnchor: {
+    ticks: number;
+    bbox: { x: number; y: number; width: number; height: number };
+  } | null;
 };
 
 export type Reducers = {
@@ -107,4 +111,5 @@ export const store = create<Store>((set, get) => ({
   boundingBoxesMeasures: [],
   songPositionMillis: 0,
   playheadAnchors: [],
+  currentPlayheadAnchor: null,
 }));

@@ -72,7 +72,7 @@ const parsePartWise = (xmlDoc: XMLDocument, ppq: number = 960): ParsedMusicXML =
   const parts: PartData[] = [];
   const tiedNotes: { [id: string]: number } = {};
   // const repeats: Repeat = [{ bar: 1, type: "forward" }];
-  const repeats: Repeat = [];
+  let repeats: Repeat = [];
 
   let initialTempo = -1;
   let initialNumerator = -1;
@@ -358,6 +358,9 @@ const parsePartWise = (xmlDoc: XMLDocument, ppq: number = 960): ParsedMusicXML =
 
   const repeats2: number[][] = [];
   let j: number = -1;
+  if (repeats.length && repeats[0].type !== "forward") {
+    repeats = [{ type: "forward", bar: 1 }, ...repeats];
+  }
   // console.log(repeats);
 
   const filtered = [];
