@@ -7,15 +7,9 @@ import {
   GraphicalStaffEntry,
   // PointF2D,
 } from "opensheetmusicdisplay";
+import { BBox } from "../types";
 
-export type BoundingBox2 = {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-};
-
-export const getBoundingBoxData = (bbox: BoundingBox): BoundingBox2 => {
+export const getBoundingBoxData = (bbox: BoundingBox): BBox => {
   let {
     AbsolutePosition: { x, y },
     BorderTop,
@@ -48,7 +42,7 @@ export const getBoundingBoxData = (bbox: BoundingBox): BoundingBox2 => {
 
 const getBoundingBox = (
   boxes: BoundingBox[],
-  result: BoundingBox2[],
+  result: BBox[],
   drawer: VexFlowMusicSheetDrawer
 ): void => {
   for (let i = 0; i < boxes.length; i++) {

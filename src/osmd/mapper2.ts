@@ -5,17 +5,11 @@ import {
   VexFlowMusicSheetDrawer,
   // PointF2D,
 } from "opensheetmusicdisplay";
-
-type BoundingBox2 = {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-};
+import { BBox } from "../types";
 
 const getBoundingBox = (
   boxes: BoundingBox[],
-  result: BoundingBox2[],
+  result: BBox[],
   drawer: VexFlowMusicSheetDrawer
 ): void => {
   for (let i = 0; i < boxes.length; i++) {

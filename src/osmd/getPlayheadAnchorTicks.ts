@@ -1,11 +1,12 @@
 import { OpenSheetMusicDisplay } from "opensheetmusicdisplay/build/dist/src";
-import { getBoundingBoxData, BoundingBox2 } from "./mapper3";
+import { getBoundingBoxData } from "./mapper3";
+import { BBox } from "../types";
 
 export const getPlayheadAnchorTicks = (osmd: OpenSheetMusicDisplay, ppq: number = 960) => {
   let ticks = 0;
   const anchorTicks: {
     ticks: number;
-    bbox: BoundingBox2;
+    bbox: BBox;
   }[] = osmd.GraphicSheet.VerticalGraphicalStaffEntryContainers.map(container => {
     const realValue = container.AbsoluteTimestamp.RealValue;
     // console.log(container.AbsoluteTimestamp);

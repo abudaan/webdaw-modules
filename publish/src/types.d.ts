@@ -12,3 +12,9 @@ export interface BoundingBox {
 export interface BoundingBoxMeasure extends BoundingBox {
     measureNumber: number;
 }
+export declare type BBox = {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+};

@@ -1,12 +1,12 @@
-import { BoundingBox } from 'webdaw-modules';
-import create from 'zustand/vanilla';
-import { midiFileName, midiFile, mxmlFile } from './files';
+import { BoundingBox } from "webdaw-modules";
+import create from "zustand/vanilla";
+import { midiFileName, midiFile, mxmlFile } from "./files";
 
 export type State = {
   offset: { x: number; y: number };
   scrollPos: { x: number; y: number };
   selection: number[];
-  songState: 'play' | 'pause' | 'stop';
+  songState: "play" | "pause" | "stop";
   midiFileName: string;
   midiFile: string;
   mxmlFile: string;
@@ -33,6 +33,10 @@ export type State = {
     height: number;
   };
   hasRepeated: { [index: number]: boolean };
+  playheadAnchors: {
+    ticks: number;
+    bbox: { x: number; y: number; width: number; height: number };
+  }[];
 };
 
 export type Reducers = {
@@ -47,7 +51,7 @@ export const store = create<Store>((set, get) => ({
   offset: { x: 0, y: 0 },
   scrollPos: { x: 0, y: 0 },
   selection: [],
-  songState: 'stop',
+  songState: "stop",
   midiFileName,
   midiFile,
   mxmlFile,
@@ -72,17 +76,17 @@ export const store = create<Store>((set, get) => ({
     height: 0,
   },
   toggleSongState: () => {
-    set(state => {
-      if (state.songState === 'play') {
-        return { songState: 'pause' };
+    set((state) => {
+      if (state.songState === "play") {
+        return { songState: "pause" };
         // } else if (state.songState === 'pause') {
         //   return { songState: 'stop' };
       }
-      return { songState: 'play' };
+      return { songState: "play" };
     });
   },
-  updateBoundingBoxMeasures: boundingBoxesMeasures => {
-    set(state => {
+  updateBoundingBoxMeasures: (boundingBoxesMeasures) => {
+    set((state) => {
       const {
         playhead: { width },
         currentBarScore,
@@ -102,4 +106,5 @@ export const store = create<Store>((set, get) => ({
   },
   boundingBoxesMeasures: [],
   songPositionMillis: 0,
+  playheadAnchors: [],
 }));
