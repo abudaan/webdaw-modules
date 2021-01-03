@@ -58,7 +58,8 @@ var parsePartWise = function (xmlDoc, ppq) {
     var partIterator = xmlDoc.evaluate("//score-part", xmlDoc, nsResolver, XPathResult.ANY_TYPE, null);
     var parts = [];
     var tiedNotes = {};
-    var repeats = [{ bar: 1, type: "forward" }];
+    // const repeats: Repeat = [{ bar: 1, type: "forward" }];
+    var repeats = [];
     var initialTempo = -1;
     var initialNumerator = -1;
     var initialDenominator = -1;
@@ -244,15 +245,30 @@ var parsePartWise = function (xmlDoc, ppq) {
         }
     }
     var repeats2 = [];
-    var j = 0;
-    repeats.forEach(function (t, i) {
-        if (i % 2 === 0) {
-            repeats2[j] = [];
-            repeats2[j].push(t.bar);
+    var j = -1;
+    // console.log(repeats);
+    var filtered = [];
+    for (var k = 0; k < repeats.length; k++) {
+        var r = repeats[k];
+        var double = false;
+        for (var k1 = 0; k1 < filtered.length; k1++) {
+            var r1 = filtered[k1];
+            if (r1.bar === r.bar && r1.type === r.type) {
+                double = true;
+                break;
+            }
         }
-        else if (i % 2 === 1) {
-            repeats2[j].push(t.bar);
+        if (!double) {
+            filtered.push(r);
+        }
+    }
+    filtered.forEach(function (t, i) {
+        if (t.type === "forward") {
             j++;
+            repeats2[j] = [t.bar];
+        }
+        else if (t.type === "backward") {
+            repeats2[j].push(t.bar);
         }
     });
     // console.log(repeats, repeats2);

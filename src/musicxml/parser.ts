@@ -71,7 +71,8 @@ const parsePartWise = (xmlDoc: XMLDocument, ppq: number = 960): ParsedMusicXML =
   );
   const parts: PartData[] = [];
   const tiedNotes: { [id: string]: number } = {};
-  const repeats: Repeat = [{ bar: 1, type: "forward" }];
+  // const repeats: Repeat = [{ bar: 1, type: "forward" }];
+  const repeats: Repeat = [];
 
   let initialTempo = -1;
   let initialNumerator = -1;
@@ -356,14 +357,31 @@ const parsePartWise = (xmlDoc: XMLDocument, ppq: number = 960): ParsedMusicXML =
   }
 
   const repeats2: number[][] = [];
-  let j: number = 0;
-  repeats.forEach((t, i) => {
-    if (i % 2 === 0) {
-      repeats2[j] = [];
-      repeats2[j].push(t.bar);
-    } else if (i % 2 === 1) {
-      repeats2[j].push(t.bar);
+  let j: number = -1;
+  // console.log(repeats);
+
+  const filtered = [];
+  for (let k = 0; k < repeats.length; k++) {
+    const r = repeats[k];
+    let double = false;
+    for (let k1 = 0; k1 < filtered.length; k1++) {
+      const r1 = filtered[k1];
+      if (r1.bar === r.bar && r1.type === r.type) {
+        double = true;
+        break;
+      }
+    }
+    if (!double) {
+      filtered.push(r);
+    }
+  }
+
+  filtered.forEach((t, i) => {
+    if (t.type === "forward") {
       j++;
+      repeats2[j] = [t.bar];
+    } else if (t.type === "backward") {
+      repeats2[j].push(t.bar);
     }
   });
   // console.log(repeats, repeats2);

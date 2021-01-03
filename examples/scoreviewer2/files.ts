@@ -10,9 +10,9 @@
 // export const midiFile = "../assets/osmd_test.mid";
 // export const mxmlFile = "../assets/osmd_test.musicxml";
 
-export const midiFileName = "Dona Nobis Pacem";
-export const midiFile = "../assets/Dona Nobis Pacem.mid";
-export const mxmlFile = "../assets/Dona Nobis Pacem.musicxml";
+// export const midiFileName = "Dona Nobis Pacem";
+// export const midiFile = "../assets/Dona Nobis Pacem.mid";
+// export const mxmlFile = "../assets/Dona Nobis Pacem.musicxml";
 
 /* multiple-bar rest */
 // export const midiFileName = "4a2s-瀰度山歌";
@@ -22,6 +22,10 @@ export const mxmlFile = "../assets/Dona Nobis Pacem.musicxml";
 // export const midiFileName = "04 3b中華色彩s-花非花 (vocal score)";
 // export const midiFile = "../assets/04 3b中華色彩s-花非花 (vocal score).mid";
 // export const mxmlFile = "../assets/04 3b中華色彩s-花非花 (vocal score).xml";
+
+export const midiFileName = "s小放牛獨唱";
+export const midiFile = "../assets/s小放牛獨唱.mid";
+export const mxmlFile = "../assets/s小放牛獨唱.musicxml";
 
 // export const midiFileName = "test2";
 // export const midiFile = "../assets/test2.mid";

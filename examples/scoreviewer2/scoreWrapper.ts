@@ -36,7 +36,7 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
     repeats,
     initialTempo,
   });
-
+  console.log(repeats);
   await osmd.load(xmlDoc);
   // console.log(getNotesInStaff(osmd, 0, 480, 10));
 
