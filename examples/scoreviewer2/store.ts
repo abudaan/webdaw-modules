@@ -21,7 +21,7 @@ export type State = {
   selectedMeasures: number[];
   width: number;
   loaded: boolean;
-  repeats: number[][];
+  repeats: [number, number, boolean][];
   initialTempo: number;
   boundingBoxesMeasures: BoundingBox[];
   songPositionMillis: number;
@@ -32,13 +32,14 @@ export type State = {
     width: number;
     height: number;
   };
-  hasRepeated: { [index: number]: boolean };
   playheadAnchors: {
     ticks: number;
+    measureNumber: number;
     bbox: { x: number; y: number; width: number; height: number };
   }[];
   currentPlayheadAnchor: {
     ticks: number;
+    measureNumber: number;
     bbox: { x: number; y: number; width: number; height: number };
   } | null;
 };
@@ -72,7 +73,6 @@ export const store = create<Store>((set, get) => ({
   repeats: [],
   initialTempo: 90,
   loaded: false,
-  hasRepeated: {},
   playhead: {
     x: 0,
     y: 0,

@@ -37,12 +37,13 @@ var getBoundingBox = function (boxes, result, drawer) {
     }
 };
 exports.mapper3 = function (osmd) {
-    var bboxes = [];
+    var result = [];
     osmd.GraphicSheet.VerticalGraphicalStaffEntryContainers.forEach(function (container) {
         container.staffEntries.forEach(function (staffEntry) {
-            bboxes.push(exports.getBoundingBoxData(staffEntry.boundingBox));
+            var measureNumber = staffEntry.parentMeasure.MeasureNumber;
+            result.push({ measureNumber: measureNumber, bbox: exports.getBoundingBoxData(staffEntry.boundingBox) });
         });
     });
-    return bboxes;
+    return result;
 };
 //# sourceMappingURL=mapper3.js.map

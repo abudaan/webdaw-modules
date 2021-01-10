@@ -4,11 +4,6 @@
  *
  * Called by the action updateBar.ts
  */
-export declare const scorePositionFromSong: (repeats: number[][], hasRepeated: {
-    [index: number]: boolean;
-}, barSong: number) => {
+export declare const scorePositionFromSong: (repeats: [number, number, boolean][], barSong: number) => {
     bar: number;
-    hasRepeated: {
-        [index: number]: boolean;
-    };
 };

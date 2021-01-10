@@ -5,24 +5,13 @@
  *
  * Called by the action updateBar.ts
  */
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.scorePositionFromSong = void 0;
-exports.scorePositionFromSong = function (repeats, hasRepeated, barSong) {
+exports.scorePositionFromSong = function (repeats, barSong) {
     if (!repeats.length) {
-        return { bar: barSong, hasRepeated: hasRepeated };
+        return { bar: barSong };
     }
-    var hasRepeatedClone = __assign({}, hasRepeated);
+    // const hasRepeatedClone = { ...hasRepeated };
     var newBar = barSong;
     for (var i = 0; i < repeats.length; i++) {
         var repeat = repeats[i];
@@ -30,14 +19,15 @@ exports.scorePositionFromSong = function (repeats, hasRepeated, barSong) {
             newBar -= repeat[1] - repeat[0] + 1;
         }
     }
-    var b = barSong;
-    for (var i = 0; i < repeats.length; i++) {
-        var repeat = repeats[i];
-        if (b > repeat[1]) {
-            hasRepeatedClone[i] = true;
-            b -= repeat[1] - repeat[0] + 1;
-        }
-    }
-    return { bar: newBar, hasRepeated: hasRepeatedClone };
+    // console.log(barSong, newBar);
+    // let b = barSong;
+    // for (let i = 0; i < repeats.length; i++) {
+    //   const repeat = repeats[i];
+    //   if (b > repeat[1]) {
+    //     hasRepeatedClone[i] = true;
+    //     b -= repeat[1] - repeat[0] + 1;
+    //   }
+    // }
+    return { bar: newBar };
 };
 //# sourceMappingURL=scorePositionFromSong.js.map

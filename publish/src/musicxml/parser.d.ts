@@ -1,5 +1,5 @@
 import { MIDIEvent } from "../MIDIEvent";
-declare type PartData = {
+export declare type PartData = {
     id: string;
     name: string;
     instrument: string;
@@ -19,4 +19,3 @@ export declare type ParsedMusicXML = {
     initialDenominator: number;
 } | null;
 export declare const parseMusicXML: (xmlDoc: XMLDocument, ppq?: number) => ParsedMusicXML;
-export {};

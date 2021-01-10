@@ -60,13 +60,17 @@ const getBoundingBox = (
 };
 
 export const mapper3 = (osmd: OpenSheetMusicDisplay) => {
-  const bboxes: { x: number; y: number; width: number; height: number }[] = [];
+  const result: {
+    measureNumber: number;
+    bbox: { x: number; y: number; width: number; height: number };
+  }[] = [];
   osmd.GraphicSheet.VerticalGraphicalStaffEntryContainers.forEach(
     (container: VerticalGraphicalStaffEntryContainer) => {
       (container as any).staffEntries.forEach((staffEntry: GraphicalStaffEntry) => {
-        bboxes.push(getBoundingBoxData((staffEntry as any).boundingBox));
+        const measureNumber = staffEntry.parentMeasure.MeasureNumber;
+        result.push({ measureNumber, bbox: getBoundingBoxData((staffEntry as any).boundingBox) });
       });
     }
   );
-  return bboxes;
+  return result;
 };

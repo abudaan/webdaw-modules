@@ -1,4 +1,4 @@
-import { BBox } from "webdaw-modules";
+import { AnchorData, BBox } from "webdaw-modules";
 import { store } from "../store";
 
 export const setSongPosition = (millis: number, ticks: number) => {
@@ -15,8 +15,8 @@ export const setSongPosition = (millis: number, ticks: number) => {
 
   let i = 0;
   let x = 0;
-  let anchor: { ticks: number; bbox: BBox } | null = null;
-  let nextAnchor: { ticks: number; bbox: BBox } | null = null;
+  let anchor: AnchorData | null = null;
+  let nextAnchor: AnchorData | null = null;
   for (; i < playheadAnchors.length; i++) {
     anchor = playheadAnchors[i];
     if (anchor.ticks > ticks) {
@@ -26,6 +26,7 @@ export const setSongPosition = (millis: number, ticks: number) => {
       break;
     }
   }
+
   if (anchor !== null && nextAnchor !== null) {
     let diffPixels = nextAnchor.bbox.x - anchor.bbox.x;
     const diffTicks = nextAnchor.ticks - anchor.ticks;

@@ -7,7 +7,7 @@
   <identification>
     <encoding>
       <software>MuseScore 3.5.2</software>
-      <encoding-date>2021-01-02</encoding-date>
+      <encoding-date>2021-01-10</encoding-date>
       <supports element="accidental" type="yes"/>
       <supports element="beam" type="yes"/>
       <supports element="print" attribute="new-page" type="yes" value="yes"/>
@@ -60,7 +60,7 @@
       </score-part>
     </part-list>
   <part id="P1">
-    <measure number="1" width="305.23">
+    <measure number="1" width="262.88">
       <print>
         <system-layout>
           <system-margins>
@@ -74,7 +74,7 @@
           </staff-layout>
         </print>
       <attributes>
-        <divisions>1</divisions>
+        <divisions>2</divisions>
         <key>
           <fifths>3</fifths>
           </key>
@@ -98,186 +98,251 @@
           <alter>1</alter>
           <octave>4</octave>
           </pitch>
-        <duration>2</duration>
+        <duration>4</duration>
         <voice>1</voice>
         <type>half</type>
         <stem>up</stem>
         <staff>1</staff>
         </note>
-      <note default-x="213.38" default-y="-20.00">
+      <note default-x="193.00" default-y="-20.00">
         <pitch>
           <step>B</step>
           <octave>4</octave>
           </pitch>
-        <duration>2</duration>
+        <duration>4</duration>
         <voice>1</voice>
         <type>half</type>
         <stem>down</stem>
         <staff>1</staff>
         </note>
       <backup>
-        <duration>4</duration>
+        <duration>8</duration>
         </backup>
       <note>
         <rest measure="yes"/>
-        <duration>4</duration>
+        <duration>8</duration>
         <voice>5</voice>
         <staff>2</staff>
         </note>
       </measure>
-    <measure number="2" width="193.50">
+    <measure number="2" width="186.31">
+      <barline location="left">
+        <bar-style>heavy-light</bar-style>
+        <repeat direction="forward"/>
+        </barline>
       <attributes>
         <time>
           <beats>3</beats>
           <beat-type>4</beat-type>
           </time>
         </attributes>
-      <note default-x="30.96" default-y="-40.00">
+      <note default-x="54.33" default-y="-40.00">
         <pitch>
           <step>E</step>
           <octave>4</octave>
           </pitch>
-        <duration>1</duration>
+        <duration>2</duration>
         <voice>1</voice>
         <type>quarter</type>
         <stem>up</stem>
         <staff>1</staff>
         </note>
-      <note default-x="84.61" default-y="-35.00">
+      <note default-x="97.79" default-y="-35.00">
         <pitch>
           <step>F</step>
           <alter>1</alter>
           <octave>4</octave>
           </pitch>
-        <duration>1</duration>
+        <duration>2</duration>
         <voice>1</voice>
         <type>quarter</type>
         <stem>up</stem>
         <staff>1</staff>
         </note>
-      <note default-x="138.26" default-y="-30.00">
+      <note default-x="141.25" default-y="-30.00">
         <pitch>
           <step>G</step>
           <alter>1</alter>
           <octave>4</octave>
           </pitch>
-        <duration>1</duration>
+        <duration>2</duration>
         <voice>1</voice>
         <type>quarter</type>
         <stem>up</stem>
         <staff>1</staff>
         </note>
       <backup>
-        <duration>3</duration>
+        <duration>6</duration>
         </backup>
       <note>
         <rest measure="yes"/>
-        <duration>3</duration>
+        <duration>6</duration>
         <voice>5</voice>
         <staff>2</staff>
         </note>
       </measure>
-    <measure number="3" width="172.54">
+    <measure number="3" width="158.74">
       <note default-x="10.00" default-y="-25.00">
         <pitch>
           <step>A</step>
           <octave>4</octave>
           </pitch>
-        <duration>1</duration>
+        <duration>2</duration>
         <voice>1</voice>
         <type>quarter</type>
         <stem>up</stem>
         <staff>1</staff>
         </note>
-      <note default-x="63.65" default-y="-30.00">
+      <note default-x="53.46" default-y="-30.00">
         <pitch>
           <step>G</step>
           <alter>1</alter>
           <octave>4</octave>
           </pitch>
-        <duration>1</duration>
+        <duration>2</duration>
         <voice>1</voice>
         <type>quarter</type>
         <stem>up</stem>
         <staff>1</staff>
         </note>
-      <note default-x="117.29" default-y="-35.00">
+      <note default-x="96.92" default-y="-35.00">
         <pitch>
           <step>F</step>
           <alter>1</alter>
           <octave>4</octave>
           </pitch>
-        <duration>1</duration>
+        <duration>2</duration>
         <voice>1</voice>
         <type>quarter</type>
         <stem>up</stem>
         <staff>1</staff>
         </note>
       <backup>
-        <duration>3</duration>
+        <duration>6</duration>
         </backup>
       <note>
         <rest measure="yes"/>
-        <duration>3</duration>
+        <duration>6</duration>
         <voice>5</voice>
         <staff>2</staff>
         </note>
+      <barline location="right">
+        <bar-style>light-heavy</bar-style>
+        <repeat direction="backward"/>
+        </barline>
       </measure>
-    <measure number="4" width="232.31">
+    <measure number="4" width="172.23">
       <attributes>
         <time>
-          <beats>4</beats>
-          <beat-type>4</beat-type>
+          <beats>6</beats>
+          <beat-type>8</beat-type>
           </time>
         </attributes>
-      <note default-x="30.96" default-y="-40.00">
+      <note default-x="29.94" default-y="-40.00">
         <pitch>
           <step>E</step>
           <octave>4</octave>
           </pitch>
-        <duration>1</duration>
+        <duration>3</duration>
         <voice>1</voice>
         <type>quarter</type>
+        <dot/>
         <stem>up</stem>
-        <staff>1</staff>
-        </note>
-      <note>
-        <rest/>
-        <duration>1</duration>
-        <voice>1</voice>
-        <type>quarter</type>
         <staff>1</staff>
         </note>
       <note>
         <rest/>
         <duration>2</duration>
         <voice>1</voice>
-        <type>half</type>
+        <type>quarter</type>
+        <staff>1</staff>
+        </note>
+      <note>
+        <rest/>
+        <duration>1</duration>
+        <voice>1</voice>
+        <type>eighth</type>
         <staff>1</staff>
         </note>
       <backup>
-        <duration>4</duration>
+        <duration>6</duration>
         </backup>
       <note>
         <rest measure="yes"/>
-        <duration>4</duration>
+        <duration>6</duration>
         <voice>5</voice>
         <staff>2</staff>
         </note>
       </measure>
-    <measure number="5" width="186.03">
+    <measure number="5" width="187.99">
+      <note>
+        <rest/>
+        <duration>1</duration>
+        <voice>1</voice>
+        <type>eighth</type>
+        <staff>1</staff>
+        </note>
+      <note default-x="41.66" default-y="-30.00">
+        <pitch>
+          <step>G</step>
+          <alter>1</alter>
+          <octave>4</octave>
+          </pitch>
+        <duration>2</duration>
+        <voice>1</voice>
+        <type>quarter</type>
+        <stem>up</stem>
+        <staff>1</staff>
+        </note>
+      <note default-x="92.00" default-y="-50.00">
+        <pitch>
+          <step>C</step>
+          <alter>1</alter>
+          <octave>4</octave>
+          </pitch>
+        <duration>1</duration>
+        <voice>1</voice>
+        <type>eighth</type>
+        <stem>up</stem>
+        <staff>1</staff>
+        </note>
+      <note>
+        <rest/>
+        <duration>1</duration>
+        <voice>1</voice>
+        <type>eighth</type>
+        <staff>1</staff>
+        </note>
+      <note>
+        <rest/>
+        <duration>1</duration>
+        <voice>1</voice>
+        <type>eighth</type>
+        <staff>1</staff>
+        </note>
+      <backup>
+        <duration>6</duration>
+        </backup>
       <note>
         <rest measure="yes"/>
-        <duration>4</duration>
+        <duration>6</duration>
+        <voice>5</voice>
+        <staff>2</staff>
+        </note>
+      </measure>
+    <measure number="6" width="121.46">
+      <note>
+        <rest measure="yes"/>
+        <duration>6</duration>
         <voice>1</voice>
         <staff>1</staff>
         </note>
       <backup>
-        <duration>4</duration>
+        <duration>6</duration>
         </backup>
       <note>
         <rest measure="yes"/>
-        <duration>4</duration>
+        <duration>6</duration>
         <voice>5</voice>
         <staff>2</staff>
         </note>

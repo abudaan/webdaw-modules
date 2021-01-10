@@ -12,7 +12,7 @@ import { getRepeat } from "./measure/getRepeat";
 
 // let n = 0;
 
-type PartData = {
+export type PartData = {
   id: string;
   name: string;
   instrument: string;

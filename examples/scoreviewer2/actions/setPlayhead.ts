@@ -52,13 +52,11 @@ export const setPlayhead = (e: PointerEvent) => {
     const {
       playhead,
       repeats,
-      hasRepeated,
       offset: { x: offsetX, y: offsetY },
     } = store.getState();
 
     const { barSong: currentBarSong, hasRepeated: hasRepeatedClone } = songPositionFromScore(
       repeats,
-      hasRepeated,
       measureNumber
     );
     const { durationMillis, startMillis } = getBarInfo(song, currentBarSong);
