@@ -19,7 +19,7 @@ let song: Heartbeat.Song;
 let keyEditor: Heartbeat.KeyEditor;
 
 const updateSongPosition = () => {
-  setSongPosition(song.millis, song.ticks);
+  setSongPosition(song.millis, song.ticks, song.bar);
   raqId = requestAnimationFrame(updateSongPosition);
 };
 
@@ -59,7 +59,7 @@ export const setup = async (): Promise<{ cleanup: () => void }> => {
     stopSong();
   });
 
-  song.addEventListener("position", "bar", updateBar);
+  // song.addEventListener("position", "bar", updateBar);
 
   const unsub1 = store.subscribe(
     (songState) => {
@@ -80,19 +80,11 @@ export const setup = async (): Promise<{ cleanup: () => void }> => {
     (measures: number[]) => {
       if (measures.length > 0) {
         console.log("LOOP", measures);
-        const { repeats, hasRepeated } = store.getState();
-        const { barSong: leftBar } = songPositionFromScore(
-          repeats,
-          hasRepeated,
-          Math.min(...measures)
-        );
+        const { repeats } = store.getState();
+        const { barSong: leftBar } = songPositionFromScore(repeats, Math.min(...measures));
         const leftPos = song.getPosition("barsbeats", leftBar, 1, 1, 0);
 
-        const { barSong: rightBar } = songPositionFromScore(
-          repeats,
-          hasRepeated,
-          Math.max(...measures) + 1
-        );
+        const { barSong: rightBar } = songPositionFromScore(repeats, Math.max(...measures) + 1);
         const rightPos = song.getPosition("barsbeats", rightBar, 1, 1, 0);
 
         song.setLeftLocator("ticks", leftPos.ticks);

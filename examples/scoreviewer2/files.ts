@@ -23,9 +23,9 @@
 // export const midiFile = "../assets/04 3b中華色彩s-花非花 (vocal score).mid";
 // export const mxmlFile = "../assets/04 3b中華色彩s-花非花 (vocal score).xml";
 
-// export const midiFileName = "s小放牛獨唱";
-// export const midiFile = "../assets/s小放牛獨唱.mid";
-// export const mxmlFile = "../assets/s小放牛獨唱.musicxml";
+export const midiFileName = "s小放牛獨唱";
+export const midiFile = "../assets/s小放牛獨唱.mid";
+export const mxmlFile = "../assets/s小放牛獨唱.musicxml";
 
 // export const midiFileName = "test2";
 // export const midiFile = "../assets/test2.mid";
@@ -35,13 +35,14 @@
 // export const midiFile = "../assets/pedal.mid";
 // export const mxmlFile = "../assets/pedal.musicxml";
 
+// mulitbar rest
 // export const midiFileName = "似火的心v5b(1)";
 // export const midiFile = "../assets/似火的心v5b(1).mid";
 // export const mxmlFile = "../assets/似火的心v5b(1).musicxml";
 
-export const midiFileName = "mozk545a_musescore";
-export const midiFile = "../assets/mozk545a_musescore.mid";
-export const mxmlFile = "../assets/mozk545a_musescore.musicxml";
+// export const midiFileName = "mozk545a_musescore";
+// export const midiFile = "../assets/mozk545a_musescore.mid";
+// export const mxmlFile = "../assets/mozk545a_musescore.musicxml";
 
 // const midiFileName = 'spring';
 // const midiFile = '../assets/spring.mid';
@@ -57,7 +58,7 @@ export const mxmlFile = "../assets/mozk545a_musescore.musicxml";
 
 // export const midiFileName = "3b中華色彩s-花非花 (full score)";
 // export const midiFile = "../assets/3b中華色彩s-花非花 (full score).mid";
-// export const mxmlFile = "../assets/3b中華色彩s-花非花 (vocal score).musicxml";
+// export const mxmlFile = "../assets/3b中華色彩s-花非花 (vocal score).xml";
 
 // const midiFileName = 'full-score';
 // const midiFile = '../assets/full-score.mid';

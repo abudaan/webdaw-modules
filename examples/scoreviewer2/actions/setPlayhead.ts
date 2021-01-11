@@ -55,10 +55,7 @@ export const setPlayhead = (e: PointerEvent) => {
       offset: { x: offsetX, y: offsetY },
     } = store.getState();
 
-    const { barSong: currentBarSong, hasRepeated: hasRepeatedClone } = songPositionFromScore(
-      repeats,
-      measureNumber
-    );
+    const { barSong: currentBarSong } = songPositionFromScore(repeats, measureNumber);
     const { durationMillis, startMillis } = getBarInfo(song, currentBarSong);
     const pixelsPerMillisecond = width / durationMillis;
     const songPositionMillis = startMillis + offset / pixelsPerMillisecond;
@@ -79,7 +76,6 @@ export const setPlayhead = (e: PointerEvent) => {
         width: playhead.width,
         height,
       },
-      hasRepeated: hasRepeatedClone,
     });
   }
 };

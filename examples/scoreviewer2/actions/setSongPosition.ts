@@ -1,17 +1,13 @@
-import { AnchorData, BBox } from "webdaw-modules";
+import { AnchorData, scorePositionFromSong } from "webdaw-modules";
 import { store } from "../store";
 
-export const setSongPosition = (millis: number, ticks: number) => {
+export const setSongPosition = (millis: number, ticks: number, bar: number) => {
   const {
-    offset: { x: offsetX },
-    currentBarStartX,
-    currentBarStartMillis,
-    pixelsPerMillisecond,
     playhead,
     playheadAnchors,
+    currentPlayheadAnchor,
+    offset: { x: offsetX, y: offsetY },
   } = store.getState();
-
-  const relPos = millis - currentBarStartMillis;
 
   let i = 0;
   let x = 0;
@@ -41,14 +37,28 @@ export const setSongPosition = (millis: number, ticks: number) => {
       // console.log(pixelsPerTick);
       x = anchor.bbox.x - 10 + (ticks - anchor.ticks) * pixelsPerTick;
     }
-  }
 
-  store.setState({
-    playhead: {
-      ...playhead,
-      x,
-      // x: offsetX + currentBarStartX + relPos * pixelsPerMillisecond,
-    },
-    currentPlayheadAnchor: anchor,
-  });
+    if (currentPlayheadAnchor?.measureNumber !== anchor.measureNumber) {
+      const { repeats, boundingBoxesMeasures } = store.getState();
+      const { bar: scoreBar } = scorePositionFromSong(repeats, bar);
+      const { y, height } = boundingBoxesMeasures[scoreBar - 1];
+      store.setState({
+        playhead: {
+          ...playhead,
+          x: x + offsetX,
+          y: y + offsetY,
+          height,
+        },
+        currentPlayheadAnchor: anchor,
+      });
+    } else {
+      store.setState({
+        playhead: {
+          ...playhead,
+          x: x + offsetX,
+        },
+        currentPlayheadAnchor: anchor,
+      });
+    }
+  }
 };

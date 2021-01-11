@@ -4,15 +4,13 @@
  */
 
 export const songPositionFromScore = (
-  repeats: number[][],
-  hasRepeated: { [index: number]: boolean },
+  repeats: [number, number, boolean][],
   barScore: number
-): { barSong: number; hasRepeated: { [index: number]: boolean } } => {
+): { barSong: number } => {
   if (repeats.length <= 1) {
-    return { barSong: barScore, hasRepeated };
+    return { barSong: barScore };
   }
   // const hasRepeatedClone: { [index: number]: boolean } = {};
-  const hasRepeatedClone = { ...hasRepeated };
   // let newBar = bar;
   // let loop = true;
   // let i = 0;
@@ -26,7 +24,7 @@ export const songPositionFromScore = (
   //     i++;
   //   }
   // }
-
+  /*
   for (let i = 0; i < repeats.length; i++) {
     const repeat = repeats[i];
     // console.log(bar, repeat[1]);
@@ -42,9 +40,10 @@ export const songPositionFromScore = (
       newBar += repeat[1] - repeat[0] + 1;
     }
   }
-
+*/
   // console.log(newBar, hasRepeatedClone);
-  return { barSong: newBar, hasRepeated: hasRepeatedClone };
+  let newBar = barScore;
+  return { barSong: newBar };
 };
 
 // export const songPositionFromScore = (repeats: number[][], bar: number): number => {
