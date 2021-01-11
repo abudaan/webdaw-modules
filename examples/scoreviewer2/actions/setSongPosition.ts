@@ -9,6 +9,8 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
     offset: { x: offsetX, y: offsetY },
   } = store.getState();
 
+  const playheadOffsetX = playhead.width / 2;
+
   let i = 0;
   let x = 0;
   let anchor: AnchorData | null = null;
@@ -27,15 +29,14 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
     let diffPixels = nextAnchor.bbox.x - anchor.bbox.x;
     const diffTicks = nextAnchor.ticks - anchor.ticks;
     if (diffPixels > 0) {
+      // the next anchor is on the same staff
       const pixelsPerTick = diffPixels / diffTicks;
-      // console.log(pixelsPerTick);
-      x = anchor.bbox.x - 10 + (ticks - anchor.ticks) * pixelsPerTick;
+      x = anchor.bbox.x - playheadOffsetX + (ticks - anchor.ticks) * pixelsPerTick;
     } else {
-      // console.log(diffPixels);
+      // the next anchor is on the next staff
       diffPixels = anchor.bbox.width;
       const pixelsPerTick = diffPixels / diffTicks;
-      // console.log(pixelsPerTick);
-      x = anchor.bbox.x - 10 + (ticks - anchor.ticks) * pixelsPerTick;
+      x = anchor.bbox.x - playheadOffsetX + (ticks - anchor.ticks) * pixelsPerTick;
     }
 
     if (currentPlayheadAnchor?.measureNumber !== anchor.measureNumber) {
@@ -60,5 +61,23 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
         currentPlayheadAnchor: anchor,
       });
     }
+    // } else if (currentPlayheadAnchor !== null) {
+    //   // we are at the end of the song
+    //   const { measureStartTicks } = store.getState();
+    //   const diffTicks = measureStartTicks[measureStartTicks.length - 1] - currentPlayheadAnchor.ticks;
+    //   console.log(currentPlayheadAnchor, measureStartTicks[measureStartTicks.length - 1]);
+    //   const diffPixels = currentPlayheadAnchor.bbox.width;
+    //   const pixelsPerTick = diffPixels / diffTicks;
+    //   x =
+    //     currentPlayheadAnchor.bbox.x -
+    //     playheadOffsetX +
+    //     (ticks - currentPlayheadAnchor.ticks) * pixelsPerTick;
+    //   store.setState({
+    //     playhead: {
+    //       ...playhead,
+    //       x: x + offsetX,
+    //     },
+    //     currentPlayheadAnchor: null,
+    //   });
   }
 };

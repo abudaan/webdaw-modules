@@ -55,7 +55,7 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
     measureStartTicks.push(lastTicks + Numerator * (4 / Denominator) * 960);
     // console.log(measureStartTicks);
     var ticks = 0;
-    var result = osmd.GraphicSheet.VerticalGraphicalStaffEntryContainers.map(function (container) {
+    var anchorData = osmd.GraphicSheet.VerticalGraphicalStaffEntryContainers.map(function (container) {
         var realValue = container.AbsoluteTimestamp.RealValue;
         var data = container.StaffEntries.map(function (entry) {
             var measureNumber = entry.parentMeasure.MeasureNumber;
@@ -84,8 +84,8 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
         var maxTicks = measureStartTicks[max];
         diffTicks += maxTicks - minTicks;
         // console.log(min, max, minTicks, maxTicks, diffTicks);
-        for (var j = 0; j < result.length; j++) {
-            var anchor = result[j];
+        for (var j = 0; j < anchorData.length; j++) {
+            var anchor = anchorData[j];
             if (anchor.measureNumber >= min && anchor.measureNumber <= max) {
                 var clone = __assign({}, anchor);
                 clone.ticks += diffTicks;
@@ -93,8 +93,8 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
             }
         }
     }
-    result.push.apply(result, __spread(copies));
-    result.sort(function (a, b) {
+    anchorData.push.apply(anchorData, __spread(copies));
+    anchorData.sort(function (a, b) {
         if (a.ticks < b.ticks) {
             return -1;
         }
@@ -104,6 +104,6 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
         return 0;
     });
     // console.log(result);
-    return result;
+    return { anchorData: anchorData, measureStartTicks: measureStartTicks };
 };
 //# sourceMappingURL=getPlayheadAnchorData.js.map

@@ -26,7 +26,7 @@ export const getPlayheadAnchorData = (
   osmd: OpenSheetMusicDisplay,
   repeats: number[][],
   ppq: number = 960
-): AnchorData[] => {
+): { anchorData: AnchorData[]; measureStartTicks: number[] } => {
   const measureStartTicks = osmd.Sheet.SourceMeasures.map((measure: SourceMeasure) => {
     return ppq * measure.AbsoluteTimestamp.RealValue * 4;
   });
@@ -38,7 +38,7 @@ export const getPlayheadAnchorData = (
   // console.log(measureStartTicks);
 
   let ticks = 0;
-  const result: AnchorData[] = osmd.GraphicSheet.VerticalGraphicalStaffEntryContainers.map(
+  const anchorData: AnchorData[] = osmd.GraphicSheet.VerticalGraphicalStaffEntryContainers.map(
     container => {
       const realValue = container.AbsoluteTimestamp.RealValue;
       const data: { measureNumber: number; bbox: BBox }[] = container.StaffEntries.map(entry => {
@@ -70,8 +70,8 @@ export const getPlayheadAnchorData = (
     const maxTicks = measureStartTicks[max];
     diffTicks += maxTicks - minTicks;
     // console.log(min, max, minTicks, maxTicks, diffTicks);
-    for (let j = 0; j < result.length; j++) {
-      const anchor = result[j];
+    for (let j = 0; j < anchorData.length; j++) {
+      const anchor = anchorData[j];
       if (anchor.measureNumber >= min && anchor.measureNumber <= max) {
         const clone = { ...anchor };
         clone.ticks += diffTicks;
@@ -79,8 +79,8 @@ export const getPlayheadAnchorData = (
       }
     }
   }
-  result.push(...copies);
-  result.sort((a, b) => {
+  anchorData.push(...copies);
+  anchorData.sort((a, b) => {
     if (a.ticks < b.ticks) {
       return -1;
     }
@@ -91,5 +91,5 @@ export const getPlayheadAnchorData = (
   });
 
   // console.log(result);
-  return result;
+  return { anchorData, measureStartTicks };
 };

@@ -42,6 +42,7 @@ export type State = {
     measureNumber: number;
     bbox: { x: number; y: number; width: number; height: number };
   } | null;
+  measureStartTicks: number[];
 };
 
 export type Reducers = {
@@ -76,7 +77,7 @@ export const store = create<Store>((set, get) => ({
   playhead: {
     x: 0,
     y: 0,
-    width: 25,
+    width: 15,
     height: 0,
   },
   toggleSongState: () => {
@@ -112,4 +113,5 @@ export const store = create<Store>((set, get) => ({
   songPositionMillis: 0,
   playheadAnchors: [],
   currentPlayheadAnchor: null,
+  measureStartTicks: [],
 }));

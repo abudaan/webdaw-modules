@@ -43,7 +43,8 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
     () => {
       render(osmd);
       store.getState().updateBoundingBoxMeasures(getBoundingBoxMeasureAll(osmd));
-      store.setState({ playheadAnchors: getPlayheadAnchorData(osmd, repeats, ppq) });
+      const { anchorData, measureStartTicks } = getPlayheadAnchorData(osmd, repeats, ppq);
+      store.setState({ playheadAnchors: anchorData, measureStartTicks });
     },
     (state) => state.width
   );
@@ -51,8 +52,10 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
   render(osmd);
   console.log(osmd);
 
-  store.setState({ playheadAnchors: getPlayheadAnchorData(osmd, repeats, ppq) });
   store.getState().updateBoundingBoxMeasures(getBoundingBoxMeasureAll(osmd));
+  const { anchorData, measureStartTicks } = getPlayheadAnchorData(osmd, repeats, ppq);
+  console.log(measureStartTicks, anchorData);
+  store.setState({ playheadAnchors: anchorData, measureStartTicks });
 
   return {
     cleanup: () => {
