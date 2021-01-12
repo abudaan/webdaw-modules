@@ -49,7 +49,7 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
 
     // console.log(jumpToNextStave);
 
-    if (jumpToNextStave) {
+    if (ticks >= endBarTicks) {
       const { repeats, boundingBoxesMeasures } = store.getState();
       const { bar: scoreBar } = scorePositionFromSong(repeats, bar);
       const { y, height } = boundingBoxesMeasures[scoreBar - 1];
