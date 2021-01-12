@@ -5,7 +5,10 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
   const {
     playhead,
     playheadAnchors,
+    measureStartTicks,
     currentPlayheadAnchor,
+    boundingBoxesMeasures,
+    jumpToNextStave,
     offset: { x: offsetX, y: offsetY },
   } = store.getState();
 
@@ -25,21 +28,28 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
     }
   }
 
+  let endBarTicks = 0;
+
   if (anchor !== null && nextAnchor !== null) {
+    endBarTicks = measureStartTicks[nextAnchor.measureNumber - 1];
     let diffPixels = nextAnchor.bbox.x - anchor.bbox.x;
     const diffTicks = nextAnchor.ticks - anchor.ticks;
     if (diffPixels > 0) {
       // the next anchor is on the same staff
       const pixelsPerTick = diffPixels / diffTicks;
+      // console.log(diffPixels, anchor.bbox.width);
+      // const pixelsPerTick = anchor.bbox.width / diffTicks;
       x = anchor.bbox.x - playheadOffsetX + (ticks - anchor.ticks) * pixelsPerTick;
     } else {
       // the next anchor is on the next staff
-      diffPixels = anchor.bbox.width;
+      diffPixels = boundingBoxesMeasures[anchor.measureNumber - 1].right - anchor.bbox.x;
       const pixelsPerTick = diffPixels / diffTicks;
       x = anchor.bbox.x - playheadOffsetX + (ticks - anchor.ticks) * pixelsPerTick;
     }
 
-    if (currentPlayheadAnchor?.measureNumber !== anchor.measureNumber) {
+    // console.log(jumpToNextStave);
+
+    if (jumpToNextStave) {
       const { repeats, boundingBoxesMeasures } = store.getState();
       const { bar: scoreBar } = scorePositionFromSong(repeats, bar);
       const { y, height } = boundingBoxesMeasures[scoreBar - 1];
@@ -51,6 +61,7 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
           height,
         },
         currentPlayheadAnchor: anchor,
+        jumpToNextStave: false,
       });
     } else {
       store.setState({
@@ -59,6 +70,7 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
           x: x + offsetX,
         },
         currentPlayheadAnchor: anchor,
+        jumpToNextStave: ticks >= endBarTicks,
       });
     }
     // } else if (currentPlayheadAnchor !== null) {

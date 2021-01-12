@@ -43,6 +43,7 @@ export type State = {
     bbox: { x: number; y: number; width: number; height: number };
   } | null;
   measureStartTicks: number[];
+  jumpToNextStave: boolean;
 };
 
 export type Reducers = {
@@ -114,4 +115,5 @@ export const store = create<Store>((set, get) => ({
   playheadAnchors: [],
   currentPlayheadAnchor: null,
   measureStartTicks: [],
+  jumpToNextStave: false,
 }));
