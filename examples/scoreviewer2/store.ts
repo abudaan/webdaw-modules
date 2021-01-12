@@ -44,6 +44,7 @@ export type State = {
   } | null;
   measureStartTicks: number[];
   jumpToNextStave: boolean;
+  lastMillis: number;
 };
 
 export type Reducers = {
@@ -116,4 +117,5 @@ export const store = create<Store>((set, get) => ({
   currentPlayheadAnchor: null,
   measureStartTicks: [],
   jumpToNextStave: false,
+  lastMillis: 0,
 }));

@@ -10,6 +10,7 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
     currentPlayheadAnchor,
     boundingBoxesMeasures,
     jumpToNextStave,
+    lastMillis,
     offset: { x: offsetX, y: offsetY },
   } = store.getState();
 
@@ -52,8 +53,8 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
     }
 
     // console.log(jumpToNextStave);
-    // console.log(endBarMillis);
-    if (millis >= endBarMillis - 100) {
+    // console.log(millis - lastMillis + 5);
+    if (millis >= endBarMillis - Math.max(millis - lastMillis, 25)) {
       const { repeats, boundingBoxesMeasures } = store.getState();
       const { bar: scoreBar } = scorePositionFromSong(repeats, bar);
       const { y, height } = boundingBoxesMeasures[scoreBar - 1];
@@ -66,6 +67,7 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
         },
         currentPlayheadAnchor: anchor,
         jumpToNextStave: false,
+        lastMillis: millis,
       });
     } else {
       store.setState({
@@ -75,6 +77,7 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
         },
         currentPlayheadAnchor: anchor,
         jumpToNextStave: ticks >= endBarTicks,
+        lastMillis: millis,
       });
     }
     // } else if (currentPlayheadAnchor !== null) {
