@@ -1,5 +1,6 @@
 import { AnchorData, scorePositionFromSong } from "webdaw-modules";
 import { store } from "../store";
+import { getSong } from "../songWrapper";
 
 export const setSongPosition = (millis: number, ticks: number, bar: number) => {
   const {
@@ -12,6 +13,7 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
     offset: { x: offsetX, y: offsetY },
   } = store.getState();
 
+  const song = getSong();
   const playheadOffsetX = playhead.width / 2;
 
   let i = 0;
@@ -29,9 +31,11 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
   }
 
   let endBarTicks = 0;
+  let endBarMillis = 0;
 
   if (anchor !== null && nextAnchor !== null) {
     endBarTicks = measureStartTicks[nextAnchor.measureNumber - 1];
+    endBarMillis = song.getPosition("ticks", endBarTicks).millis;
     let diffPixels = nextAnchor.bbox.x - anchor.bbox.x;
     const diffTicks = nextAnchor.ticks - anchor.ticks;
     if (diffPixels > 0) {
@@ -48,8 +52,8 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
     }
 
     // console.log(jumpToNextStave);
-
-    if (ticks >= endBarTicks) {
+    // console.log(endBarMillis);
+    if (millis >= endBarMillis - 100) {
       const { repeats, boundingBoxesMeasures } = store.getState();
       const { bar: scoreBar } = scorePositionFromSong(repeats, bar);
       const { y, height } = boundingBoxesMeasures[scoreBar - 1];
