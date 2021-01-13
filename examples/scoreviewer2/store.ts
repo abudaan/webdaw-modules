@@ -31,6 +31,9 @@ export type State = {
     y: number;
     width: number;
     height: number;
+    diffTicks: number;
+    diffPixels: number;
+    pixelsPerTick: number;
   };
   playheadAnchors: {
     ticks: number;
@@ -81,6 +84,9 @@ export const store = create<Store>((set, get) => ({
     y: 0,
     width: 15,
     height: 0,
+    diffTicks: 0,
+    diffPixels: 0,
+    pixelsPerTick: 0,
   },
   toggleSongState: () => {
     set((state) => {
@@ -103,6 +109,7 @@ export const store = create<Store>((set, get) => ({
       return {
         boundingBoxesMeasures,
         playhead: {
+          ...state.playhead,
           x: x + offsetX,
           y: y + offsetY,
           width,
