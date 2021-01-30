@@ -3,10 +3,26 @@
  * Used to calculate the position of the song when the user
  * clicks somewhere in the score
  */
+var __read = (this && this.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.songPositionFromScore = void 0;
 exports.songPositionFromScore = function (repeats, barScore) {
-    if (repeats.length <= 1) {
+    if (repeats.length === 0) {
         return { barSong: barScore };
     }
     // const hasRepeatedClone: { [index: number]: boolean } = {};
@@ -42,6 +58,13 @@ exports.songPositionFromScore = function (repeats, barScore) {
   */
     // console.log(newBar, hasRepeatedClone);
     var newBar = barScore;
+    for (var i = 0; i < repeats.length; i++) {
+        var _a = __read(repeats[i], 2), repeatStart = _a[0], repeatEnd = _a[1];
+        var diffBar = repeatEnd - (repeatStart - 1);
+        if (newBar > repeatEnd) {
+            newBar += diffBar;
+        }
+    }
     return { barSong: newBar };
 };
 // export const songPositionFromScore = (repeats: number[][], bar: number): number => {

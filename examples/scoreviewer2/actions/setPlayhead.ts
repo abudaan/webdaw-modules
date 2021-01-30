@@ -1,14 +1,10 @@
-import {
-  songPositionFromScore,
-  getBoundingBoxMeasureAll,
-  getMeasureAtPoint,
-  heartbeat_utils,
-} from "webdaw-modules";
+import { songPositionFromScore, getMeasureAtPoint, heartbeat_utils } from "webdaw-modules";
 import { getSong } from "../songWrapper";
 import { store } from "../store";
 import { getOSMD } from "../scoreWrapper";
 const { getBarInfo } = heartbeat_utils;
 
+// briefly highlight the bar that the playhead is currently in
 const debug = ({
   x,
   y,
@@ -38,7 +34,7 @@ const debug = ({
  */
 export const setPlayhead = (e: PointerEvent) => {
   const osmd = getOSMD();
-  const data = getMeasureAtPoint(e, osmd, getBoundingBoxMeasureAll(osmd));
+  const data = getMeasureAtPoint(e, osmd);
 
   // console.log(data);
   if (data !== null) {
@@ -65,13 +61,11 @@ export const setPlayhead = (e: PointerEvent) => {
     song.setPlayhead("millis", songPositionMillis);
 
     store.setState({
-      pixelsPerMillisecond,
       currentBarSong,
       currentBarScore: measureNumber,
-      currentBarStartX: x,
-      currentBarStartMillis: startMillis,
       playhead: {
-        x: x + offsetX + offset,
+        ...playhead,
+        x: x + offsetX + offset - playhead.width / 2,
         y: y + offsetY,
         width: playhead.width,
         height,

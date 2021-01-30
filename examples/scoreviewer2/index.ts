@@ -61,34 +61,34 @@ const init = async () => {
     }
   });
 
-  // scoreDiv.addEventListener("mousedown", (e) => {
-  //   if (e.ctrlKey) {
-  //     startSelect(e);
-  //   } else {
-  //     const { staveIndex } = getMeasureAndStaveAtPoint(e as PointerEvent, getOSMD());
-  //     const bboxes = getMeasureBoundingBoxesInStave(staveIndex, getOSMD());
-  //     const container = document.createElement("selected");
-  //     bboxes.forEach((bbox: BoundingBox) => {
-  //       const div = document.createElement("div");
-  //       div.style.position = "absolute";
-  //       div.style.backgroundColor = "rgba(0, 255, 0, 0.3)";
-  //       div.style.top = `${bbox.top}px`;
-  //       div.style.left = `${bbox.left}px`;
-  //       div.style.width = `${bbox.width}px`;
-  //       div.style.height = `${bbox.height}px`;
-  //       container.appendChild(div);
-  //     });
-  //     container.addEventListener("click", () => {
-  //       document.body.removeChild(container);
-  //     });
-  //     container.style.position = "absolute";
-  //     container.style.top = "0px";
-  //     container.style.left = "0px";
-  //     container.style.zIndex = "-1";
-  //     // document.body.appendChild(container);
-  //     // setPlayhead(e as PointerEvent);
-  //   }
-  // });
+  scoreDiv.addEventListener("mousedown", (e) => {
+    if (e.ctrlKey) {
+      startSelect(e);
+    } else {
+      // const { staveIndex } = getMeasureAndStaveAtPoint(e as PointerEvent, getOSMD());
+      // const bboxes = getMeasureBoundingBoxesInStave(staveIndex, getOSMD());
+      // const container = document.createElement("selected");
+      // bboxes.forEach((bbox: BoundingBox) => {
+      //   const div = document.createElement("div");
+      //   div.style.position = "absolute";
+      //   div.style.backgroundColor = "rgba(0, 255, 0, 0.3)";
+      //   div.style.top = `${bbox.top}px`;
+      //   div.style.left = `${bbox.left}px`;
+      //   div.style.width = `${bbox.width}px`;
+      //   div.style.height = `${bbox.height}px`;
+      //   container.appendChild(div);
+      // });
+      // container.addEventListener("click", () => {
+      //   document.body.removeChild(container);
+      // });
+      // container.style.position = "absolute";
+      // container.style.top = "0px";
+      // container.style.left = "0px";
+      // container.style.zIndex = "-1";
+      // document.body.appendChild(container);
+      setPlayhead(e as PointerEvent);
+    }
+  });
 
   // main loop during playback
   store.subscribe(
