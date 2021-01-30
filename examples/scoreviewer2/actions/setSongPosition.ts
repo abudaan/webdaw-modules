@@ -46,15 +46,15 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
     const nextMeasureIndex = currentMeasureIndex + 1;
     nextBarTicks = measureStartTicks[nextMeasureIndex];
     nextBarMillis = song.getPosition("ticks", nextBarTicks).millis;
-    console.log(
-      "next anchor",
-      refTicks,
-      anchor.ticks,
-      anchor.measureNumber,
-      ticks,
-      millis,
-      nextBarMillis
-    );
+    // console.log(
+    //   "next anchor",
+    //   refTicks,
+    //   anchor.ticks,
+    //   anchor.measureNumber,
+    //   ticks,
+    //   millis,
+    //   nextBarMillis
+    // );
     diffTicks = nextAnchor.ticks - anchor.ticks;
     diffPixels = nextAnchor.bbox.x - anchor.bbox.x;
     if (diffPixels <= 0) {

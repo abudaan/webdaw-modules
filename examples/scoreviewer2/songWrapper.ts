@@ -39,8 +39,12 @@ export const setup = async (): Promise<{ cleanup: () => void }> => {
   // load MIDI file and setup song
   await loadMIDIFile(midiFile);
   song = sequencer.createSong(sequencer.getMidiFile(midiFileName));
-  song.setTempo(30);
-  // console.log(song);
+  song.setTempo(70);
+  song.events.forEach((e: Heartbeat.MIDIEvent) => {
+    if (e.type === 144) {
+      console.log(e.bar, e.ticks, e.noteNumber);
+    }
+  });
   store.setState({ ppq: song.ppq });
   keyEditor = sequencer.createKeyEditor(song, {});
 

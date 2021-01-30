@@ -26,10 +26,6 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-var __spread = (this && this.__spread) || function () {
-    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
-    return ar;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getPlayheadAnchorData = exports.getTicksAtBar = void 0;
 var mapper3_1 = require("./mapper3");
@@ -76,12 +72,14 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
         var measureNumber = data[0].measureNumber;
         return { ticks: ticks, bbox: bbox, measureNumber: measureNumber };
     });
+    // console.log(anchorData);
     var diffTicks = 0;
     var copies = [];
     for (var i = 0; i < repeats.length; i++) {
         var _b = __read(repeats[i], 2), min = _b[0], max = _b[1];
         var minTicks = measureStartTicks[min - 1];
         var maxTicks = measureStartTicks[max];
+        // console.log(min, max, minTicks, maxTicks);
         diffTicks += maxTicks - minTicks;
         // console.log(min, max, minTicks, maxTicks, diffTicks);
         for (var j = 0; j < anchorData.length; j++) {
@@ -89,11 +87,30 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
             if (anchor.measureNumber >= min && anchor.measureNumber <= max) {
                 var clone = __assign({}, anchor);
                 clone.ticks += diffTicks;
+                clone.measureNumber += max - (min - 1);
                 copies.push(clone);
             }
         }
     }
-    anchorData.push.apply(anchorData, __spread(copies));
+    var result = anchorData.map(function (d) {
+        var measureNumber = d.measureNumber, ticks = d.ticks;
+        var clone = __assign({}, d);
+        for (var i = 0; i < repeats.length; i++) {
+            var _a = __read(repeats[i], 2), min = _a[0], max = _a[1];
+            var minTicks = measureStartTicks[min - 1];
+            var maxTicks = measureStartTicks[max];
+            var diffTicks_1 = maxTicks - minTicks;
+            if (measureNumber > max) {
+                clone.ticks = ticks + diffTicks_1;
+                clone.measureNumber = measureNumber + (max - min);
+            }
+        }
+        return clone;
+    });
+    result.forEach(function (d) {
+        console.log(d.measureNumber, d.ticks);
+    });
+    // anchorData.push(...copies);
     anchorData.sort(function (a, b) {
         if (a.ticks < b.ticks) {
             return -1;

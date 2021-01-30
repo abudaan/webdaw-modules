@@ -62,12 +62,15 @@ export const getPlayheadAnchorData = (
     }
   );
 
+  // console.log(anchorData);
+
   let diffTicks = 0;
   const copies: AnchorData[] = [];
   for (let i = 0; i < repeats.length; i++) {
     const [min, max] = repeats[i];
     const minTicks = measureStartTicks[min - 1];
     const maxTicks = measureStartTicks[max];
+    // console.log(min, max, minTicks, maxTicks);
     diffTicks += maxTicks - minTicks;
     // console.log(min, max, minTicks, maxTicks, diffTicks);
     for (let j = 0; j < anchorData.length; j++) {
@@ -75,11 +78,32 @@ export const getPlayheadAnchorData = (
       if (anchor.measureNumber >= min && anchor.measureNumber <= max) {
         const clone = { ...anchor };
         clone.ticks += diffTicks;
+        clone.measureNumber += max - (min - 1);
         copies.push(clone);
       }
     }
   }
-  anchorData.push(...copies);
+  const result: AnchorData[] = anchorData.map(d => {
+    const { measureNumber, ticks } = d;
+    const clone = { ...d };
+    for (let i = 0; i < repeats.length; i++) {
+      const [min, max] = repeats[i];
+      const minTicks = measureStartTicks[min - 1];
+      const maxTicks = measureStartTicks[max];
+      const diffTicks = maxTicks - minTicks;
+      if (measureNumber > max) {
+        clone.ticks = ticks + diffTicks;
+        clone.measureNumber = measureNumber + (max - min);
+      }
+    }
+    return clone;
+  });
+
+  result.forEach(d => {
+    console.log(d.measureNumber, d.ticks);
+  });
+
+  // anchorData.push(...copies);
   anchorData.sort((a, b) => {
     if (a.ticks < b.ticks) {
       return -1;
