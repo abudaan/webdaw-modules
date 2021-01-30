@@ -26,6 +26,10 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
+var __spread = (this && this.__spread) || function () {
+    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
+    return ar;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getPlayheadAnchorData = exports.getTicksAtBar = void 0;
 var mapper3_1 = require("./mapper3");
@@ -100,18 +104,23 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
             var minTicks = measureStartTicks[min - 1];
             var maxTicks = measureStartTicks[max];
             var diffTicks_1 = maxTicks - minTicks;
+            var diffBars = max - (min - 1);
             if (measureNumber > max) {
                 clone.ticks = ticks + diffTicks_1;
-                clone.measureNumber = measureNumber + (max - min);
+                clone.measureNumber = measureNumber + diffBars;
             }
         }
         return clone;
     });
-    result.forEach(function (d) {
-        console.log(d.measureNumber, d.ticks);
-    });
+    // result.forEach(d => {
+    //   console.log(d.measureNumber, d.ticks);
+    // });
+    // copies.forEach(d => {
+    //   console.log(d.measureNumber, d.ticks);
+    // });
+    result.push.apply(result, __spread(copies));
     // anchorData.push(...copies);
-    anchorData.sort(function (a, b) {
+    result.sort(function (a, b) {
         if (a.ticks < b.ticks) {
             return -1;
         }
@@ -120,7 +129,9 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
         }
         return 0;
     });
-    // console.log(result);
-    return { anchorData: anchorData, measureStartTicks: measureStartTicks };
+    result.forEach(function (d) {
+        console.log(d.measureNumber, d.ticks);
+    });
+    return { anchorData: result, measureStartTicks: measureStartTicks };
 };
 //# sourceMappingURL=getPlayheadAnchorData.js.map

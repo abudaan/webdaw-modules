@@ -83,6 +83,7 @@ export const getPlayheadAnchorData = (
       }
     }
   }
+
   const result: AnchorData[] = anchorData.map(d => {
     const { measureNumber, ticks } = d;
     const clone = { ...d };
@@ -91,20 +92,26 @@ export const getPlayheadAnchorData = (
       const minTicks = measureStartTicks[min - 1];
       const maxTicks = measureStartTicks[max];
       const diffTicks = maxTicks - minTicks;
+      const diffBars = max - (min - 1);
       if (measureNumber > max) {
         clone.ticks = ticks + diffTicks;
-        clone.measureNumber = measureNumber + (max - min);
+        clone.measureNumber = measureNumber + diffBars;
       }
     }
     return clone;
   });
 
-  result.forEach(d => {
-    console.log(d.measureNumber, d.ticks);
-  });
+  // result.forEach(d => {
+  //   console.log(d.measureNumber, d.ticks);
+  // });
 
+  // copies.forEach(d => {
+  //   console.log(d.measureNumber, d.ticks);
+  // });
+
+  result.push(...copies);
   // anchorData.push(...copies);
-  anchorData.sort((a, b) => {
+  result.sort((a, b) => {
     if (a.ticks < b.ticks) {
       return -1;
     }
@@ -114,6 +121,9 @@ export const getPlayheadAnchorData = (
     return 0;
   });
 
-  // console.log(result);
-  return { anchorData, measureStartTicks };
+  result.forEach(d => {
+    console.log(d.measureNumber, d.ticks);
+  });
+
+  return { anchorData: result, measureStartTicks };
 };

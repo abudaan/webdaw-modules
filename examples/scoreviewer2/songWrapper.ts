@@ -19,6 +19,7 @@ let song: Heartbeat.Song;
 let keyEditor: Heartbeat.KeyEditor;
 
 const updateSongPosition = () => {
+  // console.log(song.bar, song.beat, song.millis, song.ticks);
   setSongPosition(song.millis, song.ticks, song.bar);
   raqId = requestAnimationFrame(updateSongPosition);
 };
@@ -39,12 +40,12 @@ export const setup = async (): Promise<{ cleanup: () => void }> => {
   // load MIDI file and setup song
   await loadMIDIFile(midiFile);
   song = sequencer.createSong(sequencer.getMidiFile(midiFileName));
-  song.setTempo(70);
-  song.events.forEach((e: Heartbeat.MIDIEvent) => {
-    if (e.type === 144) {
-      console.log(e.bar, e.ticks, e.noteNumber);
-    }
-  });
+  song.setTempo(120);
+  // song.events.forEach((e: Heartbeat.MIDIEvent) => {
+  //   if (e.type === 144) {
+  //     console.log(e.bar, e.ticks, e.noteNumber);
+  //   }
+  // });
   store.setState({ ppq: song.ppq });
   keyEditor = sequencer.createKeyEditor(song, {});
 

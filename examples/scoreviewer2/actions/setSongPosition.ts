@@ -14,6 +14,7 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
   } = store.getState();
 
   const song = getSong();
+  console.log(song.bars, song.durationMillis, song.durationTicks);
   const playheadOffsetX = playhead.width / 2;
 
   // find the current and the next anchor
@@ -38,6 +39,7 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
   let diffPixels = playhead.diffPixels;
   let pixelsPerTick = playhead.pixelsPerTick;
   const refTicks = currentPlayheadAnchor !== null ? currentPlayheadAnchor.ticks : 0;
+
   // console.log(refTicks, currentPlayheadAnchor, anchor?.ticks);
   // if (anchor && nextAnchor && refTicks < anchor.ticks) {
   if (currentPlayheadAnchor && anchor && nextAnchor && currentPlayheadAnchor.ticks < anchor.ticks) {
@@ -45,7 +47,12 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
     const currentMeasureIndex = anchor.measureNumber - 1;
     const nextMeasureIndex = currentMeasureIndex + 1;
     nextBarTicks = measureStartTicks[nextMeasureIndex];
-    nextBarMillis = song.getPosition("ticks", nextBarTicks).millis;
+    if (typeof nextBarTicks !== "undefined") {
+      nextBarMillis = song.getPosition("ticks", nextBarTicks).millis;
+    } else {
+      nextBarTicks = song.durationTicks;
+      nextBarMillis = song.durationMillis;
+    }
     // console.log(
     //   "next anchor",
     //   refTicks,
@@ -58,6 +65,7 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
     diffTicks = nextAnchor.ticks - anchor.ticks;
     diffPixels = nextAnchor.bbox.x - anchor.bbox.x;
     if (diffPixels <= 0) {
+      console.log(diffPixels);
       diffPixels = boundingBoxesMeasures[anchor.measureNumber - 1].right - anchor.bbox.x;
     }
     pixelsPerTick = diffPixels / diffTicks;
