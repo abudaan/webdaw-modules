@@ -51,9 +51,6 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
         return ppq * measure.AbsoluteTimestamp.RealValue * 4;
     });
     var _a = osmd.Sheet.SourceMeasures[osmd.Sheet.SourceMeasures.length - 1].ActiveTimeSignature, Numerator = _a.Numerator, Denominator = _a.Denominator;
-    var lastTicks = measureStartTicks[measureStartTicks.length - 1];
-    measureStartTicks.push(lastTicks + Numerator * (4 / Denominator) * 960);
-    // console.log(measureStartTicks);
     var ticks = 0;
     var anchorData = osmd.GraphicSheet.VerticalGraphicalStaffEntryContainers.map(function (container) {
         var realValue = container.AbsoluteTimestamp.RealValue;
@@ -76,7 +73,6 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
         var measureNumber = data[0].measureNumber;
         return { ticks: ticks, bbox: bbox, measureNumber: measureNumber };
     });
-    // console.log(anchorData);
     var diffTicks = 0;
     var copies = [];
     for (var i = 0; i < repeats.length; i++) {
@@ -119,7 +115,6 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
     //   console.log(d.measureNumber, d.ticks);
     // });
     result.push.apply(result, __spread(copies));
-    // anchorData.push(...copies);
     result.sort(function (a, b) {
         if (a.ticks < b.ticks) {
             return -1;
@@ -129,9 +124,18 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
         }
         return 0;
     });
-    result.forEach(function (d) {
-        console.log(d.measureNumber, d.ticks);
+    // result.forEach(d => {
+    //   console.log(d.measureNumber, d.ticks);
+    // });
+    var result1 = [];
+    var currentMeasureNumber = 0;
+    result.forEach(function (r) {
+        var ticks = r.ticks, measureNumber = r.measureNumber;
+        if (currentMeasureNumber !== measureNumber) {
+            currentMeasureNumber = measureNumber;
+            result1.push(ticks);
+        }
     });
-    return { anchorData: result, measureStartTicks: measureStartTicks };
+    return { anchorData: result, measureStartTicks: result1 };
 };
 //# sourceMappingURL=getPlayheadAnchorData.js.map

@@ -33,9 +33,6 @@ export const getPlayheadAnchorData = (
   const { Numerator, Denominator } = osmd.Sheet.SourceMeasures[
     osmd.Sheet.SourceMeasures.length - 1
   ].ActiveTimeSignature;
-  const lastTicks = measureStartTicks[measureStartTicks.length - 1];
-  measureStartTicks.push(lastTicks + Numerator * (4 / Denominator) * 960);
-  // console.log(measureStartTicks);
 
   let ticks = 0;
   const anchorData: AnchorData[] = osmd.GraphicSheet.VerticalGraphicalStaffEntryContainers.map(
@@ -61,8 +58,6 @@ export const getPlayheadAnchorData = (
       return { ticks, bbox, measureNumber };
     }
   );
-
-  // console.log(anchorData);
 
   let diffTicks = 0;
   const copies: AnchorData[] = [];
@@ -110,7 +105,6 @@ export const getPlayheadAnchorData = (
   // });
 
   result.push(...copies);
-  // anchorData.push(...copies);
   result.sort((a, b) => {
     if (a.ticks < b.ticks) {
       return -1;
@@ -121,9 +115,19 @@ export const getPlayheadAnchorData = (
     return 0;
   });
 
-  result.forEach(d => {
-    console.log(d.measureNumber, d.ticks);
+  // result.forEach(d => {
+  //   console.log(d.measureNumber, d.ticks);
+  // });
+
+  const result1: number[] = [];
+  let currentMeasureNumber = 0;
+  result.forEach(r => {
+    const { ticks, measureNumber } = r;
+    if (currentMeasureNumber !== measureNumber) {
+      currentMeasureNumber = measureNumber;
+      result1.push(ticks);
+    }
   });
 
-  return { anchorData: result, measureStartTicks };
+  return { anchorData: result, measureStartTicks: result1 };
 };
