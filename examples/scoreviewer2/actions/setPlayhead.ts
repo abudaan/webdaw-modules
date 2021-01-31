@@ -1,4 +1,9 @@
-import { songPositionFromScore, getMeasureAtPoint, heartbeat_utils } from "webdaw-modules";
+import {
+  songPositionFromScore,
+  getMeasureAtPoint,
+  heartbeat_utils,
+  AnchorData,
+} from "webdaw-modules";
 import { getSong } from "../songWrapper";
 import { store } from "../store";
 import { getOSMD } from "../scoreWrapper";
@@ -49,6 +54,7 @@ export const setPlayhead = (e: PointerEvent) => {
       playhead,
       repeats,
       offset: { x: offsetX, y: offsetY },
+      playheadAnchors,
     } = store.getState();
 
     const { barSong: currentBarSong } = songPositionFromScore(repeats, measureNumber);
@@ -60,9 +66,25 @@ export const setPlayhead = (e: PointerEvent) => {
 
     song.setPlayhead("millis", songPositionMillis);
 
+    // find the current and the next anchor
+    let i = 0;
+    let anchor: AnchorData | null = null;
+    let nextAnchor: AnchorData | null = null;
+    for (; i < playheadAnchors.length; i++) {
+      anchor = playheadAnchors[i];
+      if (anchor.ticks > song.ticks) {
+        nextAnchor = anchor;
+        const index = i === 0 ? 0 : i - 1;
+        anchor = playheadAnchors[index];
+        break;
+      }
+    }
+    console.log(song.ticks, anchor?.ticks);
+
     store.setState({
       currentBarSong,
       currentBarScore: measureNumber,
+      currentPlayheadAnchor: anchor,
       playhead: {
         ...playhead,
         x: x + offsetX + offset - playhead.width / 2,

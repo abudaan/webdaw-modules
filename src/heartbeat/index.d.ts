@@ -10,6 +10,7 @@ export module Heartbeat {
     timestamp: number;
     barsAsString: string;
     activeColumn: number;
+    millis: number;
   }
 
   export type Listener = {

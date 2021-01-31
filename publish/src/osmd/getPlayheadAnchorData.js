@@ -50,7 +50,6 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
     var measureStartTicks = osmd.Sheet.SourceMeasures.map(function (measure) {
         return ppq * measure.AbsoluteTimestamp.RealValue * 4;
     });
-    var _a = osmd.Sheet.SourceMeasures[osmd.Sheet.SourceMeasures.length - 1].ActiveTimeSignature, Numerator = _a.Numerator, Denominator = _a.Denominator;
     var ticks = 0;
     var anchorData = osmd.GraphicSheet.VerticalGraphicalStaffEntryContainers.map(function (container) {
         var realValue = container.AbsoluteTimestamp.RealValue;
@@ -76,7 +75,7 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
     var diffTicks = 0;
     var copies = [];
     for (var i = 0; i < repeats.length; i++) {
-        var _b = __read(repeats[i], 2), min = _b[0], max = _b[1];
+        var _a = __read(repeats[i], 2), min = _a[0], max = _a[1];
         var minTicks = measureStartTicks[min - 1];
         var maxTicks = measureStartTicks[max];
         // console.log(min, max, minTicks, maxTicks);
@@ -136,6 +135,10 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
             result1.push(ticks);
         }
     });
+    // add ticks position of the end of the last bar
+    var _b = osmd.Sheet.SourceMeasures[osmd.Sheet.SourceMeasures.length - 1].ActiveTimeSignature, Numerator = _b.Numerator, Denominator = _b.Denominator;
+    var lastTicks = result1[result1.length - 1];
+    result1.push(lastTicks + Numerator * (4 / Denominator) * 960);
     return { anchorData: result, measureStartTicks: result1 };
 };
 //# sourceMappingURL=getPlayheadAnchorData.js.map

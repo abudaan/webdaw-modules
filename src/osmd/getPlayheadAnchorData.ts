@@ -30,9 +30,6 @@ export const getPlayheadAnchorData = (
   const measureStartTicks = osmd.Sheet.SourceMeasures.map((measure: SourceMeasure) => {
     return ppq * measure.AbsoluteTimestamp.RealValue * 4;
   });
-  const { Numerator, Denominator } = osmd.Sheet.SourceMeasures[
-    osmd.Sheet.SourceMeasures.length - 1
-  ].ActiveTimeSignature;
 
   let ticks = 0;
   const anchorData: AnchorData[] = osmd.GraphicSheet.VerticalGraphicalStaffEntryContainers.map(
@@ -128,6 +125,13 @@ export const getPlayheadAnchorData = (
       result1.push(ticks);
     }
   });
+
+  // add ticks position of the end of the last bar
+  const { Numerator, Denominator } = osmd.Sheet.SourceMeasures[
+    osmd.Sheet.SourceMeasures.length - 1
+  ].ActiveTimeSignature;
+  const lastTicks = result1[result1.length - 1];
+  result1.push(lastTicks + Numerator * (4 / Denominator) * 960);
 
   return { anchorData: result, measureStartTicks: result1 };
 };
