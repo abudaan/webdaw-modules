@@ -81,15 +81,24 @@ export const setPlayhead = (e: PointerEvent) => {
       anchor = playheadAnchors[i];
       const middle = anchor.bbox.x + anchor.bbox.width / 2;
       if (anchor.bbox.x > pointerX) {
+        break;
         const index = i === 0 ? 0 : i - 1;
         const prev = playheadAnchors[index];
-        if (prev.measureNumber === currentBarSong && prev.measureNumber !== anchor.measureNumber) {
+        // console.log(currentBarSong, prev.measureNumber, anchor.measureNumber);
+        if (anchor.measureNumber !== currentBarSong) {
           anchor = prev;
-          console.log("1");
+          console.log("1. last");
           break;
         }
-        if (anchor.measureNumber === currentBarSong) {
-          console.log("2");
+
+        const diff1 = left - prev.bbox.x;
+        const diff2 = anchor.bbox.x - left;
+        console.log(diff1, diff2);
+        if (diff1 < diff2) {
+          anchor = prev;
+          console.log("2. diff");
+          break;
+        } else {
           break;
         }
         // console.log(anchor.measureNumber, currentBarSong);
