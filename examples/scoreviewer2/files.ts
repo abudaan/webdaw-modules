@@ -44,9 +44,9 @@ export const mxmlFile = "../assets/test2.musicxml";
 // export const midiFile = "../assets/mozk545a_musescore.mid";
 // export const mxmlFile = "../assets/mozk545a_musescore.musicxml";
 
-// const midiFileName = 'spring';
-// const midiFile = '../assets/spring.mid';
-// const mxmlFile = '../assets/spring.xml';
+// export const midiFileName = "spring";
+// export const midiFile = "../assets/spring.mid";
+// export const mxmlFile = "../assets/spring.xml";
 
 // export const midiFileName = 'mozk545a_2-bars';
 // export const midiFile = '../assets/mozk545a_2-bars.mid';

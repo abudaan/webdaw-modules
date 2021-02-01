@@ -40,7 +40,7 @@ export const setup = async (): Promise<{ cleanup: () => void }> => {
   // load MIDI file and setup song
   await loadMIDIFile(midiFile);
   song = sequencer.createSong(sequencer.getMidiFile(midiFileName));
-  song.setTempo(50);
+  // song.setTempo(50);
   // song.events.forEach((e: Heartbeat.MIDIEvent) => {
   //   if (e.type === 144) {
   //     console.log(e.bar, e.ticks, e.noteNumber);

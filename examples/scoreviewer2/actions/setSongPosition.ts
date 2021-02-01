@@ -83,7 +83,8 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
     store.setState({
       playhead: {
         ...playhead,
-        x: x + offsetX - playhead.width / 2,
+        // x: x + offsetX - playhead.width / 2,
+        x: anchor.bbox.x + offsetX - playhead.width / 2,
         y: y + offsetY,
         height,
         pixelsPerTick,
