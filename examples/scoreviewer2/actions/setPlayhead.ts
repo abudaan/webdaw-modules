@@ -71,36 +71,50 @@ export const setPlayhead = (e: PointerEvent) => {
 
     // find the current and the next anchor
     let i = 0;
-    let diff = 0;
     const pointerX = x + offset;
-    let left = 0;
-    let right = 0;
     let anchor: AnchorData | null = null;
-    let nextAnchor: AnchorData | null = null;
     for (; i < playheadAnchors.length; i++) {
       anchor = playheadAnchors[i];
-      const middle = anchor.bbox.x + anchor.bbox.width / 2;
-      if (anchor.bbox.x > pointerX) {
-        break;
+      if (anchor.measureNumber === currentBarSong || anchor.measureNumber === currentBarSong + 1) {
         const index = i === 0 ? 0 : i - 1;
         const prev = playheadAnchors[index];
-        // console.log(currentBarSong, prev.measureNumber, anchor.measureNumber);
-        if (anchor.measureNumber !== currentBarSong) {
-          anchor = prev;
-          console.log("1. last");
-          break;
-        }
+        if (anchor.bbox.x > pointerX) {
+          // console.log(
+          //   "bar",
+          //   currentBarSong,
+          //   "prev",
+          //   prev.measureNumber,
+          //   "anchor",
+          //   anchor.measureNumber
+          // );
+          if (anchor.measureNumber !== currentBarSong) {
+            anchor = prev;
+            console.log("> last in measure");
+            break;
+          }
 
-        const diff1 = left - prev.bbox.x;
-        const diff2 = anchor.bbox.x - left;
-        console.log(diff1, diff2);
-        if (diff1 < diff2) {
-          anchor = prev;
-          console.log("2. diff");
+          if (prev.measureNumber !== currentBarSong) {
+            console.log("> first in measure");
+            break;
+          }
+
+          const diff1 = pointerX - (prev.bbox.x + prev.bbox.width);
+          const diff2 = anchor.bbox.x - pointerX;
+          // console.log(diff1, diff2);
+          // console.log(pointerX, prev.bbox.x, diff1, anchor.bbox.x, diff2);
+          if (diff1 < diff2) {
+            anchor = prev;
+            console.log("> diff");
+            break;
+          }
           break;
-        } else {
+        } else if (anchor.measureNumber !== currentBarSong) {
+          console.log("> stave");
+          anchor = prev;
           break;
         }
+        // break;
+
         // console.log(anchor.measureNumber, currentBarSong);
         // if (i + 1 < playheadAnchors.length) {
         //   nextAnchor = playheadAnchors[i + 1];
@@ -119,7 +133,7 @@ export const setPlayhead = (e: PointerEvent) => {
         //   }
         // }
       }
-      anchor = null;
+      // anchor = null;
     }
     // console.log(
     //   "song",
