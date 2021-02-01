@@ -14,6 +14,7 @@ import { setup as setupDebugAnchor } from "./debug_anchor";
 import { setup as setupPlayhead } from "./playhead";
 import { setup as setupDrawLoop } from "./drawLoop";
 import { setup as setupDrawSelection, startSelect } from "./drawSelection";
+import { setPlayheadFromPointer } from "./actions/setPlayheadFromPointer";
 import { setPlayhead } from "./actions/setPlayhead";
 import { getOSMD } from "./scoreWrapper";
 
@@ -89,6 +90,7 @@ const init = async () => {
       // container.style.zIndex = "-1";
       // document.body.appendChild(container);
       setPlayhead(e as PointerEvent);
+      // setPlayheadFromPointer(e as PointerEvent);
     }
   });
 

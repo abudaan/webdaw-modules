@@ -21,6 +21,7 @@ export const updateBar = () => {
   store.setState({
     pixelsPerMillisecond,
     playhead: {
+      ...playhead,
       x: x + offsetX,
       y: y + offsetY,
       height,

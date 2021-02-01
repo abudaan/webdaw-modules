@@ -3,6 +3,8 @@ import {
   getMeasureAtPoint,
   heartbeat_utils,
   AnchorData,
+  match,
+  scorePositionFromSong,
 } from "webdaw-modules";
 import { getSong } from "../songWrapper";
 import { store } from "../store";
@@ -41,8 +43,10 @@ export const setPlayhead = (e: PointerEvent) => {
   const osmd = getOSMD();
   const data = getMeasureAtPoint(e, osmd);
 
-  // console.log(data);
   if (data !== null) {
+    // data contains the bounding box of the measure, the measure number
+    // and the offset, which is the x-position of the pointer event relative
+    // to the start of the measure
     const {
       bbox: { x, y, height, width },
       measureNumber,
@@ -55,38 +59,68 @@ export const setPlayhead = (e: PointerEvent) => {
       repeats,
       offset: { x: offsetX, y: offsetY },
       playheadAnchors,
+      boundingBoxesMeasures,
     } = store.getState();
 
+    // debug({ x: x + offsetX, y: y + offsetY, height, width });
     const { barSong: currentBarSong } = songPositionFromScore(repeats, measureNumber);
     const { durationMillis, startMillis } = getBarInfo(song, currentBarSong);
     const pixelsPerMillisecond = width / durationMillis;
-    const songPositionMillis = startMillis + offset / pixelsPerMillisecond;
-
-    // debug({ x: x + offsetX, y: y + offsetY, height, width });
-
+    // const songPositionMillis = startMillis + offset / pixelsPerMillisecond;
     // song.setPlayhead("millis", songPositionMillis);
 
     // find the current and the next anchor
     let i = 0;
+    let diff = 0;
+    const pointerX = x + offset;
+    let left = 0;
+    let right = 0;
     let anchor: AnchorData | null = null;
     let nextAnchor: AnchorData | null = null;
     for (; i < playheadAnchors.length; i++) {
       anchor = playheadAnchors[i];
-      console.log(i, anchor.bbox.x, x + offset);
-      if (anchor.bbox.x >= x + offset) {
-        nextAnchor = anchor;
+      const middle = anchor.bbox.x + anchor.bbox.width / 2;
+      if (anchor.bbox.x > pointerX) {
         const index = i === 0 ? 0 : i - 1;
-        anchor = playheadAnchors[index];
-        const diff = nextAnchor.bbox.x - anchor.bbox.x;
-        console.log(x, offset, anchor.bbox.x);
-        // nextAnchor = anchor;
-        if (x + offset - anchor.bbox.x > diff / 2) {
-          anchor = nextAnchor;
+        const prev = playheadAnchors[index];
+        if (prev.measureNumber === currentBarSong && prev.measureNumber !== anchor.measureNumber) {
+          anchor = prev;
+          console.log("1");
+          break;
         }
-        break;
+        if (anchor.measureNumber === currentBarSong) {
+          console.log("2");
+          break;
+        }
+        // console.log(anchor.measureNumber, currentBarSong);
+        // if (i + 1 < playheadAnchors.length) {
+        //   nextAnchor = playheadAnchors[i + 1];
+        //   if (nextAnchor.measureNumber !== anchor.measureNumber) {
+        //     console.log("last anchor in measure");
+        //     return;
+        //   }
+        //   const diff1 = left - anchor.bbox.x;
+        //   const diff2 = nextAnchor.bbox.x - left;
+        //   // console.log(left, anchor.bbox.x, diff1, nextAnchor.bbox.x, diff2);
+        //   if (diff1 < diff2) {
+        //     break;
+        //   } else {
+        //     anchor = nextAnchor;
+        //     break;
+        //   }
+        // }
       }
+      anchor = null;
     }
-    console.log("song", x + offset, "anchor", anchor?.bbox.x);
+    // console.log(
+    //   "song",
+    //   x + offset,
+    //   "anchor",
+    //   anchor?.bbox.x,
+    //   "bar",
+    //   currentBarSong,
+    //   anchor?.measureNumber
+    // );
     song.setPlayhead("ticks", anchor === null ? 0 : anchor.ticks);
 
     store.setState({

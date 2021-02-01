@@ -54,10 +54,10 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
 
   store.getState().updateBoundingBoxMeasures(getBoundingBoxMeasureAll(osmd));
   const { anchorData, measureStartTicks } = getPlayheadAnchorData(osmd, repeats, ppq);
-  console.log(measureStartTicks, anchorData);
-  // anchorData.forEach((d) => {
-  //   console.log(d.measureNumber, d.ticks);
-  // });
+  // console.log(measureStartTicks, anchorData);
+  anchorData.forEach((d) => {
+    console.log(d.measureNumber, d.bbox.x, d.ticks);
+  });
   store.setState({ playheadAnchors: anchorData, measureStartTicks });
 
   return {
