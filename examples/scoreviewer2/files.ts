@@ -67,3 +67,7 @@ export const mxmlFile = "../assets/test2.musicxml";
 // const midiFileName = 'mozk545a_4-bars';
 // const midiFile = '../assets/mozk545a_4-bars.mid';
 // const mxmlFile = '../assets/mozk545a_4-bars.musicxml';
+
+// export const midiFileName = "Fly Me To The Moon";
+// export const midiFile = "../assets/Fly Me To The Moon.mid";
+// export const mxmlFile = "../assets/Fly Me To The Moon.musicxml";

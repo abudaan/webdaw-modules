@@ -62,9 +62,9 @@ export const setPlayhead = (e: PointerEvent) => {
     const pixelsPerMillisecond = width / durationMillis;
     const songPositionMillis = startMillis + offset / pixelsPerMillisecond;
 
-    debug({ x: x + offsetX, y: y + offsetY, height, width });
+    // debug({ x: x + offsetX, y: y + offsetY, height, width });
 
-    song.setPlayhead("millis", songPositionMillis);
+    // song.setPlayhead("millis", songPositionMillis);
 
     // find the current and the next anchor
     let i = 0;
@@ -72,14 +72,22 @@ export const setPlayhead = (e: PointerEvent) => {
     let nextAnchor: AnchorData | null = null;
     for (; i < playheadAnchors.length; i++) {
       anchor = playheadAnchors[i];
-      if (anchor.ticks > song.ticks) {
+      console.log(i, anchor.bbox.x, x + offset);
+      if (anchor.bbox.x >= x + offset) {
         nextAnchor = anchor;
         const index = i === 0 ? 0 : i - 1;
         anchor = playheadAnchors[index];
+        const diff = nextAnchor.bbox.x - anchor.bbox.x;
+        console.log(x, offset, anchor.bbox.x);
+        // nextAnchor = anchor;
+        if (x + offset - anchor.bbox.x > diff / 2) {
+          anchor = nextAnchor;
+        }
         break;
       }
     }
-    console.log(song.ticks, anchor?.ticks);
+    console.log("song", x + offset, "anchor", anchor?.bbox.x);
+    song.setPlayhead("ticks", anchor === null ? 0 : anchor.ticks);
 
     store.setState({
       currentBarSong,
@@ -87,7 +95,8 @@ export const setPlayhead = (e: PointerEvent) => {
       currentPlayheadAnchor: anchor,
       playhead: {
         ...playhead,
-        x: x + offsetX + offset - playhead.width / 2,
+        // x: x + offsetX + offset - playhead.width / 2,
+        x: anchor === null ? 0 : anchor.bbox.x + offsetX,
         y: y + offsetY,
         width: playhead.width,
         height,

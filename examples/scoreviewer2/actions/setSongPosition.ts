@@ -37,12 +37,13 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
   let diffTicks = playhead.diffTicks;
   let diffPixels = playhead.diffPixels;
   let pixelsPerTick = playhead.pixelsPerTick;
-  const refTicks = currentPlayheadAnchor !== null ? currentPlayheadAnchor.ticks : 0;
 
+  // const refTicks = currentPlayheadAnchor !== null ? currentPlayheadAnchor.ticks : 0;
   // console.log(refTicks, currentPlayheadAnchor, anchor?.ticks);
   // if (anchor && nextAnchor && refTicks < anchor.ticks) {
+
+  // here we test if we have reached a new anchor, if so we need to recalculate the playhead speed
   if (anchor && (currentPlayheadAnchor === null || currentPlayheadAnchor.ticks < anchor.ticks)) {
-    // we have moved to a new anchor so we need to recalculate the playhead speed
     const currentMeasureIndex = anchor.measureNumber - 1;
     const nextMeasureIndex = currentMeasureIndex + 1;
     nextBarTicks = measureStartTicks[nextMeasureIndex];
@@ -51,26 +52,34 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
       diffTicks = nextAnchor.ticks - anchor.ticks;
       diffPixels = nextAnchor.bbox.x - anchor.bbox.x;
     } else {
+      // if there is no nextAnchor we have reached the end of the song, in that case we count
+      // the pixels and ticks that are left in the current measure
       diffTicks = song.durationTicks - anchor.ticks;
       diffPixels = boundingBoxesMeasures[anchor.measureNumber - 1].right - anchor.bbox.x;
     }
-    if (diffPixels <= 0) {
+    // if diffPixels is less than 0 we have moved to the next stave, in that case we count
+    // the pixels and ticks that are left in the current measure
+    if (diffPixels < 0) {
+      diffTicks = song.durationTicks - anchor.ticks;
       diffPixels = boundingBoxesMeasures[anchor.measureNumber - 1].right - anchor.bbox.x;
     }
     pixelsPerTick = diffPixels / diffTicks;
+    store.setState({
+      currentPlayheadAnchor: anchor,
+    });
+    console.log("new anchor", anchor.ticks, anchor.bbox.x);
   }
-  // console.log(nextAnchor);
 
   if (anchor) {
     x = anchor.bbox.x - playheadOffsetX + (ticks - anchor.ticks) * pixelsPerTick;
     const { bar: scoreBar } = scorePositionFromSong(repeats, bar);
     const { y, height } = boundingBoxesMeasures[scoreBar - 1];
     // update the current anchor as soon as the playhead has passed the anchor (in millis)
-    let newAnchor = currentPlayheadAnchor;
-    if (millis >= nextBarMillis || currentPlayheadAnchor === null) {
-      // console.log("what is this?");
-      newAnchor = anchor;
-    }
+    // let newAnchor = currentPlayheadAnchor;
+    // if (millis >= nextBarMillis || currentPlayheadAnchor === null) {
+    //   // console.log("what is this?");
+    //   newAnchor = anchor;
+    // }
     store.setState({
       playhead: {
         ...playhead,
@@ -80,7 +89,7 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
         pixelsPerTick,
       },
       // currentPlayheadAnchor: newAnchor,
-      currentPlayheadAnchor: millis >= nextBarMillis ? anchor : currentPlayheadAnchor,
+      // currentPlayheadAnchor: millis >= nextBarMillis ? anchor : currentPlayheadAnchor,
     });
   } else {
     console.error("no anchor");

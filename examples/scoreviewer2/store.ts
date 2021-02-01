@@ -82,7 +82,7 @@ export const store = create<Store>((set, get) => ({
   playhead: {
     x: 0,
     y: 0,
-    width: 15,
+    width: 3,
     height: 0,
     diffTicks: 0,
     diffPixels: 0,
