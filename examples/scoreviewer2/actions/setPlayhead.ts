@@ -1,13 +1,7 @@
-import {
-  songPositionFromScore,
-  getMeasureAtPoint,
-  heartbeat_utils,
-  AnchorData,
-} from "webdaw-modules";
+import { songPositionFromScore, getMeasureAtPoint, AnchorData } from "webdaw-modules";
 import { getSong } from "../songWrapper";
 import { store } from "../store";
 import { getOSMD } from "../scoreWrapper";
-const { getBarInfo } = heartbeat_utils;
 
 // briefly highlight the bar that the playhead is currently in
 const debug = ({
@@ -57,15 +51,11 @@ export const setPlayhead = (e: PointerEvent) => {
       repeats,
       offset: { x: offsetX, y: offsetY },
       playheadAnchors,
-      boundingBoxesMeasures,
     } = store.getState();
 
     // debug({ x: x + offsetX, y: y + offsetY, height, width });
     const { barSong: currentBarSong } = songPositionFromScore(repeats, measureNumber);
-    const { durationMillis, startMillis } = getBarInfo(song, currentBarSong);
-    const pixelsPerMillisecond = width / durationMillis;
-    // const songPositionMillis = startMillis + offset / pixelsPerMillisecond;
-    // song.setPlayhead("millis", songPositionMillis);
+    const playheadOffsetX = playhead.width / 2;
 
     // find the current and the next anchor
     let i = 0;
@@ -75,8 +65,9 @@ export const setPlayhead = (e: PointerEvent) => {
     for (; i < playheadAnchors.length; i++) {
       anchor = playheadAnchors[i];
       if (anchor.measureNumber === currentBarSong || anchor.measureNumber === currentBarSong + 1) {
-        const index = i === 0 ? 0 : i - 1;
-        const nextIndex = i < playheadAnchors.length - 1 ? i + 1 : i;
+        let index = i < playheadAnchors.length - 1 ? i + 1 : i;
+        nextAnchor = playheadAnchors[index];
+        index = i === 0 ? 0 : i - 1;
         const prev = playheadAnchors[index];
         if (anchor.bbox.x > pointerX) {
           // console.log(
@@ -95,7 +86,6 @@ export const setPlayhead = (e: PointerEvent) => {
           }
 
           if (prev.measureNumber !== currentBarSong) {
-            nextAnchor = playheadAnchors[nextIndex];
             // console.log("> first in measure");
             break;
           }
@@ -110,7 +100,6 @@ export const setPlayhead = (e: PointerEvent) => {
             // console.log("> diff");
             break;
           }
-          nextAnchor = playheadAnchors[nextIndex];
           break;
         } else if (anchor.measureNumber !== currentBarSong) {
           // console.log("> stave");
@@ -118,37 +107,8 @@ export const setPlayhead = (e: PointerEvent) => {
           anchor = prev;
           break;
         }
-        // break;
-
-        // console.log(anchor.measureNumber, currentBarSong);
-        // if (i + 1 < playheadAnchors.length) {
-        //   nextAnchor = playheadAnchors[i + 1];
-        //   if (nextAnchor.measureNumber !== anchor.measureNumber) {
-        //     console.log("last anchor in measure");
-        //     return;
-        //   }
-        //   const diff1 = left - anchor.bbox.x;
-        //   const diff2 = nextAnchor.bbox.x - left;
-        //   // console.log(left, anchor.bbox.x, diff1, nextAnchor.bbox.x, diff2);
-        //   if (diff1 < diff2) {
-        //     break;
-        //   } else {
-        //     anchor = nextAnchor;
-        //     break;
-        //   }
-        // }
       }
-      // anchor = null;
     }
-    // console.log(
-    //   "song",
-    //   x + offset,
-    //   "anchor",
-    //   anchor?.bbox.x,
-    //   "bar",
-    //   currentBarSong,
-    //   anchor?.measureNumber
-    // );
 
     if (anchor === null) {
       console.log("setPlayhead -> anchor is null");
@@ -158,14 +118,13 @@ export const setPlayhead = (e: PointerEvent) => {
     store.setState({
       currentBarSong,
       currentBarScore: measureNumber,
-      nextPlayheadAnchor: anchor,
+      nextPlayheadAnchor: nextAnchor,
       currentPlayheadAnchor: anchor,
       playhead: {
         ...playhead,
         // x: x + offsetX + offset - playhead.width / 2,
-        x: anchor === null ? 0 : anchor.bbox.x + offsetX,
+        x: anchor === null ? 0 : anchor.bbox.x + offsetX - playheadOffsetX,
         y: y + offsetY,
-        width: playhead.width,
         height,
       },
     });
