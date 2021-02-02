@@ -53,7 +53,8 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
   if (nextAnchor === null) {
     // if there is no nextAnchor we have reached the end of the song, in that case we count
     // the pixels and ticks that are left in the current measure
-    nextX = boundingBoxesMeasures[anchor.measureNumber - 1].right;
+    const { bar: index } = scorePositionFromSong(repeats, anchor.measureNumber - 1);
+    nextX = boundingBoxesMeasures[index - 1].right;
     diffTicks = song.durationTicks - anchor.ticks;
   } else {
     nextX = nextAnchor.bbox.x;
@@ -65,10 +66,11 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
   if (diffPixels < 0) {
     const currentMeasureIndex = anchor.measureNumber - 1;
     const nextMeasureIndex = currentMeasureIndex + 1;
-    nextX = boundingBoxesMeasures[currentMeasureIndex].right;
+    const { bar: index } = scorePositionFromSong(repeats, currentMeasureIndex);
+    nextX = boundingBoxesMeasures[index].right;
     diffTicks = measureStartTicks[nextMeasureIndex] - anchor.ticks;
     diffPixels = nextX - anchor.bbox.x;
-    // console.log("next stave", diffPixels, diffTicks);
+    // console.log("next stave", diffPixels, diffTicks, nextX, anchor.measureNumber, anchor.bbox.x);
   }
   if (
     nextBar < anchor.measureNumber &&
@@ -76,6 +78,7 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
   ) {
     // console.log("REPEAT", nextBar, bar, anchor.measureNumber);
   }
+
   pixelsPerTick = diffPixels / diffTicks;
 
   x = anchor.bbox.x + (ticks - anchor.ticks) * pixelsPerTick;
