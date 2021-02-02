@@ -2,6 +2,12 @@ import { BoundingBox } from "webdaw-modules";
 import create from "zustand/vanilla";
 import { midiFileName, midiFile, mxmlFile } from "./files";
 
+export type PlayheadAnchor = {
+  ticks: number;
+  measureNumber: number;
+  bbox: { x: number; y: number; width: number; height: number };
+};
+
 export type State = {
   offset: { x: number; y: number };
   scrollPos: { x: number; y: number };
@@ -35,16 +41,9 @@ export type State = {
     diffPixels: number;
     pixelsPerTick: number;
   };
-  playheadAnchors: {
-    ticks: number;
-    measureNumber: number;
-    bbox: { x: number; y: number; width: number; height: number };
-  }[];
-  currentPlayheadAnchor: {
-    ticks: number;
-    measureNumber: number;
-    bbox: { x: number; y: number; width: number; height: number };
-  } | null;
+  playheadAnchors: PlayheadAnchor[];
+  nextPlayheadAnchor: PlayheadAnchor | null;
+  currentPlayheadAnchor: PlayheadAnchor | null;
   measureStartTicks: number[];
   jumpToNextStave: boolean;
   lastMillis: number;
@@ -121,6 +120,7 @@ export const store = create<Store>((set, get) => ({
   boundingBoxesMeasures: [],
   songPositionMillis: 0,
   playheadAnchors: [],
+  nextPlayheadAnchor: null,
   currentPlayheadAnchor: null,
   measureStartTicks: [],
   jumpToNextStave: false,
