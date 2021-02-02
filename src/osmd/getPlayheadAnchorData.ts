@@ -32,29 +32,27 @@ export const getPlayheadAnchorData = (
   });
 
   let ticks = 0;
-  const anchorData: AnchorData[] = osmd.GraphicSheet.VerticalGraphicalStaffEntryContainers.map(
-    container => {
-      const realValue = container.AbsoluteTimestamp.RealValue;
-      const data: { measureNumber: number; bbox: BBox }[] = container.StaffEntries.map(entry => {
-        const measureNumber = entry.parentMeasure.MeasureNumber;
-        return { measureNumber, bbox: getBoundingBoxData((entry as any).boundingBox) };
-      });
-      data.sort((a, b) => {
-        if (a.bbox.x < b.bbox.x) {
-          return -1;
-        }
-        if (a.bbox.x > b.bbox.x) {
-          return 1;
-        }
-        return 0;
-      });
-      // console.log(boxes);
-      ticks = ppq * 4 * realValue;
-      const bbox = data[0].bbox;
-      const measureNumber = data[0].measureNumber;
-      return { ticks, bbox, measureNumber };
-    }
-  );
+  const anchorData: AnchorData[] = osmd.GraphicSheet.VerticalGraphicalStaffEntryContainers.map(container => {
+    const realValue = container.AbsoluteTimestamp.RealValue;
+    const data: { measureNumber: number; bbox: BBox }[] = container.StaffEntries.map(entry => {
+      const measureNumber = entry.parentMeasure.MeasureNumber;
+      return { measureNumber, bbox: getBoundingBoxData((entry as any).boundingBox) };
+    });
+    data.sort((a, b) => {
+      if (a.bbox.x < b.bbox.x) {
+        return -1;
+      }
+      if (a.bbox.x > b.bbox.x) {
+        return 1;
+      }
+      return 0;
+    });
+    // console.log(boxes);
+    ticks = ppq * 4 * realValue;
+    const bbox = data[0].bbox;
+    const measureNumber = data[0].measureNumber;
+    return { ticks, bbox, measureNumber };
+  });
 
   let diffTicks = 0;
   const copies: AnchorData[] = [];
@@ -127,9 +125,7 @@ export const getPlayheadAnchorData = (
   });
 
   // add ticks position of the end of the last bar
-  const { Numerator, Denominator } = osmd.Sheet.SourceMeasures[
-    osmd.Sheet.SourceMeasures.length - 1
-  ].ActiveTimeSignature;
+  const { Numerator, Denominator } = osmd.Sheet.SourceMeasures[osmd.Sheet.SourceMeasures.length - 1].ActiveTimeSignature;
   const lastTicks = result1[result1.length - 1];
   result1.push(lastTicks + Numerator * (4 / Denominator) * 960);
 

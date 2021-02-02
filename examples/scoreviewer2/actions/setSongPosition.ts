@@ -16,6 +16,8 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
 
   const song = getSong();
   const playheadOffsetX = playhead.width / 2;
+  const { bar: scoreBar } = scorePositionFromSong(repeats, bar);
+  const { y, height } = boundingBoxesMeasures[scoreBar - 1];
 
   if (
     currentPlayheadAnchor === null ||
@@ -42,10 +44,8 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
       return;
     }
 
-    let nextX = 0;
     // calculate the speed of the playhead based on the distance between the anchors
-    let nextBarTicks = 0;
-    let nextBarMillis = 0;
+    let nextX = 0;
     let diffTicks = playhead.diffTicks;
     let diffPixels = playhead.diffPixels;
     let pixelsPerTick = playhead.pixelsPerTick;
@@ -62,17 +62,17 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
     diffPixels = nextX - anchor.bbox.x;
     // if diffPixels is less than 0 we have moved to the next stave, in that case we count
     // the pixels and ticks that are left in the current measure
-    if (diffPixels < 0) {
+    if (diffPixels < 0 || (nextAnchor && nextAnchor?.measureNumber < anchor.measureNumber)) {
       const currentMeasureIndex = anchor.measureNumber - 1;
       const nextMeasureIndex = currentMeasureIndex + 1;
+      nextX = boundingBoxesMeasures[currentMeasureIndex].right;
       diffTicks = measureStartTicks[nextMeasureIndex] - anchor.ticks;
-      // console.log("next stave", diffTicks);
+      diffPixels = nextX - anchor.bbox.x;
+      console.log("next stave", diffPixels, diffTicks);
     }
     pixelsPerTick = diffPixels / diffTicks;
 
     x = anchor.bbox.x - playheadOffsetX + (ticks - anchor.ticks) * pixelsPerTick;
-    const { bar: scoreBar } = scorePositionFromSong(repeats, bar);
-    const { y, height } = boundingBoxesMeasures[scoreBar - 1];
     // update the current anchor as soon as the playhead has passed the anchor (in millis)
     // let newAnchor = currentPlayheadAnchor;
     // if (millis >= nextBarMillis || currentPlayheadAnchor === null) {
@@ -102,6 +102,8 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
       playhead: {
         ...playhead,
         x: x + offsetX - playhead.width / 2,
+        y: y + offsetY,
+        height,
       },
     });
   }

@@ -3,8 +3,6 @@ import {
   getMeasureAtPoint,
   heartbeat_utils,
   AnchorData,
-  match,
-  scorePositionFromSong,
 } from "webdaw-modules";
 import { getSong } from "../songWrapper";
 import { store } from "../store";
@@ -73,10 +71,12 @@ export const setPlayhead = (e: PointerEvent) => {
     let i = 0;
     const pointerX = x + offset;
     let anchor: AnchorData | null = null;
+    let nextAnchor: AnchorData | null = null;
     for (; i < playheadAnchors.length; i++) {
       anchor = playheadAnchors[i];
       if (anchor.measureNumber === currentBarSong || anchor.measureNumber === currentBarSong + 1) {
         const index = i === 0 ? 0 : i - 1;
+        const nextIndex = i < playheadAnchors.length - 1 ? i + 1 : i;
         const prev = playheadAnchors[index];
         if (anchor.bbox.x > pointerX) {
           // console.log(
@@ -88,13 +88,15 @@ export const setPlayhead = (e: PointerEvent) => {
           //   anchor.measureNumber
           // );
           if (anchor.measureNumber !== currentBarSong) {
+            nextAnchor = anchor;
             anchor = prev;
-            console.log("> last in measure");
+            // console.log("> last in measure");
             break;
           }
 
           if (prev.measureNumber !== currentBarSong) {
-            console.log("> first in measure");
+            nextAnchor = playheadAnchors[nextIndex];
+            // console.log("> first in measure");
             break;
           }
 
@@ -103,13 +105,16 @@ export const setPlayhead = (e: PointerEvent) => {
           // console.log(diff1, diff2);
           // console.log(pointerX, prev.bbox.x, diff1, anchor.bbox.x, diff2);
           if (diff1 < diff2) {
+            nextAnchor = anchor;
             anchor = prev;
-            console.log("> diff");
+            // console.log("> diff");
             break;
           }
+          nextAnchor = playheadAnchors[nextIndex];
           break;
         } else if (anchor.measureNumber !== currentBarSong) {
-          console.log("> stave");
+          // console.log("> stave");
+          nextAnchor = anchor;
           anchor = prev;
           break;
         }
@@ -144,11 +149,16 @@ export const setPlayhead = (e: PointerEvent) => {
     //   currentBarSong,
     //   anchor?.measureNumber
     // );
+
+    if (anchor === null) {
+      console.log("setPlayhead -> anchor is null");
+    }
     song.setPlayhead("ticks", anchor === null ? 0 : anchor.ticks);
 
     store.setState({
       currentBarSong,
       currentBarScore: measureNumber,
+      nextPlayheadAnchor: anchor,
       currentPlayheadAnchor: anchor,
       playhead: {
         ...playhead,

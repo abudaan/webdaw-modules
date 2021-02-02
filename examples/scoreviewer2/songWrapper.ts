@@ -4,7 +4,7 @@ import {
   heartbeat_utils,
   songPositionFromScore,
 } from "webdaw-modules";
-import { updateBar } from "./actions/updateBar";
+import { stopSong } from "./actions/stopSong";
 import { store } from "./store";
 import { setSongPosition } from "./actions/setSongPosition";
 const { loadJSON, addAssetPack, loadMIDIFile } = heartbeat_utils;
@@ -26,11 +26,10 @@ const updateSongPosition = () => {
 
 export const getSong = (): Heartbeat.Song => song;
 
-export const stopSong = () => {
+export const localStopSong = () => {
   cancelAnimationFrame(raqId);
   song.stop();
-  updateBar();
-  store.setState({ songState: "stop", currentBarSong: song.bar });
+  stopSong();
 };
 
 export const setup = async (): Promise<{ cleanup: () => void }> => {
@@ -40,7 +39,7 @@ export const setup = async (): Promise<{ cleanup: () => void }> => {
   // load MIDI file and setup song
   await loadMIDIFile(midiFile);
   song = sequencer.createSong(sequencer.getMidiFile(midiFileName));
-  song.setTempo(30);
+  // song.setTempo(30);
   // song.events.forEach((e: Heartbeat.MIDIEvent) => {
   //   if (e.type === 144) {
   //     console.log(e.bar, e.ticks, e.noteNumber);
@@ -62,7 +61,7 @@ export const setup = async (): Promise<{ cleanup: () => void }> => {
   });
 
   song.addEventListener("end", () => {
-    stopSong();
+    localStopSong();
   });
 
   // song.addEventListener("position", "bar", updateBar);
@@ -70,7 +69,7 @@ export const setup = async (): Promise<{ cleanup: () => void }> => {
   const unsub1 = store.subscribe(
     (songState) => {
       if (songState === "stop") {
-        stopSong();
+        localStopSong();
       } else if (songState === "play") {
         song.play();
         raqId = requestAnimationFrame(updateSongPosition);
@@ -98,7 +97,7 @@ export const setup = async (): Promise<{ cleanup: () => void }> => {
         song.setPlayhead("ticks", leftPos.ticks);
         song.setLoop(true);
         // store.setState({ currentBarSong: song.bar });
-        updateBar();
+        // updateBar();
       } else {
         song.setLoop(false);
       }

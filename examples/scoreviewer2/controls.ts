@@ -1,4 +1,4 @@
-import { stopSong } from "./songWrapper";
+import { localStopSong } from "./songWrapper";
 import { store } from "./store";
 
 const divContainer = document.getElementById("controls") as HTMLDivElement;
@@ -64,7 +64,7 @@ export const setup = () => {
     // if (state === 'play') {
     //   store.setState({ songState: 'stop' });
     // }
-    stopSong();
+    localStopSong();
   });
 
   return {
