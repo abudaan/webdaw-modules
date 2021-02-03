@@ -11,6 +11,10 @@ export const stopSong = () => {
   const nextPlayheadAnchor = playheadAnchors[1];
   const { top: y, height } = boundingBoxesMeasures[currentPlayheadAnchor.measureNumber - 1];
 
+  const diffTicks = nextPlayheadAnchor.ticks - currentPlayheadAnchor.ticks;
+  const diffPixels = nextPlayheadAnchor.bbox.x - currentPlayheadAnchor.bbox.x;
+  const pixelsPerTick = diffPixels / diffTicks;
+
   store.setState({
     songState: "stop",
     currentBarSong: 0,
@@ -22,6 +26,7 @@ export const stopSong = () => {
       y: y + offsetY,
       width: playhead.width,
       height,
+      pixelsPerTick,
     },
   });
 };

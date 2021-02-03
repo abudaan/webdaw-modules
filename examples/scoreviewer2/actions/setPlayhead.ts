@@ -115,6 +115,11 @@ export const setPlayhead = (e: PointerEvent) => {
     }
     song.setPlayhead("ticks", anchor === null ? 0 : anchor.ticks);
 
+    const diffTicks = nextAnchor.ticks - anchor.ticks;
+    const diffPixels = nextAnchor.bbox.x - anchor.bbox.x;
+    const pixelsPerTick = diffPixels / diffTicks;
+    // console.log(pixelsPerTick, diffTicks, diffPixels, anchor, nextAnchor);
+
     store.setState({
       currentBarSong,
       currentBarScore: measureNumber,
@@ -126,6 +131,9 @@ export const setPlayhead = (e: PointerEvent) => {
         x: anchor === null ? 0 : anchor.bbox.x + offsetX - playheadOffsetX,
         y: y + offsetY,
         height,
+        pixelsPerTick,
+        diffPixels,
+        diffTicks,
       },
     });
   }
