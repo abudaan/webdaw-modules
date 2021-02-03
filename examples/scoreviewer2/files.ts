@@ -6,9 +6,9 @@
 // export const midiFile = "../assets/Canon_in_D__Pachelbel__Guitar_Tab.mid";
 // export const mxmlFile = "../assets/Canon_in_D__Pachelbel__Guitar_Tab.musicxml";
 
-export const midiFileName = "osmd_test";
-export const midiFile = "../assets/osmd_test.mid";
-export const mxmlFile = "../assets/osmd_test.musicxml";
+// export const midiFileName = "osmd_test";
+// export const midiFile = "../assets/osmd_test.mid";
+// export const mxmlFile = "../assets/osmd_test.musicxml";
 
 // export const midiFileName = "Dona Nobis Pacem";
 // export const midiFile = "../assets/Dona Nobis Pacem.mid";
@@ -31,9 +31,9 @@ export const mxmlFile = "../assets/osmd_test.musicxml";
 // export const midiFile = "../assets/test2.mid";
 // export const mxmlFile = "../assets/test2.musicxml";
 
-// export const midiFileName = "test3";
-// export const midiFile = "../assets/test3.mid";
-// export const mxmlFile = "../assets/test3.musicxml";
+export const midiFileName = "test3";
+export const midiFile = "../assets/test3.mid";
+export const mxmlFile = "../assets/test3.musicxml";
 
 // export const midiFileName = "pedal";
 // export const midiFile = "../assets/pedal.mid";
