@@ -27,9 +27,13 @@
 // export const midiFile = "../assets/s小放牛獨唱.mid";
 // export const mxmlFile = "../assets/s小放牛獨唱.musicxml";
 
-export const midiFileName = "test2";
-export const midiFile = "../assets/test2.mid";
-export const mxmlFile = "../assets/test2.musicxml";
+// export const midiFileName = "test2";
+// export const midiFile = "../assets/test2.mid";
+// export const mxmlFile = "../assets/test2.musicxml";
+
+export const midiFileName = "test3";
+export const midiFile = "../assets/test3.mid";
+export const mxmlFile = "../assets/test3.musicxml";
 
 // export const midiFileName = "pedal";
 // export const midiFile = "../assets/pedal.mid";

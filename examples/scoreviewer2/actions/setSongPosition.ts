@@ -45,33 +45,52 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
   }
 
   // calculate the speed of the playhead based on the distance between the anchors
-  let nextX = 0;
   let diffTicks = playhead.diffTicks;
   let diffPixels = playhead.diffPixels;
   let pixelsPerTick = playhead.pixelsPerTick;
 
+  const currentMeasure = anchor.measureNumber;
+  const nextMeasure = currentMeasure + 1;
+  // const { bar: barNumber } = scorePositionFromSong(repeats, nextMeasure);
+  // let nextBarX = boundingBoxesMeasures[barNumber - 1].left;
+  // let nextBarY = boundingBoxesMeasures[barNumber - 1].top;
+  // console.log(nextBarY, anchor.bbox.y);
+  let nextPosY = playhead.y;
+  if (nextAnchor) {
+    const { bar: barNumber } = scorePositionFromSong(repeats, nextAnchor.measureNumber);
+    nextPosY = boundingBoxesMeasures[barNumber - 1].top + offsetY;
+  }
+
   if (nextAnchor === null) {
     // if there is no nextAnchor we have reached the end of the song, in that case we count
-    // the pixels and ticks that are left in the current measure
-    const { bar: index } = scorePositionFromSong(repeats, anchor.measureNumber - 1);
-    nextX = boundingBoxesMeasures[index - 1].right;
+    // the pixels and ticks that are left in the current measure, so nextX is the end of the
+    // current bar and the amount of ticks left is the difference between the end of the song
+    // and the last anchor
     diffTicks = song.durationTicks - anchor.ticks;
+    const { bar: barNumber } = scorePositionFromSong(repeats, currentMeasure);
+    const endOfLastBarX = boundingBoxesMeasures[barNumber - 1].right;
+    diffPixels = endOfLastBarX - anchor.bbox.x;
+  } else if (nextPosY !== playhead.y) {
+    // if the next anchor has a different y position we will move to another staff
+    diffTicks = measureStartTicks[anchor.measureNumber - 1] - anchor.ticks;
+    const { bar: barNumber } = scorePositionFromSong(repeats, anchor.measureNumber);
+    diffPixels = boundingBoxesMeasures[barNumber].right - anchor.bbox.x;
   } else {
-    nextX = nextAnchor.bbox.x;
+    // we are moving to a next anchor on the same staff
     diffTicks = nextAnchor.ticks - anchor.ticks;
+    diffPixels = nextAnchor.bbox.x - anchor.bbox.x;
   }
-  diffPixels = nextX - anchor.bbox.x;
-  // if diffPixels is less than 0 we have moved to the next stave, in that case we count
+  // if diffPixels is less than 0 we have moved to the next staff, in that case we count
   // the pixels and ticks that are left in the current measure
-  if (diffPixels < 0) {
-    const currentMeasureIndex = anchor.measureNumber - 1;
-    const nextMeasureIndex = currentMeasureIndex + 1;
-    const { bar: index } = scorePositionFromSong(repeats, currentMeasureIndex);
-    nextX = boundingBoxesMeasures[index].right;
-    diffTicks = measureStartTicks[nextMeasureIndex] - anchor.ticks;
-    diffPixels = nextX - anchor.bbox.x;
-    // console.log("next stave", diffPixels, diffTicks, nextX, anchor.measureNumber, anchor.bbox.x);
-  }
+  // if (diffPixels < 0) {
+  //   const currentMeasureIndex = anchor.measureNumber - 1;
+  //   const nextMeasureIndex = currentMeasureIndex + 1;
+  //   const { bar: index } = scorePositionFromSong(repeats, currentMeasureIndex);
+  //   nextX = boundingBoxesMeasures[index].right;
+  //   diffTicks = measureStartTicks[nextMeasureIndex] - anchor.ticks;
+  //   diffPixels = nextX - anchor.bbox.x;
+  //   // console.log("next stave", diffPixels, diffTicks, nextX, anchor.measureNumber, anchor.bbox.x);
+  // }
   if (
     nextBar < anchor.measureNumber &&
     (nextAnchor === null || nextAnchor?.measureNumber !== anchor.measureNumber)

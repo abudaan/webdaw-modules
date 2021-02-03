@@ -2,8 +2,6 @@
 /**
  * Used to calculate the position of the playhead in the score
  * based on the position of the playhead in the song.
- *
- * Called by the action updateBar.ts
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.scorePositionFromSong = void 0;
