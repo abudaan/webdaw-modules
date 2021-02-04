@@ -79,15 +79,11 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
       const { bar: barNumber } = scorePositionFromSong(repeats, anchor.measureNumber);
       const endOfCurrentBar = boundingBoxesMeasures[barNumber - 1].right;
       diffPixels = endOfCurrentBar - anchor.bbox.x;
-      console.log(
-        "Y",
-        nextPosY
-        // diffPixels,
-        // diffTicks,
-        // measureStartTicks[nextAnchor.measureNumber - 1],
-        // anchor,
-        // nextAnchor
-      );
+      if (nextPosY !== playhead.y) {
+        console.log("Y", nextPosY);
+      } else {
+        console.log("REPEAT", nextAnchor.bbox.x - anchor.bbox.x);
+      }
     } else {
       // we are moving to a next anchor on the same staff
       diffTicks = nextAnchor.ticks - anchor.ticks;

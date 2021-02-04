@@ -22,15 +22,23 @@ var __spread = (this && this.__spread) || function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getBoundingBoxMeasureAll = exports.getBoundingBoxMeasure = exports.calculateBoundingBoxMeasure = void 0;
 // generic util methods, will become part of WebDAW
+var i = 0;
 exports.calculateBoundingBoxMeasure = function (staves) {
     var x = 0;
     var y = 0;
     var width = 0;
     var height = 0;
+    console.log("staves", ++i, staves);
     if (staves) {
         var yPos_1 = [];
-        staves.forEach(function (s, i) {
+        var filtered = staves.filter(function (s) { return typeof s !== "undefined"; });
+        filtered.forEach(function (s, i) {
             var stave = s.stave;
+            // console.log(stave, stave.multiRestElement);
+            var measure = s;
+            if (typeof measure.multiRestElement !== "undefined") {
+                console.log("multi-bar", measure.multiRestElement.number_of_measures);
+            }
             // console.log(i, stave);
             (x = stave.x, y = stave.y, width = stave.width, height = stave.height);
             yPos_1.push(y);

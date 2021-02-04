@@ -3,16 +3,23 @@ import { hasOverlap } from "../util/2d";
 import { BoundingBox } from "../types";
 
 // generic util methods, will become part of WebDAW
-
+let i = 0;
 export const calculateBoundingBoxMeasure = (staves?: GraphicalMeasure[]): BoundingBox => {
   let x: number = 0;
   let y: number = 0;
   let width: number = 0;
   let height: number = 0;
+  console.log("staves", ++i, staves);
   if (staves) {
     const yPos: number[] = [];
-    staves.forEach((s, i) => {
+    const filtered = staves.filter(s => typeof s !== "undefined");
+    filtered.forEach((s, i) => {
       const stave = (s as any).stave;
+      // console.log(stave, stave.multiRestElement);
+      const measure = s as any;
+      if (typeof measure.multiRestElement !== "undefined") {
+        console.log("multi-bar", measure.multiRestElement.number_of_measures);
+      }
       // console.log(i, stave);
       ({ x, y, width, height } = stave);
       yPos.push(y);
@@ -37,10 +44,7 @@ export const calculateBoundingBoxMeasure = (staves?: GraphicalMeasure[]): Boundi
   return { x, y, width, height, top: 0, left: 0, bottom: 0, right: 0 };
 };
 
-export const getBoundingBoxMeasure = (
-  osmd: OpenSheetMusicDisplay,
-  measureNumber: number
-): BoundingBox => {
+export const getBoundingBoxMeasure = (osmd: OpenSheetMusicDisplay, measureNumber: number): BoundingBox => {
   const staves = osmd.GraphicSheet.MeasureList.find(e => e[0]["measureNumber"] === measureNumber);
   return calculateBoundingBoxMeasure(staves);
 };

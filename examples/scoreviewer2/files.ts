@@ -31,9 +31,9 @@
 // export const midiFile = "../assets/test2.mid";
 // export const mxmlFile = "../assets/test2.musicxml";
 
-export const midiFileName = "test3";
-export const midiFile = "../assets/test3.mid";
-export const mxmlFile = "../assets/test3.musicxml";
+// export const midiFileName = "test3";
+// export const midiFile = "../assets/test3.mid";
+// export const mxmlFile = "../assets/test3.musicxml";
 
 // export const midiFileName = "pedal";
 // export const midiFile = "../assets/pedal.mid";
@@ -43,6 +43,14 @@ export const mxmlFile = "../assets/test3.musicxml";
 // export const midiFileName = "似火的心v5b(1)";
 // export const midiFile = "../assets/似火的心v5b(1).mid";
 // export const mxmlFile = "../assets/似火的心v5b(1).musicxml";
+
+// export const midiFileName = "multibar_rest";
+// export const midiFile = "../assets/multibar_rest.mid";
+// export const mxmlFile = "../assets/multibar_rest.musicxml";
+
+export const midiFileName = "multibar_rest2";
+export const midiFile = "../assets/multibar_rest2.mid";
+export const mxmlFile = "../assets/multibar_rest2.musicxml";
 
 // export const midiFileName = "mozk545a_musescore";
 // export const midiFile = "../assets/mozk545a_musescore.mid";
