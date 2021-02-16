@@ -24,7 +24,7 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
   if (
     currentPlayheadAnchor === null ||
     (nextPlayheadAnchor !== null &&
-      millis >= song.getPosition("ticks", nextPlayheadAnchor.ticks).millis)
+      millis >= song.getPosition("ticks", nextPlayheadAnchor.startTicks).millis)
   ) {
     // console.log(
     //   "recalculate",
@@ -39,7 +39,7 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
     let nextAnchor: AnchorData | null = null;
     for (; i < playheadAnchors.length; i++) {
       anchor = playheadAnchors[i];
-      if (anchor.ticks > ticks) {
+      if (anchor.startTicks > ticks) {
         nextAnchor = anchor;
         const index = i === 0 ? 0 : i - 1;
         anchor = playheadAnchors[index];
@@ -69,13 +69,13 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
       // the pixels and ticks that are left in the current measure, so nextX is the end of the
       // current bar and the amount of ticks left is the difference between the end of the song
       // and the last anchor
-      diffTicks = song.durationTicks - anchor.ticks;
+      diffTicks = song.durationTicks - anchor.startTicks;
       const { bar: barNumber } = scorePositionFromSong(repeats, anchor.measureNumber);
       const endOfLastBar = boundingBoxesMeasures[barNumber - 1].right;
       diffPixels = endOfLastBar - anchor.bbox.x;
     } else if (nextPosY !== playhead.y || nextAnchor.bbox.x - anchor.bbox.x < 0) {
       // if the next anchor has a different y position we will move to another staff
-      diffTicks = measureStartTicks[anchor.measureNumber] - anchor.ticks;
+      diffTicks = measureStartTicks[anchor.measureNumber] - anchor.startTicks;
       const { bar: barNumber } = scorePositionFromSong(repeats, anchor.measureNumber);
       const endOfCurrentBar = boundingBoxesMeasures[barNumber - 1].right;
       diffPixels = endOfCurrentBar - anchor.bbox.x;
@@ -86,13 +86,13 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
       }
     } else {
       // we are moving to a next anchor on the same staff
-      diffTicks = nextAnchor.ticks - anchor.ticks;
+      diffTicks = nextAnchor.startTicks - anchor.startTicks;
       diffPixels = nextAnchor.bbox.x - anchor.bbox.x;
-      console.log("REGULAR", anchor.ticks);
+      console.log("REGULAR", anchor.startTicks);
     }
 
     pixelsPerTick = diffPixels / diffTicks;
-    x = anchor.bbox.x + (ticks - anchor.ticks) * pixelsPerTick;
+    x = anchor.bbox.x + (ticks - anchor.startTicks) * pixelsPerTick;
     const { bar: scoreBar } = scorePositionFromSong(repeats, anchor.measureNumber);
     const { y, height } = boundingBoxesMeasures[scoreBar - 1];
 
@@ -115,7 +115,8 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
     // }
   } else {
     const x =
-      currentPlayheadAnchor.bbox.x + (ticks - currentPlayheadAnchor.ticks) * playhead.pixelsPerTick;
+      currentPlayheadAnchor.bbox.x +
+      (ticks - currentPlayheadAnchor.startTicks) * playhead.pixelsPerTick;
 
     store.setState({
       playhead: {

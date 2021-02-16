@@ -28,7 +28,7 @@ exports.calculateBoundingBoxMeasure = function (staves) {
     var y = 0;
     var width = 0;
     var height = 0;
-    console.log("staves", ++i, staves);
+    // console.log("staves", ++i, staves);
     if (staves) {
         var yPos_1 = [];
         var filtered = staves.filter(function (s) { return typeof s !== "undefined"; });

@@ -55,6 +55,10 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
         var realValue = container.AbsoluteTimestamp.RealValue;
         var data = container.StaffEntries.map(function (entry) {
             var measureNumber = entry.parentMeasure.MeasureNumber;
+            if (typeof entry.parentMeasure.multiRestElement !== "undefined") {
+                var numberOfMeasures = entry.parentMeasure.multiRestElement.number_of_measures;
+                console.log(measureNumber, numberOfMeasures);
+            }
             return { measureNumber: measureNumber, bbox: mapper3_1.getBoundingBoxData(entry.boundingBox) };
         });
         data.sort(function (a, b) {
@@ -68,10 +72,14 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
         });
         // console.log(boxes);
         ticks = ppq * 4 * realValue;
+        // console.log("realValue", realValue, ticks);
+        // always get the first vertical graphical staff entry
         var bbox = data[0].bbox;
         var measureNumber = data[0].measureNumber;
-        return { ticks: ticks, bbox: bbox, measureNumber: measureNumber };
+        return { startTicks: ticks, endTicks: 0, bbox: bbox, measureNumber: measureNumber };
     });
+    // console.log(anchorData);
+    // copy anchor data for all repeats
     var diffTicks = 0;
     var copies = [];
     for (var i = 0; i < repeats.length; i++) {
@@ -85,23 +93,27 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
             var anchor = anchorData[j];
             if (anchor.measureNumber >= min && anchor.measureNumber <= max) {
                 var clone = __assign({}, anchor);
-                clone.ticks += diffTicks;
+                clone.startTicks += diffTicks;
                 clone.measureNumber += max - (min - 1);
                 copies.push(clone);
             }
         }
     }
+    // console.log(copies);
+    // update the ticks and measure number of the bars that come after the repeats
     var result = anchorData.map(function (d) {
-        var measureNumber = d.measureNumber, ticks = d.ticks;
+        var measureNumber = d.measureNumber, startTicks = d.startTicks;
         var clone = __assign({}, d);
+        var diffTicks = 0;
+        var diffBars = 0;
         for (var i = 0; i < repeats.length; i++) {
             var _a = __read(repeats[i], 2), min = _a[0], max = _a[1];
             var minTicks = measureStartTicks[min - 1];
             var maxTicks = measureStartTicks[max];
-            var diffTicks_1 = maxTicks - minTicks;
-            var diffBars = max - (min - 1);
+            diffTicks += maxTicks - minTicks;
+            diffBars += max - (min - 1);
             if (measureNumber > max) {
-                clone.ticks = ticks + diffTicks_1;
+                clone.startTicks = startTicks + diffTicks;
                 clone.measureNumber = measureNumber + diffBars;
             }
         }
@@ -115,30 +127,48 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
     // });
     result.push.apply(result, __spread(copies));
     result.sort(function (a, b) {
-        if (a.ticks < b.ticks) {
+        if (a.startTicks < b.startTicks) {
             return -1;
         }
-        if (a.ticks > b.ticks) {
+        if (a.startTicks > b.startTicks) {
             return 1;
         }
         return 0;
     });
+    result.sort(function (a, b) {
+        if (a.measureNumber < b.measureNumber) {
+            return -1;
+        }
+        if (a.measureNumber > b.measureNumber) {
+            return 1;
+        }
+        return 0;
+    });
+    for (var i = 0; i < result.length; i++) {
+        var a1 = result[i];
+        var a2 = result[i + 1];
+        if (a2) {
+            a1.endTicks = a2.startTicks;
+        }
+    }
     // result.forEach(d => {
     //   console.log(d.measureNumber, d.ticks);
     // });
     var result1 = [];
     var currentMeasureNumber = 0;
     result.forEach(function (r) {
-        var ticks = r.ticks, measureNumber = r.measureNumber;
+        var startTicks = r.startTicks, measureNumber = r.measureNumber;
         if (currentMeasureNumber !== measureNumber) {
             currentMeasureNumber = measureNumber;
-            result1.push(ticks);
+            result1.push(startTicks);
         }
     });
     // add ticks position of the end of the last bar
     var _b = osmd.Sheet.SourceMeasures[osmd.Sheet.SourceMeasures.length - 1].ActiveTimeSignature, Numerator = _b.Numerator, Denominator = _b.Denominator;
-    var lastTicks = result1[result1.length - 1];
-    result1.push(lastTicks + Numerator * (4 / Denominator) * 960);
+    var lastTicks = result1[result1.length - 1] + Numerator * (4 / Denominator) * 960;
+    result1.push(lastTicks);
+    result[result.length - 1].endTicks = lastTicks;
+    console.log(result);
     return { anchorData: result, measureStartTicks: result1 };
 };
 //# sourceMappingURL=getPlayheadAnchorData.js.map

@@ -3,7 +3,8 @@ import create from "zustand/vanilla";
 import { midiFileName, midiFile, mxmlFile } from "./files";
 
 export type PlayheadAnchor = {
-  ticks: number;
+  startTicks: number;
+  endTicks: number;
   measureNumber: number;
   bbox: { x: number; y: number; width: number; height: number };
 };

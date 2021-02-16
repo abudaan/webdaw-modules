@@ -52,6 +52,10 @@ export const midiFileName = "multibar_rest2";
 export const midiFile = "../assets/multibar_rest2.mid";
 export const mxmlFile = "../assets/multibar_rest2.musicxml";
 
+// export const midiFileName = "chopin_valse_op.64_no.1_minute_valse.musicxml";
+// export const midiFile = "../assets/chopin_valse_op.64_no.1_minute_valse.mid";
+// export const mxmlFile = "../assets/chopin_valse_op.64_no.1_minute_valse.musicxml";
+
 // export const midiFileName = "mozk545a_musescore";
 // export const midiFile = "../assets/mozk545a_musescore.mid";
 // export const mxmlFile = "../assets/mozk545a_musescore.musicxml";

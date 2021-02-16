@@ -4,7 +4,8 @@ import { BBox } from "../types";
 export declare const getTicksAtBar: (parts: PartData[]) => void;
 export declare type AnchorData = {
     measureNumber: number;
-    ticks: number;
+    startTicks: number;
+    endTicks: number;
     bbox: BBox;
 };
 export declare const getPlayheadAnchorData: (osmd: OpenSheetMusicDisplay, repeats: number[][], ppq?: number) => {

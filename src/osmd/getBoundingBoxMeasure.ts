@@ -9,7 +9,7 @@ export const calculateBoundingBoxMeasure = (staves?: GraphicalMeasure[]): Boundi
   let y: number = 0;
   let width: number = 0;
   let height: number = 0;
-  console.log("staves", ++i, staves);
+  // console.log("staves", ++i, staves);
   if (staves) {
     const yPos: number[] = [];
     const filtered = staves.filter(s => typeof s !== "undefined");

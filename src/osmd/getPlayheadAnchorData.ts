@@ -18,7 +18,8 @@ export const getTicksAtBar = (parts: PartData[]) => {
 
 export type AnchorData = {
   measureNumber: number;
-  ticks: number;
+  startTicks: number;
+  endTicks: number;
   bbox: BBox;
 };
 
@@ -36,6 +37,10 @@ export const getPlayheadAnchorData = (
     const realValue = container.AbsoluteTimestamp.RealValue;
     const data: { measureNumber: number; bbox: BBox }[] = container.StaffEntries.map(entry => {
       const measureNumber = entry.parentMeasure.MeasureNumber;
+      if (typeof (entry.parentMeasure as any).multiRestElement !== "undefined") {
+        const numberOfMeasures = (entry.parentMeasure as any).multiRestElement.number_of_measures;
+        console.log(measureNumber, numberOfMeasures);
+      }
       return { measureNumber, bbox: getBoundingBoxData((entry as any).boundingBox) };
     });
     data.sort((a, b) => {
@@ -49,11 +54,16 @@ export const getPlayheadAnchorData = (
     });
     // console.log(boxes);
     ticks = ppq * 4 * realValue;
+    // console.log("realValue", realValue, ticks);
+    // always get the first vertical graphical staff entry
     const bbox = data[0].bbox;
     const measureNumber = data[0].measureNumber;
-    return { ticks, bbox, measureNumber };
+    return { startTicks: ticks, endTicks: 0, bbox, measureNumber };
   });
 
+  // console.log(anchorData);
+
+  // copy anchor data for all repeats
   let diffTicks = 0;
   const copies: AnchorData[] = [];
   for (let i = 0; i < repeats.length; i++) {
@@ -67,24 +77,29 @@ export const getPlayheadAnchorData = (
       const anchor = anchorData[j];
       if (anchor.measureNumber >= min && anchor.measureNumber <= max) {
         const clone = { ...anchor };
-        clone.ticks += diffTicks;
+        clone.startTicks += diffTicks;
         clone.measureNumber += max - (min - 1);
         copies.push(clone);
       }
     }
   }
 
+  // console.log(copies);
+
+  // update the ticks and measure number of the bars that come after the repeats
   const result: AnchorData[] = anchorData.map(d => {
-    const { measureNumber, ticks } = d;
+    const { measureNumber, startTicks } = d;
     const clone = { ...d };
+    let diffTicks = 0;
+    let diffBars = 0;
     for (let i = 0; i < repeats.length; i++) {
       const [min, max] = repeats[i];
       const minTicks = measureStartTicks[min - 1];
       const maxTicks = measureStartTicks[max];
-      const diffTicks = maxTicks - minTicks;
-      const diffBars = max - (min - 1);
+      diffTicks += maxTicks - minTicks;
+      diffBars += max - (min - 1);
       if (measureNumber > max) {
-        clone.ticks = ticks + diffTicks;
+        clone.startTicks = startTicks + diffTicks;
         clone.measureNumber = measureNumber + diffBars;
       }
     }
@@ -101,14 +116,32 @@ export const getPlayheadAnchorData = (
 
   result.push(...copies);
   result.sort((a, b) => {
-    if (a.ticks < b.ticks) {
+    if (a.startTicks < b.startTicks) {
       return -1;
     }
-    if (a.ticks > b.ticks) {
+    if (a.startTicks > b.startTicks) {
       return 1;
     }
     return 0;
   });
+
+  result.sort((a, b) => {
+    if (a.measureNumber < b.measureNumber) {
+      return -1;
+    }
+    if (a.measureNumber > b.measureNumber) {
+      return 1;
+    }
+    return 0;
+  });
+
+  for (let i = 0; i < result.length; i++) {
+    let a1 = result[i];
+    let a2 = result[i + 1];
+    if (a2) {
+      a1.endTicks = a2.startTicks;
+    }
+  }
 
   // result.forEach(d => {
   //   console.log(d.measureNumber, d.ticks);
@@ -117,17 +150,20 @@ export const getPlayheadAnchorData = (
   const result1: number[] = [];
   let currentMeasureNumber = 0;
   result.forEach(r => {
-    const { ticks, measureNumber } = r;
+    const { startTicks, measureNumber } = r;
     if (currentMeasureNumber !== measureNumber) {
       currentMeasureNumber = measureNumber;
-      result1.push(ticks);
+      result1.push(startTicks);
     }
   });
 
   // add ticks position of the end of the last bar
   const { Numerator, Denominator } = osmd.Sheet.SourceMeasures[osmd.Sheet.SourceMeasures.length - 1].ActiveTimeSignature;
-  const lastTicks = result1[result1.length - 1];
-  result1.push(lastTicks + Numerator * (4 / Denominator) * 960);
+  const lastTicks = result1[result1.length - 1] + Numerator * (4 / Denominator) * 960;
+  result1.push(lastTicks);
+  result[result.length - 1].endTicks = lastTicks;
+
+  console.log(result);
 
   return { anchorData: result, measureStartTicks: result1 };
 };
