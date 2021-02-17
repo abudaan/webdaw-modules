@@ -63,17 +63,17 @@ export const setup = () => {
     (state) => state.selection
   );
 
-  const unsub2 = store.subscribe(
-    () => {
-      const {
-        selectedMeasures,
-        offset: { x: offsetX, y: offsetY },
-      } = store.getState();
-      const boundingBoxes = getBoundingBoxesOfSelectedMeasures(selectedMeasures, getOSMD());
-      drawLoop(boundingBoxes, offsetX, offsetY);
-    },
-    (state) => state.width
-  );
+  // const unsub2 = store.subscribe(
+  //   () => {
+  //     const {
+  //       selectedMeasures,
+  //       offset: { x: offsetX, y: offsetY },
+  //     } = store.getState();
+  //     const boundingBoxes = getBoundingBoxesOfSelectedMeasures(selectedMeasures, getOSMD());
+  //     drawLoop(boundingBoxes, offsetX, offsetY);
+  //   },
+  //   (state) => state.width
+  // );
 
   return {
     cleanup: () => {

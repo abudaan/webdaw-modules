@@ -44,13 +44,13 @@
 // export const midiFile = "../assets/似火的心v5b(1).mid";
 // export const mxmlFile = "../assets/似火的心v5b(1).musicxml";
 
-export const midiFileName = "multibar_rest";
-export const midiFile = "../assets/multibar_rest.mid";
-export const mxmlFile = "../assets/multibar_rest.musicxml";
+// export const midiFileName = "multibar_rest";
+// export const midiFile = "../assets/multibar_rest.mid";
+// export const mxmlFile = "../assets/multibar_rest.musicxml";
 
-// export const midiFileName = "multibar_rest2";
-// export const midiFile = "../assets/multibar_rest2.mid";
-// export const mxmlFile = "../assets/multibar_rest2.musicxml";
+export const midiFileName = "multibar_rest2";
+export const midiFile = "../assets/multibar_rest2.mid";
+export const mxmlFile = "../assets/multibar_rest2.musicxml";
 
 // export const midiFileName = "chopin_valse_op.64_no.1_minute_valse.musicxml";
 // export const midiFile = "../assets/chopin_valse_op.64_no.1_minute_valse.mid";

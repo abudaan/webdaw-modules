@@ -70,7 +70,7 @@ export const store = create<Store>((set, get) => ({
   midiFileName,
   midiFile,
   mxmlFile,
-  ppq: 960,
+  ppq: 480,
   currentBarSong: 1,
   currentBarScore: 1,
   currentPosition: 0,

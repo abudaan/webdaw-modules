@@ -11,6 +11,7 @@ export declare type AnchorData = {
     yPos: number;
     numPixels: number;
     pixelsPerTick: number;
+    ghost: boolean;
 };
 export declare const getPlayheadAnchorData: (osmd: OpenSheetMusicDisplay, repeats: number[][], ppq?: number) => {
     anchorData: AnchorData[];

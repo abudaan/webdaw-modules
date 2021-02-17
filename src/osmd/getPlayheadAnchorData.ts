@@ -26,6 +26,7 @@ export type AnchorData = {
   yPos: number;
   numPixels: number;
   pixelsPerTick: number;
+  ghost: boolean;
 };
 
 export const getPlayheadAnchorData = (
@@ -38,26 +39,64 @@ export const getPlayheadAnchorData = (
     return ppq * measure.AbsoluteTimestamp.RealValue * 4;
   });
 
-  let ticks = 0;
-  const anchorData: AnchorData[] = osmd.GraphicSheet.VerticalGraphicalStaffEntryContainers.map(container => {
+  const anchorData: AnchorData[] = [];
+  let runningTicks = 0;
+  osmd.GraphicSheet.VerticalGraphicalStaffEntryContainers.forEach(container => {
     const realValue = container.AbsoluteTimestamp.RealValue;
-    const data: { measureNumber: number; bbox: BBox; bboxMeasure: BBox; yPos: number }[] = container.StaffEntries.map(entry => {
+    ppq * 4 * realValue;
+    const data: AnchorData[] = [];
+
+    container.StaffEntries.forEach(entry => {
       const measureNumber = entry.parentMeasure.MeasureNumber;
-      if (typeof (entry.parentMeasure as any).multiRestElement !== "undefined") {
-        const numberOfMeasures = (entry.parentMeasure as any).multiRestElement.number_of_measures;
-        console.log(measureNumber, numberOfMeasures);
-      }
+      const bboxMeasure = measureBoundingBoxes[measureNumber - 1];
       const yPos = (entry.parentMeasure as any).parentMusicSystem.boundingBox.absolutePosition.y * 10;
-      const bbox = getBoundingBoxData((entry as any).boundingBox);
-      // console.log(yPos);
-      return {
-        measureNumber,
-        bbox,
-        // bboxMeasure: getBoundingBoxData((entry.parentMeasure as any).boundingBox),
-        bboxMeasure: measureBoundingBoxes[measureNumber - 1],
-        yPos,
-      };
+
+      if (typeof (entry.parentMeasure as any).multiRestElement !== "undefined") {
+        const { Numerator, Denominator } = osmd.Sheet.SourceMeasures[measureNumber - 1].ActiveTimeSignature;
+        const numberOfMeasures = (entry.parentMeasure as any).multiRestElement.number_of_measures;
+        const diffTicks = numberOfMeasures * Numerator * (ppq / (Denominator / 4));
+        const numGhostAnchors = numberOfMeasures * Numerator;
+        const anchorTicks = diffTicks / numGhostAnchors;
+        const anchorPixels = bboxMeasure.width / numGhostAnchors;
+        console.log("adasdasd", diffTicks, anchorTicks, anchorPixels, ppq);
+        let x = bboxMeasure.x;
+        for (let i = 0; i < numGhostAnchors; i++) {
+          data.push({
+            numPixels: anchorTicks,
+            startTicks: runningTicks + i * anchorTicks,
+            endTicks: 0,
+            pixelsPerTick: 0,
+            measureNumber,
+            bbox: {
+              x: x + i * anchorPixels,
+              y: bboxMeasure.y,
+              width: anchorPixels,
+              height: bboxMeasure.height,
+            },
+            bboxMeasure,
+            yPos,
+            ghost: true,
+          });
+        }
+        runningTicks = ppq * 4 * realValue;
+      } else {
+        runningTicks = ppq * 4 * realValue;
+        const bbox = getBoundingBoxData((entry as any).boundingBox);
+        data.push({
+          numPixels: 0,
+          startTicks: runningTicks,
+          endTicks: 0,
+          pixelsPerTick: 0,
+          measureNumber,
+          bbox,
+          // bboxMeasure: getBoundingBoxData((entry.parentMeasure as any).boundingBox),
+          bboxMeasure,
+          yPos,
+          ghost: false,
+        });
+      }
     });
+
     data.sort((a, b) => {
       if (a.bbox.x < b.bbox.x) {
         return -1;
@@ -68,11 +107,22 @@ export const getPlayheadAnchorData = (
       return 0;
     });
     // console.log(boxes);
-    ticks = ppq * 4 * realValue;
-    // console.log("realValue", realValue, ticks);
+
     // always get the first vertical graphical staff entry
-    const { bbox, bboxMeasure, measureNumber, yPos } = data[0];
-    return { startTicks: ticks, endTicks: 0, bbox, bboxMeasure, measureNumber, numPixels: 0, yPos, pixelsPerTick: 0 };
+    const anchor = data[0];
+    if (anchor.ghost === false) {
+      anchorData.push(anchor);
+    } else {
+      let x;
+      for (let i = 0; i < data.length; i++) {
+        const tmpX = data[i].bbox.x;
+        if (tmpX !== x) {
+          x = tmpX;
+          console.log(i, data[i]);
+          anchorData.push(data[i]);
+        }
+      }
+    }
   });
 
   // console.log(anchorData);
@@ -170,7 +220,7 @@ export const getPlayheadAnchorData = (
     if (a2) {
       a1.endTicks = a2.startTicks;
       a1.numPixels = a2.bbox.x - a1.bbox.x;
-      if (a2.yPos !== a1.yPos) {
+      if (a2.yPos !== a1.yPos || a2.bbox.x < a1.bbox.x) {
         // a1.numPixels = a1.bbox.width
         a1.numPixels = a1.bboxMeasure.x + a1.bboxMeasure.width - a1.bbox.x;
       }
