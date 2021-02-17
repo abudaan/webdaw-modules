@@ -1,14 +1,12 @@
-import { AnchorData, scorePositionFromSong } from "webdaw-modules";
+import { AnchorData } from "webdaw-modules";
 import { store } from "../store";
 import { getSong } from "../songWrapper";
 
 export const setSongPosition = (millis: number, ticks: number, bar: number) => {
   const {
-    repeats,
     playhead,
     playheadAnchors,
     currentPlayheadAnchor,
-    boundingBoxesMeasures,
     offset: { x: offsetX, y: offsetY },
   } = store.getState();
 
@@ -33,7 +31,6 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
       return;
     }
 
-    // calculate the speed of the playhead based on the distance between the anchors
     const x = anchor.bbox.x + (ticks - anchor.startTicks) * anchor.pixelsPerTick;
 
     store.setState({
