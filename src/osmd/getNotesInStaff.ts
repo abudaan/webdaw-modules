@@ -23,6 +23,7 @@ export const getNotesInStaff = (osmd: OpenSheetMusicDisplay, staffIndex: number,
   const notes: NoteInfo[] = [];
   let noteIndex = 0;
   let ticks = 0;
+  console.log(measures);
   for (let i = 0; i < measures.length; i++) {
     const measure = measures[i];
     if (measure) {
@@ -33,13 +34,8 @@ export const getNotesInStaff = (osmd: OpenSheetMusicDisplay, staffIndex: number,
           for (let l = 0; l < voiceEntry.notes.length; l++) {
             const note = voiceEntry.notes[l];
             // const relPosInMeasure = (note.sourceNote as any).voiceEntry.timestamp.realValue;
-            const {
-              // Numerator: numerator,
-              Denominator: denominator,
-              // WholeValue: wholeValue,
-              // RealValue: realValue,
-            } = note.sourceNote.Length;
-            // console.log(ticks, numerator, denominator, wholeValue, realValue, relPosInMeasure);
+            const { Numerator: numerator, Denominator: denominator, WholeValue: wholeValue, RealValue: realValue } = note.sourceNote.Length;
+            console.log(ticks, numerator, denominator, wholeValue, realValue);
             if ((note.sourceNote as any).isRestFlag === false) {
               notes.push({
                 ticks,
@@ -56,6 +52,7 @@ export const getNotesInStaff = (osmd: OpenSheetMusicDisplay, staffIndex: number,
           }
         }
       }
+    } else {
     }
   }
   return notes;

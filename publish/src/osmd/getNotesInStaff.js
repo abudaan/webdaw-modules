@@ -20,6 +20,7 @@ exports.getNotesInStaff = function (osmd, staffIndex, ppq, amount) {
     var notes = [];
     var noteIndex = 0;
     var ticks = 0;
+    console.log(measures);
     for (var i = 0; i < measures.length; i++) {
         var measure = measures[i];
         if (measure) {
@@ -30,10 +31,8 @@ exports.getNotesInStaff = function (osmd, staffIndex, ppq, amount) {
                     for (var l = 0; l < voiceEntry.notes.length; l++) {
                         var note = voiceEntry.notes[l];
                         // const relPosInMeasure = (note.sourceNote as any).voiceEntry.timestamp.realValue;
-                        var 
-                        // Numerator: numerator,
-                        denominator = note.sourceNote.Length.Denominator;
-                        // console.log(ticks, numerator, denominator, wholeValue, realValue, relPosInMeasure);
+                        var _a = note.sourceNote.Length, numerator = _a.Numerator, denominator = _a.Denominator, wholeValue = _a.WholeValue, realValue = _a.RealValue;
+                        console.log(ticks, numerator, denominator, wholeValue, realValue);
                         if (note.sourceNote.isRestFlag === false) {
                             notes.push({
                                 ticks: ticks,
@@ -50,6 +49,8 @@ exports.getNotesInStaff = function (osmd, staffIndex, ppq, amount) {
                     }
                 }
             }
+        }
+        else {
         }
     }
     return notes;
