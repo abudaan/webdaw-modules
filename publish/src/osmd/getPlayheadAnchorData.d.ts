@@ -7,6 +7,10 @@ export declare type AnchorData = {
     startTicks: number;
     endTicks: number;
     bbox: BBox;
+    bboxMeasure: BBox;
+    yPos: number;
+    numPixels: number;
+    pixelsPerTick: number;
 };
 export declare const getPlayheadAnchorData: (osmd: OpenSheetMusicDisplay, repeats: number[][], ppq?: number) => {
     anchorData: AnchorData[];

@@ -7,6 +7,10 @@ export type PlayheadAnchor = {
   endTicks: number;
   measureNumber: number;
   bbox: { x: number; y: number; width: number; height: number };
+  bboxMeasure: { x: number; y: number; width: number; height: number };
+  numPixels: number;
+  yPos: number;
+  pixelsPerTick: number;
 };
 
 export type State = {

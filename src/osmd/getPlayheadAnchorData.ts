@@ -21,6 +21,10 @@ export type AnchorData = {
   startTicks: number;
   endTicks: number;
   bbox: BBox;
+  bboxMeasure: BBox;
+  yPos: number;
+  numPixels: number;
+  pixelsPerTick: number;
 };
 
 export const getPlayheadAnchorData = (
@@ -35,13 +39,18 @@ export const getPlayheadAnchorData = (
   let ticks = 0;
   const anchorData: AnchorData[] = osmd.GraphicSheet.VerticalGraphicalStaffEntryContainers.map(container => {
     const realValue = container.AbsoluteTimestamp.RealValue;
-    const data: { measureNumber: number; bbox: BBox }[] = container.StaffEntries.map(entry => {
+    const data: { measureNumber: number; bbox: BBox; bboxMeasure: BBox; yPos: number }[] = container.StaffEntries.map(entry => {
       const measureNumber = entry.parentMeasure.MeasureNumber;
       if (typeof (entry.parentMeasure as any).multiRestElement !== "undefined") {
         const numberOfMeasures = (entry.parentMeasure as any).multiRestElement.number_of_measures;
         console.log(measureNumber, numberOfMeasures);
       }
-      return { measureNumber, bbox: getBoundingBoxData((entry as any).boundingBox) };
+      return {
+        measureNumber,
+        bbox: getBoundingBoxData((entry as any).boundingBox),
+        bboxMeasure: getBoundingBoxData((entry.parentMeasure as any).boundingBox),
+        yPos: (entry.parentMeasure as any).parentMusicSystem.boundingBox.absolutePosition.y,
+      };
     });
     data.sort((a, b) => {
       if (a.bbox.x < b.bbox.x) {
@@ -56,9 +65,8 @@ export const getPlayheadAnchorData = (
     ticks = ppq * 4 * realValue;
     // console.log("realValue", realValue, ticks);
     // always get the first vertical graphical staff entry
-    const bbox = data[0].bbox;
-    const measureNumber = data[0].measureNumber;
-    return { startTicks: ticks, endTicks: 0, bbox, measureNumber };
+    const { bbox, bboxMeasure, measureNumber, yPos } = data[0];
+    return { startTicks: ticks, endTicks: 0, bbox, bboxMeasure, measureNumber, numPixels: 0, yPos, pixelsPerTick: 0 };
   });
 
   // console.log(anchorData);
@@ -140,6 +148,12 @@ export const getPlayheadAnchorData = (
     let a2 = result[i + 1];
     if (a2) {
       a1.endTicks = a2.startTicks;
+      a1.numPixels = a2.bbox.x - a1.bbox.x;
+      if (a2.yPos !== a1.yPos) {
+        // a1.numPixels = a1.bbox.width
+        a1.numPixels = a1.bboxMeasure.x + a1.bboxMeasure.width - a1.bbox.x;
+      }
+      a1.pixelsPerTick = a1.numPixels / (a1.endTicks - a1.startTicks);
     }
   }
 

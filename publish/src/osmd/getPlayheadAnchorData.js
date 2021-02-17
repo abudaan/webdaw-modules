@@ -59,7 +59,12 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
                 var numberOfMeasures = entry.parentMeasure.multiRestElement.number_of_measures;
                 console.log(measureNumber, numberOfMeasures);
             }
-            return { measureNumber: measureNumber, bbox: mapper3_1.getBoundingBoxData(entry.boundingBox) };
+            return {
+                measureNumber: measureNumber,
+                bbox: mapper3_1.getBoundingBoxData(entry.boundingBox),
+                bboxMeasure: mapper3_1.getBoundingBoxData(entry.parentMeasure.boundingBox),
+                yPos: entry.parentMeasure.parentMusicSystem.boundingBox.absolutePosition.y,
+            };
         });
         data.sort(function (a, b) {
             if (a.bbox.x < b.bbox.x) {
@@ -74,9 +79,8 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
         ticks = ppq * 4 * realValue;
         // console.log("realValue", realValue, ticks);
         // always get the first vertical graphical staff entry
-        var bbox = data[0].bbox;
-        var measureNumber = data[0].measureNumber;
-        return { startTicks: ticks, endTicks: 0, bbox: bbox, measureNumber: measureNumber };
+        var _a = data[0], bbox = _a.bbox, bboxMeasure = _a.bboxMeasure, measureNumber = _a.measureNumber, yPos = _a.yPos;
+        return { startTicks: ticks, endTicks: 0, bbox: bbox, bboxMeasure: bboxMeasure, measureNumber: measureNumber, numPixels: 0, yPos: yPos, pixelsPerTick: 0 };
     });
     // console.log(anchorData);
     // copy anchor data for all repeats
@@ -149,6 +153,12 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
         var a2 = result[i + 1];
         if (a2) {
             a1.endTicks = a2.startTicks;
+            a1.numPixels = a2.bbox.x - a1.bbox.x;
+            if (a2.yPos !== a1.yPos) {
+                // a1.numPixels = a1.bbox.width
+                a1.numPixels = a1.bboxMeasure.x + a1.bboxMeasure.width - a1.bbox.x;
+            }
+            a1.pixelsPerTick = a1.numPixels / (a1.endTicks - a1.startTicks);
         }
     }
     // result.forEach(d => {
