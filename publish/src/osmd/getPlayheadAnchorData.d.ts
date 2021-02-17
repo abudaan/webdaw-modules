@@ -10,6 +10,7 @@ export declare type AnchorData = {
     bboxMeasure: BBox;
     yPos: number;
     numPixels: number;
+    numTicks: number;
     pixelsPerTick: number;
     ghost: boolean;
 };

@@ -52,11 +52,11 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
     var measureStartTicks = osmd.Sheet.SourceMeasures.map(function (measure) {
         return ppq * measure.AbsoluteTimestamp.RealValue * 4;
     });
+    console.log(ppq);
     var anchorData = [];
-    var runningTicks = 0;
     osmd.GraphicSheet.VerticalGraphicalStaffEntryContainers.forEach(function (container) {
         var realValue = container.AbsoluteTimestamp.RealValue;
-        ppq * 4 * realValue;
+        var runningTicks = ppq * 4 * realValue;
         var data = [];
         container.StaffEntries.forEach(function (entry) {
             var measureNumber = entry.parentMeasure.MeasureNumber;
@@ -69,13 +69,13 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
                 var numGhostAnchors = numberOfMeasures * Numerator_1;
                 var anchorTicks = diffTicks_1 / numGhostAnchors;
                 var anchorPixels = bboxMeasure.width / numGhostAnchors;
-                console.log("adasdasd", diffTicks_1, anchorTicks, anchorPixels, ppq);
                 var x = bboxMeasure.x;
                 for (var i = 0; i < numGhostAnchors; i++) {
                     data.push({
                         numPixels: anchorTicks,
                         startTicks: runningTicks + i * anchorTicks,
                         endTicks: 0,
+                        numTicks: 0,
                         pixelsPerTick: 0,
                         measureNumber: measureNumber,
                         bbox: {
@@ -89,15 +89,14 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
                         ghost: true,
                     });
                 }
-                runningTicks = ppq * 4 * realValue;
             }
             else {
-                runningTicks = ppq * 4 * realValue;
                 var bbox = mapper3_1.getBoundingBoxData(entry.boundingBox);
                 data.push({
                     numPixels: 0,
                     startTicks: runningTicks,
                     endTicks: 0,
+                    numTicks: 0,
                     pixelsPerTick: 0,
                     measureNumber: measureNumber,
                     bbox: bbox,
@@ -129,7 +128,6 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
                 var tmpX = data[i].bbox.x;
                 if (tmpX !== x) {
                     x = tmpX;
-                    console.log(i, data[i]);
                     anchorData.push(data[i]);
                 }
             }
@@ -231,6 +229,7 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
         }
         var diffTicks_2 = a1.endTicks - a1.startTicks;
         a1.pixelsPerTick = a1.numPixels / (a1.endTicks - a1.startTicks);
+        a1.numTicks = a1.endTicks - a1.startTicks;
     }
     // result.forEach(d => {
     //   console.log(d.measureNumber, d.ticks);

@@ -25,6 +25,7 @@ export type AnchorData = {
   bboxMeasure: BBox;
   yPos: number;
   numPixels: number;
+  numTicks: number;
   pixelsPerTick: number;
   ghost: boolean;
 };
@@ -38,12 +39,11 @@ export const getPlayheadAnchorData = (
   const measureStartTicks = osmd.Sheet.SourceMeasures.map((measure: SourceMeasure) => {
     return ppq * measure.AbsoluteTimestamp.RealValue * 4;
   });
-
+  console.log(ppq);
   const anchorData: AnchorData[] = [];
-  let runningTicks = 0;
   osmd.GraphicSheet.VerticalGraphicalStaffEntryContainers.forEach(container => {
     const realValue = container.AbsoluteTimestamp.RealValue;
-    ppq * 4 * realValue;
+    const runningTicks = ppq * 4 * realValue;
     const data: AnchorData[] = [];
 
     container.StaffEntries.forEach(entry => {
@@ -58,13 +58,13 @@ export const getPlayheadAnchorData = (
         const numGhostAnchors = numberOfMeasures * Numerator;
         const anchorTicks = diffTicks / numGhostAnchors;
         const anchorPixels = bboxMeasure.width / numGhostAnchors;
-        console.log("adasdasd", diffTicks, anchorTicks, anchorPixels, ppq);
         let x = bboxMeasure.x;
         for (let i = 0; i < numGhostAnchors; i++) {
           data.push({
             numPixels: anchorTicks,
             startTicks: runningTicks + i * anchorTicks,
             endTicks: 0,
+            numTicks: 0,
             pixelsPerTick: 0,
             measureNumber,
             bbox: {
@@ -78,14 +78,13 @@ export const getPlayheadAnchorData = (
             ghost: true,
           });
         }
-        runningTicks = ppq * 4 * realValue;
       } else {
-        runningTicks = ppq * 4 * realValue;
         const bbox = getBoundingBoxData((entry as any).boundingBox);
         data.push({
           numPixels: 0,
           startTicks: runningTicks,
           endTicks: 0,
+          numTicks: 0,
           pixelsPerTick: 0,
           measureNumber,
           bbox,
@@ -118,7 +117,6 @@ export const getPlayheadAnchorData = (
         const tmpX = data[i].bbox.x;
         if (tmpX !== x) {
           x = tmpX;
-          console.log(i, data[i]);
           anchorData.push(data[i]);
         }
       }
@@ -230,6 +228,7 @@ export const getPlayheadAnchorData = (
     }
     const diffTicks = a1.endTicks - a1.startTicks;
     a1.pixelsPerTick = a1.numPixels / (a1.endTicks - a1.startTicks);
+    a1.numTicks = a1.endTicks - a1.startTicks;
   }
 
   // result.forEach(d => {
