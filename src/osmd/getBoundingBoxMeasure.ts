@@ -19,7 +19,7 @@ export const calculateBoundingBoxMeasure = (staves?: GraphicalMeasure[]): Boundi
       measureNumber = s.MeasureNumber;
       const measure = s as any;
       if (typeof measure.multiRestElement !== "undefined") {
-        console.log("multi-bar", measure.multiRestElement.number_of_measures);
+        // console.log("multi-bar", measure.multiRestElement.number_of_measures);
       }
       // console.log(i, stave);
       ({ x, y, width, height } = stave);

@@ -38,7 +38,7 @@ exports.calculateBoundingBoxMeasure = function (staves) {
             measureNumber = s.MeasureNumber;
             var measure = s;
             if (typeof measure.multiRestElement !== "undefined") {
-                console.log("multi-bar", measure.multiRestElement.number_of_measures);
+                // console.log("multi-bar", measure.multiRestElement.number_of_measures);
             }
             // console.log(i, stave);
             (x = stave.x, y = stave.y, width = stave.width, height = stave.height);
