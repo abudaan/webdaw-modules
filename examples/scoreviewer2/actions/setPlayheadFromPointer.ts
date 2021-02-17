@@ -34,7 +34,7 @@ export const setPlayheadFromPointer = (e: PointerEvent) => {
       offset: { x: offsetX, y: offsetY },
     } = store.getState();
 
-    song.setPlayhead("ticks", anchor?.ticks);
+    song.setPlayhead("ticks", anchor?.startTicks);
 
     store.setState({
       currentPlayheadAnchor: anchor,

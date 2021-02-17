@@ -27,6 +27,7 @@ exports.calculateBoundingBoxMeasure = function (staves) {
     var y = 0;
     var width = 0;
     var height = 0;
+    var measureNumber = 0;
     // console.log("staves", ++i, staves);
     if (staves) {
         var yPos_1 = [];
@@ -34,6 +35,7 @@ exports.calculateBoundingBoxMeasure = function (staves) {
         filtered.forEach(function (s, i) {
             var stave = s.stave;
             // console.log(stave, stave.multiRestElement);
+            measureNumber = s.MeasureNumber;
             var measure = s;
             if (typeof measure.multiRestElement !== "undefined") {
                 console.log("multi-bar", measure.multiRestElement.number_of_measures);
@@ -56,6 +58,7 @@ exports.calculateBoundingBoxMeasure = function (staves) {
             bottom: yMin + height,
             left: x,
             right: x + width,
+            measureNumber: measureNumber,
         };
     }
     return { x: x, y: y, width: width, height: height, top: 0, left: 0, bottom: 0, right: 0 };

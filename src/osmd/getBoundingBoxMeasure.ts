@@ -8,6 +8,7 @@ export const calculateBoundingBoxMeasure = (staves?: GraphicalMeasure[]): Boundi
   let y: number = 0;
   let width: number = 0;
   let height: number = 0;
+  let measureNumber: number = 0;
   // console.log("staves", ++i, staves);
   if (staves) {
     const yPos: number[] = [];
@@ -15,6 +16,7 @@ export const calculateBoundingBoxMeasure = (staves?: GraphicalMeasure[]): Boundi
     filtered.forEach((s, i) => {
       const stave = (s as any).stave;
       // console.log(stave, stave.multiRestElement);
+      measureNumber = s.MeasureNumber;
       const measure = s as any;
       if (typeof measure.multiRestElement !== "undefined") {
         console.log("multi-bar", measure.multiRestElement.number_of_measures);
@@ -38,6 +40,7 @@ export const calculateBoundingBoxMeasure = (staves?: GraphicalMeasure[]): Boundi
       bottom: yMin + height,
       left: x,
       right: x + width,
+      measureNumber,
     };
   }
   return { x, y, width, height, top: 0, left: 0, bottom: 0, right: 0 };

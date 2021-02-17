@@ -16,7 +16,7 @@ export const getAnchorsFromPoint = (
   let nextAnchor: AnchorData | null = null;
   for (; i < playheadAnchors.length; i++) {
     anchor = playheadAnchors[i];
-    console.log(i, y, anchor.bbox.y, anchor.bbox.y + anchor.bbox.height);
+    // console.log(i, y, anchor.bbox.y, anchor.bbox.y + anchor.bbox.height);
     if (anchor.bbox.x >= x && y >= anchor.bbox.y + 50 && y <= anchor.bbox.y + anchor.bbox.height) {
       nextAnchor = anchor;
       const index = i === 0 ? 0 : i - 1;

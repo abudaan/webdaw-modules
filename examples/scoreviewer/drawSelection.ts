@@ -1,4 +1,4 @@
-import { store } from './store';
+import { store } from "./store";
 
 let div: HTMLDivElement;
 let scrollPosX: number;
@@ -17,13 +17,13 @@ const drawSelect = (e: MouseEvent) => {
 
 const stopSelect = (e: MouseEvent) => {
   // document.removeEventListener('mousedown', startSelect);
-  document.removeEventListener('mouseup', stopSelect);
-  document.removeEventListener('mousemove', drawSelect);
-  div.style.display = 'none';
-  div.style.left = '0px';
-  div.style.top = '0px';
-  div.style.width = '0px';
-  div.style.height = '0px';
+  document.removeEventListener("mouseup", stopSelect);
+  document.removeEventListener("mousemove", drawSelect);
+  div.style.display = "none";
+  div.style.left = "0px";
+  div.style.top = "0px";
+  div.style.width = "0px";
+  div.style.height = "0px";
   store.setState({
     selection: [
       selectionStartPoint.x,
@@ -37,14 +37,14 @@ const stopSelect = (e: MouseEvent) => {
 export const startSelect = (e: MouseEvent) => {
   selectionStartPoint.x = e.clientX;
   selectionStartPoint.y = e.clientY;
-  div.style.display = 'block';
-  document.addEventListener('mouseup', stopSelect);
-  document.addEventListener('mousemove', drawSelect);
+  div.style.display = "block";
+  document.addEventListener("mouseup", stopSelect);
+  document.addEventListener("mousemove", drawSelect);
 };
 
 export const setup = () => {
-  div = document.createElement('div');
-  div.id = 'selection';
+  div = document.createElement("div");
+  div.id = "selection";
   document.body.appendChild(div);
 
   ({
@@ -55,7 +55,7 @@ export const setup = () => {
     (pos: { x: number; y: number }) => {
       ({ x: scrollPosX, y: scrollPosY } = pos);
     },
-    state => state.scrollPos
+    (state) => state.scrollPos
   );
 
   return {

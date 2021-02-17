@@ -52,7 +52,7 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
     var measureStartTicks = osmd.Sheet.SourceMeasures.map(function (measure) {
         return ppq * measure.AbsoluteTimestamp.RealValue * 4;
     });
-    console.log(ppq);
+    // console.log(ppq);
     var anchorData = [];
     osmd.GraphicSheet.VerticalGraphicalStaffEntryContainers.forEach(function (container) {
         var realValue = container.AbsoluteTimestamp.RealValue;
@@ -234,7 +234,7 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
     // result.forEach(d => {
     //   console.log(d.measureNumber, d.ticks);
     // });
-    console.log(result);
+    // console.log(result);
     return { anchorData: result, measureStartTicks: result1 };
 };
 //# sourceMappingURL=getPlayheadAnchorData.js.map

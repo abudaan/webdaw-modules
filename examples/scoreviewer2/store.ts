@@ -1,17 +1,6 @@
-import { BoundingBox } from "webdaw-modules";
+import { BoundingBox, AnchorData } from "webdaw-modules";
 import create from "zustand/vanilla";
 import { midiFileName, midiFile, mxmlFile } from "./files";
-
-export type PlayheadAnchor = {
-  startTicks: number;
-  endTicks: number;
-  measureNumber: number;
-  bbox: { x: number; y: number; width: number; height: number };
-  bboxMeasure: { x: number; y: number; width: number; height: number };
-  numPixels: number;
-  yPos: number;
-  pixelsPerTick: number;
-};
 
 export type State = {
   offset: { x: number; y: number };
@@ -46,9 +35,9 @@ export type State = {
     diffPixels: number;
     pixelsPerTick: number;
   };
-  playheadAnchors: PlayheadAnchor[];
-  nextPlayheadAnchor: PlayheadAnchor | null;
-  currentPlayheadAnchor: PlayheadAnchor | null;
+  playheadAnchors: AnchorData[];
+  nextPlayheadAnchor: AnchorData | null;
+  currentPlayheadAnchor: AnchorData | null;
   measureStartTicks: number[];
   jumpToNextStave: boolean;
   lastMillis: number;

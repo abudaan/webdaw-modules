@@ -1,5 +1,5 @@
 import { OpenSheetMusicDisplay } from "opensheetmusicdisplay";
-import { BoundingBoxMeasure } from "../types";
+import { BoundingBox } from "../types";
 /**
  * finds all measures that have a overlap with the selection rectangle
  */
@@ -11,5 +11,5 @@ export declare const getSelectedMeasures: (osmd: OpenSheetMusicDisplay, start: {
     y: number;
 }) => {
     barNumbers: number[];
-    boundingBoxes: BoundingBoxMeasure[];
+    boundingBoxes: BoundingBox[];
 };

@@ -19,7 +19,7 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
     let anchor: AnchorData | null = null;
     for (let i = 0; i < playheadAnchors.length; i++) {
       anchor = playheadAnchors[i];
-      if (anchor.startTicks > ticks) {
+      if (anchor?.startTicks > ticks) {
         const index = i === 0 ? 0 : i - 1;
         anchor = playheadAnchors[index];
         break;

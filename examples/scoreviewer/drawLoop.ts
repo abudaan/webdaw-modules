@@ -1,5 +1,5 @@
 import {
-  BoundingBoxMeasure,
+  BoundingBox,
   getBoundingBoxesOfSelectedMeasures,
   getSelectedMeasures,
 } from "webdaw-modules";
@@ -9,7 +9,7 @@ import { store } from "./store";
 let div: HTMLDivElement;
 
 // draw rectangles on the score to indicate the set loop
-const drawLoop = (boundingBoxes: BoundingBoxMeasure[], offsetX: number, offsetY: number) => {
+const drawLoop = (boundingBoxes: BoundingBox[], offsetX: number, offsetY: number) => {
   // div.style.display = 'none';
   while (div.firstChild) {
     div.removeChild(div.firstChild);
@@ -55,7 +55,7 @@ export const setup = () => {
           y: selection[3] + scrollPosY - offsetY,
         }
       );
-      // console.log(barNumbers);
+      console.log(barNumbers);
       store.setState({ selectedMeasures: barNumbers });
 
       drawLoop(boundingBoxes, offsetX, offsetY);
