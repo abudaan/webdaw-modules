@@ -23,19 +23,22 @@ export const getNotesInStaff = (osmd: OpenSheetMusicDisplay, staffIndex: number,
   const notes: NoteInfo[] = [];
   let noteIndex = 0;
   let ticks = 0;
-  console.log(measures);
+  // console.log(measures);
   for (let i = 0; i < measures.length; i++) {
     const measure = measures[i];
     if (measure) {
+      const measureNumber = measure.MeasureNumber;
+      const { Numerator, Denominator } = osmd.Sheet.SourceMeasures[measureNumber - 1].ActiveTimeSignature;
+      const beatTicks = ppq / (Denominator / 4);
+
       for (let j = 0; j < measure.staffEntries.length; j++) {
         const staffEntry = measure.staffEntries[j];
         for (let k = 0; k < staffEntry.graphicalVoiceEntries.length; k++) {
           const voiceEntry = staffEntry.graphicalVoiceEntries[k];
           for (let l = 0; l < voiceEntry.notes.length; l++) {
             const note = voiceEntry.notes[l];
-            // const relPosInMeasure = (note.sourceNote as any).voiceEntry.timestamp.realValue;
-            const { Numerator: numerator, Denominator: denominator, WholeValue: wholeValue, RealValue: realValue } = note.sourceNote.Length;
-            console.log(ticks, numerator, denominator, wholeValue, realValue);
+            const realValue = staffEntry.getAbsoluteTimestamp().RealValue;
+            ticks = realValue * Numerator * beatTicks;
             if ((note.sourceNote as any).isRestFlag === false) {
               notes.push({
                 ticks,
@@ -48,11 +51,9 @@ export const getNotesInStaff = (osmd: OpenSheetMusicDisplay, staffIndex: number,
                 return notes;
               }
             }
-            ticks += ppq * (4 / denominator);
           }
         }
       }
-    } else {
     }
   }
   return notes;

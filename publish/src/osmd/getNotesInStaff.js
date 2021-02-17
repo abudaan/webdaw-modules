@@ -20,19 +20,21 @@ exports.getNotesInStaff = function (osmd, staffIndex, ppq, amount) {
     var notes = [];
     var noteIndex = 0;
     var ticks = 0;
-    console.log(measures);
+    // console.log(measures);
     for (var i = 0; i < measures.length; i++) {
         var measure = measures[i];
         if (measure) {
+            var measureNumber = measure.MeasureNumber;
+            var _a = osmd.Sheet.SourceMeasures[measureNumber - 1].ActiveTimeSignature, Numerator = _a.Numerator, Denominator = _a.Denominator;
+            var beatTicks = ppq / (Denominator / 4);
             for (var j = 0; j < measure.staffEntries.length; j++) {
                 var staffEntry = measure.staffEntries[j];
                 for (var k = 0; k < staffEntry.graphicalVoiceEntries.length; k++) {
                     var voiceEntry = staffEntry.graphicalVoiceEntries[k];
                     for (var l = 0; l < voiceEntry.notes.length; l++) {
                         var note = voiceEntry.notes[l];
-                        // const relPosInMeasure = (note.sourceNote as any).voiceEntry.timestamp.realValue;
-                        var _a = note.sourceNote.Length, numerator = _a.Numerator, denominator = _a.Denominator, wholeValue = _a.WholeValue, realValue = _a.RealValue;
-                        console.log(ticks, numerator, denominator, wholeValue, realValue);
+                        var realValue = staffEntry.getAbsoluteTimestamp().RealValue;
+                        ticks = realValue * Numerator * beatTicks;
                         if (note.sourceNote.isRestFlag === false) {
                             notes.push({
                                 ticks: ticks,
@@ -45,12 +47,9 @@ exports.getNotesInStaff = function (osmd, staffIndex, ppq, amount) {
                                 return notes;
                             }
                         }
-                        ticks += ppq * (4 / denominator);
                     }
                 }
             }
-        }
-        else {
         }
     }
     return notes;

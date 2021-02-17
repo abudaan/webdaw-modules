@@ -43,18 +43,19 @@ export const getPlayheadAnchorData = (
   const anchorData: AnchorData[] = [];
   osmd.GraphicSheet.VerticalGraphicalStaffEntryContainers.forEach(container => {
     const realValue = container.AbsoluteTimestamp.RealValue;
-    const runningTicks = ppq * 4 * realValue;
     const data: AnchorData[] = [];
 
     container.StaffEntries.forEach(entry => {
       const measureNumber = entry.parentMeasure.MeasureNumber;
       const bboxMeasure = measureBoundingBoxes[measureNumber - 1];
+      const { Numerator, Denominator } = osmd.Sheet.SourceMeasures[measureNumber - 1].ActiveTimeSignature;
+      const beatTicks = ppq / (Denominator / 4);
+      const runningTicks = beatTicks * Numerator * realValue;
       const yPos = (entry.parentMeasure as any).parentMusicSystem.boundingBox.absolutePosition.y * 10;
 
       if (typeof (entry.parentMeasure as any).multiRestElement !== "undefined") {
-        const { Numerator, Denominator } = osmd.Sheet.SourceMeasures[measureNumber - 1].ActiveTimeSignature;
         const numberOfMeasures = (entry.parentMeasure as any).multiRestElement.number_of_measures;
-        const diffTicks = numberOfMeasures * Numerator * (ppq / (Denominator / 4));
+        const diffTicks = numberOfMeasures * Numerator * beatTicks;
         const numGhostAnchors = numberOfMeasures * Numerator;
         const anchorTicks = diffTicks / numGhostAnchors;
         const anchorPixels = bboxMeasure.width / numGhostAnchors;

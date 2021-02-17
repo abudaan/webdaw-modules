@@ -56,17 +56,18 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
     var anchorData = [];
     osmd.GraphicSheet.VerticalGraphicalStaffEntryContainers.forEach(function (container) {
         var realValue = container.AbsoluteTimestamp.RealValue;
-        var runningTicks = ppq * 4 * realValue;
         var data = [];
         container.StaffEntries.forEach(function (entry) {
             var measureNumber = entry.parentMeasure.MeasureNumber;
             var bboxMeasure = measureBoundingBoxes[measureNumber - 1];
+            var _a = osmd.Sheet.SourceMeasures[measureNumber - 1].ActiveTimeSignature, Numerator = _a.Numerator, Denominator = _a.Denominator;
+            var beatTicks = ppq / (Denominator / 4);
+            var runningTicks = beatTicks * Numerator * realValue;
             var yPos = entry.parentMeasure.parentMusicSystem.boundingBox.absolutePosition.y * 10;
             if (typeof entry.parentMeasure.multiRestElement !== "undefined") {
-                var _a = osmd.Sheet.SourceMeasures[measureNumber - 1].ActiveTimeSignature, Numerator_1 = _a.Numerator, Denominator_1 = _a.Denominator;
                 var numberOfMeasures = entry.parentMeasure.multiRestElement.number_of_measures;
-                var diffTicks_1 = numberOfMeasures * Numerator_1 * (ppq / (Denominator_1 / 4));
-                var numGhostAnchors = numberOfMeasures * Numerator_1;
+                var diffTicks_1 = numberOfMeasures * Numerator * beatTicks;
+                var numGhostAnchors = numberOfMeasures * Numerator;
                 var anchorTicks = diffTicks_1 / numGhostAnchors;
                 var anchorPixels = bboxMeasure.width / numGhostAnchors;
                 var x = bboxMeasure.x;
