@@ -33,6 +33,7 @@ var __spread = (this && this.__spread) || function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getPlayheadAnchorData = exports.getTicksAtBar = void 0;
 var mapper3_1 = require("./mapper3");
+var getBoundingBoxMeasure_1 = require("./getBoundingBoxMeasure");
 exports.getTicksAtBar = function (parts) {
     parts.forEach(function (data) {
         var bar = 0;
@@ -47,6 +48,7 @@ exports.getTicksAtBar = function (parts) {
 };
 exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
     if (ppq === void 0) { ppq = 960; }
+    var measureBoundingBoxes = getBoundingBoxMeasure_1.getBoundingBoxMeasureAll(osmd);
     var measureStartTicks = osmd.Sheet.SourceMeasures.map(function (measure) {
         return ppq * measure.AbsoluteTimestamp.RealValue * 4;
     });
@@ -59,11 +61,15 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
                 var numberOfMeasures = entry.parentMeasure.multiRestElement.number_of_measures;
                 console.log(measureNumber, numberOfMeasures);
             }
+            var yPos = entry.parentMeasure.parentMusicSystem.boundingBox.absolutePosition.y * 10;
+            var bbox = mapper3_1.getBoundingBoxData(entry.boundingBox);
+            // console.log(yPos);
             return {
                 measureNumber: measureNumber,
-                bbox: mapper3_1.getBoundingBoxData(entry.boundingBox),
-                bboxMeasure: mapper3_1.getBoundingBoxData(entry.parentMeasure.boundingBox),
-                yPos: entry.parentMeasure.parentMusicSystem.boundingBox.absolutePosition.y,
+                bbox: bbox,
+                // bboxMeasure: getBoundingBoxData((entry.parentMeasure as any).boundingBox),
+                bboxMeasure: measureBoundingBoxes[measureNumber - 1],
+                yPos: yPos,
             };
         });
         data.sort(function (a, b) {
@@ -148,22 +154,6 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
         }
         return 0;
     });
-    for (var i = 0; i < result.length; i++) {
-        var a1 = result[i];
-        var a2 = result[i + 1];
-        if (a2) {
-            a1.endTicks = a2.startTicks;
-            a1.numPixels = a2.bbox.x - a1.bbox.x;
-            if (a2.yPos !== a1.yPos) {
-                // a1.numPixels = a1.bbox.width
-                a1.numPixels = a1.bboxMeasure.x + a1.bboxMeasure.width - a1.bbox.x;
-            }
-            a1.pixelsPerTick = a1.numPixels / (a1.endTicks - a1.startTicks);
-        }
-    }
-    // result.forEach(d => {
-    //   console.log(d.measureNumber, d.ticks);
-    // });
     var result1 = [];
     var currentMeasureNumber = 0;
     result.forEach(function (r) {
@@ -177,7 +167,27 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
     var _b = osmd.Sheet.SourceMeasures[osmd.Sheet.SourceMeasures.length - 1].ActiveTimeSignature, Numerator = _b.Numerator, Denominator = _b.Denominator;
     var lastTicks = result1[result1.length - 1] + Numerator * (4 / Denominator) * 960;
     result1.push(lastTicks);
-    result[result.length - 1].endTicks = lastTicks;
+    for (var i = 0; i < result.length; i++) {
+        var a1 = result[i];
+        var a2 = result[i + 1];
+        if (a2) {
+            a1.endTicks = a2.startTicks;
+            a1.numPixels = a2.bbox.x - a1.bbox.x;
+            if (a2.yPos !== a1.yPos) {
+                // a1.numPixels = a1.bbox.width
+                a1.numPixels = a1.bboxMeasure.x + a1.bboxMeasure.width - a1.bbox.x;
+            }
+        }
+        else {
+            a1.endTicks = lastTicks;
+            a1.numPixels = a1.bboxMeasure.x + a1.bboxMeasure.width - a1.bbox.x;
+        }
+        var diffTicks_1 = a1.endTicks - a1.startTicks;
+        a1.pixelsPerTick = a1.numPixels / (a1.endTicks - a1.startTicks);
+    }
+    // result.forEach(d => {
+    //   console.log(d.measureNumber, d.ticks);
+    // });
     console.log(result);
     return { anchorData: result, measureStartTicks: result1 };
 };

@@ -21,7 +21,6 @@ var __spread = (this && this.__spread) || function () {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getBoundingBoxMeasureAll = exports.getBoundingBoxMeasure = exports.calculateBoundingBoxMeasure = void 0;
-// generic util methods, will become part of WebDAW
 var i = 0;
 exports.calculateBoundingBoxMeasure = function (staves) {
     var x = 0;

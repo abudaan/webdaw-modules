@@ -2,7 +2,6 @@ import { GraphicalMeasure, OpenSheetMusicDisplay } from "opensheetmusicdisplay";
 import { hasOverlap } from "../util/2d";
 import { BoundingBox } from "../types";
 
-// generic util methods, will become part of WebDAW
 let i = 0;
 export const calculateBoundingBoxMeasure = (staves?: GraphicalMeasure[]): BoundingBox => {
   let x: number = 0;

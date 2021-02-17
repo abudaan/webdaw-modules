@@ -35,15 +35,13 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
 
     // calculate the speed of the playhead based on the distance between the anchors
     const x = anchor.bbox.x + (ticks - anchor.startTicks) * anchor.pixelsPerTick;
-    const { bar: scoreBar } = scorePositionFromSong(repeats, anchor.measureNumber);
-    const { y, height } = boundingBoxesMeasures[scoreBar - 1];
 
     store.setState({
       playhead: {
         ...playhead,
         x: x + offsetX - playheadOffsetX,
-        y: y + offsetY,
-        height,
+        y: anchor.yPos + offsetY,
+        height: anchor.bboxMeasure.height,
       },
       currentPlayheadAnchor: anchor,
     });

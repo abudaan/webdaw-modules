@@ -2,6 +2,7 @@ import { OpenSheetMusicDisplay, SourceMeasure } from "opensheetmusicdisplay";
 import { getBoundingBoxData } from "./mapper3";
 import { PartData } from "../musicxml/parser";
 import { BBox } from "../types";
+import { getBoundingBoxMeasureAll } from "./getBoundingBoxMeasure";
 
 export const getTicksAtBar = (parts: PartData[]) => {
   parts.forEach(data => {
@@ -32,6 +33,7 @@ export const getPlayheadAnchorData = (
   repeats: number[][],
   ppq: number = 960
 ): { anchorData: AnchorData[]; measureStartTicks: number[] } => {
+  const measureBoundingBoxes = getBoundingBoxMeasureAll(osmd);
   const measureStartTicks = osmd.Sheet.SourceMeasures.map((measure: SourceMeasure) => {
     return ppq * measure.AbsoluteTimestamp.RealValue * 4;
   });
@@ -45,11 +47,15 @@ export const getPlayheadAnchorData = (
         const numberOfMeasures = (entry.parentMeasure as any).multiRestElement.number_of_measures;
         console.log(measureNumber, numberOfMeasures);
       }
+      const yPos = (entry.parentMeasure as any).parentMusicSystem.boundingBox.absolutePosition.y * 10;
+      const bbox = getBoundingBoxData((entry as any).boundingBox);
+      // console.log(yPos);
       return {
         measureNumber,
-        bbox: getBoundingBoxData((entry as any).boundingBox),
-        bboxMeasure: getBoundingBoxData((entry.parentMeasure as any).boundingBox),
-        yPos: (entry.parentMeasure as any).parentMusicSystem.boundingBox.absolutePosition.y,
+        bbox,
+        // bboxMeasure: getBoundingBoxData((entry.parentMeasure as any).boundingBox),
+        bboxMeasure: measureBoundingBoxes[measureNumber - 1],
+        yPos,
       };
     });
     data.sort((a, b) => {
@@ -143,24 +149,6 @@ export const getPlayheadAnchorData = (
     return 0;
   });
 
-  for (let i = 0; i < result.length; i++) {
-    let a1 = result[i];
-    let a2 = result[i + 1];
-    if (a2) {
-      a1.endTicks = a2.startTicks;
-      a1.numPixels = a2.bbox.x - a1.bbox.x;
-      if (a2.yPos !== a1.yPos) {
-        // a1.numPixels = a1.bbox.width
-        a1.numPixels = a1.bboxMeasure.x + a1.bboxMeasure.width - a1.bbox.x;
-      }
-      a1.pixelsPerTick = a1.numPixels / (a1.endTicks - a1.startTicks);
-    }
-  }
-
-  // result.forEach(d => {
-  //   console.log(d.measureNumber, d.ticks);
-  // });
-
   const result1: number[] = [];
   let currentMeasureNumber = 0;
   result.forEach(r => {
@@ -175,7 +163,28 @@ export const getPlayheadAnchorData = (
   const { Numerator, Denominator } = osmd.Sheet.SourceMeasures[osmd.Sheet.SourceMeasures.length - 1].ActiveTimeSignature;
   const lastTicks = result1[result1.length - 1] + Numerator * (4 / Denominator) * 960;
   result1.push(lastTicks);
-  result[result.length - 1].endTicks = lastTicks;
+
+  for (let i = 0; i < result.length; i++) {
+    let a1 = result[i];
+    let a2 = result[i + 1];
+    if (a2) {
+      a1.endTicks = a2.startTicks;
+      a1.numPixels = a2.bbox.x - a1.bbox.x;
+      if (a2.yPos !== a1.yPos) {
+        // a1.numPixels = a1.bbox.width
+        a1.numPixels = a1.bboxMeasure.x + a1.bboxMeasure.width - a1.bbox.x;
+      }
+    } else {
+      a1.endTicks = lastTicks;
+      a1.numPixels = a1.bboxMeasure.x + a1.bboxMeasure.width - a1.bbox.x;
+    }
+    const diffTicks = a1.endTicks - a1.startTicks;
+    a1.pixelsPerTick = a1.numPixels / (a1.endTicks - a1.startTicks);
+  }
+
+  // result.forEach(d => {
+  //   console.log(d.measureNumber, d.ticks);
+  // });
 
   console.log(result);
 

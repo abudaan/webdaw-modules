@@ -113,9 +113,9 @@ export const setPlayhead = (e: PointerEvent) => {
     if (anchor === null) {
       console.log("setPlayhead -> anchor is null");
     }
-    song.setPlayhead("ticks", anchor === null ? 0 : anchor.ticks);
+    song.setPlayhead("ticks", anchor === null ? 0 : anchor.startTicks);
 
-    const diffTicks = nextAnchor.ticks - anchor.ticks;
+    const diffTicks = nextAnchor.startTicks - anchor.startTicks;
     const diffPixels = nextAnchor.bbox.x - anchor.bbox.x;
     const pixelsPerTick = diffPixels / diffTicks;
     // console.log(pixelsPerTick, diffTicks, diffPixels, anchor, nextAnchor);
