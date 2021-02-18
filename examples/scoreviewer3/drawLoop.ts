@@ -56,15 +56,16 @@ export const setup = () => {
           y: selection[3] + scrollPosY - offsetY,
         }
       );
+      // WIP: improve anchor positions in custom loops
       // console.log(barNumbers);
-      const { repeats, ppq } = store.getState();
-      const clone = [...repeats];
-      clone.push({ start: barNumbers[0], end: barNumbers[1], active: true, id: "loop" });
-      const { anchorData } = getPlayheadAnchorData(getOSMD(), repeats, ppq);
+      // const { repeats, ppq } = store.getState();
+      // const clone = [...repeats];
+      // clone.push({ start: barNumbers[0], end: barNumbers[1], active: true, id: "loop" });
+      // const { anchorData } = getPlayheadAnchorData(getOSMD(), repeats, ppq);
       store.setState({
         selectedMeasures: barNumbers,
         // repeats: clone,
-        playheadAnchors: anchorData,
+        // playheadAnchors: anchorData,
       });
 
       drawLoop(boundingBoxes, offsetX, offsetY);
