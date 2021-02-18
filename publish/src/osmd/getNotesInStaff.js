@@ -33,7 +33,13 @@ var __spread = (this && this.__spread) || function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getNotesInStaff = void 0;
 /**
- * @param {NotesInStaffArgs} args
+ * @param {Object} args
+ * @param {OpenSheetMusicDisplay} args.osmd
+ * @param {number} args.staffIndex
+ * @param {RepeatDate} args.repeats
+ * @param {number} [args.ppq] - default 960
+ * @param {number} [args.amount] - default 100
+ * @param {number} [args.start] - default 0
  *
  * The returned notes are objects that contain the ticks value, the MIDI note number and the measure index.
  * Passing a value for ppq affects the ticks values of the notes, this is handy if you need to match tick values

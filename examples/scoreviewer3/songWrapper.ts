@@ -81,6 +81,8 @@ export const setup = async (): Promise<{ cleanup: () => void }> => {
         const { barSong: rightBar } = songPositionFromScore(repeats, Math.max(...measures) + 1);
         const rightPos = song.getPosition("barsbeats", rightBar, 1, 1, 0);
 
+        console.log(leftPos, rightPos);
+
         song.setLeftLocator("ticks", leftPos.ticks);
         song.setRightLocator("ticks", rightPos.ticks);
         song.setPlayhead("ticks", leftPos.ticks);

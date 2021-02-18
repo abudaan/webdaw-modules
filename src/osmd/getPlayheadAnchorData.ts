@@ -128,6 +128,7 @@ export const getPlayheadAnchorData = (
 
   // copy anchor data for all repeats
   let diffTicks = 0;
+  let diffBars = 0;
   const copies: AnchorData[] = [];
   for (let i = 0; i < repeats.length; i++) {
     const { start, end } = repeats[i];
@@ -135,13 +136,14 @@ export const getPlayheadAnchorData = (
     const maxTicks = measureStartTicks[end];
     // console.log(min, max, minTicks, maxTicks);
     diffTicks += maxTicks - minTicks;
+    diffBars += end - (start - 1);
     // console.log(min, max, minTicks, maxTicks, diffTicks);
     for (let j = 0; j < anchorData.length; j++) {
       const anchor = anchorData[j];
       if (anchor.measureNumber >= start && anchor.measureNumber <= end) {
         const clone = { ...anchor };
         clone.startTicks += diffTicks;
-        clone.measureNumber += start - (end - 1);
+        clone.measureNumber += diffBars;
         copies.push(clone);
       }
     }
@@ -157,6 +159,7 @@ export const getPlayheadAnchorData = (
     let diffBars = 0;
     for (let i = 0; i < repeats.length; i++) {
       const { start, end } = repeats[i];
+      console.log(start, end);
       const minTicks = measureStartTicks[start - 1];
       const maxTicks = measureStartTicks[end];
       diffTicks += maxTicks - minTicks;
