@@ -20,15 +20,22 @@ export type PartData = {
   events: MIDIEvent[];
 };
 
-export type Repeat = {
+type Repeat = {
   bar: number;
   type: string;
 }[];
 
+export type RepeatData = {
+  start: number;
+  end: number;
+  active: boolean;
+  id: string;
+};
+
 export type ParsedMusicXML = {
   ppq: number;
   parts: PartData[];
-  repeats: number[][];
+  repeats: RepeatData[];
   initialTempo: number;
   initialNumerator: number;
   initialDenominator: number;
@@ -62,13 +69,7 @@ const parsePartWise = (xmlDoc: XMLDocument, ppq: number = 960): ParsedMusicXML =
   //   xmlDoc.ownerDocument === null ? xmlDoc.documentElement : xmlDoc.ownerDocument.documentElement
   // );
   const nsResolver = xmlDoc.createNSResolver(xmlDoc.documentElement);
-  const partIterator = xmlDoc.evaluate(
-    "//score-part",
-    xmlDoc,
-    nsResolver,
-    XPathResult.ANY_TYPE,
-    null
-  );
+  const partIterator = xmlDoc.evaluate("//score-part", xmlDoc, nsResolver, XPathResult.ANY_TYPE, null);
   const parts: PartData[] = [];
   const tiedNotes: { [id: string]: number } = {};
   // const repeats: Repeat = [{ bar: 1, type: "forward" }];
@@ -88,13 +89,7 @@ const parsePartWise = (xmlDoc: XMLDocument, ppq: number = 960): ParsedMusicXML =
     const instrument = getInstrument(xmlDoc, partNode, nsResolver);
     parts.push({ id: partId, name: partName, volume, instrument, events: [] });
 
-    const measureIterator = xmlDoc.evaluate(
-      '//part[@id="' + partId + '"]/measure',
-      partNode,
-      nsResolver,
-      XPathResult.ANY_TYPE,
-      null
-    );
+    const measureIterator = xmlDoc.evaluate('//part[@id="' + partId + '"]/measure', partNode, nsResolver, XPathResult.ANY_TYPE, null);
 
     let ticks = 0;
     let tmp: any;
@@ -131,13 +126,7 @@ const parsePartWise = (xmlDoc: XMLDocument, ppq: number = 960): ParsedMusicXML =
       }
 
       // get all notes and backups
-      const noteIterator = xmlDoc.evaluate(
-        "*[self::note or self::backup or self::forward]",
-        measureNode,
-        nsResolver,
-        XPathResult.ANY_TYPE,
-        null
-      );
+      const noteIterator = xmlDoc.evaluate("*[self::note or self::backup or self::forward]", measureNode, nsResolver, XPathResult.ANY_TYPE, null);
       let noteNode: Node | null;
       while ((noteNode = noteIterator.iterateNext())) {
         // console.log(noteNode);
@@ -148,22 +137,10 @@ const parsePartWise = (xmlDoc: XMLDocument, ppq: number = 960): ParsedMusicXML =
 
         let tieStart = false;
         let tieStop = false;
-        const tieIterator = xmlDoc.evaluate(
-          "tie",
-          noteNode,
-          nsResolver,
-          XPathResult.ANY_TYPE,
-          null
-        );
+        const tieIterator = xmlDoc.evaluate("tie", noteNode, nsResolver, XPathResult.ANY_TYPE, null);
         let tieNode: Node | null;
         while ((tieNode = tieIterator.iterateNext())) {
-          const tieType = xmlDoc.evaluate(
-            "@type",
-            tieNode,
-            nsResolver,
-            XPathResult.STRING_TYPE,
-            null
-          ).stringValue;
+          const tieType = xmlDoc.evaluate("@type", tieNode, nsResolver, XPathResult.STRING_TYPE, null).stringValue;
           if (tieType === "start") {
             tieStart = true;
           } else if (tieType === "stop") {
@@ -171,79 +148,29 @@ const parsePartWise = (xmlDoc: XMLDocument, ppq: number = 960): ParsedMusicXML =
           }
         }
 
-        const rest = xmlDoc.evaluate(
-          "rest",
-          noteNode,
-          nsResolver,
-          XPathResult.FIRST_ORDERED_NODE_TYPE,
-          null
-        ).singleNodeValue;
+        const rest = xmlDoc.evaluate("rest", noteNode, nsResolver, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 
-        const chord = xmlDoc.evaluate(
-          "chord",
-          noteNode,
-          nsResolver,
-          XPathResult.FIRST_ORDERED_NODE_TYPE,
-          null
-        ).singleNodeValue;
+        const chord = xmlDoc.evaluate("chord", noteNode, nsResolver, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 
-        const grace = xmlDoc.evaluate(
-          "grace",
-          noteNode,
-          nsResolver,
-          XPathResult.FIRST_ORDERED_NODE_TYPE,
-          null
-        ).singleNodeValue;
+        const grace = xmlDoc.evaluate("grace", noteNode, nsResolver, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 
         if (rest !== null) {
-          noteDuration = xmlDoc.evaluate(
-            "duration",
-            noteNode,
-            nsResolver,
-            XPathResult.NUMBER_TYPE,
-            null
-          ).numberValue;
+          noteDuration = xmlDoc.evaluate("duration", noteNode, nsResolver, XPathResult.NUMBER_TYPE, null).numberValue;
           ticks += (noteDuration / divisions) * ppq;
           // console.log("rest", ticks);
         } else if (noteNode.nodeName === "note" && grace === null) {
-          const step = xmlDoc.evaluate(
-            "pitch/step",
-            noteNode,
-            nsResolver,
-            XPathResult.STRING_TYPE,
-            null
-          ).stringValue;
-          const alter = xmlDoc.evaluate(
-            "pitch/alter",
-            noteNode,
-            nsResolver,
-            XPathResult.NUMBER_TYPE,
-            null
-          ).numberValue;
-          const octave = xmlDoc.evaluate(
-            "pitch/octave",
-            noteNode,
-            nsResolver,
-            XPathResult.NUMBER_TYPE,
-            null
-          ).numberValue;
-          tmp = xmlDoc.evaluate("voice", noteNode, nsResolver, XPathResult.NUMBER_TYPE, null)
-            .numberValue;
+          const step = xmlDoc.evaluate("pitch/step", noteNode, nsResolver, XPathResult.STRING_TYPE, null).stringValue;
+          const alter = xmlDoc.evaluate("pitch/alter", noteNode, nsResolver, XPathResult.NUMBER_TYPE, null).numberValue;
+          const octave = xmlDoc.evaluate("pitch/octave", noteNode, nsResolver, XPathResult.NUMBER_TYPE, null).numberValue;
+          tmp = xmlDoc.evaluate("voice", noteNode, nsResolver, XPathResult.NUMBER_TYPE, null).numberValue;
           if (!isNaN(tmp)) {
             voice = tmp;
           }
-          tmp = xmlDoc.evaluate("staff", noteNode, nsResolver, XPathResult.NUMBER_TYPE, null)
-            .numberValue;
+          tmp = xmlDoc.evaluate("staff", noteNode, nsResolver, XPathResult.NUMBER_TYPE, null).numberValue;
           if (!isNaN(tmp)) {
             staff = tmp;
           }
-          noteDuration = xmlDoc.evaluate(
-            "duration",
-            noteNode,
-            nsResolver,
-            XPathResult.NUMBER_TYPE,
-            null
-          ).numberValue;
+          noteDuration = xmlDoc.evaluate("duration", noteNode, nsResolver, XPathResult.NUMBER_TYPE, null).numberValue;
           noteDurationTicks = (noteDuration / divisions) * ppq;
 
           // const noteType = xmlDoc.evaluate('type', noteNode, nsResolver, XPathResult.STRING_TYPE, null).stringValue;
@@ -330,24 +257,12 @@ const parsePartWise = (xmlDoc: XMLDocument, ppq: number = 960): ParsedMusicXML =
             //console.log('end', measureNumber, voice, noteNumber, tiedNotes);
           }
         } else if (noteNode.nodeName === "backup") {
-          noteDuration = xmlDoc.evaluate(
-            "duration",
-            noteNode,
-            nsResolver,
-            XPathResult.NUMBER_TYPE,
-            null
-          ).numberValue;
+          noteDuration = xmlDoc.evaluate("duration", noteNode, nsResolver, XPathResult.NUMBER_TYPE, null).numberValue;
           ticks -= (noteDuration / divisions) * ppq;
           // console.log("backup", ticks);
           //console.log(noteDuration, divisions);
         } else if (noteNode.nodeName === "forward") {
-          noteDuration = xmlDoc.evaluate(
-            "duration",
-            noteNode,
-            nsResolver,
-            XPathResult.NUMBER_TYPE,
-            null
-          ).numberValue;
+          noteDuration = xmlDoc.evaluate("duration", noteNode, nsResolver, XPathResult.NUMBER_TYPE, null).numberValue;
           ticks += (noteDuration / divisions) * ppq;
           // console.log('forward', ticks);
           //console.log(noteDuration, divisions);
@@ -356,7 +271,7 @@ const parsePartWise = (xmlDoc: XMLDocument, ppq: number = 960): ParsedMusicXML =
     }
   }
 
-  const repeats2: number[][] = [];
+  const repeats2: [number, number][] = [];
   let j: number = -1;
   if (repeats.length && repeats[0].type !== "forward") {
     repeats = [{ type: "forward", bar: 1 }, ...repeats];
@@ -382,17 +297,29 @@ const parsePartWise = (xmlDoc: XMLDocument, ppq: number = 960): ParsedMusicXML =
   filtered.forEach((t, i) => {
     if (t.type === "forward") {
       j++;
-      repeats2[j] = [t.bar];
+      repeats2[j] = [t.bar, -1];
     } else if (t.type === "backward") {
-      repeats2[j].push(t.bar);
+      repeats2[j][1] = t.bar;
     }
   });
   // console.log(repeats, repeats2);
 
+  let i = 0;
+  const repeats3: RepeatData[] = [];
+  repeats2.forEach(([start, end]) => {
+    repeats3.push({
+      start,
+      end,
+      active: true,
+      id: `score-${i++}`,
+    });
+  });
+  // console.log(repeats3);
+
   return {
     ppq,
     parts,
-    repeats: repeats2,
+    repeats: repeats3,
     initialTempo,
     initialNumerator,
     initialDenominator,

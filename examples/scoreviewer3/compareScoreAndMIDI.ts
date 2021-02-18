@@ -7,7 +7,7 @@ export const compareScoreAndMIDI = () => {
   const osmd = getOSMD();
   const song = getSong();
   const notesScore = getNotesInStaff(osmd, 0, song.ppq, numNotesToTest);
-  const notesMidi: Heartbeat.MIDINote[] = song.tracks[1].notes;
+  const notesMidi: Heartbeat.MIDINote[] = song.tracks[0].notes;
   // console.log(notesScore);
   // console.log(notesMidi);
   let match = 0;

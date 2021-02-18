@@ -18,7 +18,7 @@ let song: Heartbeat.Song;
 let keyEditor: Heartbeat.KeyEditor;
 
 const updateSongPosition = () => {
-  setSongPosition(song.millis, song.ticks, song.bar);
+  setSongPosition(song.millis, song.ticks);
   raqId = requestAnimationFrame(updateSongPosition);
 };
 

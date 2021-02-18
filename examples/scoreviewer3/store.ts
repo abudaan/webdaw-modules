@@ -1,4 +1,4 @@
-import { BoundingBox, AnchorData } from "webdaw-modules";
+import { BoundingBox, AnchorData, RepeatData } from "webdaw-modules";
 import create from "zustand/vanilla";
 import { midiFileName, midiFile, mxmlFile } from "./files";
 
@@ -16,7 +16,7 @@ export type State = {
   selectedMeasures: number[];
   width: number;
   loaded: boolean;
-  repeats: [number, number, boolean][];
+  repeats: RepeatData[];
   initialTempo: number;
   boundingBoxesMeasures: BoundingBox[];
   playhead: {

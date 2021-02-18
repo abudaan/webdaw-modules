@@ -21,7 +21,7 @@ export const setup = () => {
     },
     (state) => state.songState
   );
-
+  /*
   const unsub2 = store.subscribe(
     (loaded) => {
       if (loaded) {
@@ -49,7 +49,7 @@ export const setup = () => {
     },
     (state) => state.loaded
   );
-
+*/
   btnPlay.addEventListener("click", () => {
     const state = store.getState().songState;
     if (state === "play") {
@@ -70,7 +70,7 @@ export const setup = () => {
   return {
     cleanup: () => {
       unsub1();
-      unsub2();
+      // unsub2();
     },
   };
 };

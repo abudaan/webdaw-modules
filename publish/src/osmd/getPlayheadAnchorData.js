@@ -139,18 +139,18 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
     var diffTicks = 0;
     var copies = [];
     for (var i = 0; i < repeats.length; i++) {
-        var _a = __read(repeats[i], 2), min = _a[0], max = _a[1];
-        var minTicks = measureStartTicks[min - 1];
-        var maxTicks = measureStartTicks[max];
+        var _a = repeats[i], start = _a.start, end = _a.end;
+        var minTicks = measureStartTicks[start - 1];
+        var maxTicks = measureStartTicks[end];
         // console.log(min, max, minTicks, maxTicks);
         diffTicks += maxTicks - minTicks;
         // console.log(min, max, minTicks, maxTicks, diffTicks);
         for (var j = 0; j < anchorData.length; j++) {
             var anchor = anchorData[j];
-            if (anchor.measureNumber >= min && anchor.measureNumber <= max) {
+            if (anchor.measureNumber >= start && anchor.measureNumber <= end) {
                 var clone = __assign({}, anchor);
                 clone.startTicks += diffTicks;
-                clone.measureNumber += max - (min - 1);
+                clone.measureNumber += start - (end - 1);
                 copies.push(clone);
             }
         }
@@ -163,12 +163,12 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
         var diffTicks = 0;
         var diffBars = 0;
         for (var i = 0; i < repeats.length; i++) {
-            var _a = __read(repeats[i], 2), min = _a[0], max = _a[1];
-            var minTicks = measureStartTicks[min - 1];
-            var maxTicks = measureStartTicks[max];
+            var _a = repeats[i], start = _a.start, end = _a.end;
+            var minTicks = measureStartTicks[start - 1];
+            var maxTicks = measureStartTicks[end];
             diffTicks += maxTicks - minTicks;
-            diffBars += max - (min - 1);
-            if (measureNumber > max) {
+            diffBars += end - (start - 1);
+            if (measureNumber > end) {
                 clone.startTicks = startTicks + diffTicks;
                 clone.measureNumber = measureNumber + diffBars;
             }
