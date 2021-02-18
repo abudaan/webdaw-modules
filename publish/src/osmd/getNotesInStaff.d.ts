@@ -1,4 +1,4 @@
-import { OpenSheetMusicDisplay } from "opensheetmusicdisplay/build/dist/src";
+import { OpenSheetMusicDisplay } from "opensheetmusicdisplay";
 export declare type NoteInfo = {
     ticks: number;
     noteNumber: number;
@@ -14,4 +14,4 @@ export declare type NoteInfo = {
  * Passing a value for ppq affects the ticks values of the notes, this is handy if you need to match tick values
  * with a MIDI file that has a different ppq value then the score.
  */
-export declare const getNotesInStaff: (osmd: OpenSheetMusicDisplay, staffIndex: number, ppq?: number, amount?: number) => NoteInfo[];
+export declare const getNotesInStaff: (osmd: OpenSheetMusicDisplay, staffIndex: number, repeats: any, ppq?: number, amount?: number) => NoteInfo[];

@@ -11,7 +11,7 @@ exports.getNotesInStaff = void 0;
  * Passing a value for ppq affects the ticks values of the notes, this is handy if you need to match tick values
  * with a MIDI file that has a different ppq value then the score.
  */
-exports.getNotesInStaff = function (osmd, staffIndex, ppq, amount) {
+exports.getNotesInStaff = function (osmd, staffIndex, repeats, ppq, amount) {
     if (ppq === void 0) { ppq = 960; }
     if (amount === void 0) { amount = 100; }
     var measures = osmd.GraphicSheet.MeasureList.map(function (staves) {
