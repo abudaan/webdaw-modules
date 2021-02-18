@@ -27,9 +27,9 @@
 // export const midiFile = "../assets/s小放牛獨唱.mid";
 // export const mxmlFile = "../assets/s小放牛獨唱.musicxml";
 
-export const midiFileName = "test2";
-export const midiFile = "../assets/test2.mid";
-export const mxmlFile = "../assets/test2.musicxml";
+// export const midiFileName = "test2";
+// export const midiFile = "../assets/test2.mid";
+// export const mxmlFile = "../assets/test2.musicxml";
 
 // export const midiFileName = "test3";
 // export const midiFile = "../assets/test3.mid";
@@ -48,9 +48,9 @@ export const mxmlFile = "../assets/test2.musicxml";
 // export const midiFile = "../assets/multibar_rest.mid";
 // export const mxmlFile = "../assets/multibar_rest.musicxml";
 
-// export const midiFileName = "multibar_rest2";
-// export const midiFile = "../assets/multibar_rest2.mid";
-// export const mxmlFile = "../assets/multibar_rest2.musicxml";
+export const midiFileName = "multibar_rest2";
+export const midiFile = "../assets/multibar_rest2.mid";
+export const mxmlFile = "../assets/multibar_rest2.musicxml";
 
 // export const midiFileName = "chopin_valse_op.64_no.1_minute_valse.musicxml";
 // export const midiFile = "../assets/chopin_valse_op.64_no.1_minute_valse.mid";
