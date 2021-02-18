@@ -38,7 +38,7 @@ export const parsedMusicXMLToSong = (data: ParsedMusicXML): Song | null => {
 
   sortMIDIEvents(events);
 
-  return {
+  return ({
     ppq,
     latency: 17, // value in milliseconds -> the length of a single frame @ 60Hz refresh rate
     bufferTime: 100, // value in milliseconds
@@ -56,5 +56,5 @@ export const parsedMusicXMLToSong = (data: ParsedMusicXML): Song | null => {
     initialNumerator,
     initialDenominator,
     repeats,
-  } as Song;
+  } as any) as Song;
 };

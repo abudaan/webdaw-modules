@@ -8,10 +8,16 @@ export const compareScoreAndMIDI = () => {
   const numNotesToTest = 10;
   const osmd = getOSMD();
   const song = getSong();
-  const notesScore = getNotesInStaff(osmd, repeats, 0, song.ppq, numNotesToTest);
+  const notesScore = getNotesInStaff({
+    osmd,
+    repeats,
+    staffIndex: 0,
+    ppq: song.ppq,
+    amount: numNotesToTest,
+  });
   const notesMidi: Heartbeat.MIDINote[] = song.tracks[0].notes;
-  console.log(notesScore);
-  console.log(notesMidi);
+  // console.log(notesScore);
+  // console.log(notesMidi);
   let match = 0;
   notesScore.forEach((n, i) => {
     const { ticks, noteNumber } = n;
