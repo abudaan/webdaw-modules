@@ -10,9 +10,9 @@
 // export const midiFile = "../assets/osmd_test.mid";
 // export const mxmlFile = "../assets/osmd_test.musicxml";
 
-// export const midiFileName = "Dona Nobis Pacem";
-// export const midiFile = "../assets/Dona Nobis Pacem.mid";
-// export const mxmlFile = "../assets/Dona Nobis Pacem.musicxml";
+export const midiFileName = "Dona Nobis Pacem";
+export const midiFile = "../assets/Dona Nobis Pacem.mid";
+export const mxmlFile = "../assets/Dona Nobis Pacem.musicxml";
 
 /* multiple-bar rest */
 // export const midiFileName = "4a2s-瀰度山歌";
@@ -48,9 +48,9 @@
 // export const midiFile = "../assets/multibar_rest.mid";
 // export const mxmlFile = "../assets/multibar_rest.musicxml";
 
-export const midiFileName = "multibar_rest2";
-export const midiFile = "../assets/multibar_rest2.mid";
-export const mxmlFile = "../assets/multibar_rest2.musicxml";
+// export const midiFileName = "multibar_rest2";
+// export const midiFile = "../assets/multibar_rest2.mid";
+// export const mxmlFile = "../assets/multibar_rest2.musicxml";
 
 // export const midiFileName = "chopin_valse_op.64_no.1_minute_valse.musicxml";
 // export const midiFile = "../assets/chopin_valse_op.64_no.1_minute_valse.mid";

@@ -30,7 +30,7 @@ const init = async () => {
   await setupSong();
   await setupScore(scoreDiv);
   setupControls();
-  setupPlayhead(false);
+  setupPlayhead(true);
   setupDrawLoop();
   setupDrawSelection();
   compareScoreAndMIDI();
