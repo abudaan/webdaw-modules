@@ -1,10 +1,5 @@
-import {
-  songPositionFromScore,
-  getMeasureAtPoint,
-  heartbeat_utils,
-  AnchorData,
-} from "webdaw-modules";
-import { getAnchorsFromPoint } from "./getAnchorsFromPoint";
+import { getMeasureAtPoint } from "webdaw-modules";
+import { getAnchorFromPoint } from "./getAnchorFromPoint";
 import { getSong } from "../songWrapper";
 import { store } from "../store";
 import { getOSMD } from "../scoreWrapper";
@@ -21,20 +16,17 @@ export const setPlayheadFromPointer = (e: PointerEvent) => {
   // console.log(data);
   if (data !== null) {
     const {
-      bbox: { x, y, height, width },
-      measureNumber,
+      bbox: { x, y, height },
       offset,
     } = data;
 
-    // // we need to add a little margin in case note are above the stave
-    // const margin = 50;
-    const [anchor, nextAnchor] = getAnchorsFromPoint(x + offset, y);
+    const anchor = getAnchorFromPoint(x + offset, y);
     const {
       playhead,
       offset: { x: offsetX, y: offsetY },
     } = store.getState();
 
-    song.setPlayhead("ticks", anchor?.startTicks);
+    song.setPlayhead("ticks", anchor === null ? 0 : anchor.startTicks);
 
     store.setState({
       currentPlayheadAnchor: anchor,

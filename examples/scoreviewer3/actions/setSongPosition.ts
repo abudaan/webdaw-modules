@@ -1,8 +1,7 @@
 import { AnchorData } from "webdaw-modules";
 import { store } from "../store";
-import { getSong } from "../songWrapper";
 
-export const setSongPosition = (millis: number, ticks: number, bar: number) => {
+export const setSongPosition = (millis: number, ticks: number) => {
   const {
     playhead,
     playheadAnchors,
@@ -10,10 +9,13 @@ export const setSongPosition = (millis: number, ticks: number, bar: number) => {
     offset: { x: offsetX, y: offsetY },
   } = store.getState();
 
-  const song = getSong();
   const playheadOffsetX = playhead.width / 2;
 
+  // here we check if the position in ticks has passed the current anchor, you can
+  // also perform this check in millis like so:
+  //
   // currentPlayheadAnchor === null || millis >= song.getPosition("ticks", currentPlayheadAnchor.endTicks).millis) {
+  //
   if (currentPlayheadAnchor === null || ticks >= currentPlayheadAnchor.endTicks) {
     // find the current anchor
     let anchor: AnchorData | null = null;

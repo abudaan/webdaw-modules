@@ -1,10 +1,10 @@
 import {
   parseMusicXML,
   loadMusicXMLFile,
-  getBoundingBoxMeasureAll,
   OpenSheetMusicDisplay,
   getPlayheadAnchorData,
 } from "webdaw-modules";
+import { updateBoundingBoxMeasures } from "./actions/updateBoundingBoxMeasures";
 import { store } from "./store";
 
 let scoreDiv: HTMLDivElement;
@@ -39,7 +39,7 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
   const unsub1 = store.subscribe(
     () => {
       render(osmd);
-      store.getState().updateBoundingBoxMeasures(getBoundingBoxMeasureAll(osmd));
+      updateBoundingBoxMeasures(osmd);
       const { anchorData, measureStartTicks } = getPlayheadAnchorData(osmd, repeats, ppq);
       store.setState({ playheadAnchors: anchorData, measureStartTicks });
     },
@@ -47,9 +47,8 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
   );
 
   render(osmd);
-  console.log(osmd);
-  const boxes = getBoundingBoxMeasureAll(osmd);
-  store.getState().updateBoundingBoxMeasures(boxes);
+  // console.log(osmd);
+  updateBoundingBoxMeasures(osmd);
   const { anchorData, measureStartTicks } = getPlayheadAnchorData(osmd, repeats, ppq);
   store.setState({ playheadAnchors: anchorData, measureStartTicks });
 

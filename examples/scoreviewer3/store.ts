@@ -10,42 +10,28 @@ export type State = {
   midiFileName: string;
   midiFile: string;
   mxmlFile: string;
-  ppq: number;
-  currentPosition: number;
   currentBarSong: number;
   currentBarScore: number;
-  currentBarStartX: number;
-  currentBarStartMillis: number;
-  currentBarDurationMillis: number;
-  pixelsPerMillisecond: number;
+  ppq: number;
   selectedMeasures: number[];
   width: number;
   loaded: boolean;
   repeats: [number, number, boolean][];
   initialTempo: number;
   boundingBoxesMeasures: BoundingBox[];
-  songPositionMillis: number;
-  playheadPositionPixels: number;
   playhead: {
     x: number;
     y: number;
     width: number;
     height: number;
-    diffTicks: number;
-    diffPixels: number;
-    pixelsPerTick: number;
   };
   playheadAnchors: AnchorData[];
-  nextPlayheadAnchor: AnchorData | null;
   currentPlayheadAnchor: AnchorData | null;
   measureStartTicks: number[];
-  jumpToNextStave: boolean;
-  lastMillis: number;
 };
 
 export type Reducers = {
   toggleSongState: () => void;
-  updateBoundingBoxMeasures: (bbox: BoundingBox[]) => void;
 };
 
 export type Store = State & Reducers;
@@ -62,11 +48,6 @@ export const store = create<Store>((set, get) => ({
   ppq: 480,
   currentBarSong: 1,
   currentBarScore: 1,
-  currentPosition: 0,
-  currentBarStartX: 0,
-  currentBarStartMillis: 0,
-  currentBarDurationMillis: 0,
-  pixelsPerMillisecond: 0,
   selectedMeasures: [],
   width: window.innerWidth,
   repeats: [],
@@ -77,9 +58,6 @@ export const store = create<Store>((set, get) => ({
     y: 0,
     width: 3,
     height: 0,
-    diffTicks: 0,
-    diffPixels: 0,
-    pixelsPerTick: 0,
   },
   toggleSongState: () => {
     set((state) => {
@@ -91,32 +69,8 @@ export const store = create<Store>((set, get) => ({
       return { songState: "play" };
     });
   },
-  updateBoundingBoxMeasures: (boundingBoxesMeasures) => {
-    set((state) => {
-      const {
-        playhead: { width },
-        currentBarScore,
-        offset: { x: offsetX, y: offsetY },
-      } = state;
-      const { x, y, height } = boundingBoxesMeasures[currentBarScore - 1];
-      return {
-        boundingBoxesMeasures,
-        playhead: {
-          ...state.playhead,
-          x: x + offsetX,
-          y: y + offsetY,
-          width,
-          height,
-        },
-      };
-    });
-  },
   boundingBoxesMeasures: [],
-  songPositionMillis: 0,
   playheadAnchors: [],
-  nextPlayheadAnchor: null,
   currentPlayheadAnchor: null,
   measureStartTicks: [],
-  jumpToNextStave: false,
-  lastMillis: 0,
 }));
