@@ -1,6 +1,6 @@
 import { OpenSheetMusicDisplay, SourceMeasure } from "opensheetmusicdisplay";
 import { getBoundingBoxData } from "./mapper3";
-import { PartData } from "../musicxml/parser";
+import { PartData, RepeatData } from "../musicxml/parser";
 import { BBox } from "../types";
 import { getBoundingBoxMeasureAll } from "./getBoundingBoxMeasure";
 
@@ -32,7 +32,7 @@ export type AnchorData = {
 
 export const getPlayheadAnchorData = (
   osmd: OpenSheetMusicDisplay,
-  repeats: number[][],
+  repeats: RepeatData[],
   ppq: number = 960
 ): { anchorData: AnchorData[]; measureStartTicks: number[] } => {
   const measureBoundingBoxes = getBoundingBoxMeasureAll(osmd);
@@ -130,18 +130,18 @@ export const getPlayheadAnchorData = (
   let diffTicks = 0;
   const copies: AnchorData[] = [];
   for (let i = 0; i < repeats.length; i++) {
-    const [min, max] = repeats[i];
-    const minTicks = measureStartTicks[min - 1];
-    const maxTicks = measureStartTicks[max];
+    const { start, end } = repeats[i];
+    const minTicks = measureStartTicks[start - 1];
+    const maxTicks = measureStartTicks[end];
     // console.log(min, max, minTicks, maxTicks);
     diffTicks += maxTicks - minTicks;
     // console.log(min, max, minTicks, maxTicks, diffTicks);
     for (let j = 0; j < anchorData.length; j++) {
       const anchor = anchorData[j];
-      if (anchor.measureNumber >= min && anchor.measureNumber <= max) {
+      if (anchor.measureNumber >= start && anchor.measureNumber <= end) {
         const clone = { ...anchor };
         clone.startTicks += diffTicks;
-        clone.measureNumber += max - (min - 1);
+        clone.measureNumber += start - (end - 1);
         copies.push(clone);
       }
     }
@@ -156,12 +156,12 @@ export const getPlayheadAnchorData = (
     let diffTicks = 0;
     let diffBars = 0;
     for (let i = 0; i < repeats.length; i++) {
-      const [min, max] = repeats[i];
-      const minTicks = measureStartTicks[min - 1];
-      const maxTicks = measureStartTicks[max];
+      const { start, end } = repeats[i];
+      const minTicks = measureStartTicks[start - 1];
+      const maxTicks = measureStartTicks[end];
       diffTicks += maxTicks - minTicks;
-      diffBars += max - (min - 1);
-      if (measureNumber > max) {
+      diffBars += end - (start - 1);
+      if (measureNumber > end) {
         clone.startTicks = startTicks + diffTicks;
         clone.measureNumber = measureNumber + diffBars;
       }

@@ -6,14 +6,16 @@ export declare type PartData = {
     volume: number;
     events: MIDIEvent[];
 };
-export declare type Repeat = {
-    bar: number;
-    type: string;
-}[];
+export declare type RepeatData = {
+    start: number;
+    end: number;
+    active: boolean;
+    id: string;
+};
 export declare type ParsedMusicXML = {
     ppq: number;
     parts: PartData[];
-    repeats: number[][];
+    repeats: RepeatData[];
     initialTempo: number;
     initialNumerator: number;
     initialDenominator: number;

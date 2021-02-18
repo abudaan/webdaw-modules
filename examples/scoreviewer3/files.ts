@@ -39,7 +39,7 @@ export const mxmlFile = "../assets/test2.musicxml";
 // export const midiFile = "../assets/pedal.mid";
 // export const mxmlFile = "../assets/pedal.musicxml";
 
-// mulitbar rest
+// multi-bar rest
 // export const midiFileName = "似火的心v5b(1)";
 // export const midiFile = "../assets/似火的心v5b(1).mid";
 // export const mxmlFile = "../assets/似火的心v5b(1).musicxml";

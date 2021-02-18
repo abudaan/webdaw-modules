@@ -142,13 +142,11 @@ var parsePartWise = function (xmlDoc, ppq) {
                     var step = xmlDoc.evaluate("pitch/step", noteNode, nsResolver, XPathResult.STRING_TYPE, null).stringValue;
                     var alter = xmlDoc.evaluate("pitch/alter", noteNode, nsResolver, XPathResult.NUMBER_TYPE, null).numberValue;
                     var octave = xmlDoc.evaluate("pitch/octave", noteNode, nsResolver, XPathResult.NUMBER_TYPE, null).numberValue;
-                    tmp = xmlDoc.evaluate("voice", noteNode, nsResolver, XPathResult.NUMBER_TYPE, null)
-                        .numberValue;
+                    tmp = xmlDoc.evaluate("voice", noteNode, nsResolver, XPathResult.NUMBER_TYPE, null).numberValue;
                     if (!isNaN(tmp)) {
                         voice = tmp;
                     }
-                    tmp = xmlDoc.evaluate("staff", noteNode, nsResolver, XPathResult.NUMBER_TYPE, null)
-                        .numberValue;
+                    tmp = xmlDoc.evaluate("staff", noteNode, nsResolver, XPathResult.NUMBER_TYPE, null).numberValue;
                     if (!isNaN(tmp)) {
                         staff = tmp;
                     }
@@ -272,17 +270,29 @@ var parsePartWise = function (xmlDoc, ppq) {
     filtered.forEach(function (t, i) {
         if (t.type === "forward") {
             j++;
-            repeats2[j] = [t.bar];
+            repeats2[j] = [t.bar, -1];
         }
         else if (t.type === "backward") {
-            repeats2[j].push(t.bar);
+            repeats2[j][1] = t.bar;
         }
     });
     // console.log(repeats, repeats2);
+    var i = 0;
+    var repeats3 = [];
+    repeats2.forEach(function (_a) {
+        var _b = __read(_a, 2), start = _b[0], end = _b[1];
+        repeats3.push({
+            start: start,
+            end: end,
+            active: true,
+            id: "score-" + i++,
+        });
+    });
+    // console.log(repeats3);
     return {
         ppq: ppq,
         parts: parts,
-        repeats: repeats2,
+        repeats: repeats3,
         initialTempo: initialTempo,
         initialNumerator: initialNumerator,
         initialDenominator: initialDenominator,

@@ -76,8 +76,9 @@ export const setup = (debug: boolean = true) => {
     (state) => state.loaded
   );
 
+  let unsub5 = () => {};
   if (debug) {
-    const unsub5 = store.subscribe(
+    unsub5 = store.subscribe(
       () => {
         drawDebug(store.getState().playheadAnchors.map((d) => d.bbox));
       },
@@ -91,6 +92,7 @@ export const setup = (debug: boolean = true) => {
       unsub2();
       unsub3();
       unsub4();
+      unsub5();
     },
   };
 };
