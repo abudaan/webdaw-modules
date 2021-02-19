@@ -45,15 +45,14 @@ See [index.d.ts](https://github.com/abudaan/webdaw-modules/blob/master/index.d.t
 To make it easier to use WebDAW together with heartbeat I have added the heartbeat code to WebDAW. You can now use heartbeat as a WebDAW module. I will gradually move functionality out of heartbeat into separate WebDAW modules. If you want to use heartbeat in your project you can simply do this like so:
 
 ```typescript
-import { heartbeat, Heartbeat } from 'webdaw-modules';
+import { heartbeat, Heartbeat } from "webdaw-modules";
 
 heartbeat.ready().then(() => {
   const song: Heartbeat.Song = heartbeat.createSong();
-})
-
+});
 ```
-So `heartbeat` (all lowercase) is the module and `Heartbeat` (with capital) is the namespace where all heartbeat typings live.
 
+So `heartbeat` (all lowercase) is the module and `Heartbeat` (with capital) is the namespace where all heartbeat typings live.
 
 ## About the name
 
@@ -67,7 +66,7 @@ Also I think the term webdaw, or cased like WebDAW, describes a concept, a way o
 
 - [basic](https://abudaan.github.io/webdaw-modules/examples/basic)
 - [musicxml](https://abudaan.github.io/webdaw-modules/examples/musicxml)
-- [scoreviewer (with OSMD)](https://abudaan.github.io/webdaw-modules/examples/scoreviewer)
+- [scoreviewer (with OSMD)](https://abudaan.github.io/webdaw-modules/examples/scoreviewer3)
 
 ## Webpack
 
