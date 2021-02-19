@@ -15,9 +15,9 @@
 // export const mxmlFile = "../assets/Dona Nobis Pacem.musicxml";
 
 /* multiple-bar rest */
-export const midiFileName = "4a2s-瀰度山歌";
-export const midiFile = "../assets/4a2s-瀰度山歌.mid";
-export const mxmlFile = "../assets/4a2s-瀰度山歌 (vocal score).xml";
+// export const midiFileName = "4a2s-瀰度山歌";
+// export const midiFile = "../assets/4a2s-瀰度山歌.mid";
+// export const mxmlFile = "../assets/4a2s-瀰度山歌 (vocal score).xml";
 
 // export const midiFileName = "04 3b中華色彩s-花非花 (vocal score)";
 // export const midiFile = "../assets/04 3b中華色彩s-花非花 (vocal score).mid";
@@ -52,21 +52,21 @@ export const mxmlFile = "../assets/4a2s-瀰度山歌 (vocal score).xml";
 // export const midiFile = "../assets/multibar_rest2.mid";
 // export const mxmlFile = "../assets/multibar_rest2.musicxml";
 
-// export const midiFileName = "chopin_valse_op.64_no.1_minute_valse.musicxml";
+// export const midiFileName = "chopin_valse_op.64_no.1_minute_valse";
 // export const midiFile = "../assets/chopin_valse_op.64_no.1_minute_valse.mid";
 // export const mxmlFile = "../assets/chopin_valse_op.64_no.1_minute_valse.musicxml";
 
-// export const midiFileName = "mozk545a_musescore";
-// export const midiFile = "../assets/mozk545a_musescore.mid";
-// export const mxmlFile = "../assets/mozk545a_musescore.musicxml";
+export const midiFileName = "mozk545a_musescore";
+export const midiFile = "../assets/mozk545a_musescore.mid";
+export const mxmlFile = "../assets/mozk545a_musescore.musicxml";
 
 // export const midiFileName = "spring";
 // export const midiFile = "../assets/spring.mid";
 // export const mxmlFile = "../assets/spring.xml";
 
-// export const midiFileName = 'mozk545a_2-bars';
-// export const midiFile = '../assets/mozk545a_2-bars.mid';
-// export const mxmlFile = '../assets/mozk545a_2-bars.musicxml';
+// export const midiFileName = "mozk545a_2-bars";
+// export const midiFile = "../assets/mozk545a_2-bars.mid";
+// export const mxmlFile = "../assets/mozk545a_2-bars.musicxml";
 
 // const midiFileName = 'mozk545a_2-bars_2-tracks';
 // const midiFile = '../assets/mozk545a_2-bars_2-tracks.mid';

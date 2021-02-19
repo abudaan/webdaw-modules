@@ -174,7 +174,7 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
         var diffBars = 0;
         for (var i = 0; i < repeats.length; i++) {
             var _a = repeats[i], start = _a.start, end = _a.end;
-            console.log(start, end);
+            // console.log(start, end);
             var minTicks = measureStartTicks[start - 1];
             var maxTicks = measureStartTicks[end];
             diffTicks += maxTicks - minTicks;

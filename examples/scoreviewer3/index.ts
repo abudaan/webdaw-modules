@@ -6,6 +6,7 @@ import { setup as setupScore } from "./scoreWrapper";
 import { setup as setupControls } from "./controls";
 import { setup as setupPlayhead } from "./playhead";
 import { setup as setupDrawLoop } from "./drawLoop";
+import { setup as setupDebugAnchor } from "./debug_anchor";
 import { setup as setupFollowScore } from "./followScore";
 import { setup as setupDrawSelection, startSelect } from "./drawSelection";
 import { compareScoreAndMIDI } from "./compareScoreAndMIDI";
@@ -32,10 +33,11 @@ const init = async () => {
   await setupScore(scoreDiv);
   setupControls();
   setupPlayhead(false);
+  // setupDebugAnchor();
   setupDrawLoop();
   setupDrawSelection();
   setupFollowScore();
-  compareScoreAndMIDI();
+  // compareScoreAndMIDI();
 
   window.addEventListener("resize", () => {
     store.setState({ width: window.innerWidth });
@@ -58,7 +60,7 @@ const init = async () => {
   });
 
   scoreDiv.addEventListener("mousedown", (e) => {
-    if (e.ctrlKey) {
+    if (e.altKey) {
       startSelect(e);
     } else {
       setPlayhead(e as PointerEvent);

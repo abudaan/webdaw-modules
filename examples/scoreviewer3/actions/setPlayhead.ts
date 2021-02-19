@@ -69,7 +69,7 @@ export const setPlayhead = (e: PointerEvent) => {
         const previousAnchor = playheadAnchors[index];
         // test if the pointer is inside the anchor bbox
         if (anchor.bbox.x > pointerX) {
-          // anchor is the first one in th next measure so choose the previous because
+          // anchor is the first one in the next measure so choose the previous because
           // we always select an anchor that is inside the measure that the user has clicked on
           if (anchor.measureNumber !== currentBarSong) {
             anchor = previousAnchor;

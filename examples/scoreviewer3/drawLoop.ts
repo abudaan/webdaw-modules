@@ -34,7 +34,7 @@ export const setup = () => {
   div.id = "selected-bars";
   document.body.appendChild(div);
   div.addEventListener("mousedown", (e) => {
-    if (e.shiftKey) {
+    if (e.altKey) {
       store.setState({ selection: [0, 0, 0, 0] });
     }
   });

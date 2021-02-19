@@ -167,7 +167,7 @@ export const getPlayheadAnchorData = (
     let diffBars = 0;
     for (let i = 0; i < repeats.length; i++) {
       const { start, end } = repeats[i];
-      console.log(start, end);
+      // console.log(start, end);
       const minTicks = measureStartTicks[start - 1];
       const maxTicks = measureStartTicks[end];
       diffTicks += maxTicks - minTicks;
