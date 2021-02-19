@@ -42,11 +42,11 @@ exports.songPositionFromScore = function (repeats, barScore) {
   */
     // console.log(newBar, hasRepeatedClone);
     var newBar = barScore;
-    console.log(repeats);
+    // console.log(repeats);
     for (var i = 0; i < repeats.length; i++) {
         var _a = repeats[i], start = _a.start, end = _a.end;
         var diffBar = end - (start - 1);
-        console.log(barScore, start, end, diffBar);
+        // console.log(barScore, start, end, diffBar);
         if (newBar > end) {
             newBar += diffBar;
         }

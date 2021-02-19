@@ -36,18 +36,27 @@ export const getPlayheadAnchorData = (
   ppq: number = 960
 ): { anchorData: AnchorData[]; measureStartTicks: number[] } => {
   const measureBoundingBoxes = getBoundingBoxMeasureAll(osmd);
+  // console.log(measureBoundingBoxes);
   const measureStartTicks = osmd.Sheet.SourceMeasures.map((measure: SourceMeasure) => {
     return ppq * measure.AbsoluteTimestamp.RealValue * 4;
   });
   // console.log(ppq);
+  let upbeat = false;
   const anchorData: AnchorData[] = [];
   osmd.GraphicSheet.VerticalGraphicalStaffEntryContainers.forEach(container => {
     const realValue = container.AbsoluteTimestamp.RealValue;
     const runningTicks = ppq * 4 * realValue;
     const data: AnchorData[] = [];
 
-    container.StaffEntries.forEach(entry => {
-      const measureNumber = entry.parentMeasure.MeasureNumber;
+    container.StaffEntries.forEach((entry, i) => {
+      let measureNumber = entry.parentMeasure.MeasureNumber;
+      if (measureNumber === 0 && upbeat === false) {
+        upbeat = true;
+      }
+      if (upbeat) {
+        measureNumber += 1;
+      }
+      // console.log(measureIndex);
       const bboxMeasure = measureBoundingBoxes[measureNumber - 1];
       const yPos = (entry.parentMeasure as any).parentMusicSystem.boundingBox.absolutePosition.y * 10;
 

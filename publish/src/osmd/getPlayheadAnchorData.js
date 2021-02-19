@@ -49,17 +49,26 @@ exports.getTicksAtBar = function (parts) {
 exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
     if (ppq === void 0) { ppq = 960; }
     var measureBoundingBoxes = getBoundingBoxMeasure_1.getBoundingBoxMeasureAll(osmd);
+    // console.log(measureBoundingBoxes);
     var measureStartTicks = osmd.Sheet.SourceMeasures.map(function (measure) {
         return ppq * measure.AbsoluteTimestamp.RealValue * 4;
     });
     // console.log(ppq);
+    var upbeat = false;
     var anchorData = [];
     osmd.GraphicSheet.VerticalGraphicalStaffEntryContainers.forEach(function (container) {
         var realValue = container.AbsoluteTimestamp.RealValue;
         var runningTicks = ppq * 4 * realValue;
         var data = [];
-        container.StaffEntries.forEach(function (entry) {
+        container.StaffEntries.forEach(function (entry, i) {
             var measureNumber = entry.parentMeasure.MeasureNumber;
+            if (measureNumber === 0 && upbeat === false) {
+                upbeat = true;
+            }
+            if (upbeat) {
+                measureNumber += 1;
+            }
+            // console.log(measureIndex);
             var bboxMeasure = measureBoundingBoxes[measureNumber - 1];
             var yPos = entry.parentMeasure.parentMusicSystem.boundingBox.absolutePosition.y * 10;
             if (typeof entry.parentMeasure.multiRestElement !== "undefined") {
@@ -70,16 +79,16 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
                 var anchorTicks = diffTicks_1 / numGhostAnchors;
                 var anchorPixels = bboxMeasure.width / numGhostAnchors;
                 var x = bboxMeasure.x;
-                for (var i = 0; i < numGhostAnchors; i++) {
+                for (var i_1 = 0; i_1 < numGhostAnchors; i_1++) {
                     data.push({
                         numPixels: anchorTicks,
-                        startTicks: runningTicks + i * anchorTicks,
+                        startTicks: runningTicks + i_1 * anchorTicks,
                         endTicks: 0,
                         numTicks: 0,
                         pixelsPerTick: 0,
                         measureNumber: measureNumber,
                         bbox: {
-                            x: x + i * anchorPixels,
+                            x: x + i_1 * anchorPixels,
                             y: bboxMeasure.y,
                             width: anchorPixels,
                             height: bboxMeasure.height,
