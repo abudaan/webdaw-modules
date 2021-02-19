@@ -33,6 +33,7 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
     return Promise.reject();
   }
   const { repeats, initialTempo } = parsed;
+  // console.log("repeats", repeats);
 
   store.setState({
     repeats,

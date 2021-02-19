@@ -107,6 +107,8 @@ export const setPlayhead = (e: PointerEvent) => {
       console.log("setPlayhead -> anchor is null");
       anchor = playheadAnchors[0];
     }
+    // const hbTicks = song.getPosition("barsbeats", anchor.measureNumber, 1, 1, 0).ticks;
+    // console.log("anchor", anchor.measureNumber, anchor.startTicks, hbTicks);
     song.setPlayhead("ticks", anchor === null ? 0 : anchor.startTicks);
 
     store.setState({

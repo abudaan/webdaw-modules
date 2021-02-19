@@ -46,9 +46,9 @@ exports.songPositionFromScore = function (repeats, barScore) {
     for (var i = 0; i < repeats.length; i++) {
         var _a = repeats[i], start = _a.start, end = _a.end;
         var diffBar = end - (start - 1);
-        // console.log(barScore, start, end, diffBar);
         if (newBar > end) {
             newBar += diffBar;
+            // console.log(barScore, newBar, start, end, diffBar);
         }
     }
     return { barSong: newBar };

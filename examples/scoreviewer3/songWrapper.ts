@@ -3,6 +3,7 @@ import {
   Heartbeat,
   heartbeat_utils,
   songPositionFromScore,
+  AnchorData,
 } from "webdaw-modules";
 import { stopSong } from "./actions/stopSong";
 import { store } from "./store";
@@ -92,6 +93,25 @@ export const setup = async (): Promise<{ cleanup: () => void }> => {
     },
     (state) => state.selectedMeasures
   );
+
+  // const unsub3 = store.subscribe(
+  //   (ticks: number[]) => {
+  //     ticks.forEach((t, i) => {
+  //       const hb = song.getPosition("barsbeats", i + 1, 1, 1, 0).ticks;
+  //       console.log(i + 1, t, hb, hb === t);
+  //     });
+  //   },
+  //   (state) => state.measureStartTicks
+  // );
+
+  // const unsub3 = store.subscribe(
+  //   (playheadAnchors: AnchorData[]) => {
+  //     playheadAnchors.forEach((a, i) => {
+  //       console.log(a.measureNumber, a.startTicks);
+  //     });
+  //   },
+  //   (state) => state.playheadAnchors
+  // );
 
   return {
     cleanup: () => {

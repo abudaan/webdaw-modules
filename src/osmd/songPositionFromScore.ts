@@ -46,9 +46,9 @@ export const songPositionFromScore = (repeats: RepeatData[], barScore: number): 
   for (let i = 0; i < repeats.length; i++) {
     const { start, end } = repeats[i];
     const diffBar = end - (start - 1);
-    // console.log(barScore, start, end, diffBar);
     if (newBar > end) {
       newBar += diffBar;
+      // console.log(barScore, newBar, start, end, diffBar);
     }
   }
 

@@ -36,10 +36,14 @@ export const getPlayheadAnchorData = (
   ppq: number = 960
 ): { anchorData: AnchorData[]; measureStartTicks: number[] } => {
   const measureBoundingBoxes = getBoundingBoxMeasureAll(osmd);
-  // console.log(measureBoundingBoxes);
+  // console.log("measureBoundingBoxes", measureBoundingBoxes);
   const measureStartTicks = osmd.Sheet.SourceMeasures.map((measure: SourceMeasure) => {
     return ppq * measure.AbsoluteTimestamp.RealValue * 4;
   });
+  const { Numerator, Denominator } = osmd.Sheet.SourceMeasures[osmd.Sheet.SourceMeasures.length - 1].ActiveTimeSignature;
+  measureStartTicks.push(measureStartTicks[measureStartTicks.length - 1] + Numerator * (4 / Denominator) * 960);
+  // console.log(measureStartTicks, measureStartTicks[73]);
+
   // console.log(ppq);
   let upbeat = false;
   const anchorData: AnchorData[] = [];
@@ -52,16 +56,18 @@ export const getPlayheadAnchorData = (
       let measureNumber = entry.parentMeasure.MeasureNumber;
       if (measureNumber === 0 && upbeat === false) {
         upbeat = true;
+        console.log("UPBEAT");
       }
       if (upbeat) {
         measureNumber += 1;
       }
-      // console.log(measureIndex);
-      const bboxMeasure = measureBoundingBoxes[measureNumber - 1];
+      const measureIndex = measureNumber - 1;
+      const bboxMeasure = measureBoundingBoxes[measureIndex];
+      // console.log(measureIndex, bboxMeasure);
       const yPos = (entry.parentMeasure as any).parentMusicSystem.boundingBox.absolutePosition.y * 10;
 
       if (typeof (entry.parentMeasure as any).multiRestElement !== "undefined") {
-        const { Numerator, Denominator } = osmd.Sheet.SourceMeasures[measureNumber - 1].ActiveTimeSignature;
+        const { Numerator, Denominator } = osmd.Sheet.SourceMeasures[measureIndex].ActiveTimeSignature;
         const numberOfMeasures = (entry.parentMeasure as any).multiRestElement.number_of_measures;
         const diffTicks = numberOfMeasures * Numerator * (ppq / (Denominator / 4));
         const numGhostAnchors = numberOfMeasures * Numerator;
@@ -142,7 +148,7 @@ export const getPlayheadAnchorData = (
     const { start, end } = repeats[i];
     const minTicks = measureStartTicks[start - 1];
     const maxTicks = measureStartTicks[end];
-    // console.log(min, max, minTicks, maxTicks);
+    // console.log(start, end, minTicks, maxTicks);
     diffTicks += maxTicks - minTicks;
     diffBars += end - (start - 1);
     // console.log(min, max, minTicks, maxTicks, diffTicks);
@@ -171,6 +177,7 @@ export const getPlayheadAnchorData = (
       const minTicks = measureStartTicks[start - 1];
       const maxTicks = measureStartTicks[end];
       diffTicks += maxTicks - minTicks;
+      // console.log(diffTicks);
       diffBars += end - (start - 1);
       if (measureNumber > end) {
         clone.startTicks = startTicks + diffTicks;
@@ -220,7 +227,7 @@ export const getPlayheadAnchorData = (
   });
 
   // add ticks position of the end of the last bar
-  const { Numerator, Denominator } = osmd.Sheet.SourceMeasures[osmd.Sheet.SourceMeasures.length - 1].ActiveTimeSignature;
+  // const { Numerator, Denominator } = osmd.Sheet.SourceMeasures[osmd.Sheet.SourceMeasures.length - 1].ActiveTimeSignature;
   const lastTicks = result1[result1.length - 1] + Numerator * (4 / Denominator) * 960;
   result1.push(lastTicks);
 
@@ -246,8 +253,6 @@ export const getPlayheadAnchorData = (
   // result.forEach(d => {
   //   console.log(d.measureNumber, d.ticks);
   // });
-
-  // console.log(result);
 
   return { anchorData: result, measureStartTicks: result1 };
 };

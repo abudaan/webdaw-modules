@@ -33,7 +33,7 @@ const init = async () => {
   await setupScore(scoreDiv);
   setupControls();
   setupPlayhead(false);
-  // setupDebugAnchor();
+  setupDebugAnchor();
   setupDrawLoop();
   setupDrawSelection();
   setupFollowScore();
