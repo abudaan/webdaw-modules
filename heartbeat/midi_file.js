@@ -4,11 +4,9 @@
 */
 
 function midiFile() {
+  "use strict";
 
-  'use strict';
-
-  var
-    // import
+  var // import
     parseUrl, // defined in util.js
     base64ToBinary, // defined in util.js
     typeString, // defined in util.js
@@ -20,10 +18,8 @@ function midiFile() {
     createTrack, // defined in track.js
     createPart, // defined in part.js
     createMidiEvent, // defined in midi_event.js
-
     index = 0,
     MidiFile;
-
 
   function cleanup(midifile, callback) {
     midifile = undefined;
@@ -32,15 +28,36 @@ function midiFile() {
     }
   }
 
-
   function parse(midifile, buffer, callback) {
     //console.time('parse midi');
-    var data, i, j, numEvents, part, track, numTracks,
-      events, event, ticks, tmpTicks, channel,
-      parsed, timeEvents, noteNumber, bpm,
-      lastNoteOn, lastNoteOff, ppqFactor,
-      type, lastType, lastData1, lastData2,
-      numNoteOn, numNoteOff, numOther, noteOns, noteOffs;
+    var data,
+      i,
+      j,
+      numEvents,
+      part,
+      track,
+      numTracks,
+      events,
+      event,
+      ticks,
+      tmpTicks,
+      channel,
+      parsed,
+      timeEvents,
+      noteNumber,
+      bpm,
+      lastNoteOn,
+      lastNoteOff,
+      ppqFactor,
+      type,
+      lastType,
+      lastData1,
+      lastData2,
+      numNoteOn,
+      numNoteOff,
+      numOther,
+      noteOns,
+      noteOffs;
 
     // buffer is ArrayBuffer, so convert it
     buffer = new Uint8Array(buffer);
@@ -49,7 +66,7 @@ function midiFile() {
     //console.log(data.header.ticksPerBeat);
 
     // save some memory
-    midifile.base64 = '';
+    midifile.base64 = "";
     midifile.numTracks = 0;
 
     i = 0;
@@ -82,10 +99,9 @@ function midiFile() {
       noteOffs = {};
 
       for (j = 0; j < numEvents; j++) {
-
         event = events[j];
 
-        tmpTicks += (event.deltaTime * ppqFactor);
+        tmpTicks += event.deltaTime * ppqFactor;
         //console.log(event.subtype, event.deltaTime, tmpTicks);
 
         if (channel === -1 && event.channel !== undefined) {
@@ -95,28 +111,27 @@ function midiFile() {
 
         type = event.subtype;
 
-        if (type === 'noteOn') {
+        if (type === "noteOn") {
           numNoteOn++;
-        } else if (type === 'noteOff') {
+        } else if (type === "noteOff") {
           numNoteOff++;
         } else {
           numOther++;
         }
 
         switch (event.subtype) {
-
-          case 'trackName':
+          case "trackName":
             track.name = event.text;
             //console.log('name', track.name, numTracks);
             break;
 
-          case 'instrumentName':
+          case "instrumentName":
             if (event.text) {
               track.instrumentName = event.text;
             }
             break;
 
-          case 'noteOn':
+          case "noteOn":
             //track.isUseful = true;
             /*
             noteNumber = event.noteNumber;
@@ -139,7 +154,7 @@ function midiFile() {
             parsed.push(createMidiEvent(tmpTicks, 0x90, event.noteNumber, event.velocity));
             break;
 
-          case 'noteOff':
+          case "noteOff":
             //track.isUseful = true;
             /*
             noteNumber = event.noteNumber;
@@ -162,12 +177,12 @@ function midiFile() {
             parsed.push(createMidiEvent(tmpTicks, 0x80, event.noteNumber, event.velocity));
             break;
 
-          case 'endOfTrack':
+          case "endOfTrack":
             //console.log(track.name, '0x2F', tmpTicks);
             //parsed.push(createMidiEvent(tmpTicks,0x2F));
             break;
 
-          case 'setTempo':
+          case "setTempo":
             //sometimes 2 tempo events have the same position in ticks
             //→ we use the last in these cases (same as Cubase)
 
@@ -176,7 +191,7 @@ function midiFile() {
 
             if (tmpTicks === ticks && lastType === type) {
               if (sequencer.debug >= 3) {
-                console.info('tempo events on the same tick', j, tmpTicks, bpm);
+                console.info("tempo events on the same tick", j, tmpTicks, bpm);
               }
               timeEvents.pop();
             }
@@ -189,11 +204,11 @@ function midiFile() {
             timeEvents.push(createMidiEvent(tmpTicks, 0x51, bpm));
             break;
 
-          case 'timeSignature':
+          case "timeSignature":
             //see comment above ↑
             if (tmpTicks === ticks && lastType === type) {
               if (sequencer.debug >= 3) {
-                console.info('time signature events on the same tick', j, tmpTicks, event.numerator, event.denominator);
+                console.info("time signature events on the same tick", j, tmpTicks, event.numerator, event.denominator);
               }
               timeEvents.pop();
             }
@@ -208,8 +223,7 @@ function midiFile() {
             timeEvents.push(createMidiEvent(tmpTicks, 0x58, event.numerator, event.denominator));
             break;
 
-
-          case 'controller':
+          case "controller":
             //track.isUseful = true;
             /*
             if(
@@ -228,22 +242,22 @@ function midiFile() {
             lastData1 = event.controllerType;
             lastData2 = event.value;
             */
-            parsed.push(createMidiEvent(tmpTicks, 0xB0, event.controllerType, event.value));
+            parsed.push(createMidiEvent(tmpTicks, 0xb0, event.controllerType, event.value));
             //console.log('controller:', tmpTicks, event.type, event.controllerType, event.value);
             break;
 
-          case 'programChange':
+          case "programChange":
             //track.isUseful = true;
-            parsed.push(createMidiEvent(tmpTicks, 0xC0, event.programNumber));
+            parsed.push(createMidiEvent(tmpTicks, 0xc0, event.programNumber));
             //console.log(event.type,event.controllerType);
             break;
 
-          case 'channelAftertouch':
-            parsed.push(createMidiEvent(tmpTicks, 0xD0, event.amount));
+          case "channelAftertouch":
+            parsed.push(createMidiEvent(tmpTicks, 0xd0, event.amount));
             break;
 
-          case 'pitchBend':
-            parsed.push(createMidiEvent(tmpTicks, 0xE0, event.value));
+          case "pitchBend":
+            parsed.push(createMidiEvent(tmpTicks, 0xe0, event.value));
             break;
 
           default:
@@ -263,7 +277,7 @@ function midiFile() {
       }
       i++;
     }
-
+    midifile.tracks.reverse();
     midifile.timeEvents = timeEvents;
     midifile.autoSize = true;
     //console.timeEnd('parse midi');
@@ -271,9 +285,7 @@ function midiFile() {
     callback(midifile);
   }
 
-
   function load(midifile, callback) {
-
     if (midifile.base64 !== undefined) {
       parse(midifile, base64ToBinary(midifile.base64), callback);
       return;
@@ -285,11 +297,11 @@ function midiFile() {
     ajax({
       url: midifile.url,
       responseType: midifile.responseType,
-      onError: function () {
+      onError: function() {
         cleanup(midifile, callback);
       },
-      onSuccess: function (data) {
-        if (midifile.responseType === 'json') {
+      onSuccess: function(data) {
+        if (midifile.responseType === "json") {
           // if the json data is corrupt (for instance because of a trailing comma) data will be null
           if (data === null) {
             callback(false);
@@ -299,7 +311,7 @@ function midiFile() {
           if (data.base64 === undefined) {
             cleanup(midifile, callback);
             if (sequencer.debug) {
-              console.warn('no base64 data');
+              console.warn("no base64 data");
             }
             return;
           }
@@ -316,28 +328,27 @@ function midiFile() {
             midifile.name = parseUrl(midifile.url).name;
           }
 
-          midifile.localPath = midifile.folder !== undefined ? midifile.folder + '/' + midifile.name : midifile.name;
+          midifile.localPath = midifile.folder !== undefined ? midifile.folder + "/" + midifile.name : midifile.name;
           parse(midifile, base64ToBinary(data.base64), callback);
         } else {
           if (midifile.name === undefined) {
             midifile.name = parseUrl(midifile.url).name;
           }
-          midifile.localPath = midifile.folder !== undefined ? midifile.folder + '/' + midifile.name : midifile.name;
+          midifile.localPath = midifile.folder !== undefined ? midifile.folder + "/" + midifile.name : midifile.name;
           parse(midifile, data, callback);
         }
-      }
+      },
     });
   }
-
 
   function store(midifile) {
     var occupied = findItem(midifile.localPath, sequencer.storage.midi, true),
       action = midifile.action;
 
     //console.log(occupied);
-    if (occupied && occupied.className === 'MidiFile' && action !== 'overwrite') {
+    if (occupied && occupied.className === "MidiFile" && action !== "overwrite") {
       if (sequencer.debug >= 2) {
-        console.warn('there is already a midifile at', midifile.localPath);
+        console.warn("there is already a midifile at", midifile.localPath);
         cleanup(midifile);
       }
     } else {
@@ -345,10 +356,9 @@ function midiFile() {
     }
   }
 
-
-  MidiFile = function (config) {
-    this.id = 'MF' + index++ + new Date().getTime();
-    this.className = 'MidiFile';
+  MidiFile = function(config) {
+    this.id = "MF" + index++ + new Date().getTime();
+    this.className = "MidiFile";
 
     this.url = config.url;
     this.json = config.json;
@@ -359,25 +369,27 @@ function midiFile() {
     this.folder = config.folder;
 
     if (this.url !== undefined) {
-      this.responseType = this.url.indexOf('.json') === this.url.lastIndexOf('.') ? 'json' : 'arraybuffer';
+      this.responseType = this.url.indexOf(".json") === this.url.lastIndexOf(".") ? "json" : "arraybuffer";
     } else {
       if (this.name === undefined && this.folder === undefined) {
         this.name = this.id;
         this.localPath = this.id;
       } else {
-        this.localPath = this.folder !== undefined ? this.folder + '/' + this.name : this.name;
+        this.localPath = this.folder !== undefined ? this.folder + "/" + this.name : this.name;
       }
     }
   };
 
-
-  sequencer.addMidiFile = function (config, callback) {
+  sequencer.addMidiFile = function(config, callback) {
     var type = typeString(config),
-      midifile, json, name, folder;
+      midifile,
+      json,
+      name,
+      folder;
 
-    if (type !== 'object') {
+    if (type !== "object") {
       if (sequencer.debug >= 2) {
-        console.warn('can\'t create a MidiFile with this data', config);
+        console.warn("can't create a MidiFile with this data", config);
       }
       return false;
     }
@@ -386,46 +398,48 @@ function midiFile() {
       json = config.json;
       name = config.name;
       folder = config.folder;
-      if (typeString(json) === 'string') {
+      if (typeString(json) === "string") {
         try {
           json = JSON.parse(json);
         } catch (e) {
           if (sequencer.debug >= 2) {
-            console.warn('can\'t create a MidiFile with this data', config);
+            console.warn("can't create a MidiFile with this data", config);
           }
           return false;
         }
       }
       if (json.base64 === undefined) {
         if (sequencer.debug >= 2) {
-          console.warn('can\'t create a MidiFile with this data', config);
+          console.warn("can't create a MidiFile with this data", config);
         }
         return false;
       }
       config = {
         base64: json.base64,
         name: name === undefined ? json.name : name,
-        folder: folder === undefined ? json.folder : folder
+        folder: folder === undefined ? json.folder : folder,
       };
       //console.log('config', name, folder, json.name, json.folder);
     }
 
     midifile = new MidiFile(config);
 
-    sequencer.addTask({
-      type: 'load midifile',
-      method: load,
-      params: midifile
-    }, function () {
-      //console.log(midifile);
-      store(midifile);
-      if (callback) {
-        callback(midifile);
+    sequencer.addTask(
+      {
+        type: "load midifile",
+        method: load,
+        params: midifile,
+      },
+      function() {
+        //console.log(midifile);
+        store(midifile);
+        if (callback) {
+          callback(midifile);
+        }
       }
-    });
+    );
 
     sequencer.startTaskQueue();
-
 
     /*
             load(midifile, function(){
@@ -438,31 +452,29 @@ function midiFile() {
     */
   };
 
-
   function MidiFile2(config) {
     var reader = new FileReader();
 
     function executor(resolve, reject) {
-
-      reader.addEventListener('loadend', function () {
+      reader.addEventListener("loadend", function() {
         // reader.result contains the contents of blob as a typed array
-        parse({}, reader.result, function (midifile) {
+        parse({}, reader.result, function(midifile) {
           resolve(midifile);
         });
       });
 
-      reader.addEventListener('error', function (e) {
+      reader.addEventListener("error", function(e) {
         reject(e);
       });
 
       if (config.blob !== undefined) {
         reader.readAsArrayBuffer(config.blob);
       } else if (config.arraybuffer !== undefined) {
-        parse({}, config.arraybuffer, function (midifile) {
+        parse({}, config.arraybuffer, function(midifile) {
           resolve(midifile);
         });
       } else if (config.base64 !== undefined) {
-        parse({}, base64ToBinary(config.base64), function (midifile) {
+        parse({}, base64ToBinary(config.base64), function(midifile) {
           resolve(midifile);
         });
       }
@@ -471,14 +483,12 @@ function midiFile() {
     this._promise = new Promise(executor);
   }
 
-
-  sequencer.createMidiFile = function (config) {
+  sequencer.createMidiFile = function(config) {
     var mf = new MidiFile2(config);
     return mf._promise;
   };
 
-
-  sequencer.protectedScope.addInitMethod(function () {
+  sequencer.protectedScope.addInitMethod(function() {
     ajax = sequencer.protectedScope.ajax;
     findItem = sequencer.protectedScope.findItem;
     storeItem = sequencer.protectedScope.storeItem;

@@ -12,10 +12,11 @@ export const compareScoreAndMIDI = () => {
     const notesScore = getNotesInStaff({
       osmd,
       repeats,
-      staffIndex: 2,
+      staffIndex: 0,
       ppq: song.ppq,
       amount: numNotesToTest,
     });
+    // console.log(song.tracks);
     const notesMidi: Heartbeat.MIDINote[] = song.tracks[0].notes;
     // console.log(notesScore);
     // console.log(notesMidi);
@@ -34,6 +35,6 @@ export const compareScoreAndMIDI = () => {
     // the array to calculate the match ratio
     console.log("MATCH", match / notesScore.length);
   } catch (e) {
-    console.error(e);
+    console.warn(e);
   }
 };

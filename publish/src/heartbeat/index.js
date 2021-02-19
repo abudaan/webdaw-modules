@@ -5740,9 +5740,8 @@ function midiEventNames() {
     adapted to work with heartbeatjs' type MidiEvent and Track
 */
 function midiFile() {
-    'use strict';
-    var 
-    // import
+    "use strict";
+    var // import
     parseUrl, // defined in util.js
     base64ToBinary, // defined in util.js
     typeString, // defined in util.js
@@ -5770,7 +5769,7 @@ function midiFile() {
         //console.log(data);
         //console.log(data.header.ticksPerBeat);
         // save some memory
-        midifile.base64 = '';
+        midifile.base64 = "";
         midifile.numTracks = 0;
         i = 0;
         numTracks = data.tracks.length;
@@ -5802,33 +5801,33 @@ function midiFile() {
             noteOffs = {};
             for (j = 0; j < numEvents; j++) {
                 event = events[j];
-                tmpTicks += (event.deltaTime * ppqFactor);
+                tmpTicks += event.deltaTime * ppqFactor;
                 //console.log(event.subtype, event.deltaTime, tmpTicks);
                 if (channel === -1 && event.channel !== undefined) {
                     channel = event.channel;
                     track.channel = channel;
                 }
                 type = event.subtype;
-                if (type === 'noteOn') {
+                if (type === "noteOn") {
                     numNoteOn++;
                 }
-                else if (type === 'noteOff') {
+                else if (type === "noteOff") {
                     numNoteOff++;
                 }
                 else {
                     numOther++;
                 }
                 switch (event.subtype) {
-                    case 'trackName':
+                    case "trackName":
                         track.name = event.text;
                         //console.log('name', track.name, numTracks);
                         break;
-                    case 'instrumentName':
+                    case "instrumentName":
                         if (event.text) {
                             track.instrumentName = event.text;
                         }
                         break;
-                    case 'noteOn':
+                    case "noteOn":
                         //track.isUseful = true;
                         /*
                         noteNumber = event.noteNumber;
@@ -5850,7 +5849,7 @@ function midiFile() {
                         */
                         parsed.push(createMidiEvent(tmpTicks, 0x90, event.noteNumber, event.velocity));
                         break;
-                    case 'noteOff':
+                    case "noteOff":
                         //track.isUseful = true;
                         /*
                         noteNumber = event.noteNumber;
@@ -5872,18 +5871,18 @@ function midiFile() {
                         */
                         parsed.push(createMidiEvent(tmpTicks, 0x80, event.noteNumber, event.velocity));
                         break;
-                    case 'endOfTrack':
+                    case "endOfTrack":
                         //console.log(track.name, '0x2F', tmpTicks);
                         //parsed.push(createMidiEvent(tmpTicks,0x2F));
                         break;
-                    case 'setTempo':
+                    case "setTempo":
                         //sometimes 2 tempo events have the same position in ticks
                         //→ we use the last in these cases (same as Cubase)
                         bpm = 60000000 / event.microsecondsPerBeat;
                         //console.log('setTempo',bpm,event.microsecondsPerBeat);
                         if (tmpTicks === ticks && lastType === type) {
                             if (sequencer.debug >= 3) {
-                                console.info('tempo events on the same tick', j, tmpTicks, bpm);
+                                console.info("tempo events on the same tick", j, tmpTicks, bpm);
                             }
                             timeEvents.pop();
                         }
@@ -5894,11 +5893,11 @@ function midiFile() {
                         }
                         timeEvents.push(createMidiEvent(tmpTicks, 0x51, bpm));
                         break;
-                    case 'timeSignature':
+                    case "timeSignature":
                         //see comment above ↑
                         if (tmpTicks === ticks && lastType === type) {
                             if (sequencer.debug >= 3) {
-                                console.info('time signature events on the same tick', j, tmpTicks, event.numerator, event.denominator);
+                                console.info("time signature events on the same tick", j, tmpTicks, event.numerator, event.denominator);
                             }
                             timeEvents.pop();
                         }
@@ -5911,7 +5910,7 @@ function midiFile() {
                         }
                         timeEvents.push(createMidiEvent(tmpTicks, 0x58, event.numerator, event.denominator));
                         break;
-                    case 'controller':
+                    case "controller":
                         //track.isUseful = true;
                         /*
                         if(
@@ -5930,19 +5929,19 @@ function midiFile() {
                         lastData1 = event.controllerType;
                         lastData2 = event.value;
                         */
-                        parsed.push(createMidiEvent(tmpTicks, 0xB0, event.controllerType, event.value));
+                        parsed.push(createMidiEvent(tmpTicks, 0xb0, event.controllerType, event.value));
                         //console.log('controller:', tmpTicks, event.type, event.controllerType, event.value);
                         break;
-                    case 'programChange':
+                    case "programChange":
                         //track.isUseful = true;
-                        parsed.push(createMidiEvent(tmpTicks, 0xC0, event.programNumber));
+                        parsed.push(createMidiEvent(tmpTicks, 0xc0, event.programNumber));
                         //console.log(event.type,event.controllerType);
                         break;
-                    case 'channelAftertouch':
-                        parsed.push(createMidiEvent(tmpTicks, 0xD0, event.amount));
+                    case "channelAftertouch":
+                        parsed.push(createMidiEvent(tmpTicks, 0xd0, event.amount));
                         break;
-                    case 'pitchBend':
-                        parsed.push(createMidiEvent(tmpTicks, 0xE0, event.value));
+                    case "pitchBend":
+                        parsed.push(createMidiEvent(tmpTicks, 0xe0, event.value));
                         break;
                     default:
                     //console.log(track.name, event.type);
@@ -5960,6 +5959,7 @@ function midiFile() {
             }
             i++;
         }
+        midifile.tracks.reverse();
         midifile.timeEvents = timeEvents;
         midifile.autoSize = true;
         //console.timeEnd('parse midi');
@@ -5982,7 +5982,7 @@ function midiFile() {
                 cleanup(midifile, callback);
             },
             onSuccess: function (data) {
-                if (midifile.responseType === 'json') {
+                if (midifile.responseType === "json") {
                     // if the json data is corrupt (for instance because of a trailing comma) data will be null
                     if (data === null) {
                         callback(false);
@@ -5991,7 +5991,7 @@ function midiFile() {
                     if (data.base64 === undefined) {
                         cleanup(midifile, callback);
                         if (sequencer.debug) {
-                            console.warn('no base64 data');
+                            console.warn("no base64 data");
                         }
                         return;
                     }
@@ -6004,25 +6004,25 @@ function midiFile() {
                     if (midifile.name === undefined) {
                         midifile.name = parseUrl(midifile.url).name;
                     }
-                    midifile.localPath = midifile.folder !== undefined ? midifile.folder + '/' + midifile.name : midifile.name;
+                    midifile.localPath = midifile.folder !== undefined ? midifile.folder + "/" + midifile.name : midifile.name;
                     parse(midifile, base64ToBinary(data.base64), callback);
                 }
                 else {
                     if (midifile.name === undefined) {
                         midifile.name = parseUrl(midifile.url).name;
                     }
-                    midifile.localPath = midifile.folder !== undefined ? midifile.folder + '/' + midifile.name : midifile.name;
+                    midifile.localPath = midifile.folder !== undefined ? midifile.folder + "/" + midifile.name : midifile.name;
                     parse(midifile, data, callback);
                 }
-            }
+            },
         });
     }
     function store(midifile) {
         var occupied = findItem(midifile.localPath, sequencer.storage.midi, true), action = midifile.action;
         //console.log(occupied);
-        if (occupied && occupied.className === 'MidiFile' && action !== 'overwrite') {
+        if (occupied && occupied.className === "MidiFile" && action !== "overwrite") {
             if (sequencer.debug >= 2) {
-                console.warn('there is already a midifile at', midifile.localPath);
+                console.warn("there is already a midifile at", midifile.localPath);
                 cleanup(midifile);
             }
         }
@@ -6031,8 +6031,8 @@ function midiFile() {
         }
     }
     MidiFile = function (config) {
-        this.id = 'MF' + index++ + new Date().getTime();
-        this.className = 'MidiFile';
+        this.id = "MF" + index++ + new Date().getTime();
+        this.className = "MidiFile";
         this.url = config.url;
         this.json = config.json;
         this.base64 = config.base64;
@@ -6040,7 +6040,7 @@ function midiFile() {
         this.name = config.name;
         this.folder = config.folder;
         if (this.url !== undefined) {
-            this.responseType = this.url.indexOf('.json') === this.url.lastIndexOf('.') ? 'json' : 'arraybuffer';
+            this.responseType = this.url.indexOf(".json") === this.url.lastIndexOf(".") ? "json" : "arraybuffer";
         }
         else {
             if (this.name === undefined && this.folder === undefined) {
@@ -6048,15 +6048,15 @@ function midiFile() {
                 this.localPath = this.id;
             }
             else {
-                this.localPath = this.folder !== undefined ? this.folder + '/' + this.name : this.name;
+                this.localPath = this.folder !== undefined ? this.folder + "/" + this.name : this.name;
             }
         }
     };
     sequencer.addMidiFile = function (config, callback) {
         var type = typeString(config), midifile, json, name, folder;
-        if (type !== 'object') {
+        if (type !== "object") {
             if (sequencer.debug >= 2) {
-                console.warn('can\'t create a MidiFile with this data', config);
+                console.warn("can't create a MidiFile with this data", config);
             }
             return false;
         }
@@ -6064,35 +6064,35 @@ function midiFile() {
             json = config.json;
             name = config.name;
             folder = config.folder;
-            if (typeString(json) === 'string') {
+            if (typeString(json) === "string") {
                 try {
                     json = JSON.parse(json);
                 }
                 catch (e) {
                     if (sequencer.debug >= 2) {
-                        console.warn('can\'t create a MidiFile with this data', config);
+                        console.warn("can't create a MidiFile with this data", config);
                     }
                     return false;
                 }
             }
             if (json.base64 === undefined) {
                 if (sequencer.debug >= 2) {
-                    console.warn('can\'t create a MidiFile with this data', config);
+                    console.warn("can't create a MidiFile with this data", config);
                 }
                 return false;
             }
             config = {
                 base64: json.base64,
                 name: name === undefined ? json.name : name,
-                folder: folder === undefined ? json.folder : folder
+                folder: folder === undefined ? json.folder : folder,
             };
             //console.log('config', name, folder, json.name, json.folder);
         }
         midifile = new MidiFile(config);
         sequencer.addTask({
-            type: 'load midifile',
+            type: "load midifile",
             method: load,
-            params: midifile
+            params: midifile,
         }, function () {
             //console.log(midifile);
             store(midifile);
@@ -6114,13 +6114,13 @@ function midiFile() {
     function MidiFile2(config) {
         var reader = new FileReader();
         function executor(resolve, reject) {
-            reader.addEventListener('loadend', function () {
+            reader.addEventListener("loadend", function () {
                 // reader.result contains the contents of blob as a typed array
                 parse({}, reader.result, function (midifile) {
                     resolve(midifile);
                 });
             });
-            reader.addEventListener('error', function (e) {
+            reader.addEventListener("error", function (e) {
                 reject(e);
             });
             if (config.blob !== undefined) {
@@ -11505,7 +11505,7 @@ function createSequencer() {
 
 */
 function song() {
-    'use strict';
+    "use strict";
     var slice = Array.prototype.slice, 
     //import
     createMidiEvent, // → defined in midi_event.js
@@ -11564,9 +11564,9 @@ function song() {
         //Object.defineProperty(this,'tracks',{value: []});
         //Object.defineProperty(this, 'events', {value: 'val'});
         config = config || {};
-        this.id = 'S' + songIndex++ + '' + new Date().getTime();
+        this.id = "S" + songIndex++ + "" + new Date().getTime();
         this.name = config.name || this.id;
-        this.className = 'Song';
+        this.className = "Song";
         addSong(this);
         this.midiInputs = {};
         this.midiOutputs = {};
@@ -11583,10 +11583,10 @@ function song() {
         this.factor = 4 / this.denominator;
         this.ticksPerBeat = this.ppq * this.factor;
         this.ticksPerBar = this.ticksPerBeat * this.nominator;
-        this.millisPerTick = (60000 / this.bpm / this.ppq);
-        this.quantizeValue = config.quantizeValue || '8';
+        this.millisPerTick = 60000 / this.bpm / this.ppq;
+        this.quantizeValue = config.quantizeValue || "8";
         this.fixedLengthValue = config.fixedLengthValue || false;
-        this.positionType = config.positionType || 'all';
+        this.positionType = config.positionType || "all";
         this.useMetronome = config.useMetronome;
         this.autoSize = config.autoSize === undefined ? true : config.autoSize === true;
         this.playbackSpeed = 1;
@@ -11631,10 +11631,7 @@ function song() {
             // there has to be a tempo and time signature event at ticks 0, otherwise the position can't be calculated, and moreover, it is dictated by the MIDI standard
             this.tempoEvent = createMidiEvent(0, sequencer.TEMPO, this.bpm);
             this.timeSignatureEvent = createMidiEvent(0, sequencer.TIME_SIGNATURE, this.nominator, this.denominator);
-            this.timeEvents = [
-                this.tempoEvent,
-                this.timeSignatureEvent
-            ];
+            this.timeEvents = [this.tempoEvent, this.timeSignatureEvent];
         }
         // TODO: A value for bpm, nominator and denominator in the config overrules the time events specified in the config -> maybe this should be the other way round
         // if a value for bpm is set in the config, and this value is different from the bpm value of the first
@@ -11684,7 +11681,7 @@ function song() {
         this.precount = 0;
         this.listeners = {};
         this.playhead = createPlayhead(this, this.positionType, this.id, this); //, this.position);
-        this.playheadRecording = createPlayhead(this, 'all', this.id + '_recording');
+        this.playheadRecording = createPlayhead(this, "all", this.id + "_recording");
         this.scheduler = createScheduler(this);
         this.followEvent = createFollowEvent(this);
         this.volume = 1;
@@ -11692,13 +11689,14 @@ function song() {
         this.gainNode.gain.value = this.volume;
         this.metronome = createMetronome(this, dispatchEvent);
         this.connect();
-        if (config.className === 'MidiFile' && config.loaded === false) {
+        if (config.className === "MidiFile" && config.loaded === false) {
             if (sequencer.debug) {
-                console.warn('midifile', config.name, 'has not yet been loaded!');
+                console.warn("midifile", config.name, "has not yet been loaded!");
             }
         }
         //if(config.tracks && config.tracks.length > 0){
         if (config.tracks) {
+            // console.log("TRACKS", config.tracks);
             this.addTracks(config.tracks);
         }
         if (config.parts) {
@@ -11721,7 +11719,7 @@ function song() {
         //console.log('update');
         this.update(true);
         this.numTimeEvents = this.timeEvents.length;
-        this.playhead.set('ticks', 0);
+        this.playhead.set("ticks", 0);
         this.midiEventListeners = {};
         //console.log(this.timeEvents);
     };
@@ -11730,10 +11728,10 @@ function song() {
         if (data === undefined) {
             part = false;
         }
-        else if (part.className === 'Part') {
+        else if (part.className === "Part") {
             part = data;
         }
-        else if (typeString(data) === 'string') {
+        else if (typeString(data) === "string") {
             part = song.partsById[data];
         }
         else if (isNaN(data) === false) {
@@ -11747,10 +11745,10 @@ function song() {
         if (data === undefined) {
             track = false;
         }
-        else if (data.className === 'Track') {
+        else if (data.className === "Track") {
             track = data;
         }
-        else if (typeString(data) === 'string') {
+        else if (typeString(data) === "string") {
             track = song.tracksById[data];
             if (track === undefined) {
                 track = song.tracksByName[data];
@@ -11793,13 +11791,13 @@ function song() {
                             track.setMidiInput(port.id, true);
                         });
             */
-            track.state = 'new';
+            track.state = "new";
             track.needsUpdate = true;
             tracksById[track.id] = track;
             tracksByName[track.name] = track;
             addedIds.push(track.id);
             objectForEach(track.partsById, function (part) {
-                part.state = 'new';
+                part.state = "new";
             });
             /*
                         for(j in track.partsById){
@@ -11823,10 +11821,10 @@ function song() {
             }
             //console.log(track);
             if (track.song !== undefined && track.song !== this) {
-                console.warn('can\'t remove: this track belongs to song', track.song.id);
+                console.warn("can't remove: this track belongs to song", track.song.id);
                 continue;
             }
-            track.state = 'removed';
+            track.state = "removed";
             track.disconnect(this.gainNode);
             track.reset();
             delete this.tracksById[track.id];
@@ -11867,16 +11865,16 @@ function song() {
             for (i = 0; i < maxi; i++) {
                 arg = data[i];
                 type = typeString(arg);
-                if (type === 'array') {
+                if (type === "array") {
                     loop(arg, 0, arg.length);
                 }
-                else if (type === 'string') {
+                else if (type === "string") {
                     event = song.eventsById[arg];
                     if (event !== undefined) {
                         result.push(arg);
                     }
                 }
-                else if (arg.className === 'MidiEvent') {
+                else if (arg.className === "MidiEvent") {
                     result.push(arg);
                 }
             }
@@ -11894,8 +11892,7 @@ function song() {
         return events;
     };
     pulse = function (song) {
-        var 
-        //now = window.performance.now(),
+        var //now = window.performance.now(),
         now = sequencer.getTime() * 1000, diff = now - song.timeStamp, millis = song.millis + diff;
         song.diff = diff;
         //console.log(diff);
@@ -11916,26 +11913,27 @@ function song() {
         //console.log(song.millis, diff, song.loopEnd);
         //console.log(song.doLoop, song.scheduler.looped, song.millis > song.loopEnd);
         //console.log(song.scheduler.prevMaxtime, song.loopEnd);
-        if (song.doLoop && song.scheduler.looped && millis >= song.loopEnd) { // && song.jump !== true){
+        if (song.doLoop && song.scheduler.looped && millis >= song.loopEnd) {
+            // && song.jump !== true){
             //console.log(song.prevMillis, song.millis);
             //song.scheduler.looped = false;
             song.followEvent.resetAllListeners();
-            song.playhead.set('millis', song.loopStart + (millis - song.loopEnd));
+            song.playhead.set("millis", song.loopStart + (millis - song.loopEnd));
             song.followEvent.update();
             //console.log('-->', song.millis);
             song.scheduler.update();
-            dispatchEvent(song, 'loop');
+            dispatchEvent(song, "loop");
             //song.startTime += (song.loopEnd - song.loopStart);
         }
         else if (millis >= song.durationMillis) {
-            song.playhead.update('millis', song.durationMillis - song.millis);
+            song.playhead.update("millis", song.durationMillis - song.millis);
             song.followEvent.update();
             song.pause();
             song.endOfSong = true;
-            dispatchEvent(song, 'end');
+            dispatchEvent(song, "end");
         }
         else {
-            song.playhead.update('millis', diff);
+            song.playhead.update("millis", diff);
             song.followEvent.update();
             song.scheduler.update();
         }
@@ -11946,7 +11944,7 @@ function song() {
         //console.log(song.millis);
     };
     Song.prototype.remove = function () {
-        console.warn('Song.remove() is deprecated, please use sequencer.deleteSong()');
+        console.warn("Song.remove() is deprecated, please use sequencer.deleteSong()");
         sequencer.deleteSong(this);
     };
     Song.prototype.play = function () {
@@ -11960,12 +11958,12 @@ function song() {
         // tell the scheduler to schedule the audio events that start before the current position of the playhead
         this.scheduler.firstRun = true;
         // only loop when the loop is legal and this.loop is set to true
-        this.doLoop = (this.illegalLoop === false && this.loop === true);
+        this.doLoop = this.illegalLoop === false && this.loop === true;
         //console.log('play', this.doLoop, this.illegalLoop, this.loop);
         // or should I move to loopStart here if loop is enabled?
         if (this.endOfSong) {
             this.followEvent.resetAllListeners();
-            this.playhead.set('millis', 0);
+            this.playhead.set("millis", 0);
             this.scheduler.setIndex(0);
         }
         // timeStamp is used for calculating the diff in time of every consecutive frame
@@ -11977,7 +11975,7 @@ function song() {
         }
         catch (e) {
             if (sequencer.debug) {
-                console.log('window.performance.now() not supported');
+                console.log("window.performance.now() not supported");
             }
         }
         if (this.precounting) {
@@ -11995,8 +11993,8 @@ function song() {
                     song.prerolling = false;
                     song.recording = true;
                     song.playing = true;
-                    dispatchEvent(song, 'record_start');
-                    dispatchEvent(song, 'play');
+                    dispatchEvent(song, "record_start");
+                    dispatchEvent(song, "play");
                     //console.log('playAfterPrecount', sequencer.getTime(), playstart, song.metronome.precountDurationInMillis);
                     repetitiveTasks.playAfterPrecount = undefined;
                     delete repetitiveTasks.playAfterPrecount;
@@ -12010,7 +12008,7 @@ function song() {
         //pulse(this);
         song = this;
         // fixes bug: when an event listener is added to a midi note, the listener sometimes misses the first note
-        song.playhead.update('millis', 0);
+        song.playhead.update("millis", 0);
         song.followEvent.update();
         repetitiveTasks[this.id] = function () {
             pulse(song);
@@ -12020,7 +12018,7 @@ function song() {
         this.endOfSong = false;
         if (this.precounting !== true) {
             this.playing = true;
-            dispatchEvent(this, 'play');
+            dispatchEvent(this, "play");
         }
     };
     Song.prototype.pause = function () {
@@ -12036,13 +12034,13 @@ function song() {
         this.allNotesOff();
         this.playing = false;
         this.paused = true;
-        dispatchEvent(this, 'pause');
+        dispatchEvent(this, "pause");
     };
     Song.prototype.stop = function () {
         if (this.stopped) {
             // is this necessary?
             this.followEvent.resetAllListeners();
-            this.playhead.set('millis', 0);
+            this.playhead.set("millis", 0);
             this.scheduler.setIndex(0);
             return;
         }
@@ -12053,7 +12051,7 @@ function song() {
         // remove unschedule callback of all samples
         objectForEach(timedTasks, function (task, id) {
             //console.log(id);
-            if (id.indexOf('unschedule_') === 0 || id.indexOf('event_') === 0) {
+            if (id.indexOf("unschedule_") === 0 || id.indexOf("event_") === 0) {
                 task = null;
                 delete timedTasks[id];
             }
@@ -12064,9 +12062,9 @@ function song() {
         this.stopped = true;
         this.endOfSong = false;
         this.followEvent.resetAllListeners();
-        this.playhead.set('millis', 0);
+        this.playhead.set("millis", 0);
         this.scheduler.setIndex(0);
-        dispatchEvent(this, 'stop');
+        dispatchEvent(this, "stop");
     };
     Song.prototype.adjustLatencyForAllRecordings = function (value) {
         // @todo: add callback here!
@@ -12110,7 +12108,7 @@ function song() {
             }
             else {
                 // a recording with a precount always starts at the beginning of a bar
-                this.setPlayhead('barsbeats', this.bar);
+                this.setPlayhead("barsbeats", this.bar);
                 this.metronome.createPrecountEvents(precount);
                 this.precount = precount;
                 this.recordStartMillis = this.millis - this.metronome.precountDurationInMillis;
@@ -12128,7 +12126,7 @@ function song() {
         //console.log('precountDurationInMillis', this.metronome.precountDurationInMillis);
         //console.log('recordStartMillis', this.recordStartMillis);
         this.recordTimestampTicks = this.ticks;
-        this.recordId = 'REC' + new Date().getTime();
+        this.recordId = "REC" + new Date().getTime();
         this.recordedNotes = [];
         this.recordedEvents = [];
         this.recordingNotes = {};
@@ -12138,11 +12136,11 @@ function song() {
         }
         for (i = this.numTracks - 1; i >= 0; i--) {
             track = this.tracks[i];
-            if (track.recordEnabled === 'audio') {
+            if (track.recordEnabled === "audio") {
                 this.recordingAudio = true;
             }
             //console.log(track.name, track.index);
-            if (track.recordEnabled === 'audio') {
+            if (track.recordEnabled === "audio") {
                 audioRecording = true;
                 track.prepareForRecording(this.recordId, function () {
                     if (userFeedback === false) {
@@ -12169,22 +12167,22 @@ function song() {
                 this.precounting = true;
                 this.prerolling = this.preroll;
                 if (this.prerolling) {
-                    dispatchEvent(this, 'record_preroll');
+                    dispatchEvent(this, "record_preroll");
                 }
                 else {
-                    dispatchEvent(this, 'record_precount');
+                    dispatchEvent(this, "record_precount");
                 }
             }
             else {
                 this.recording = true;
-                dispatchEvent(this, 'record_start');
+                dispatchEvent(this, "record_start");
             }
             this.play();
         }
         else {
             this.recording = true;
             this.precounting = false;
-            dispatchEvent(this, 'record_start');
+            dispatchEvent(this, "record_start");
         }
     };
     _getRecordingPerTrack = function (index, recordingHistory, callback) {
@@ -12215,11 +12213,11 @@ function song() {
         var scope = this;
         _getRecordingPerTrack.call(this, 0, {}, function (history) {
             scope.update();
-            dispatchEvent(scope, 'recorded_events', history);
+            dispatchEvent(scope, "recorded_events", history);
         });
         // perform update immediately for midi recordings
         this.update();
-        dispatchEvent(this, 'record_stop');
+        dispatchEvent(this, "record_stop");
         return this.recordId;
     };
     Song.prototype.undoRecording = function (history) {
@@ -12263,11 +12261,11 @@ function song() {
             arg = args[i];
             type = typeString(arg);
             //console.log(arg, type);
-            if (type === 'string' || type === 'number') {
+            if (type === "string" || type === "number") {
                 // overrule the quantize values of all tracks in this song, but the song's quantizeValue doesn't change
                 value = arg;
             }
-            else if (type === 'object') {
+            else if (type === "object") {
                 historyObject = arg;
             }
         }
@@ -12286,7 +12284,7 @@ function song() {
     Song.prototype.undoQuantize = function (history) {
         if (history === undefined) {
             if (sequencer.debug >= 2) {
-                console.warn('please pass a quantize history object');
+                console.warn("please pass a quantize history object");
             }
             return;
         }
@@ -12317,7 +12315,7 @@ function song() {
             this.loopStartTicks = pos.ticks;
         }
         this.illegalLoop = this.loopStart >= this.loopEnd;
-        this.doLoop = (this.illegalLoop === false && this.loop === true);
+        this.doLoop = this.illegalLoop === false && this.loop === true;
         this.loopDuration = this.illegalLoop === true ? 0 : this.loopEnd - this.loopStart;
         // if(this.doLoop === false && this.loop === true){
         //     dispatchEvent('loop_off', this);
@@ -12328,6 +12326,7 @@ function song() {
     };
     // right: song position < right locator
     Song.prototype.setRightLocator = function () {
+        //(value){
         //var pos = getPosition(this, [].concat(type, value));
         //this.rightLocator = AP.slice.call(arguments);
         var pos = getPosition(this, slice.call(arguments)), previousState = this.illegalLoop;
@@ -12339,7 +12338,7 @@ function song() {
         }
         //console.log(this.loopEnd);
         this.illegalLoop = this.loopEnd <= this.loopStart;
-        this.doLoop = (this.illegalLoop === false && this.loop === true);
+        this.doLoop = this.illegalLoop === false && this.loop === true;
         this.loopDuration = this.illegalLoop === true ? 0 : this.loopEnd - this.loopStart;
         // if(previousState !== false && this.loop === true){
         //     dispatchEvent('loop_off', this);
@@ -12361,7 +12360,7 @@ function song() {
             }
             return;
         }
-        this.doLoop = (this.illegalLoop === false && this.loop === true);
+        this.doLoop = this.illegalLoop === false && this.loop === true;
     };
     Song.prototype.setPlayhead = function () {
         //console.log('setPlayhead');
@@ -12376,7 +12375,7 @@ function song() {
         //console.log(slice.call(arguments));
         var pos = getPosition(this, slice.call(arguments)), millis = pos.millis;
         this.startMillis = millis;
-        this.playhead.set('millis', millis);
+        this.playhead.set("millis", millis);
         this.scheduler.setIndex(millis);
         //console.log(pos.bar, this.bar);
         //console.log(this.playhead.activeEvents);
@@ -12420,8 +12419,8 @@ function song() {
     };
     Song.prototype.addTrack = function () {
         var args = getArguments(arguments), arg0 = args[0], numArgs = args.length;
-        if (typeString(arg0) === 'array' || numArgs > 1) {
-            console.warn('please use addTracks() if you want to get more that one tracks');
+        if (typeString(arg0) === "array" || numArgs > 1) {
+            console.warn("please use addTracks() if you want to get more that one tracks");
             args = [arg0];
         }
         return addTracks(args, this)[0];
@@ -12446,7 +12445,7 @@ function song() {
     Song.prototype.getPart = function () {
         var args = getArguments(arguments);
         if (args.length > 1) {
-            console.warn('please use getParts() if you want to get more that one part');
+            console.warn("please use getParts() if you want to get more that one part");
         }
         //@TODO: check if a call is faster
         //return getParts(args, this)[0];
@@ -12461,7 +12460,7 @@ function song() {
         var args = getArguments(arguments);
         //var args = getArguments.apply(null, arguments);
         if (args.length > 1) {
-            console.warn('please use removeTracks() if you want to remove more that one tracks');
+            console.warn("please use removeTracks() if you want to remove more that one tracks");
         }
         //return _removeTracks(args, this)[0];
         return _removeTracks.call(this, args)[0];
@@ -12471,7 +12470,7 @@ function song() {
     };
     Song.prototype.setPlaybackSpeed = function (speed) {
         if (speed < 0.01 || speed > 100) {
-            console.error('playback speed has to be > 0.01 and < 100');
+            console.error("playback speed has to be > 0.01 and < 100");
             return;
         }
         var ticks = this.ticks, startLoop, endLoop, newPos;
@@ -12480,18 +12479,18 @@ function song() {
         this.update(true);
         // get the new position of the locators after the update
         if (this.loopStartTicks !== undefined) {
-            startLoop = this.getPosition('ticks', this.loopStartTicks);
+            startLoop = this.getPosition("ticks", this.loopStartTicks);
             this.loopStart = startLoop.millis;
             this.loopStartTicks = startLoop.ticks;
         }
         if (this.loopEndTicks !== undefined) {
-            endLoop = this.getPosition('ticks', this.loopEndTicks);
+            endLoop = this.getPosition("ticks", this.loopEndTicks);
             this.loopEnd = endLoop.millis;
             this.loopEndTicks = endLoop.ticks;
         }
         // get the new position of the playhead after the update
-        newPos = this.getPosition('ticks', ticks);
-        this.setPlayhead('ticks', newPos.ticks);
+        newPos = this.getPosition("ticks", ticks);
+        this.setPlayhead("ticks", newPos.ticks);
     };
     Song.prototype.gridToSong = function (x, y, width, height) {
         return gridToSong(this, x, y, width, height);
@@ -12556,13 +12555,13 @@ function song() {
     Song.prototype.updateTempoEvent = function (event, bpm) {
         if (event.type !== sequencer.TEMPO) {
             if (sequencer.debug >= 4) {
-                console.error('this is not a tempo event');
+                console.error("this is not a tempo event");
             }
             return;
         }
         if (event.song !== this) {
             if (sequencer.debug >= 4) {
-                console.error('this event has not been added to this song yet');
+                console.error("this event has not been added to this song yet");
             }
             return;
         }
@@ -12574,13 +12573,13 @@ function song() {
     Song.prototype.updateTimeSignatureEvent = function (event, nominator, denominator) {
         if (event.type !== sequencer.TIME_SIGNATURE) {
             if (sequencer.debug >= 4) {
-                console.error('this is not a time signature event');
+                console.error("this is not a time signature event");
             }
             return;
         }
         if (event.song !== this) {
             if (sequencer.debug >= 4) {
-                console.error('this event has not been added to this song yet');
+                console.error("this event has not been added to this song yet");
             }
             return;
         }
@@ -12607,7 +12606,7 @@ function song() {
                 console.log('start', newStartPos.barsAsString);
             }
             */
-            newStartPos = this.getPosition('ticks', startPos.ticks);
+            newStartPos = this.getPosition("ticks", startPos.ticks);
             this.loopStart = newStartPos.millis;
             this.loopStartTicks = newStartPos.ticks;
             this.loopStartPosition = newStartPos;
@@ -12621,10 +12620,10 @@ function song() {
             }
             */
             //console.log('right locator', endPos.barsAsString, endPos.ticks);
-            newEndPos = this.getPosition('ticks', endPos.ticks);
+            newEndPos = this.getPosition("ticks", endPos.ticks);
             if (newEndPos.ticks > this.durationTicks) {
                 //console.log('right locator beyond end of song');
-                newEndPos = this.getPosition('ticks', this.bars);
+                newEndPos = this.getPosition("ticks", this.bars);
             }
             this.loopEnd = newEndPos.millis;
             this.loopEndTicks = newEndPos.ticks;
@@ -12640,13 +12639,13 @@ function song() {
                     //console.log('playhead', newPos.barsAsString);
                 }
         */
-        newPos = this.getPosition('ticks', ticks);
+        newPos = this.getPosition("ticks", ticks);
         if (this.doLoop && newPos.ticks > this.durationTicks) {
             //console.log('playhead beyond end of song');
-            this.setPlayhead('ticks', 0);
+            this.setPlayhead("ticks", 0);
         }
         else {
-            this.setPlayhead('ticks', newPos.ticks);
+            this.setPlayhead("ticks", newPos.ticks);
         }
         this.loopDuration = this.illegalLoop === true ? 0 : this.loopEnd - this.loopStart;
         /*
@@ -12716,7 +12715,7 @@ function song() {
         // console.log(events);
         for (i = events.length - 1; i >= 0; i--) {
             event = events[i];
-            if (event.className === 'MidiEvent') {
+            if (event.className === "MidiEvent") {
                 if (event.type === sequencer.TEMPO) {
                     this.timeEvents.push(event);
                 }
@@ -12725,12 +12724,12 @@ function song() {
                         A time signature event can only be positioned at the beginning of a bar,
                         so we look for the nearest bar and put the event there.
                     */
-                    position = this.getPosition('ticks', event.ticks);
+                    position = this.getPosition("ticks", event.ticks);
                     if (position.beat > position.nominator / 2) {
-                        position = this.getPosition('barsbeats', position.bar + 1);
+                        position = this.getPosition("barsbeats", position.bar + 1);
                     }
                     else {
-                        position = this.getPosition('barsbeats', position.bar);
+                        position = this.getPosition("barsbeats", position.bar);
                     }
                     event.ticks = position.ticks;
                     this.timeEvents.push(event);
@@ -12771,8 +12770,8 @@ function song() {
     };
     Song.prototype.removeDoubleTimeEvents = function () {
         var events = [], i, event, ticks, type, eventsByTicks = {
-            '81': {},
-            '88': {},
+            "81": {},
+            "88": {},
         };
         //console.log('before', this.timeEvents);
         for (i = this.timeEvents.length - 1; i >= 0; i--) {
@@ -12792,10 +12791,10 @@ function song() {
                 }
             }
         }
-        objectForEach(eventsByTicks['81'], function (event) {
+        objectForEach(eventsByTicks["81"], function (event) {
             events.push(event);
         });
-        objectForEach(eventsByTicks['88'], function (event) {
+        objectForEach(eventsByTicks["88"], function (event) {
             events.push(event);
         });
         this.timeEvents = events;
@@ -12817,7 +12816,7 @@ function song() {
         checkDuration(this, true);
     };
     Song.prototype.setDurationInBars = function (bars) {
-        var me = this, removedEvents = me.findEvent('bar > ' + bars), removedParts = [], changedTracks = [], changedParts = [], dirtyTracks = {}, dirtyParts = {};
+        var me = this, removedEvents = me.findEvent("bar > " + bars), removedParts = [], changedTracks = [], changedParts = [], dirtyTracks = {}, dirtyParts = {};
         //console.log(removedEvents);
         removedEvents.forEach(function (event) {
             var trackId = event.trackId, partId = event.partId;
@@ -12855,25 +12854,24 @@ function song() {
             removedEvents: removedEvents,
             removedParts: removedParts,
             changedTracks: changedTracks,
-            changedParts: changedParts
+            changedParts: changedParts,
         };
     };
-    Song.prototype.addEffect = function () {
-    };
-    Song.prototype.removeEffect = function () {
-    };
+    Song.prototype.addEffect = function () { };
+    Song.prototype.removeEffect = function () { };
     Song.prototype.setVolume = function () {
+        // value, Track, Track, Track, etc. in any order
         var args = slice.call(arguments), numArgs = args.length, tracks = [], value, i;
         function loop(data, i, maxi) {
             for (i = 0; i < maxi; i++) {
                 var arg = data[i], type = typeString(arg);
-                if (type === 'array') {
+                if (type === "array") {
                     loop(arg, 0, arg.length);
                 }
-                else if (type === 'number') {
+                else if (type === "number") {
                     value = arg;
                 }
-                else if (arg.className === 'Track') {
+                else if (arg.className === "Track") {
                     tracks.push(arg);
                 }
             }
@@ -12881,7 +12879,7 @@ function song() {
         if (numArgs === 1) {
             value = args[0];
             if (isNaN(value)) {
-                console.warn('please pass a number');
+                console.warn("please pass a number");
                 return;
             }
             this.volume = value < 0 ? 0 : value > 1 ? 1 : value;
@@ -12967,8 +12965,8 @@ function song() {
             if (track.routeToMidiOut) {
                 // console.log(track.channel);
                 objectForEach(track.midiOutputs, function (midiOutput) {
-                    midiOutput.send([0xB0 + track.channel, 0x7B, 0x00], time + getTimeDiff() + 100 + track.audioLatency); // stop all notes
-                    midiOutput.send([0xB0 + track.channel, 0x79, 0x00], time + getTimeDiff() + 100 + track.audioLatency); // reset all controllers
+                    midiOutput.send([0xb0 + track.channel, 0x7b, 0x00], time + getTimeDiff() + 100 + track.audioLatency); // stop all notes
+                    midiOutput.send([0xb0 + track.channel, 0x79, 0x00], time + getTimeDiff() + 100 + track.audioLatency); // reset all controllers
                 });
             }
             // track.audio.allNotesOff();
@@ -12987,8 +12985,8 @@ function song() {
         // console.log('allNotesOff', this.millis, time);
         objectForEach(this.midiOutputs, function (output) {
             // console.log(output)
-            for (var i = 0xB0; i < 0xC0; i++) {
-                output.send([i, 0x7B, 0x00], time + getTimeDiff() + 100); // stop all notes
+            for (var i = 0xb0; i < 0xc0; i++) {
+                output.send([i, 0x7b, 0x00], time + getTimeDiff() + 100); // stop all notes
                 output.send([i, 0x79, 0x00], time + getTimeDiff() + 100); // reset all controllers
             }
             //output.send([176, 123, 0], sequencer.getTime());
@@ -13005,13 +13003,13 @@ function song() {
     };
     Song.prototype.getMidiInputsAsDropdown = function (config) {
         config = config || {
-            type: 'input'
+            type: "input",
         };
         return getMidiPortsAsDropdown(config, this);
     };
     Song.prototype.getMidiOutputsAsDropdown = function (config) {
         config = config || {
-            type: 'output'
+            type: "output",
         };
         return getMidiPortsAsDropdown(config, this);
     };
