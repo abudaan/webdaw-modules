@@ -6,6 +6,7 @@ import { setup as setupScore } from "./scoreWrapper";
 import { setup as setupControls } from "./controls";
 import { setup as setupPlayhead } from "./playhead";
 import { setup as setupDrawLoop } from "./drawLoop";
+import { setup as setupFollowScore } from "./followScore";
 import { setup as setupDrawSelection, startSelect } from "./drawSelection";
 import { compareScoreAndMIDI } from "./compareScoreAndMIDI";
 import { setPlayhead } from "./actions/setPlayhead";
@@ -33,6 +34,7 @@ const init = async () => {
   setupPlayhead(false);
   setupDrawLoop();
   setupDrawSelection();
+  setupFollowScore();
   compareScoreAndMIDI();
 
   window.addEventListener("resize", () => {

@@ -73,15 +73,14 @@ export const setup = async (): Promise<{ cleanup: () => void }> => {
   const unsub2 = store.subscribe(
     (measures: number[]) => {
       if (measures.length > 0) {
-        console.log("LOOP", measures);
+        // console.log("LOOP", measures);
         const { repeats } = store.getState();
+
         const { barSong: leftBar } = songPositionFromScore(repeats, Math.min(...measures));
         const leftPos = song.getPosition("barsbeats", leftBar, 1, 1, 0);
 
         const { barSong: rightBar } = songPositionFromScore(repeats, Math.max(...measures) + 1);
         const rightPos = song.getPosition("barsbeats", rightBar, 1, 1, 0);
-
-        console.log(leftPos, rightPos);
 
         song.setLeftLocator("ticks", leftPos.ticks);
         song.setRightLocator("ticks", rightPos.ticks);
