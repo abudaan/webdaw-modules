@@ -1,4 +1,4 @@
-import { BBox, getPlayheadAnchorData } from "webdaw-modules";
+import { AnchorData, BBox, getPlayheadAnchorData } from "webdaw-modules";
 import { getOSMD } from "./scoreWrapper";
 import { store } from "./store";
 import { createDiv } from "./util";
@@ -23,7 +23,15 @@ const setupDebug = () => {
   container.id = "container-staffentries";
   document.body.appendChild(container);
   return {
-    drawDebug: (bboxes: BBox[]) => {
+    drawDebug: (anchors: AnchorData[]) => {
+      const bboxes = anchors.map((d) => {
+        const { bbox } = d;
+        return {
+          ...bbox,
+          width: d.numPixels,
+        };
+      });
+
       while (container.childNodes.length > 0) {
         if (container.firstChild) {
           container.removeChild(container.firstChild);
@@ -38,7 +46,7 @@ const setupDebug = () => {
 
 export const setup = (debug: boolean = true) => {
   // setup debug
-  let drawDebug: (bboxes: BBox[]) => void;
+  let drawDebug: (anchors: AnchorData[]) => void;
   if (debug) {
     ({ drawDebug } = setupDebug());
   }
@@ -70,15 +78,7 @@ export const setup = (debug: boolean = true) => {
       playhead.x = playheadAnchors[0].bbox.x;
       draw(playhead);
       if (debug) {
-        // drawDebug(store.getState().playheadAnchors.map((d) => d.bbox));
-        drawDebug(
-          store.getState().playheadAnchors.map((d) => {
-            const { bbox } = d;
-            return {
-              ...bbox,
-            };
-          })
-        );
+        drawDebug(store.getState().playheadAnchors);
       }
     },
     (state) => state.loaded
@@ -86,18 +86,9 @@ export const setup = (debug: boolean = true) => {
 
   const unsub4a = store.subscribe(
     () => {
-      const { repeats, loops, ppq } = store.getState();
-      const { anchorData } = getPlayheadAnchorData(getOSMD(), repeats, loops, ppq);
+      const { playheadAnchors } = store.getState();
       if (debug) {
-        drawDebug(
-          anchorData.map((d) => {
-            const { bbox } = d;
-            return {
-              ...bbox,
-              width: d.numPixels,
-            };
-          })
-        );
+        drawDebug(playheadAnchors);
       }
     },
     (state) => state.selectedMeasures
@@ -106,8 +97,8 @@ export const setup = (debug: boolean = true) => {
   let unsub5 = () => {};
   if (debug) {
     unsub5 = store.subscribe(
-      () => {
-        drawDebug(store.getState().playheadAnchors.map((d) => d.bbox));
+      (playheadAnchors: AnchorData[]) => {
+        drawDebug(playheadAnchors);
       },
       (state) => state.playheadAnchors
     );
@@ -119,6 +110,7 @@ export const setup = (debug: boolean = true) => {
       unsub2();
       unsub3();
       unsub4();
+      unsub4a();
       unsub5();
     },
   };

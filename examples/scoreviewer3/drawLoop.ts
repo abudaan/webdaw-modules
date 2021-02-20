@@ -64,12 +64,12 @@ export const setup = () => {
       const min = Math.min(...barNumbers);
       const max = Math.max(...barNumbers);
       const loops = [{ start: min, end: max, active: true, id: "loop" }];
-      // const { anchorData } = getPlayheadAnchorData(getOSMD(), repeats, loops, ppq);
+      const { anchorData } = getPlayheadAnchorData(getOSMD(), repeats, loops, ppq);
 
       store.setState({
+        loops,
         selectedMeasures: barNumbers,
-        // loops,
-        // playheadAnchors: anchorData,
+        playheadAnchors: anchorData,
       });
 
       drawLoop(boundingBoxes, offsetX, offsetY);

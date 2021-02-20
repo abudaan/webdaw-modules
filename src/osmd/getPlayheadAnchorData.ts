@@ -250,30 +250,37 @@ export const getPlayheadAnchorData = (
     a1.numTicks = a1.endTicks - a1.startTicks;
   }
 
-  if (loops.length) {
-    console.log("optimize for loops");
+  if (loops.length === 2) {
+    console.log("optimize for loops", loops);
     for (let i = 0; i < loops.length; i++) {
       const { start, end } = loops[i];
       for (let j = 0; j < result.length; j++) {
         const anchor = result[j];
+        const prevAnchor = result[j - 1];
         const nextAnchor = result[j + 1];
-        if (anchor.measureNumber === start) {
-          // anchor.numPixels = anchor.bboxMeasure.x + anchor.bboxMeasure.width - anchor.bbox.x;
-          // anchor.pixelsPerTick = anchor.numPixels / (anchor.endTicks - anchor.startTicks);
-        } else if (nextAnchor && nextAnchor.measureNumber === end + 1) {
-          console.log(start, end, nextAnchor.measureNumber, anchor.endTicks, anchor.numPixels);
+        // if (anchor.measureNumber === start) {
+        // anchor.numPixels = anchor.bboxMeasure.x + anchor.bboxMeasure.width - anchor.bbox.x;
+        // anchor.pixelsPerTick = anchor.numPixels / (anchor.endTicks - anchor.startTicks);
+        // } else if (anchor.measureNumber === end && nextAnchor && nextAnchor.measureNumber === end + 1) {
+        // if (anchor.measureNumber === start && prevAnchor && prevAnchor.measureNumber === start - 1) {
+        //   anchor.startTicks = measureStartTicks[anchor.measureNumber];
+        //   anchor.bbox.x = anchor.bboxMeasure.x;
+        //   anchor.numPixels += anchor.bbox.x - anchor.bboxMeasure.x;
+        //   anchor.pixelsPerTick = anchor.numPixels / (anchor.endTicks - anchor.startTicks);
+        // }
+
+        if (anchor.measureNumber === end && nextAnchor && nextAnchor.measureNumber === end + 1) {
           anchor.endTicks = measureStartTicks[nextAnchor.measureNumber];
           anchor.numPixels = anchor.bboxMeasure.x + anchor.bboxMeasure.width - anchor.bbox.x;
           anchor.pixelsPerTick = anchor.numPixels / (anchor.endTicks - anchor.startTicks);
-          console.log(2, anchor.endTicks, anchor.numPixels);
         }
       }
     }
   }
 
-  // result.forEach(d => {
-  //   console.log(d.measureNumber, d.ticks);
-  // });
+  result.forEach(d => {
+    console.log(d.measureNumber, d.startTicks, d.numPixels);
+  });
 
   return { anchorData: result, measureStartTicks: result1, upbeat };
 };
