@@ -1,5 +1,6 @@
 import { OpenSheetMusicDisplay } from "opensheetmusicdisplay";
 import { PartData, RepeatData } from "../musicxml/parser";
+import { LoopData } from "./types";
 import { BBox } from "../types";
 export declare const getTicksAtBar: (parts: PartData[]) => void;
 export declare type AnchorData = {
@@ -14,7 +15,7 @@ export declare type AnchorData = {
     pixelsPerTick: number;
     ghost: boolean;
 };
-export declare const getPlayheadAnchorData: (osmd: OpenSheetMusicDisplay, repeats: RepeatData[], loops: RepeatData[], ppq?: number) => {
+export declare const getPlayheadAnchorData: (osmd: OpenSheetMusicDisplay, repeats: RepeatData[], loops: LoopData[], ppq?: number) => {
     anchorData: AnchorData[];
     measureStartTicks: number[];
     upbeat: boolean;

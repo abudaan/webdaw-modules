@@ -57,17 +57,17 @@
 // export const midiFile = "../assets/chopin_valse_op.64_no.1_minute_valse.mid";
 // export const mxmlFile = "../assets/chopin_valse_op.64_no.1_minute_valse.musicxml";
 
-export const midiFileName = "mozk545a_musescore";
-export const midiFile = "../assets/mozk545a_musescore.mid";
-export const mxmlFile = "../assets/mozk545a_musescore.musicxml";
+// export const midiFileName = "mozk545a_musescore";
+// export const midiFile = "../assets/mozk545a_musescore.mid";
+// export const mxmlFile = "../assets/mozk545a_musescore.musicxml";
 
 // export const midiFileName = "spring";
 // export const midiFile = "../assets/spring.mid";
 // export const mxmlFile = "../assets/spring.xml";
 
-// export const midiFileName = "simple_test";
-// export const midiFile = "../assets/simple_test.mid";
-// export const mxmlFile = "../assets/simple_test.musicxml";
+export const midiFileName = "simple_test";
+export const midiFile = "../assets/simple_test.mid";
+export const mxmlFile = "../assets/simple_test.musicxml";
 
 // export const midiFileName = "mozk545a_2-bars";
 // export const midiFile = "../assets/mozk545a_2-bars.mid";

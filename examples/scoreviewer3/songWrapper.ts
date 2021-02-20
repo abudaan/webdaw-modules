@@ -3,11 +3,13 @@ import {
   Heartbeat,
   heartbeat_utils,
   songPositionFromScore,
-  AnchorData,
+  getPlayheadAnchorData,
+  LoopData,
 } from "webdaw-modules";
 import { stopSong } from "./actions/stopSong";
 import { store } from "./store";
 import { setSongPosition } from "./actions/setSongPosition";
+import { getOSMD } from "./scoreWrapper";
 const { loadJSON, addAssetPack, loadMIDIFile } = heartbeat_utils;
 
 const instrumentName = "TP00-PianoStereo";
@@ -73,15 +75,35 @@ export const setup = async (): Promise<{ cleanup: () => void }> => {
 
   const unsub2 = store.subscribe(
     (measures: number[]) => {
+      const { repeats, ppq } = store.getState();
+
       if (measures.length > 0) {
         // console.log("LOOP", measures);
-        const { repeats } = store.getState();
 
-        const { barSong: leftBar } = songPositionFromScore(repeats, Math.min(...measures));
+        const startBar = Math.min(...measures);
+        const endBar = Math.max(...measures);
+
+        const { barSong: leftBar } = songPositionFromScore(repeats, startBar);
         const leftPos = song.getPosition("barsbeats", leftBar, 1, 1, 0);
 
-        const { barSong: rightBar } = songPositionFromScore(repeats, Math.max(...measures) + 1);
+        const { barSong: rightBar } = songPositionFromScore(repeats, endBar + 1);
         const rightPos = song.getPosition("barsbeats", rightBar, 1, 1, 0);
+        const loopData: LoopData = {
+          startBar,
+          endBar,
+          startMillis: leftPos.millis,
+          endMillis: rightPos.millis,
+          startTicks: leftPos.millis,
+          endTicks: rightPos.ticks,
+          active: true,
+          id: "loop",
+        };
+        const loops = [loopData];
+        const { anchorData } = getPlayheadAnchorData(getOSMD(), repeats, loops, ppq);
+        store.setState({
+          loops,
+          playheadAnchors: anchorData,
+        });
 
         song.setLeftLocator("ticks", leftPos.ticks);
         song.setRightLocator("ticks", rightPos.ticks);
@@ -89,6 +111,11 @@ export const setup = async (): Promise<{ cleanup: () => void }> => {
         song.setLoop(true);
       } else {
         song.setLoop(false);
+        const { anchorData } = getPlayheadAnchorData(getOSMD(), repeats, [], ppq);
+        store.setState({
+          loops: [],
+          playheadAnchors: anchorData,
+        });
       }
     },
     (state) => state.selectedMeasures

@@ -249,10 +249,10 @@ exports.getPlayheadAnchorData = function (osmd, repeats, loops, ppq) {
         a1.pixelsPerTick = a1.numPixels / diffTicks_2;
         a1.numTicks = a1.endTicks - a1.startTicks;
     }
-    if (loops.length === 2) {
-        console.log("optimize for loops", loops);
+    if (loops.length) {
+        // console.log("optimize for loops", loops);
         for (var i = 0; i < loops.length; i++) {
-            var _c = loops[i], start = _c.start, end = _c.end;
+            var _c = loops[i], startBar = _c.startBar, endBar = _c.endBar;
             for (var j = 0; j < result.length; j++) {
                 var anchor = result[j];
                 var prevAnchor = result[j - 1];
@@ -267,8 +267,8 @@ exports.getPlayheadAnchorData = function (osmd, repeats, loops, ppq) {
                 //   anchor.numPixels += anchor.bbox.x - anchor.bboxMeasure.x;
                 //   anchor.pixelsPerTick = anchor.numPixels / (anchor.endTicks - anchor.startTicks);
                 // }
-                if (anchor.measureNumber === end && nextAnchor && nextAnchor.measureNumber === end + 1) {
-                    console.log("update last anchor", anchor);
+                if (anchor.measureNumber === endBar && nextAnchor && nextAnchor.measureNumber === endBar + 1) {
+                    // console.log("update last anchor", anchor);
                     // anchor.endTicks = measureStartTicks[nextAnchor.measureNumber - 1];
                     anchor.numPixels = anchor.bboxMeasure.x + anchor.bboxMeasure.width - anchor.bbox.x;
                     anchor.pixelsPerTick = anchor.numPixels / (anchor.endTicks - anchor.startTicks);
@@ -276,9 +276,9 @@ exports.getPlayheadAnchorData = function (osmd, repeats, loops, ppq) {
             }
         }
     }
-    result.forEach(function (d) {
-        console.log(d.measureNumber, d.startTicks, d.numPixels);
-    });
+    // result.forEach(d => {
+    //   console.log(d.measureNumber, d.startTicks, d.numPixels);
+    // });
     return { anchorData: result, measureStartTicks: result1, upbeat: upbeat };
 };
 //# sourceMappingURL=getPlayheadAnchorData.js.map

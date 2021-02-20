@@ -65,6 +65,7 @@ __exportStar(require("./osmd/scorePositionFromSong"), exports);
 __exportStar(require("./osmd/setGraphicalNoteColor"), exports);
 __exportStar(require("./osmd/songPositionFromScore"), exports);
 __exportStar(require("./osmd/type_shims"), exports);
+__exportStar(require("./osmd/types"), exports);
 __exportStar(require("./osmd/util"), exports);
 __exportStar(require("./MIDIEvent"), exports);
 __exportStar(require("./util/2d"), exports);

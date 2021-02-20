@@ -38,6 +38,7 @@ export * from "./osmd/scorePositionFromSong";
 export * from "./osmd/setGraphicalNoteColor";
 export * from "./osmd/songPositionFromScore";
 export * from "./osmd/type_shims";
+export * from "./osmd/types";
 export * from "./osmd/util";
 export * from "./MIDIEvent";
 export * from "./util/2d";

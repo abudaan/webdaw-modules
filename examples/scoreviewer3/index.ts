@@ -32,8 +32,8 @@ const init = async () => {
   await setupSong();
   await setupScore(scoreDiv);
   setupControls();
-  // setupPlayhead(true);
-  setupPlayhead(false);
+  setupPlayhead(true);
+  // setupPlayhead(false);
   // setupDebugAnchor();
   setupDrawLoop();
   setupDrawSelection();

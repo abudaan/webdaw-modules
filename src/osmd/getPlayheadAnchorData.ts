@@ -1,6 +1,7 @@
 import { OpenSheetMusicDisplay, SourceMeasure } from "opensheetmusicdisplay";
 import { getBoundingBoxData } from "./mapper3";
 import { PartData, RepeatData } from "../musicxml/parser";
+import { LoopData } from "./types";
 import { BBox } from "../types";
 import { getBoundingBoxMeasureAll } from "./getBoundingBoxMeasure";
 
@@ -33,7 +34,7 @@ export type AnchorData = {
 export const getPlayheadAnchorData = (
   osmd: OpenSheetMusicDisplay,
   repeats: RepeatData[],
-  loops: RepeatData[],
+  loops: LoopData[],
   ppq: number = 960
 ): { anchorData: AnchorData[]; measureStartTicks: number[]; upbeat: boolean } => {
   const measureBoundingBoxes = getBoundingBoxMeasureAll(osmd);
@@ -250,10 +251,10 @@ export const getPlayheadAnchorData = (
     a1.numTicks = a1.endTicks - a1.startTicks;
   }
 
-  if (loops.length === 2) {
-    console.log("optimize for loops", loops);
+  if (loops.length) {
+    // console.log("optimize for loops", loops);
     for (let i = 0; i < loops.length; i++) {
-      const { start, end } = loops[i];
+      const { startBar, endBar } = loops[i];
       for (let j = 0; j < result.length; j++) {
         const anchor = result[j];
         const prevAnchor = result[j - 1];
@@ -269,8 +270,8 @@ export const getPlayheadAnchorData = (
         //   anchor.pixelsPerTick = anchor.numPixels / (anchor.endTicks - anchor.startTicks);
         // }
 
-        if (anchor.measureNumber === end && nextAnchor && nextAnchor.measureNumber === end + 1) {
-          console.log("update last anchor", anchor);
+        if (anchor.measureNumber === endBar && nextAnchor && nextAnchor.measureNumber === endBar + 1) {
+          // console.log("update last anchor", anchor);
           // anchor.endTicks = measureStartTicks[nextAnchor.measureNumber - 1];
           anchor.numPixels = anchor.bboxMeasure.x + anchor.bboxMeasure.width - anchor.bbox.x;
           anchor.pixelsPerTick = anchor.numPixels / (anchor.endTicks - anchor.startTicks);
@@ -279,9 +280,9 @@ export const getPlayheadAnchorData = (
     }
   }
 
-  result.forEach(d => {
-    console.log(d.measureNumber, d.startTicks, d.numPixels);
-  });
+  // result.forEach(d => {
+  //   console.log(d.measureNumber, d.startTicks, d.numPixels);
+  // });
 
   return { anchorData: result, measureStartTicks: result1, upbeat };
 };

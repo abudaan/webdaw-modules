@@ -1,13 +1,15 @@
 import {
   BoundingBox,
   getBoundingBoxesOfSelectedMeasures,
-  getPlayheadAnchorData,
   getSelectedMeasures,
 } from "webdaw-modules";
 import { getOSMD } from "./scoreWrapper";
+import { getSong } from "./songWrapper";
 import { store } from "./store";
 
 let div: HTMLDivElement;
+
+const song = getSong();
 
 // draw rectangles on the score to indicate the set loop
 const drawLoop = (boundingBoxes: BoundingBox[], offsetX: number, offsetY: number) => {
@@ -58,21 +60,8 @@ export const setup = () => {
         },
         upbeat
       );
-      // WIP: improve anchor data for loops
-      // console.log(barNumbers);
-      const { repeats, ppq } = store.getState();
-      const min = Math.min(...barNumbers);
-      const max = Math.max(...barNumbers);
-      const loops = [{ start: min, end: max, active: true, id: "loop" }];
-      const { anchorData } = getPlayheadAnchorData(getOSMD(), repeats, loops, ppq);
-
-      store.setState({
-        loops,
-        selectedMeasures: barNumbers,
-        playheadAnchors: anchorData,
-      });
-
       drawLoop(boundingBoxes, offsetX, offsetY);
+      store.setState({ selectedMeasures: barNumbers });
     },
     (state) => state.selection
   );
