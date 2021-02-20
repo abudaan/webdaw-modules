@@ -26,7 +26,7 @@ export const setup = () => {
       if (anchor !== null) {
         divAnchor.style.left = `${anchor.bbox.x + offsetX}px`;
         divAnchor.style.top = `${anchor.bbox.y + offsetY}px`;
-        divAnchor.style.width = `${anchor.bbox.width}px`;
+        divAnchor.style.width = `${anchor.numPixels}px`;
         divAnchor.style.height = `${anchor.bbox.height}px`;
         divAnchor.style.background = "rgba(0,255,0,0.5)";
       }

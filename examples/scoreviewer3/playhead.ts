@@ -1,4 +1,4 @@
-import { BBox } from "webdaw-modules";
+import { BBox, getPlayheadAnchorData } from "webdaw-modules";
 import { getOSMD } from "./scoreWrapper";
 import { store } from "./store";
 import { createDiv } from "./util";
@@ -70,10 +70,37 @@ export const setup = (debug: boolean = true) => {
       playhead.x = playheadAnchors[0].bbox.x;
       draw(playhead);
       if (debug) {
-        drawDebug(store.getState().playheadAnchors.map((d) => d.bbox));
+        // drawDebug(store.getState().playheadAnchors.map((d) => d.bbox));
+        drawDebug(
+          store.getState().playheadAnchors.map((d) => {
+            const { bbox } = d;
+            return {
+              ...bbox,
+            };
+          })
+        );
       }
     },
     (state) => state.loaded
+  );
+
+  const unsub4a = store.subscribe(
+    () => {
+      const { repeats, loops, ppq } = store.getState();
+      const { anchorData } = getPlayheadAnchorData(getOSMD(), repeats, loops, ppq);
+      if (debug) {
+        drawDebug(
+          anchorData.map((d) => {
+            const { bbox } = d;
+            return {
+              ...bbox,
+              width: d.numPixels,
+            };
+          })
+        );
+      }
+    },
+    (state) => state.selectedMeasures
   );
 
   let unsub5 = () => {};

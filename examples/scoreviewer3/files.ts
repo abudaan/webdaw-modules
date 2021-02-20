@@ -11,9 +11,9 @@
 // export const mxmlFile = "../assets/osmd_test.musicxml";
 
 // upbeat
-export const midiFileName = "Dona Nobis Pacem";
-export const midiFile = "../assets/Dona Nobis Pacem.mid";
-export const mxmlFile = "../assets/Dona Nobis Pacem.musicxml";
+// export const midiFileName = "Dona Nobis Pacem";
+// export const midiFile = "../assets/Dona Nobis Pacem.mid";
+// export const mxmlFile = "../assets/Dona Nobis Pacem.musicxml";
 
 /* multiple-bar rest */
 // export const midiFileName = "4a2s-瀰度山歌";
@@ -65,9 +65,9 @@ export const mxmlFile = "../assets/Dona Nobis Pacem.musicxml";
 // export const midiFile = "../assets/spring.mid";
 // export const mxmlFile = "../assets/spring.xml";
 
-// export const midiFileName = "mozk545a_2-bars";
-// export const midiFile = "../assets/mozk545a_2-bars.mid";
-// export const mxmlFile = "../assets/mozk545a_2-bars.musicxml";
+export const midiFileName = "mozk545a_2-bars";
+export const midiFile = "../assets/mozk545a_2-bars.mid";
+export const mxmlFile = "../assets/mozk545a_2-bars.musicxml";
 
 // const midiFileName = 'mozk545a_2-bars_2-tracks';
 // const midiFile = '../assets/mozk545a_2-bars_2-tracks.mid';

@@ -60,13 +60,14 @@ export const setup = () => {
       );
       // WIP: improve anchor data for loops
       // console.log(barNumbers);
-      // const { repeats, ppq } = store.getState();
-      // const loops = [{ start: barNumbers[0], end: barNumbers[1], active: true, id: "loop" }];
+      const { repeats, ppq } = store.getState();
+      const min = Math.min(...barNumbers);
+      const max = Math.max(...barNumbers);
+      const loops = [{ start: min, end: max, active: true, id: "loop" }];
       // const { anchorData } = getPlayheadAnchorData(getOSMD(), repeats, loops, ppq);
 
       store.setState({
         selectedMeasures: barNumbers,
-        // selectedMeasures: barNumbers,
         // loops,
         // playheadAnchors: anchorData,
       });

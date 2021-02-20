@@ -249,20 +249,27 @@ exports.getPlayheadAnchorData = function (osmd, repeats, loops, ppq) {
         a1.pixelsPerTick = a1.numPixels / (a1.endTicks - a1.startTicks);
         a1.numTicks = a1.endTicks - a1.startTicks;
     }
-    // optimize for loops
-    // for (let i = 0; i < loops.length; i++) {
-    //   const { start, end } = loops[i];
-    //   for (let j = 0; j < result.length; j++) {
-    //     const anchor = result[j];
-    //     if (anchor.measureNumber === start) {
-    //       anchor.numPixels = anchor.bboxMeasure.x + anchor.bboxMeasure.width - anchor.bbox.x;
-    //       anchor.pixelsPerTick = anchor.numPixels / (anchor.endTicks - anchor.startTicks);
-    //     } else if (anchor.measureNumber === end) {
-    //       anchor.numPixels = anchor.bboxMeasure.x + anchor.bboxMeasure.width - anchor.bbox.x;
-    //       anchor.pixelsPerTick = anchor.numPixels / (anchor.endTicks - anchor.startTicks);
-    //     }
-    //   }
-    // }
+    if (loops.length) {
+        console.log("optimize for loops");
+        for (var i = 0; i < loops.length; i++) {
+            var _c = loops[i], start = _c.start, end = _c.end;
+            for (var j = 0; j < result.length; j++) {
+                var anchor = result[j];
+                var nextAnchor = result[j + 1];
+                if (anchor.measureNumber === start) {
+                    // anchor.numPixels = anchor.bboxMeasure.x + anchor.bboxMeasure.width - anchor.bbox.x;
+                    // anchor.pixelsPerTick = anchor.numPixels / (anchor.endTicks - anchor.startTicks);
+                }
+                else if (nextAnchor && nextAnchor.measureNumber === end + 1) {
+                    console.log(start, end, nextAnchor.measureNumber, anchor.endTicks, anchor.numPixels);
+                    anchor.endTicks = measureStartTicks[nextAnchor.measureNumber];
+                    anchor.numPixels = anchor.bboxMeasure.x + anchor.bboxMeasure.width - anchor.bbox.x;
+                    anchor.pixelsPerTick = anchor.numPixels / (anchor.endTicks - anchor.startTicks);
+                    console.log(2, anchor.endTicks, anchor.numPixels);
+                }
+            }
+        }
+    }
     // result.forEach(d => {
     //   console.log(d.measureNumber, d.ticks);
     // });
