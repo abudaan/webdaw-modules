@@ -1,5 +1,6 @@
 import { AnchorData } from "webdaw-modules";
 import { store } from "../store";
+import { getSong } from "../songWrapper";
 
 export const setSongPosition = (millis: number, ticks: number) => {
   const {
@@ -11,22 +12,32 @@ export const setSongPosition = (millis: number, ticks: number) => {
 
   const playheadOffsetX = playhead.width / 2;
 
+  // TODO: check here which is the next bar in case of looping!!!
+
   // here we check if the position in ticks has passed the current anchor, you can
   // also perform this check in millis like so:
   //
   // currentPlayheadAnchor === null || millis >= song.getPosition("ticks", currentPlayheadAnchor.endTicks).millis) {
   //
-  if (currentPlayheadAnchor === null || ticks >= currentPlayheadAnchor.endTicks) {
+  console.log(ticks, currentPlayheadAnchor?.endTicks);
+  const endMillis = currentPlayheadAnchor
+    ? getSong().getPosition("ticks", currentPlayheadAnchor.endTicks).millis
+    : 0;
+  if (currentPlayheadAnchor === null || millis >= endMillis) {
+    // if (currentPlayheadAnchor === null || ticks >= currentPlayheadAnchor.endTicks) {
     // find the current anchor
     let anchor: AnchorData | null = null;
-    for (let i = 0; i < playheadAnchors.length; i++) {
+    let i = 0;
+    let index = 0;
+    for (; i < playheadAnchors.length; i++) {
       anchor = playheadAnchors[i];
       if (anchor?.startTicks > ticks) {
-        const index = i === 0 ? 0 : i - 1;
+        index = i === 0 ? 0 : i - 1;
         anchor = playheadAnchors[index];
         break;
       }
     }
+    console.log("update", millis, endMillis, index);
 
     if (anchor === null) {
       console.error("could not find an anchor");

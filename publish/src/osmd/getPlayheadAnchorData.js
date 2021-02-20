@@ -246,7 +246,7 @@ exports.getPlayheadAnchorData = function (osmd, repeats, loops, ppq) {
             a1.numPixels = a1.bboxMeasure.x + a1.bboxMeasure.width - a1.bbox.x;
         }
         var diffTicks_2 = a1.endTicks - a1.startTicks;
-        a1.pixelsPerTick = a1.numPixels / (a1.endTicks - a1.startTicks);
+        a1.pixelsPerTick = a1.numPixels / diffTicks_2;
         a1.numTicks = a1.endTicks - a1.startTicks;
     }
     if (loops.length === 2) {
@@ -268,7 +268,8 @@ exports.getPlayheadAnchorData = function (osmd, repeats, loops, ppq) {
                 //   anchor.pixelsPerTick = anchor.numPixels / (anchor.endTicks - anchor.startTicks);
                 // }
                 if (anchor.measureNumber === end && nextAnchor && nextAnchor.measureNumber === end + 1) {
-                    anchor.endTicks = measureStartTicks[nextAnchor.measureNumber];
+                    console.log("update last anchor", anchor);
+                    // anchor.endTicks = measureStartTicks[nextAnchor.measureNumber - 1];
                     anchor.numPixels = anchor.bboxMeasure.x + anchor.bboxMeasure.width - anchor.bbox.x;
                     anchor.pixelsPerTick = anchor.numPixels / (anchor.endTicks - anchor.startTicks);
                 }

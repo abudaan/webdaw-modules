@@ -246,7 +246,7 @@ export const getPlayheadAnchorData = (
       a1.numPixels = a1.bboxMeasure.x + a1.bboxMeasure.width - a1.bbox.x;
     }
     const diffTicks = a1.endTicks - a1.startTicks;
-    a1.pixelsPerTick = a1.numPixels / (a1.endTicks - a1.startTicks);
+    a1.pixelsPerTick = a1.numPixels / diffTicks;
     a1.numTicks = a1.endTicks - a1.startTicks;
   }
 
@@ -270,7 +270,8 @@ export const getPlayheadAnchorData = (
         // }
 
         if (anchor.measureNumber === end && nextAnchor && nextAnchor.measureNumber === end + 1) {
-          anchor.endTicks = measureStartTicks[nextAnchor.measureNumber];
+          console.log("update last anchor", anchor);
+          // anchor.endTicks = measureStartTicks[nextAnchor.measureNumber - 1];
           anchor.numPixels = anchor.bboxMeasure.x + anchor.bboxMeasure.width - anchor.bbox.x;
           anchor.pixelsPerTick = anchor.numPixels / (anchor.endTicks - anchor.startTicks);
         }
