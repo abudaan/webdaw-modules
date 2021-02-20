@@ -55,20 +55,8 @@ export module Heartbeat {
     addMidiEventListener: (event: string, callback: (arg?: any) => void) => void;
     removeEventListener: (type: string) => void;
     setLoop: (loop?: boolean) => void;
-    setLeftLocator: (
-      type: string,
-      bar: number,
-      beat?: number,
-      sixteenth?: number,
-      tick?: number
-    ) => void;
-    setRightLocator: (
-      type: string,
-      bar: number,
-      beat?: number,
-      sixteenth?: number,
-      tick?: number
-    ) => void;
+    setLeftLocator: (type: string, bar: number, beat?: number, sixteenth?: number, tick?: number) => void;
+    setRightLocator: (type: string, bar: number, beat?: number, sixteenth?: number, tick?: number) => void;
     addEvents: (events: Array<MIDIEvent>) => void;
     addTimeEvents: (events: Array<MIDIEvent>) => void;
     removeTimeEvents: () => void;
@@ -154,13 +142,14 @@ export module Heartbeat {
   export type Track = {
     id: string;
     name: string;
-    parts: Array<Part>;
-    events: Array<MIDIEvent>;
+    parts: Part[];
+    events: MIDIEvent[];
     needsUpdate: boolean;
     partsById: { [id: string]: Part };
     audioLatency: number;
     monitor: boolean;
     mute: boolean;
+    notes: MIDINote[];
     addPart: (part: Part) => void;
     addPartAt: (part: Part, type: [string, number]) => void;
     removeEvents: (events: Array<MIDIEvent>) => void;
@@ -201,7 +190,7 @@ export module Heartbeat {
     bpm: number;
     nominator: number;
     denominator: number;
-    tracks: Array<Track>;
+    tracks: Track[];
     timeEvents: Array<MIDIEvent>;
   }
 
@@ -339,21 +328,13 @@ export module Heartbeat {
     getAudioContext(): AudioContext;
     getMasterGainNode(): GainNode;
     createAudioEvent(config: any): Heartbeat.AudioEvent;
-    addMidiFile(
-      args: { url?: string; arraybuffer?: ArrayBuffer },
-      callback: (mf: Heartbeat.MIDIFileJSON) => void
-    ): void;
+    addMidiFile(args: { url?: string; arraybuffer?: ArrayBuffer }, callback: (mf: Heartbeat.MIDIFileJSON) => void): void;
     createMidiFile(args: any): any;
     addAssetPack(ap: Heartbeat.AssetPack, callback: () => void): void;
     getInstruments(): Heartbeat.Instrument[];
     ready(): Promise<boolean>;
     getNoteNumber(step: string, octave: number): number;
-    createMidiEvent(
-      ticks: number,
-      type: number,
-      data1: number,
-      data2?: number
-    ): Heartbeat.MIDIEvent;
+    createMidiEvent(ticks: number, type: number, data1: number, data2?: number): Heartbeat.MIDIEvent;
     processEvent(event: Heartbeat.MIDIEvent, instrument: string): void;
     processEvent(event: Heartbeat.MIDIEvent[], instrument: string): void;
     stopProcessEvents(): void;
@@ -373,21 +354,13 @@ export function getMidiFiles(): Heartbeat.MIDIFileJSON[];
 export function getAudioContext(): AudioContext;
 export function getMasterGainNode(): GainNode;
 export function createAudioEvent(config: any): Heartbeat.AudioEvent;
-export function addMidiFile(
-  args: { url?: string; arraybuffer?: ArrayBuffer },
-  callback: (mf: Heartbeat.MIDIFileJSON) => void
-): void;
+export function addMidiFile(args: { url?: string; arraybuffer?: ArrayBuffer }, callback: (mf: Heartbeat.MIDIFileJSON) => void): void;
 export function createMidiFile(args: any): any;
 export function addAssetPack(ap: Heartbeat.AssetPack, callback: () => void): void;
 export function getInstruments(): Heartbeat.Instrument[];
 export function ready(): Promise<boolean>;
 export function getNoteNumber(step: string, octave: number): number;
-export function createMidiEvent(
-  ticks: number,
-  type: number,
-  data1: number,
-  data2?: number
-): Heartbeat.MIDIEvent;
+export function createMidiEvent(ticks: number, type: number, data1: number, data2?: number): Heartbeat.MIDIEvent;
 export function processEvent(event: Heartbeat.MIDIEvent, instrument: string): void;
 export function processEvent(event: Heartbeat.MIDIEvent[], instrument: string): void;
 export function stopProcessEvents(): void;

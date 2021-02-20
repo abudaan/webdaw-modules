@@ -1,4 +1,4 @@
-import { songPositionFromScore, getMeasureAtPoint, AnchorData } from "webdaw-modules";
+import { songPositionFromScore, getMeasureAtPoint, getClosestAnchor } from "webdaw-modules";
 import { getSong } from "../songWrapper";
 import { store } from "../store";
 import { getOSMD } from "../scoreWrapper";
@@ -45,7 +45,6 @@ export const setPlayhead = (e: PointerEvent) => {
       offset,
     } = data;
 
-    const song = getSong();
     const {
       playhead,
       repeats,
@@ -54,63 +53,24 @@ export const setPlayhead = (e: PointerEvent) => {
     } = store.getState();
 
     debug({ x: x + offsetX, y: y + offsetY, height, width });
+
+    const song = getSong();
     const { barSong: currentBarSong } = songPositionFromScore(repeats, measureNumber);
-    const playheadOffsetX = playhead.width / 2;
 
-    // find the current and the previous anchor
-    const pointerX = x + offset;
-    let anchor: AnchorData | null = null;
-    for (let i = 0; i < playheadAnchors.length; i++) {
-      anchor = playheadAnchors[i];
-      // only test further if the anchor is in the current measure or the next one
-      if (anchor.measureNumber === currentBarSong || anchor.measureNumber === currentBarSong + 1) {
-        let index = i < playheadAnchors.length - 1 ? i + 1 : i;
-        index = i === 0 ? 0 : i - 1;
-        const previousAnchor = playheadAnchors[index];
-        // test if the pointer is inside the anchor bbox
-        if (anchor.bbox.x > pointerX) {
-          // anchor is the first one in the next measure so choose the previous because
-          // we always select an anchor that is inside the measure that the user has clicked on
-          if (anchor.measureNumber !== currentBarSong) {
-            anchor = previousAnchor;
-            // console.log("> last in measure");
-            break;
-          }
-
-          if (previousAnchor.measureNumber !== currentBarSong) {
-            // console.log("> first in measure");
-            break;
-          }
-
-          // now we have two anchors in the same measure; we select the anchor that is
-          // the closest to the pointer position
-          const diff1 = pointerX - (previousAnchor.bbox.x + previousAnchor.bbox.width);
-          const diff2 = anchor.bbox.x - pointerX;
-          // console.log(diff1, diff2);
-          // console.log(pointerX, prev.bbox.x, diff1, anchor.bbox.x, diff2);
-          if (diff1 < diff2) {
-            anchor = previousAnchor;
-            // console.log("> diff");
-            break;
-          }
-          break;
-        }
-        //   } else if (anchor.measureNumber !== currentBarSong) {
-        //     console.log("> stave");
-        //     anchor = previousAnchor;
-        //     break;
-        // }
-      }
-    }
+    let anchor = getClosestAnchor({
+      pointerX: x + offset,
+      currentBarSong,
+      anchors: playheadAnchors,
+    });
 
     if (anchor === null) {
       console.log("setPlayhead -> anchor is null");
       anchor = playheadAnchors[0];
     }
-    // const hbTicks = song.getPosition("barsbeats", anchor.measureNumber, 1, 1, 0).ticks;
-    // console.log("anchor", anchor.measureNumber, anchor.startTicks, hbTicks);
+
     song.setPlayhead("ticks", anchor === null ? 0 : anchor.startTicks);
 
+    const playheadOffsetX = playhead.width / 2;
     store.setState({
       currentBarSong,
       currentBarScore: measureNumber,
