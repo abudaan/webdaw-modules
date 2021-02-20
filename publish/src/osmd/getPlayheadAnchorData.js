@@ -46,7 +46,7 @@ exports.getTicksAtBar = function (parts) {
         }, 0);
     });
 };
-exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
+exports.getPlayheadAnchorData = function (osmd, repeats, loops, ppq) {
     if (ppq === void 0) { ppq = 960; }
     var measureBoundingBoxes = getBoundingBoxMeasure_1.getBoundingBoxMeasureAll(osmd);
     // console.log("measureBoundingBoxes", measureBoundingBoxes);
@@ -249,9 +249,23 @@ exports.getPlayheadAnchorData = function (osmd, repeats, ppq) {
         a1.pixelsPerTick = a1.numPixels / (a1.endTicks - a1.startTicks);
         a1.numTicks = a1.endTicks - a1.startTicks;
     }
+    // optimize for loops
+    // for (let i = 0; i < loops.length; i++) {
+    //   const { start, end } = loops[i];
+    //   for (let j = 0; j < result.length; j++) {
+    //     const anchor = result[j];
+    //     if (anchor.measureNumber === start) {
+    //       anchor.numPixels = anchor.bboxMeasure.x + anchor.bboxMeasure.width - anchor.bbox.x;
+    //       anchor.pixelsPerTick = anchor.numPixels / (anchor.endTicks - anchor.startTicks);
+    //     } else if (anchor.measureNumber === end) {
+    //       anchor.numPixels = anchor.bboxMeasure.x + anchor.bboxMeasure.width - anchor.bbox.x;
+    //       anchor.pixelsPerTick = anchor.numPixels / (anchor.endTicks - anchor.startTicks);
+    //     }
+    //   }
+    // }
     // result.forEach(d => {
     //   console.log(d.measureNumber, d.ticks);
     // });
-    return { anchorData: result, measureStartTicks: result1 };
+    return { anchorData: result, measureStartTicks: result1, upbeat: upbeat };
 };
 //# sourceMappingURL=getPlayheadAnchorData.js.map

@@ -9,7 +9,7 @@ export declare const getSelectedMeasures: (osmd: OpenSheetMusicDisplay, start: {
 }, end: {
     x: number;
     y: number;
-}) => {
+}, upbeat?: boolean) => {
     barNumbers: number[];
     boundingBoxes: BoundingBox[];
 };

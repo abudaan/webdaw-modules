@@ -9,11 +9,12 @@ import { getBoundingBoxMeasureAll } from "./getBoundingBoxMeasure";
 export const getSelectedMeasures = (
   osmd: OpenSheetMusicDisplay,
   start: { x: number; y: number },
-  end: { x: number; y: number }
+  end: { x: number; y: number },
+  upbeat: boolean = false
 ): { barNumbers: number[]; boundingBoxes: BoundingBox[] } => {
   const boundingBoxes = getBoundingBoxMeasureAll(osmd);
   // console.log(boundingBoxes);
-  const selectedBars: number[] = [];
+  let selectedBars: number[] = [];
   const selection: BoundingBox = {
     x: start.x,
     y: start.y,
@@ -32,6 +33,9 @@ export const getSelectedMeasures = (
       }
     }
   });
+  if (upbeat) {
+    selectedBars = selectedBars.map(b => b + 1);
+  }
   // console.log(selectedBars);
   const barNumbers: number[] = [];
   // add missing bar numbers

@@ -33,8 +33,9 @@ export type AnchorData = {
 export const getPlayheadAnchorData = (
   osmd: OpenSheetMusicDisplay,
   repeats: RepeatData[],
+  loops: RepeatData[],
   ppq: number = 960
-): { anchorData: AnchorData[]; measureStartTicks: number[] } => {
+): { anchorData: AnchorData[]; measureStartTicks: number[]; upbeat: boolean } => {
   const measureBoundingBoxes = getBoundingBoxMeasureAll(osmd);
   // console.log("measureBoundingBoxes", measureBoundingBoxes);
   const measureStartTicks = osmd.Sheet.SourceMeasures.map((measure: SourceMeasure) => {
@@ -162,7 +163,6 @@ export const getPlayheadAnchorData = (
       }
     }
   }
-
   // console.log(copies);
 
   // update the ticks and measure number of the bars that come after the repeats
@@ -250,9 +250,24 @@ export const getPlayheadAnchorData = (
     a1.numTicks = a1.endTicks - a1.startTicks;
   }
 
+  // optimize for loops
+  // for (let i = 0; i < loops.length; i++) {
+  //   const { start, end } = loops[i];
+  //   for (let j = 0; j < result.length; j++) {
+  //     const anchor = result[j];
+  //     if (anchor.measureNumber === start) {
+  //       anchor.numPixels = anchor.bboxMeasure.x + anchor.bboxMeasure.width - anchor.bbox.x;
+  //       anchor.pixelsPerTick = anchor.numPixels / (anchor.endTicks - anchor.startTicks);
+  //     } else if (anchor.measureNumber === end) {
+  //       anchor.numPixels = anchor.bboxMeasure.x + anchor.bboxMeasure.width - anchor.bbox.x;
+  //       anchor.pixelsPerTick = anchor.numPixels / (anchor.endTicks - anchor.startTicks);
+  //     }
+  //   }
+  // }
+
   // result.forEach(d => {
   //   console.log(d.measureNumber, d.ticks);
   // });
 
-  return { anchorData: result, measureStartTicks: result1 };
+  return { anchorData: result, measureStartTicks: result1, upbeat };
 };

@@ -44,6 +44,7 @@ export const setup = () => {
       const {
         offset: { x: offsetX, y: offsetY },
         scrollPos: { x: scrollPosX, y: scrollPosY },
+        upbeat,
       } = store.getState();
       const { barNumbers, boundingBoxes } = getSelectedMeasures(
         getOSMD(),
@@ -54,17 +55,19 @@ export const setup = () => {
         {
           x: selection[2] + scrollPosX - offsetX,
           y: selection[3] + scrollPosY - offsetY,
-        }
+        },
+        upbeat
       );
-      // WIP: improve anchor positions in custom loops
+      // WIP: improve anchor data for loops
       // console.log(barNumbers);
       // const { repeats, ppq } = store.getState();
-      // const clone = [...repeats];
-      // clone.push({ start: barNumbers[0], end: barNumbers[1], active: true, id: "loop" });
-      // const { anchorData } = getPlayheadAnchorData(getOSMD(), repeats, ppq);
+      // const loops = [{ start: barNumbers[0], end: barNumbers[1], active: true, id: "loop" }];
+      // const { anchorData } = getPlayheadAnchorData(getOSMD(), repeats, loops, ppq);
+
       store.setState({
         selectedMeasures: barNumbers,
-        // repeats: clone,
+        // selectedMeasures: barNumbers,
+        // loops,
         // playheadAnchors: anchorData,
       });
 

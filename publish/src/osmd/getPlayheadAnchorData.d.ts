@@ -14,7 +14,8 @@ export declare type AnchorData = {
     pixelsPerTick: number;
     ghost: boolean;
 };
-export declare const getPlayheadAnchorData: (osmd: OpenSheetMusicDisplay, repeats: RepeatData[], ppq?: number) => {
+export declare const getPlayheadAnchorData: (osmd: OpenSheetMusicDisplay, repeats: RepeatData[], loops: RepeatData[], ppq?: number) => {
     anchorData: AnchorData[];
     measureStartTicks: number[];
+    upbeat: boolean;
 };

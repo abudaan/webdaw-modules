@@ -19,7 +19,7 @@ export const getOSMD = (): OpenSheetMusicDisplay => osmd;
 
 export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => void }> => {
   scoreDiv = divElem;
-  const { mxmlFile, ppq } = store.getState();
+  const { mxmlFile, ppq, loops } = store.getState();
   osmd = new OpenSheetMusicDisplay(scoreDiv, {
     backend: "svg",
     autoResize: false,
@@ -45,8 +45,13 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
     () => {
       render(osmd);
       updateBoundingBoxMeasures(osmd);
-      const { anchorData, measureStartTicks } = getPlayheadAnchorData(osmd, repeats, ppq);
-      store.setState({ playheadAnchors: anchorData, measureStartTicks });
+      const { upbeat, anchorData, measureStartTicks } = getPlayheadAnchorData(
+        osmd,
+        repeats,
+        loops,
+        ppq
+      );
+      store.setState({ playheadAnchors: anchorData, measureStartTicks, upbeat });
     },
     (state) => state.width
   );
@@ -54,8 +59,13 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
   render(osmd);
   // console.log(osmd);
   updateBoundingBoxMeasures(osmd);
-  const { anchorData, measureStartTicks } = getPlayheadAnchorData(osmd, repeats, ppq);
-  store.setState({ playheadAnchors: anchorData, measureStartTicks });
+  const { upbeat, anchorData, measureStartTicks } = getPlayheadAnchorData(
+    osmd,
+    repeats,
+    loops,
+    ppq
+  );
+  store.setState({ playheadAnchors: anchorData, measureStartTicks, upbeat });
 
   return {
     cleanup: () => {

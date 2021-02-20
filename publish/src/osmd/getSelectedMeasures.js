@@ -6,7 +6,8 @@ var getBoundingBoxMeasure_1 = require("./getBoundingBoxMeasure");
 /**
  * finds all measures that have a overlap with the selection rectangle
  */
-exports.getSelectedMeasures = function (osmd, start, end) {
+exports.getSelectedMeasures = function (osmd, start, end, upbeat) {
+    if (upbeat === void 0) { upbeat = false; }
     var boundingBoxes = getBoundingBoxMeasure_1.getBoundingBoxMeasureAll(osmd);
     // console.log(boundingBoxes);
     var selectedBars = [];
@@ -28,6 +29,9 @@ exports.getSelectedMeasures = function (osmd, start, end) {
             }
         }
     });
+    if (upbeat) {
+        selectedBars = selectedBars.map(function (b) { return b + 1; });
+    }
     // console.log(selectedBars);
     var barNumbers = [];
     // add missing bar numbers

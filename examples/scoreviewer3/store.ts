@@ -13,10 +13,12 @@ export type State = {
   currentBarSong: number;
   currentBarScore: number;
   ppq: number;
+  upbeat: boolean;
   selectedMeasures: number[];
   width: number;
   loaded: boolean;
   repeats: RepeatData[];
+  loops: RepeatData[];
   initialTempo: number;
   boundingBoxesMeasures: BoundingBox[];
   playhead: {
@@ -51,6 +53,8 @@ export const store = create<Store>((set, get) => ({
   selectedMeasures: [],
   width: window.innerWidth,
   repeats: [],
+  loops: [],
+  upbeat: false,
   initialTempo: 90,
   loaded: false,
   playhead: {
