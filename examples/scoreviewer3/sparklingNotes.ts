@@ -6,12 +6,16 @@ import {
   NoteMappingMIDIToGraphical,
   setGraphicalNoteColor,
   heartbeat as sequencer,
+  OpenSheetMusicDisplay,
+  RepeatData,
 } from "webdaw-modules";
 import { getOSMD } from "./scoreWrapper";
 import { getSong } from "./songWrapper";
 import { store } from "./store";
 
 const instrumentName = "TP00-PianoStereo";
+let midiToGraphical: NoteMappingMIDIToGraphical = {};
+let graphicalToMidi: NoteMappingGraphicalToMIDI = {};
 
 // reset all highlighted notes
 const resetScore = (midiToGraphical: NoteMappingMIDIToGraphical) => {
@@ -21,10 +25,12 @@ const resetScore = (midiToGraphical: NoteMappingMIDIToGraphical) => {
   });
 };
 
-export const setup = () => {
-  const song = getSong();
-  const osmd = getOSMD();
-  const { ppq, repeats } = store.getState();
+const prepareScore = (
+  osmd: OpenSheetMusicDisplay,
+  song: Heartbeat.Song,
+  repeats: RepeatData[],
+  ppq: number
+) => {
   const graphicalNotesPerBarPerTrack = getGraphicalNotesPerMeasurePerTrack(osmd, ppq);
   // console.log(graphicalNotesPerBarPerTrack);
   const mappings: {
@@ -33,8 +39,6 @@ export const setup = () => {
     graphicalToMidi: NoteMappingGraphicalToMIDI;
   }[] = mapMIDINoteIdToGraphicalNotePerTrack(graphicalNotesPerBarPerTrack, repeats, song.notes);
 
-  let midiToGraphical: NoteMappingMIDIToGraphical = {};
-  let graphicalToMidi: NoteMappingGraphicalToMIDI = {};
   mappings.forEach((mapping) => {
     if (mapping.score > 0.9) {
       midiToGraphical = {
@@ -80,8 +84,32 @@ export const setup = () => {
       setGraphicalNoteColor(element, "black");
     });
   });
+};
+
+export const setup = () => {
+  const song = getSong();
+  const osmd = getOSMD();
+  const { ppq, repeats } = store.getState();
+
+  const unsub1 = store.subscribe(
+    () => {
+      prepareScore(osmd, song, repeats, ppq);
+    },
+    (state) => state.loaded
+  );
+
+  const unsub2 = store.subscribe(
+    () => {
+      prepareScore(osmd, song, repeats, ppq);
+    },
+    (state) => state.width
+  );
 
   return {
+    cleanup: () => {
+      unsub1();
+      unsub2();
+    },
     update: () => {
       // highlight active notes and dim passive notes
       const snapshot = song.keyEditor.getSnapshot("key-editor");
