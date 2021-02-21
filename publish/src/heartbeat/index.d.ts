@@ -87,6 +87,7 @@ export module Heartbeat {
     data1: number;
     data2: number;
     ticks: number;
+    millis: number;
     command: number;
     noteName: string;
     noteNumber: number;

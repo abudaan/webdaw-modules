@@ -9,6 +9,7 @@ import {
   OpenSheetMusicDisplay,
   RepeatData,
 } from "webdaw-modules";
+import { setSongPosition } from "./actions/setSongPosition";
 import { getOSMD } from "./scoreWrapper";
 import { getSong } from "./songWrapper";
 import { store } from "./store";
@@ -40,7 +41,7 @@ const prepareScore = (
   }[] = mapMIDINoteIdToGraphicalNotePerTrack(graphicalNotesPerBarPerTrack, repeats, song.notes);
 
   mappings.forEach((mapping) => {
-    if (mapping.score > 0.9) {
+    if (mapping.score > 0.5) {
       midiToGraphical = {
         ...midiToGraphical,
         ...mapping.midiToGraphical,
@@ -58,14 +59,12 @@ const prepareScore = (
       const midiNote = graphicalToMidi[element.id];
       const noteOn = midiNote.noteOn as Heartbeat.MIDIEvent;
       const noteOff = midiNote.noteOff as Heartbeat.MIDIEvent;
-      if (e.ctrlKey) {
-        // @TODO: fix this
-        // song.setPlayhead("ticks", noteOn.ticks);
-        // if (!song.playing) {
-        //   song.play();
-        // }
-        // resetScore(midiToGraphical);
-        // setGraphicalNoteColor(element, "red");
+      if (e.altKey) {
+        setSongPosition(noteOn.millis, noteOn.ticks);
+        song.setPlayhead("ticks", noteOn.ticks);
+        resetScore(midiToGraphical);
+        setGraphicalNoteColor(element, "red");
+        store.setState({ songState: "play" });
       } else {
         setGraphicalNoteColor(element, "red");
         sequencer.processEvent(
@@ -111,6 +110,10 @@ export const setup = () => {
       unsub2();
     },
     update: () => {
+      if (Object.keys(midiToGraphical).length === 0) {
+        // console.log(":(");
+        return;
+      }
       // highlight active notes and dim passive notes
       const snapshot = song.keyEditor.getSnapshot("key-editor");
       // console.log(snapshot);
