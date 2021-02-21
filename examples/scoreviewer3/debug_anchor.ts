@@ -1,34 +1,79 @@
 import { AnchorData } from "webdaw-modules";
 import { store } from "./store";
+import { getOSMD } from "./scoreWrapper";
+import { createDiv } from "./util";
+
+const drawAllAnchors = (container: HTMLDivElement) => {
+  const scrollPosX = window.scrollX;
+  const scrollPosY = window.scrollY;
+  const {
+    playheadAnchors,
+    offset: { x: offsetX, y: offsetY },
+  } = store.getState();
+
+  const bboxes = playheadAnchors.map((d) => {
+    const { bbox } = d;
+    return {
+      ...bbox,
+      width: d.numPixels,
+    };
+  });
+
+  while (container.childNodes.length > 0) {
+    if (container.firstChild) {
+      container.removeChild(container.firstChild);
+    }
+  }
+
+  bboxes.forEach((bbox) => {
+    createDiv({ bbox, offsetX, offsetY, scrollPosX, scrollPosY, parent: container });
+  });
+};
 
 export const setup = () => {
-  // const divContainer = document.getElementById("controls") as HTMLDivElement;
-  const divAnchor = document.createElement("div");
-  divAnchor.style.position = "absolute";
-  document.body.appendChild(divAnchor);
+  // draw all anchors
+  const osmd = getOSMD();
+  const containerAllAnchors = document.createElement("div");
+  containerAllAnchors.id = "all-anchors";
+  document.body.appendChild(containerAllAnchors);
 
-  let offsetX: number = 0;
-  let offsetY: number = 0;
+  // draw the anchor that are currently active (playhead is in this anchor)
+  const divCurrentAnchor = document.createElement("div");
+  divCurrentAnchor.style.position = "absolute";
+  document.body.appendChild(divCurrentAnchor);
 
   const unsub1 = store.subscribe(
-    (anchor: AnchorData | null) => {
-      if (anchor !== null) {
-        ({
-          offset: { x: offsetX, y: offsetY },
-        } = store.getState());
-      }
+    () => {
+      drawAllAnchors(containerAllAnchors);
     },
-    (state) => state.currentPlayheadAnchor
+    (state) => state.loaded
   );
 
   const unsub2 = store.subscribe(
+    () => {
+      drawAllAnchors(containerAllAnchors);
+    },
+    (state) => state.width
+  );
+
+  const unsub3 = store.subscribe(
+    () => {
+      drawAllAnchors(containerAllAnchors);
+    },
+    (state) => state.playheadAnchors
+  );
+
+  const unsub4 = store.subscribe(
     (anchor: AnchorData | null) => {
       if (anchor !== null) {
-        divAnchor.style.left = `${anchor.bbox.x + offsetX}px`;
-        divAnchor.style.top = `${anchor.bbox.y + offsetY}px`;
-        divAnchor.style.width = `${anchor.bbox.width}px`;
-        divAnchor.style.height = `${anchor.bbox.height}px`;
-        divAnchor.style.background = "rgba(0,255,0,0.5)";
+        const {
+          offset: { x: offsetX, y: offsetY },
+        } = store.getState();
+        divCurrentAnchor.style.left = `${anchor.bbox.x + offsetX}px`;
+        divCurrentAnchor.style.top = `${anchor.bbox.y + offsetY}px`;
+        divCurrentAnchor.style.width = `${anchor.bbox.width}px`;
+        divCurrentAnchor.style.height = `${anchor.bbox.height}px`;
+        divCurrentAnchor.style.background = "rgba(0,255,0,0.5)";
       }
     },
     (state) => state.currentPlayheadAnchor
@@ -38,6 +83,8 @@ export const setup = () => {
     cleanup: () => {
       unsub1();
       unsub2();
+      unsub3();
+      unsub4();
     },
   };
 };
