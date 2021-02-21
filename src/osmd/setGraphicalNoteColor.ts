@@ -6,7 +6,7 @@
 export const setGraphicalNoteColor = (el: SVGElement, color: string) => {
   const stems = el.getElementsByClassName("vf-stem");
   const noteheads = el.getElementsByClassName("vf-notehead");
-  console.log(noteheads);
+  // console.log(noteheads);
   for (let i = 0; i < stems.length; i++) {
     const stem = stems[i];
     if (stem.firstChild !== null) {
