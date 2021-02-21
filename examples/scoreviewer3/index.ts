@@ -9,6 +9,7 @@ import { setup as setupDrawLoop } from "./drawLoop";
 import { setup as setupDebugAnchor } from "./debug_anchor";
 import { setup as setupFollowScore } from "./followScore";
 import { setup as setupDrawSelection, startSelect } from "./drawSelection";
+import { setup as setupSparklingNotes } from "./sparklingNotes";
 import { compareScoreAndMIDI } from "./compareScoreAndMIDI";
 import { setPlayhead } from "./actions/setPlayhead";
 
@@ -22,9 +23,11 @@ if (scoreDiv === null || loadingDiv === null) {
 console.log(`WebDAW: ${getVersion()}`);
 
 let raqId: number;
+let updateSparklingNotes: () => void;
 
 const loop = () => {
-  // you can do something here if necessary
+  // you can do something else here if necessary
+  updateSparklingNotes();
   raqId = requestAnimationFrame(loop);
 };
 
@@ -38,6 +41,7 @@ const init = async () => {
   setupDrawSelection();
   setupFollowScore();
   // compareScoreAndMIDI();
+  ({ update: updateSparklingNotes } = setupSparklingNotes());
 
   window.addEventListener("resize", () => {
     store.setState({ width: window.innerWidth });

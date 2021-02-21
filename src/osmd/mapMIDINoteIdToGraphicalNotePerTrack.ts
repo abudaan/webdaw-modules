@@ -1,7 +1,7 @@
 import { MusicSystem } from "opensheetmusicdisplay";
 import { GraphicalNoteData } from "./getGraphicalNotesPerMeasure";
-import { MIDIEventGeneric, MIDINoteGeneric } from "../createNotes";
-import { MIDIEvent } from "src/MIDIEvent";
+import { MIDINoteGeneric } from "../createNotes";
+import { RepeatData } from "../musicxml/parser";
 
 /*
   This method maps the notes in the SVG document of the score to MIDI notes in the sequencer
@@ -21,7 +21,7 @@ type NoteMappingGraphicalToMIDI = {
 
 export const mapMIDINoteIdToGraphicalNotePerTrack = (
   graphicalNotesPerBarPerTrack: GraphicalNoteData[][][],
-  repeats: number[][],
+  repeats: RepeatData[],
   notes: MIDINoteGeneric[]
 ): {
   score: number;
@@ -63,7 +63,7 @@ export const mapMIDINoteIdToGraphicalNotePerTrack = (
 const getMappingPerTrack = (
   graphicalNotes: GraphicalNoteData[][],
   midiNotes: MIDINoteGeneric[],
-  repeats: number[][]
+  repeats: RepeatData[]
 ): {
   midiToGraphical: NoteMappingMIDIToGraphical;
   graphicalToMidi: NoteMappingGraphicalToMIDI;
@@ -89,12 +89,12 @@ const getMappingPerTrack = (
   while (true) {
     barIndex++;
     // console.log(barIndex, repeatIndex, hasRepeated[repeatIndex], repeats[repeatIndex][1]);
-    if (barIndex === repeats[repeatIndex][1]) {
+    if (repeats.length && barIndex === repeats[repeatIndex].end) {
       if (hasRepeated[repeatIndex] !== true) {
-        barIndex = repeats[repeatIndex][0] - 1;
+        barIndex = repeats[repeatIndex].start - 1;
         // console.log('REPEAT START', barIndex)
         hasRepeated[repeatIndex] = true;
-        barOffset += repeats[repeatIndex][1] - repeats[repeatIndex][0] + 1;
+        barOffset += repeats[repeatIndex].end - repeats[repeatIndex].start + 1;
         // ticksOffset += (repeats[repeatIndex][1] - repeats[repeatIndex][0]) * song.numerator * ppq;
       } else {
         // console.log('REPEAT END', barIndex, repeatIndex);
@@ -116,11 +116,7 @@ const getMappingPerTrack = (
         const { element, noteNumber, bar, parentMusicSystem } = bd;
         for (let j = 0; j < filteredMidi.length; j++) {
           const note = filteredMidi[j];
-          if (
-            !midiToGraphical[note.id] &&
-            note.noteOn.bar == bar + barOffset - 1 &&
-            note.noteOn.noteNumber == noteNumber
-          ) {
+          if (!midiToGraphical[note.id] && note.noteOn.bar == bar + barOffset - 1 && note.noteOn.noteNumber == noteNumber) {
             numMatch += 1;
             midiToGraphical[note.id] = { element, musicSystem: parentMusicSystem };
             graphicalToMidi[element.id] = note;

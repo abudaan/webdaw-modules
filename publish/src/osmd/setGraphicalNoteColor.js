@@ -9,7 +9,7 @@ exports.setGraphicalNoteColor = void 0;
 exports.setGraphicalNoteColor = function (el, color) {
     var stems = el.getElementsByClassName("vf-stem");
     var noteheads = el.getElementsByClassName("vf-notehead");
-    // console.log(stem, notehead);
+    console.log(noteheads);
     for (var i = 0; i < stems.length; i++) {
         var stem = stems[i];
         if (stem.firstChild !== null) {

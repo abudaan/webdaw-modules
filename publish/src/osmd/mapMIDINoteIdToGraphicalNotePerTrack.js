@@ -51,12 +51,12 @@ var getMappingPerTrack = function (graphicalNotes, midiNotes, repeats) {
     var _loop_1 = function () {
         barIndex++;
         // console.log(barIndex, repeatIndex, hasRepeated[repeatIndex], repeats[repeatIndex][1]);
-        if (barIndex === repeats[repeatIndex][1]) {
+        if (repeats.length && barIndex === repeats[repeatIndex].end) {
             if (hasRepeated[repeatIndex] !== true) {
-                barIndex = repeats[repeatIndex][0] - 1;
+                barIndex = repeats[repeatIndex].start - 1;
                 // console.log('REPEAT START', barIndex)
                 hasRepeated[repeatIndex] = true;
-                barOffset += repeats[repeatIndex][1] - repeats[repeatIndex][0] + 1;
+                barOffset += repeats[repeatIndex].end - repeats[repeatIndex].start + 1;
                 // ticksOffset += (repeats[repeatIndex][1] - repeats[repeatIndex][0]) * song.numerator * ppq;
             }
             else {
@@ -79,9 +79,7 @@ var getMappingPerTrack = function (graphicalNotes, midiNotes, repeats) {
                 var element = bd.element, noteNumber = bd.noteNumber, bar = bd.bar, parentMusicSystem = bd.parentMusicSystem;
                 for (var j = 0; j < filteredMidi_1.length; j++) {
                     var note = filteredMidi_1[j];
-                    if (!midiToGraphical[note.id] &&
-                        note.noteOn.bar == bar + barOffset - 1 &&
-                        note.noteOn.noteNumber == noteNumber) {
+                    if (!midiToGraphical[note.id] && note.noteOn.bar == bar + barOffset - 1 && note.noteOn.noteNumber == noteNumber) {
                         numMatch += 1;
                         midiToGraphical[note.id] = { element: element, musicSystem: parentMusicSystem };
                         graphicalToMidi[element.id] = note;

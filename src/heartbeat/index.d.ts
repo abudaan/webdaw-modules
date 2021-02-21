@@ -46,6 +46,7 @@ export module Heartbeat {
     timeEvents: Array<MIDIEvent>;
     notes: Array<MIDINote>;
     useMetronome: boolean;
+    keyEditor: KeyEditor;
     play: () => void;
     pause: () => void;
     stop: () => void;
@@ -79,7 +80,7 @@ export module Heartbeat {
     activeNotes: MIDINote[];
   }
 
-  export interface MIDIEvent {
+  export type MIDIEvent = {
     id: string;
     bar: number;
     type: number;
@@ -96,10 +97,10 @@ export module Heartbeat {
     track: null | Track;
     trackId: string;
     part: null | Part;
-    clone: () => this;
+    clone: () => MIDIEvent;
     transpose: (semi: number) => void;
     active?: boolean;
-  }
+  };
 
   export type Note = {
     name: string;
@@ -110,9 +111,26 @@ export module Heartbeat {
     blackKey: boolean;
   };
 
-  export interface MIDINote extends MIDIEvent {
+  // export interface MIDINote extends MIDIEvent {
+  export type MIDINote = {
+    id: string;
+    bar: number;
+    type: number;
+    data1: number;
+    data2: number;
+    ticks: number;
+    command: number;
+    noteName: string;
+    noteNumber: number;
+    velocity: number;
+    midiNote: MIDINote;
+    muted: boolean;
+    song: null | Song;
+    track: null | Track;
     trackId: string;
-    track: Track;
+    part: null | Part;
+    clone: () => MIDINote;
+    transpose: (semi: number) => void;
     number: number;
     noteOn: MIDIEvent;
     noteOff: MIDIEvent;
@@ -120,9 +138,9 @@ export module Heartbeat {
     note: Note;
     mute: (flag: boolean) => void;
     active?: boolean;
-  }
+  };
 
-  export interface Part {
+  export type Part = {
     id: string;
     name: string;
     events: Array<MIDIEvent>;
@@ -137,7 +155,7 @@ export module Heartbeat {
       width: number;
       height: number;
     };
-  }
+  };
 
   export type Track = {
     id: string;

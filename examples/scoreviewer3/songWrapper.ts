@@ -40,8 +40,8 @@ export const setup = async (): Promise<{ cleanup: () => void }> => {
   // load MIDI file and setup song
   await loadMIDIFile(midiFile);
   song = sequencer.createSong(sequencer.getMidiFile(name));
+  const keyEditor = sequencer.createKeyEditor(song, {});
   store.setState({ ppq: song.ppq });
-  keyEditor = sequencer.createKeyEditor(song, {});
 
   // load instrument and setup all tracks
   let url = instrumentMp3;
