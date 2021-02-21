@@ -19,7 +19,8 @@ export const getOSMD = (): OpenSheetMusicDisplay => osmd;
 
 export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => void }> => {
   scoreDiv = divElem;
-  const { mxmlFile, ppq, loops } = store.getState();
+  const { files, currentFilesIndex, ppq, loops } = store.getState();
+  const { mxmlFile } = files[currentFilesIndex];
   osmd = new OpenSheetMusicDisplay(scoreDiv, {
     backend: "svg",
     autoResize: false,

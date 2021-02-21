@@ -1,11 +1,11 @@
-import { AnchorData } from "../../publish/src";
+import { AnchorData } from "webdaw-modules";
 import { store } from "./store";
 
 export const setup = () => {
-  const divContainer = document.getElementById("controls") as HTMLDivElement;
+  // const divContainer = document.getElementById("controls") as HTMLDivElement;
   const divAnchor = document.createElement("div");
   divAnchor.style.position = "absolute";
-  divContainer.appendChild(divAnchor);
+  document.body.appendChild(divAnchor);
 
   let offsetX: number = 0;
   let offsetY: number = 0;
@@ -26,7 +26,7 @@ export const setup = () => {
       if (anchor !== null) {
         divAnchor.style.left = `${anchor.bbox.x + offsetX}px`;
         divAnchor.style.top = `${anchor.bbox.y + offsetY}px`;
-        divAnchor.style.width = `${anchor.numPixels}px`;
+        divAnchor.style.width = `${anchor.bbox.width}px`;
         divAnchor.style.height = `${anchor.bbox.height}px`;
         divAnchor.style.background = "rgba(0,255,0,0.5)";
       }

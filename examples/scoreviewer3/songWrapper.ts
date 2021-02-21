@@ -35,11 +35,11 @@ export const localStopSong = () => {
 
 export const setup = async (): Promise<{ cleanup: () => void }> => {
   await sequencer.ready();
-  const { midiFileName, midiFile } = store.getState();
-
+  const { files, currentFilesIndex } = store.getState();
+  const { name, midiFile } = files[currentFilesIndex];
   // load MIDI file and setup song
   await loadMIDIFile(midiFile);
-  song = sequencer.createSong(sequencer.getMidiFile(midiFileName));
+  song = sequencer.createSong(sequencer.getMidiFile(name));
   store.setState({ ppq: song.ppq });
   keyEditor = sequencer.createKeyEditor(song, {});
 

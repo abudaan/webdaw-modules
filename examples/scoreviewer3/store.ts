@@ -1,15 +1,12 @@
 import { BoundingBox, AnchorData, RepeatData, LoopData } from "webdaw-modules";
 import create from "zustand/vanilla";
-import { midiFileName, midiFile, mxmlFile } from "./files";
+import { files, FileData } from "./files";
 
 export type State = {
   offset: { x: number; y: number };
   scrollPos: { x: number; y: number };
   selection: number[];
   songState: "play" | "pause" | "stop";
-  midiFileName: string;
-  midiFile: string;
-  mxmlFile: string;
   currentBarSong: number;
   currentBarScore: number;
   ppq: number;
@@ -30,6 +27,8 @@ export type State = {
   playheadAnchors: AnchorData[];
   currentPlayheadAnchor: AnchorData | null;
   measureStartTicks: number[];
+  files: FileData[];
+  currentFilesIndex: number;
 };
 
 export type Reducers = {
@@ -44,9 +43,6 @@ export const store = create<Store>((set, get) => ({
   scrollPos: { x: 0, y: 0 },
   selection: [],
   songState: "stop",
-  midiFileName,
-  midiFile,
-  mxmlFile,
   ppq: 480,
   currentBarSong: 1,
   currentBarScore: 1,
@@ -77,4 +73,6 @@ export const store = create<Store>((set, get) => ({
   playheadAnchors: [],
   currentPlayheadAnchor: null,
   measureStartTicks: [],
+  files,
+  currentFilesIndex: 0,
 }));
