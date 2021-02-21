@@ -77,5 +77,6 @@ export const store = create<Store>((set, get) => ({
   currentFilesIndex: files.findIndex((f: FileData) => {
     // return f.name === "mozk545a_2-bars";
     return f.name === "mozk545a_musescore";
+    // return f.name === "multibar_rest2";
   }),
 }));

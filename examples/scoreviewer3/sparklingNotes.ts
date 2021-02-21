@@ -9,7 +9,7 @@ import {
   OpenSheetMusicDisplay,
   RepeatData,
 } from "webdaw-modules";
-import { setSongPosition } from "./actions/setPlayheadFromSong";
+import { setPlayheadFromSong } from "./actions/setPlayheadFromSong";
 import { getOSMD } from "./scoreWrapper";
 import { getSong } from "./songWrapper";
 import { store } from "./store";
@@ -32,26 +32,31 @@ const prepareScore = (
   repeats: RepeatData[],
   ppq: number
 ) => {
-  const graphicalNotesPerBarPerTrack = getGraphicalNotesPerMeasurePerTrack(osmd, ppq);
-  // console.log(graphicalNotesPerBarPerTrack);
-  const mappings: {
-    score: number;
-    midiToGraphical: NoteMappingMIDIToGraphical;
-    graphicalToMidi: NoteMappingGraphicalToMIDI;
-  }[] = mapMIDINoteIdToGraphicalNotePerTrack(graphicalNotesPerBarPerTrack, repeats, song.notes);
+  try {
+    const graphicalNotesPerBarPerTrack = getGraphicalNotesPerMeasurePerTrack(osmd, ppq);
+    // console.log(graphicalNotesPerBarPerTrack);
+    const mappings: {
+      score: number;
+      midiToGraphical: NoteMappingMIDIToGraphical;
+      graphicalToMidi: NoteMappingGraphicalToMIDI;
+    }[] = mapMIDINoteIdToGraphicalNotePerTrack(graphicalNotesPerBarPerTrack, repeats, song.notes);
 
-  mappings.forEach((mapping) => {
-    if (mapping.score > 0.5) {
-      midiToGraphical = {
-        ...midiToGraphical,
-        ...mapping.midiToGraphical,
-      };
-      graphicalToMidi = {
-        ...graphicalToMidi,
-        ...mapping.graphicalToMidi,
-      };
-    }
-  });
+    mappings.forEach((mapping) => {
+      if (mapping.score > 0.5) {
+        midiToGraphical = {
+          ...midiToGraphical,
+          ...mapping.midiToGraphical,
+        };
+        graphicalToMidi = {
+          ...graphicalToMidi,
+          ...mapping.graphicalToMidi,
+        };
+      }
+    });
+  } catch (e) {
+    console.warn("Sparkling notes are not supported for this score");
+    return;
+  }
 
   // setup listeners for every graphical note to make them clickable
   Object.values(midiToGraphical).forEach(({ element }) => {
@@ -60,7 +65,7 @@ const prepareScore = (
       const noteOn = midiNote.noteOn as Heartbeat.MIDIEvent;
       const noteOff = midiNote.noteOff as Heartbeat.MIDIEvent;
       if (e.altKey) {
-        setSongPosition(noteOn.millis, noteOn.ticks);
+        setPlayheadFromSong(noteOn.millis, noteOn.ticks);
         song.setPlayhead("ticks", noteOn.ticks);
         resetScore(midiToGraphical);
         setGraphicalNoteColor(element, "red");

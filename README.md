@@ -86,6 +86,8 @@ Because I run the webserver in the root folder, the examples run on github.io as
 
 ## Scoreviewer version 3
 
+You can find the live version [here](https://abudaan.github.io/webdaw-modules/examples/scoreviewer3)
+
 ### Anchors
 
 This version uses so called anchors to determine the position of the playhead. The anchors are calculated based on the bounding boxes of the rendered svg note elements and contain the following information:
@@ -121,12 +123,16 @@ Loop set on the first bar
 
 ![anchors loop](./images/anchors-loop.png "Anchor with a loop set")
 
-The anchor debugger shows all anchor in blue and the anchor that is currently used by the playhead is drawn in green. You can turn this on by importing the `setup` method from `debug_anchor.ts`:
+The anchor debugger shows all anchors in blue and the anchor that is currently used by the playhead is drawn in green. You can turn this on by importing the `setup` method from `debug_anchor.ts`:
 
 ```typescript
 import { setup as setupDebugAnchor } from "./debug_anchors";
 setupDebugAnchor();
 ```
+
+A word about the `ghost` key: when a score contains a multi-bar rest, we only have a single graphical element in the score to calculate the playhead position. This can be too coarse and therefor ghost anchors are rendered for every beat in multi-bar rest bars:
+
+![multi-bar rests](./images/multibar-rest.png "Ghost anchors and multi-bar rest")
 
 ### Update the position of the playhead
 
@@ -135,7 +141,7 @@ This is done by two actions:
 - `setPlayheadFromPointer.ts` -> when the user clicks somewhere in the score the playhead moves to the nearest anchor
 - `setPlayheadFromSong.ts` -> the playhead is synchronized to the position of the song in ticks or milliseconds
 
-In `index.ts` you will find the eventlistener for `setPlayheadFromPointer` and the other action `setPlayheadFromSong` is called on every animation frame by `songWrapper.ts`.
+In `index.ts` you will find the event listener for `setPlayheadFromPointer` and the other action `setPlayheadFromSong` is called on every animation frame by `songWrapper.ts`.
 
 The calculation of the current anchor based on a user event or the song's position is all done in a webdaw module so you only have to process the returned anchor data.
 
@@ -160,9 +166,9 @@ In the actions folder:
 
 Other files:
 
-- `compareScoreAndMidi` &rarr; Can be used to compare the notes in the MIDI file to the notes in the score. Sometimes the order of tracks in the MIDI file is different than the order in the score, by comparing the notes in a certain MIDI track to the notes in a certain staff in the score you can find out how the tracks are mapped to the staves. Note that in most cases the order is correct. Also note that an empty staff in a score will render but an empty track in the MIDI file is removed.
+- `compareScoreAndMidi` &rarr; Can be used to compare the notes in the MIDI file to the notes in the score. Sometimes the order of tracks in the MIDI file is different than the order in the score, by comparing the notes in a certain MIDI track to the notes in a certain staff in the score you can find out how the tracks are mapped to the staves. Note that in most cases the order is correct. Also note that an empty staff in a score will render but an empty track in the MIDI file will be removed.
 
-- `controls` &rarr; Renders the start and stop button at the top of the page
+- `controls` &rarr; Renders the start and stop button at the top of the page.
 
 - `debug_anchors` &rarr; Draws all anchors as transparent blue divs on top of the score. If a score has repeats, the anchors in the areas that repeat will be drawn twice, you can recognize these anchors by their darker color. When the song plays the anchor that is currently used by the playhead to determine its speed and travel distance is rendered in transparent green divs. The width of the green divs is the exact with of the bounding box of the graphical symbol, the width of the blue divs is the travel distance between the subsequent anchors, you can see that the blue ones are rendered consecutively.
 
@@ -174,7 +180,7 @@ Other files:
 
 - `files` &rarr; A list of all files that I have tested. I will add a dropdown menu for easy switching between these files and eventually the files that the user can upload themselves.
 
-- `followScore` &rarr; While the song plays this function scrolls the staff where the playhead is currently in to a visible area of the viewport. However, in some cases this can be an annoying feature.
+- `followScore` &rarr; While the song plays this function scrolls the staff where the playhead is currently in to a visible area of the viewport. However, in some cases this can be an annoying feature. This method uses the `yPos` key of the current anchor to determine the scroll position. `yPos` is the y-position of the top-most staff line.
 
 - `index` &rarr; The main file, start your code exploration here.
 
@@ -184,7 +190,7 @@ Other files:
 
 - `songWrapper` &rarr; Sets up the song based on the selected MIDI file. Starts a requestAnimation loop as soon as the song starts playing that calls the action `setPlayheadFromSong`, see above.
 
-- `sparklingNote` &rarr; Sets up and performs the highlighting of graphical notes when the song plays. This only works in regular scores that have noteheads.
+- `sparklingNotes` &rarr; Sets up and performs the highlighting of graphical notes when the song plays. This only works in regular scores that have noteheads. Note: this doesn't work yet with scores with multi-bar rests.
 
 - `store` &rarr; Keeps the state of the application. I use the [zustand](https://github.com/pmndrs/zustand) state manager.
 
@@ -192,8 +198,8 @@ Other files:
 
 ### Bugs
 
-In some scores the anchor are not calculated correctly which results in the playhead jumping back and forth in a measure. I am not yet sure whether this problem originates in the code that calculates the anchors or that is because of errors in the MusicXML file. You can easily spot wrong anchor data if you turn on the anchor debugger:
+In some scores the anchor are not calculated correctly which results in the playhead jumping back and forth inside a measure. I am not yet sure whether this problem originates in the code that calculates the anchors or that is because of errors in the MusicXML file. Rest assured that this bug is rather rare. You can easily spot wrong anchor data if you turn on the anchor debugger:
 
 ![anchor errors](./images/anchor-errors.png "Anchor errors")
 
-As you can see there are 2 anchor that are way too long. If this error occurs in your score and you can't solve it in the score (for instance by importing and exporting the score in MuseScore) then you can turn off the `smooth` which makes the playhead jump from anchor to anchor. Less elegant but at least the playhead isn't jumping all over the place.
+As you can see there are 2 anchor that are way too long. If this error occurs in your score and you can't solve it in the score (for instance by importing and exporting the score in MuseScore) then you can turn off `smooth` which makes the playhead jump from anchor to anchor. Less elegant but at least the playhead isn't jumping all over the place.
