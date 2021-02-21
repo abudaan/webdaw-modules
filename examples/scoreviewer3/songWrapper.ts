@@ -8,7 +8,7 @@ import {
 } from "webdaw-modules";
 import { stopSong } from "./actions/stopSong";
 import { store } from "./store";
-import { setSongPosition } from "./actions/setSongPosition";
+import { setPlayheadFromSong } from "./actions/setPlayheadFromSong";
 import { getOSMD } from "./scoreWrapper";
 const { loadJSON, addAssetPack, loadMIDIFile } = heartbeat_utils;
 
@@ -21,7 +21,7 @@ let song: Heartbeat.Song;
 let keyEditor: Heartbeat.KeyEditor;
 
 const updateSongPosition = () => {
-  setSongPosition(song.millis, song.ticks);
+  setPlayheadFromSong(song.millis, song.ticks);
   raqId = requestAnimationFrame(updateSongPosition);
 };
 

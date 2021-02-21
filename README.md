@@ -86,6 +86,8 @@ Because I run the webserver in the root folder, the examples run on github.io as
 
 ## Scoreviewer version 3
 
+### Anchors
+
 This version uses so called anchors to determine the position of the playhead. The anchors are calculated based on the bounding boxes of the rendered svg note elements and contain the following information:
 
 ```typescript
@@ -109,8 +111,30 @@ Most keys are self-describing. A bounding box (bbox) contains the keys `x`, `y`,
 - the next anchor lies on the next staff
 - the next anchor lies before the current anchor, this happens both in repeated parts of the score and user-set loops
 
-This is done because otherwise the playhead would travel into the next bar before jumping to the next staff or measure, see screenshots
+This is done because otherwise the playhead would travel into the next bar before jumping to the next staff or measure, see screenshots with the anchor debugger:
+
+No loop
 
 ![anchors regular](./images/anchors-regular.png "Anchor with no loop set")
 
+Loop set on the first bar
+
 ![anchors loop](./images/anchors-loop.png "Anchor with a loop set")
+
+The anchor debugger shows all anchor in blue and the anchor that is currently used by the playhead is drawn in green. You can turn this on by importing the `setup` method from `debug_anchor.ts`:
+
+```typescript
+import { setup as setupDebugAnchor } from "./debug_anchors";
+setupDebugAnchor();
+```
+
+### Update the position of the playhead
+
+This is done by two actions:
+
+- `setPlayheadFromPointer.ts` -> when the user clicks somewhere in the score the playhead moves to the nearest anchor
+- `setPlayheadFromSong.ts` -> the playhead is synchronized to the position of the song in ticks or milliseconds
+
+In `index.ts` you will find the eventlistener for `setPlayheadFromPointer` and the other action `setPlayheadFromSong` is called on every animation frame by `songWrapper.ts`.
+
+The calculation of the current anchor based on a user event or the song's position is all done in a webdaw module so you only have to process the returned anchor data. For example code see the code of the 2 action files listed above.

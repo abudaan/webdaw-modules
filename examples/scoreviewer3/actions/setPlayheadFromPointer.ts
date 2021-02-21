@@ -4,7 +4,7 @@ import { store } from "../store";
 import { getOSMD } from "../scoreWrapper";
 
 // briefly highlight the bar that the playhead is currently in
-const debug = ({
+const highlight = ({
   x,
   y,
   width,
@@ -31,7 +31,7 @@ const debug = ({
  * User clicks somewhere in the score, we translate the position where the user clicked
  * to a position in the song.
  */
-export const setPlayhead = (e: PointerEvent) => {
+export const setPlayheadFromPointer = (e: PointerEvent) => {
   const osmd = getOSMD();
   const data = getMeasureAtPoint(e, osmd);
 
@@ -52,7 +52,7 @@ export const setPlayhead = (e: PointerEvent) => {
       playheadAnchors,
     } = store.getState();
 
-    debug({ x: x + offsetX, y: y + offsetY, height, width });
+    highlight({ x: x + offsetX, y: y + offsetY, height, width });
 
     const song = getSong();
     const { barSong: currentBarSong } = songPositionFromScore(repeats, measureNumber);

@@ -6,12 +6,12 @@ import { setup as setupScore } from "./scoreWrapper";
 import { setup as setupControls } from "./controls";
 import { setup as setupPlayhead } from "./playhead";
 import { setup as setupDrawLoop } from "./drawLoop";
-import { setup as setupDebugAnchor } from "./debug_anchor";
+import { setup as setupDebugAnchor } from "./debug_anchors";
 import { setup as setupFollowScore } from "./followScore";
 import { setup as setupDrawSelection, startSelect } from "./drawSelection";
 import { setup as setupSparklingNotes } from "./sparklingNotes";
 import { compareScoreAndMIDI } from "./compareScoreAndMIDI";
-import { setPlayhead } from "./actions/setPlayhead";
+import { setPlayheadFromPointer } from "./actions/setPlayheadFromPointer";
 
 const scoreDiv = document.getElementById("score") as HTMLDivElement;
 const loadingDiv = document.getElementById("loading");
@@ -39,7 +39,7 @@ const init = async () => {
   setupDrawLoop();
   setupDrawSelection();
   setupFollowScore(); // makes the score scroll together with the playhead
-  setupDebugAnchor();
+  // setupDebugAnchor();
   // compareScoreAndMIDI();
   ({ update: updateSparklingNotes } = setupSparklingNotes());
 
@@ -67,7 +67,7 @@ const init = async () => {
     if (e.altKey) {
       startSelect(e);
     } else {
-      setPlayhead(e as PointerEvent);
+      setPlayheadFromPointer(e as PointerEvent);
     }
   });
 

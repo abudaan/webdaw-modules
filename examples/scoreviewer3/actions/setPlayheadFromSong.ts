@@ -2,7 +2,7 @@ import { getCurrentAnchor } from "webdaw-modules";
 import { store } from "../store";
 import { getSong } from "../songWrapper";
 
-export const setSongPosition = (millis: number, ticks: number) => {
+export const setPlayheadFromSong = (millis: number, ticks: number) => {
   const {
     playhead,
     playheadAnchors: anchors,

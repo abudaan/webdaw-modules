@@ -9,7 +9,7 @@ import {
   OpenSheetMusicDisplay,
   RepeatData,
 } from "webdaw-modules";
-import { setSongPosition } from "./actions/setSongPosition";
+import { setSongPosition } from "./actions/setPlayheadFromSong";
 import { getOSMD } from "./scoreWrapper";
 import { getSong } from "./songWrapper";
 import { store } from "./store";
