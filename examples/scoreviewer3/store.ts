@@ -75,6 +75,7 @@ export const store = create<Store>((set, get) => ({
   measureStartTicks: [],
   files,
   currentFilesIndex: files.findIndex((f: FileData) => {
-    return f.name === "mozk545a_2-bars";
+    // return f.name === "mozk545a_2-bars";
+    return f.name === "mozk545a_musescore";
   }),
 }));

@@ -137,4 +137,22 @@ This is done by two actions:
 
 In `index.ts` you will find the eventlistener for `setPlayheadFromPointer` and the other action `setPlayheadFromSong` is called on every animation frame by `songWrapper.ts`.
 
-The calculation of the current anchor based on a user event or the song's position is all done in a webdaw module so you only have to process the returned anchor data. For example code see the code of the 2 action files listed above.
+The calculation of the current anchor based on a user event or the song's position is all done in a webdaw module so you only have to process the returned anchor data.
+
+There is an option to make the playhead jump from anchor to anchor instead of smoothly travelling from one the other by setting `smooth` to `false`;
+
+For example code see the code of the 2 action files listed above.
+
+### Retrieving the anchors
+
+You can use the webdaw module `osmd/getPlayheadAnchorData.ts` to retrieve all anchors from the rendered score, in the example it is calles in `scoreWrapper.ts`. Note that you have to retrieve the anchor data again after the score has resized.
+
+In OSMD an upbeat always has its `measureNumber` key set to 0 which is very unhandy because you can't simply convert measure numbers to indexes by deducting 1 from the measure number. Therefor `getPlayheadAnchorData` returns a key `upbeat` which is true if the score starts with an upbeat; this is key is necessary for multiple calculations, for instance for calculating the right position of a loop.
+
+### Bugs
+
+In some scores the anchor are not calculated correctly which results in the playhead jumping back and forth in a measure. I am not yet sure whether this problem originates in the code that calculates the anchors or that is because of errors in the MusicXML file. You can easily spot wrong anchor data if you turn on the anchor debugger:
+
+![anchor errors](./images/anchor-errors.png "Anchor errors")
+
+As you can see there are 2 anchor that are way too long. If this error occurs in your score and you can't solve it in the score (for instance by importing and exporting the score in MuseScore) then you can turn off the `smooth` which makes the playhead jump from anchor to anchor. Less elegant but at least the playhead isn't jumping all over the place.
