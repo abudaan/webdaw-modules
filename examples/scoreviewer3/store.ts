@@ -17,7 +17,7 @@ export type State = {
   repeats: RepeatData[];
   loops: LoopData[];
   initialTempo: number;
-  boundingBoxesMeasures: BoundingBox[];
+  // boundingBoxesMeasures: BoundingBox[];
   playhead: {
     x: number;
     y: number;
@@ -69,7 +69,7 @@ export const store = create<Store>((set, get) => ({
       return { songState: "play" };
     });
   },
-  boundingBoxesMeasures: [],
+  // boundingBoxesMeasures: [],
   playheadAnchors: [],
   currentPlayheadAnchor: null,
   measureStartTicks: [],

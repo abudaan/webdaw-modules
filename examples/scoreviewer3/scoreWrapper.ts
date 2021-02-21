@@ -4,7 +4,7 @@ import {
   OpenSheetMusicDisplay,
   getPlayheadAnchorData,
 } from "webdaw-modules";
-import { updateBoundingBoxMeasures } from "./actions/updateBoundingBoxMeasures";
+// import { updateBoundingBoxMeasures } from "./actions/updateBoundingBoxMeasures";
 import { store } from "./store";
 
 let scoreDiv: HTMLDivElement;
@@ -46,7 +46,7 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
   subscribes[subscribes.length] = store.subscribe(
     () => {
       render(osmd);
-      updateBoundingBoxMeasures(osmd);
+      // updateBoundingBoxMeasures(osmd);
       const { upbeat, anchorData, measureStartTicks } = getPlayheadAnchorData(
         osmd,
         repeats,
@@ -60,7 +60,7 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
 
   render(osmd);
   // console.log(osmd);
-  updateBoundingBoxMeasures(osmd);
+  // updateBoundingBoxMeasures(osmd);
   const { upbeat, anchorData, measureStartTicks } = getPlayheadAnchorData(
     osmd,
     repeats,

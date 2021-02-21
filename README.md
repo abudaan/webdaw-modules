@@ -145,9 +145,50 @@ For example code see the code of the 2 action files listed above.
 
 ### Retrieving the anchors
 
-You can use the webdaw module `osmd/getPlayheadAnchorData.ts` to retrieve all anchors from the rendered score, in the example it is calles in `scoreWrapper.ts`. Note that you have to retrieve the anchor data again after the score has resized.
+You can use the webdaw module `osmd/getPlayheadAnchorData.ts` to retrieve all anchors from the rendered score, in the example this action is called from `scoreWrapper.ts`. Note that you have to retrieve the anchor data again after the score has resized.
 
 In OSMD an upbeat always has its `measureNumber` key set to 0 which is very unhandy because you can't simply convert measure numbers to indexes by deducting 1 from the measure number. Therefor `getPlayheadAnchorData` returns a key `upbeat` which is true if the score starts with an upbeat; this is key is necessary for multiple calculations, for instance for calculating the right position of a loop.
+
+### Quick run-through of the files
+
+In the actions folder:
+
+- `setPlayheadFromPointer` &rarr; See above.
+- `setPlayheadFromSong` &rarr; See above.
+- `stopSong` &rarr; Handles everything that is necessary if the song stops, such as updating the position of the playhead.
+- `updateBoundingBoxesMeasures` &rarr; Calculates and retrieves the bounding boxes of all measures, this action is currently not used.
+
+Other files:
+
+- `compareScoreAndMidi` &rarr; Can be used to compare the notes in the MIDI file to the notes in the score. Sometimes the order of tracks in the MIDI file is different than the order in the score, by comparing the notes in a certain MIDI track to the notes in a certain staff in the score you can find out how the tracks are mapped to the staves. Note that in most cases the order is correct. Also note that an empty staff in a score will render but an empty track in the MIDI file is removed.
+
+- `controls` &rarr; Renders the start and stop button at the top of the page
+
+- `debug_anchors` &rarr; Draws all anchors as transparent blue divs on top of the score. If a score has repeats, the anchors in the areas that repeat will be drawn twice, you can recognize these anchors by their darker color. When the song plays the anchor that is currently used by the playhead to determine its speed and travel distance is rendered in transparent green divs. The width of the green divs is the exact with of the bounding box of the graphical symbol, the width of the blue divs is the travel distance between the subsequent anchors, you can see that the blue ones are rendered consecutively.
+
+- `debug` &rarr; Not in use
+
+- `drawLoop` &rarr; Draws the loop of all bars that were selected by the user before the pointer up event.
+
+- `drawSelection` &rarr; Draws a selection rectangle on top of the score to select a loop, see `drawLoop`
+
+- `files` &rarr; A list of all files that I have tested. I will add a dropdown menu for easy switching between these files and eventually the files that the user can upload themselves.
+
+- `followScore` &rarr; While the song plays this function scrolls the staff where the playhead is currently in to a visible area of the viewport. However, in some cases this can be an annoying feature.
+
+- `index` &rarr; The main file, start your code exploration here.
+
+- `playhead` &rarr; Draws the playhead, subscribes to the store to get notified when the playhead needs to move to another position.
+
+- `scoreWrapper` &rarr; Sets up the score based on the selected MusicXML file.
+
+- `songWrapper` &rarr; Sets up the song based on the selected MIDI file. Starts a requestAnimation loop as soon as the song starts playing that calls the action `setPlayheadFromSong`, see above.
+
+- `sparklingNote` &rarr; Sets up and performs the highlighting of graphical notes when the song plays. This only works in regular scores that have noteheads.
+
+- `store` &rarr; Keeps the state of the application. I use the [zustand](https://github.com/pmndrs/zustand) state manager.
+
+- `utils` &rarr; Utility functions
 
 ### Bugs
 
