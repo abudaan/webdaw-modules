@@ -111,6 +111,6 @@ Most keys are self-describing. A bounding box (bbox) contains the keys `x`, `y`,
 
 This is done because otherwise the playhead would travel into the next bar before jumping to the next staff or measure, see screenshots
 
-![anchors regular](./images/anchor-regular.png "Anchor with no loop set")
+![anchors regular](./images/anchors-regular.png "Anchor with no loop set")
 
-![anchors loop](./images/anchor-loop.png "Anchor with a loop set")
+![anchors loop](./images/anchors-loop.png "Anchor with a loop set")
