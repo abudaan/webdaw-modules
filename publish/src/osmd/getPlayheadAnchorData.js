@@ -101,6 +101,7 @@ exports.getPlayheadAnchorData = function (osmd, repeats, loops, ppq) {
                         bboxMeasure: bboxMeasure,
                         yPos: yPos,
                         ghost: true,
+                        nextAnchor: null,
                     });
                 }
             }
@@ -118,6 +119,7 @@ exports.getPlayheadAnchorData = function (osmd, repeats, loops, ppq) {
                     bboxMeasure: bboxMeasure,
                     yPos: yPos,
                     ghost: false,
+                    nextAnchor: null,
                 });
             }
         });
@@ -240,10 +242,13 @@ exports.getPlayheadAnchorData = function (osmd, repeats, loops, ppq) {
                 // a1.numPixels = a1.bbox.width
                 a1.numPixels = a1.bboxMeasure.x + a1.bboxMeasure.width - a1.bbox.x;
             }
+            a1.nextAnchor = a2;
         }
         else {
             a1.endTicks = lastTicks;
             a1.numPixels = a1.bboxMeasure.x + a1.bboxMeasure.width - a1.bbox.x;
+            // create a dummy anchor
+            a1.nextAnchor = __assign(__assign({}, a1), { endTicks: lastTicks, measureNumber: a1.measureNumber + 1 });
         }
         var diffTicks_2 = a1.endTicks - a1.startTicks;
         a1.pixelsPerTick = a1.numPixels / diffTicks_2;

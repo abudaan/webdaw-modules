@@ -29,6 +29,7 @@ export type AnchorData = {
   numTicks: number;
   pixelsPerTick: number;
   ghost: boolean;
+  nextAnchor: AnchorData | null;
 };
 
 export const getPlayheadAnchorData = (
@@ -93,6 +94,7 @@ export const getPlayheadAnchorData = (
             bboxMeasure,
             yPos,
             ghost: true,
+            nextAnchor: null,
           });
         }
       } else {
@@ -109,6 +111,7 @@ export const getPlayheadAnchorData = (
           bboxMeasure,
           yPos,
           ghost: false,
+          nextAnchor: null,
         });
       }
     });
@@ -242,9 +245,12 @@ export const getPlayheadAnchorData = (
         // a1.numPixels = a1.bbox.width
         a1.numPixels = a1.bboxMeasure.x + a1.bboxMeasure.width - a1.bbox.x;
       }
+      a1.nextAnchor = a2;
     } else {
       a1.endTicks = lastTicks;
       a1.numPixels = a1.bboxMeasure.x + a1.bboxMeasure.width - a1.bbox.x;
+      // create a dummy anchor
+      a1.nextAnchor = { ...a1, endTicks: lastTicks, measureNumber: a1.measureNumber + 1 };
     }
     const diffTicks = a1.endTicks - a1.startTicks;
     a1.pixelsPerTick = a1.numPixels / diffTicks;

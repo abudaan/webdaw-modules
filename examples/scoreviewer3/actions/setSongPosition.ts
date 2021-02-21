@@ -9,65 +9,66 @@ export const setSongPosition = (millis: number, ticks: number) => {
     currentPlayheadAnchor,
     offset: { x: offsetX, y: offsetY },
     loops,
+    ppq,
   } = store.getState();
 
+  // choose to use millis or ticks to check if the playhead has passed the current anchor
+  // millis is recommended when you use a low ppq value and your song has a slow tempo
+  const useMillis = false;
   const playheadOffsetX = playhead.width / 2;
-
-  // check if we are in a loop
-  let inLoop = false;
-  let currentLoop = null;
   const currentMeasureNumber = currentPlayheadAnchor ? currentPlayheadAnchor.measureNumber : 1;
-  if (loops.length) {
-    // presently only a single loop is supported
-    currentLoop = loops[0];
-    inLoop = millis >= currentLoop.startMillis && millis < currentLoop.endMillis;
+
+  let forceUpdate = false;
+  if (currentPlayheadAnchor !== null) {
+    if (loops.length) {
+      // check if we are in a loop and if we've reached the last anchor before the song repeats
+      // presently only a single loop is supported
+      const currentLoop = loops[0];
+      // const inLoop = millis >= currentLoop.startMillis && millis < currentLoop.endMillis;
+      if (
+        currentPlayheadAnchor.measureNumber === currentLoop.endBar &&
+        currentPlayheadAnchor.nextAnchor &&
+        currentPlayheadAnchor.nextAnchor.measureNumber !== currentMeasureNumber
+      ) {
+        // if (useMillis) {
+        //   const endMillis = getSong().getPosition("ticks", currentPlayheadAnchor.endTicks).millis;
+        //   forceUpdate = millis >= endMillis - 50;
+        // } else {
+        //   // check if the position in ticks has passed the current anchor
+        //   forceUpdate = ticks >= currentPlayheadAnchor.endTicks - Math.max(ppq / 8, 120);
+        // }
+        forceUpdate = true;
+      }
+    }
+    if (forceUpdate === false) {
+      if (useMillis) {
+        // check if the position in millis has passed the current anchor
+        const endMillis = getSong().getPosition("ticks", currentPlayheadAnchor.endTicks).millis;
+        forceUpdate = millis >= endMillis;
+      } else {
+        // check if the position in ticks has passed the current anchor
+        forceUpdate = ticks >= currentPlayheadAnchor.endTicks;
+      }
+    }
   }
-
-  // here we check if the position in ticks has passed the current anchor, you can
-  // also perform this check in millis like so:
-  //
-  // currentPlayheadAnchor === null || millis >= song.getPosition("ticks", currentPlayheadAnchor.endTicks).millis) {
-  //
-
-  let endMillis = currentPlayheadAnchor
-    ? getSong().getPosition("ticks", currentPlayheadAnchor.endTicks).millis
-    : 0;
 
   // console.log(ticks, currentPlayheadAnchor?.endTicks);
-  console.log(millis, endMillis);
+  // console.log(millis, endMillis);
 
-  if (inLoop && currentMeasureNumber === currentLoop.endBar) {
-  }
-
-  if (currentPlayheadAnchor === null || millis >= endMillis) {
-    // if (currentPlayheadAnchor === null || ticks >= currentPlayheadAnchor.endTicks) {
-    const currentMeasureNumber = currentPlayheadAnchor ? currentPlayheadAnchor.measureNumber : 1;
+  if (currentPlayheadAnchor === null || forceUpdate) {
     // find the current anchor
     let anchor: AnchorData | null = null;
-    console.log("UPDATE");
+    // console.log("UPDATE");
 
     let i = 0;
     let index = 0;
-    if (inLoop && currentMeasureNumber === currentLoop.endBar) {
-      console.log("in loop");
-      for (; i < playheadAnchors.length; i++) {
-        anchor = playheadAnchors[i];
-        if (anchor?.measureNumber === currentLoop.startBar) {
-          index = i === 0 ? 0 : i - 1;
-          anchor = playheadAnchors[index];
-          break;
-        }
+    for (; i < playheadAnchors.length; i++) {
+      anchor = playheadAnchors[i];
+      if (anchor?.startTicks > ticks) {
+        index = i === 0 ? 0 : i - 1;
+        anchor = playheadAnchors[index];
+        break;
       }
-    } else {
-      for (; i < playheadAnchors.length; i++) {
-        anchor = playheadAnchors[i];
-        if (anchor?.startTicks > ticks) {
-          index = i === 0 ? 0 : i - 1;
-          anchor = playheadAnchors[index];
-          break;
-        }
-      }
-      // console.log("update", millis, endMillis, index);
     }
 
     if (anchor === null) {
