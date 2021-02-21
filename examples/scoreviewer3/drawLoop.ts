@@ -41,7 +41,9 @@ export const setup = () => {
     }
   });
 
-  const unsub1 = store.subscribe(
+  const unsubscribes: (() => void)[] = [];
+
+  unsubscribes[unsubscribes.length] = store.subscribe(
     (selection: number[]) => {
       const {
         offset: { x: offsetX, y: offsetY },
@@ -66,7 +68,7 @@ export const setup = () => {
     (state) => state.selection
   );
 
-  const unsub2 = store.subscribe(
+  unsubscribes[unsubscribes.length] = store.subscribe(
     () => {
       const {
         selectedMeasures,
@@ -80,8 +82,9 @@ export const setup = () => {
 
   return {
     cleanup: () => {
-      unsub1();
-      unsub2();
+      unsubscribes.forEach((unsubscribe) => {
+        unsubscribe();
+      });
     },
   };
 };

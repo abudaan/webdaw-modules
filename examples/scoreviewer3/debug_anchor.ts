@@ -4,8 +4,8 @@ import { getOSMD } from "./scoreWrapper";
 import { createDiv } from "./util";
 
 const drawAllAnchors = (container: HTMLDivElement) => {
-  const scrollPosX = window.scrollX;
-  const scrollPosY = window.scrollY;
+  const scrollPosX = 0; //window.scrollX;
+  const scrollPosY = 0; // window.scrollY;
   const {
     playheadAnchors,
     offset: { x: offsetX, y: offsetY },
@@ -42,28 +42,37 @@ export const setup = () => {
   divCurrentAnchor.style.position = "absolute";
   document.body.appendChild(divCurrentAnchor);
 
-  const unsub1 = store.subscribe(
+  const unsubscribes: (() => void)[] = [];
+
+  unsubscribes[unsubscribes.length] = store.subscribe(
     () => {
       drawAllAnchors(containerAllAnchors);
     },
     (state) => state.loaded
   );
 
-  const unsub2 = store.subscribe(
+  unsubscribes[unsubscribes.length] = store.subscribe(
     () => {
       drawAllAnchors(containerAllAnchors);
     },
     (state) => state.width
   );
 
-  const unsub3 = store.subscribe(
+  unsubscribes[unsubscribes.length] = store.subscribe(
     () => {
       drawAllAnchors(containerAllAnchors);
     },
     (state) => state.playheadAnchors
   );
 
-  const unsub4 = store.subscribe(
+  // subs[subs.length] = store.subscribe(
+  //   () => {
+  //     drawAllAnchors(containerAllAnchors);
+  //   },
+  //   (state) => state.selectedMeasures
+  // );
+
+  unsubscribes[unsubscribes.length] = store.subscribe(
     (anchor: AnchorData | null) => {
       if (anchor !== null) {
         const {
@@ -79,12 +88,30 @@ export const setup = () => {
     (state) => state.currentPlayheadAnchor
   );
 
+  // const subscribes[subscribes.length] = store.subscribe(
+  //   (ticks: number[]) => {
+  //     ticks.forEach((t, i) => {
+  //       const hb = song.getPosition("barsbeats", i + 1, 1, 1, 0).ticks;
+  //       console.log(i + 1, t, hb, hb === t);
+  //     });
+  //   },
+  //   (state) => state.measureStartTicks
+  // );
+
+  // const subscribes[subscribes.length] = store.subscribe(
+  //   (playheadAnchors: AnchorData[]) => {
+  //     playheadAnchors.forEach((a, i) => {
+  //       console.log(a.measureNumber, a.startTicks);
+  //     });
+  //   },
+  //   (state) => state.playheadAnchors
+  // );
+
   return {
     cleanup: () => {
-      unsub1();
-      unsub2();
-      unsub3();
-      unsub4();
+      unsubscribes.forEach((sub) => {
+        sub();
+      });
     },
   };
 };

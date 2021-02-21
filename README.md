@@ -83,3 +83,34 @@ npm run watch #starts webpack in watch mode
 Now you can see the examples at <http://localhost:8000/examples>.
 
 Because I run the webserver in the root folder, the examples run on github.io as well (the examples need to have the right path to the assets folder).
+
+## Scoreviewer version 3
+
+This version uses so called anchors to determine the position of the playhead. The anchors are calculated based on the bounding boxes of the rendered svg note elements and contain the following information:
+
+```typescript
+export type AnchorData = {
+  measureNumber: number;
+  startTicks: number;
+  endTicks: number;
+  bbox: BBox;
+  bboxMeasure: BBox;
+  yPos: number;
+  numPixels: number;
+  numTicks: number;
+  pixelsPerTick: number;
+  ghost: boolean;
+  nextAnchor: AnchorData | null;
+};
+```
+
+Most keys are self-describing. A bounding box (bbox) contains the keys `x`, `y`,`width` and `height`. The key `numPixels` is the distance from the x-position of the current anchor to the x-position of the next anchor. Note that this is the actual travel distance of the playhead and that this value is not the same as the width of the anchor. Also note that in some cases this value is the distance between the x-position of the anchor to the nearest bar line, this is the case when:
+
+- the next anchor lies on the next staff
+- the next anchor lies before the current anchor, this happens both in repeated parts of the score and user-set loops
+
+This is done because otherwise the playhead would travel into the next bar before jumping to the next staff or measure, see screenshots
+
+![anchors regular](./images/anchor-regular.png "Anchor with no loop set")
+
+![anchors loop](./images/anchor-loop.png "Anchor with a loop set")

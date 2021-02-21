@@ -58,7 +58,9 @@ export const setup = async (): Promise<{ cleanup: () => void }> => {
     localStopSong();
   });
 
-  const unsub1 = store.subscribe(
+  const subscribes: (() => void)[] = [];
+
+  subscribes[subscribes.length] = store.subscribe(
     (songState) => {
       if (songState === "stop") {
         localStopSong();
@@ -73,7 +75,7 @@ export const setup = async (): Promise<{ cleanup: () => void }> => {
     (state) => state.songState
   );
 
-  const unsub2 = store.subscribe(
+  subscribes[subscribes.length] = store.subscribe(
     (measures: number[]) => {
       const { repeats, ppq } = store.getState();
 
@@ -121,29 +123,11 @@ export const setup = async (): Promise<{ cleanup: () => void }> => {
     (state) => state.selectedMeasures
   );
 
-  // const unsub3 = store.subscribe(
-  //   (ticks: number[]) => {
-  //     ticks.forEach((t, i) => {
-  //       const hb = song.getPosition("barsbeats", i + 1, 1, 1, 0).ticks;
-  //       console.log(i + 1, t, hb, hb === t);
-  //     });
-  //   },
-  //   (state) => state.measureStartTicks
-  // );
-
-  // const unsub3 = store.subscribe(
-  //   (playheadAnchors: AnchorData[]) => {
-  //     playheadAnchors.forEach((a, i) => {
-  //       console.log(a.measureNumber, a.startTicks);
-  //     });
-  //   },
-  //   (state) => state.playheadAnchors
-  // );
-
   return {
     cleanup: () => {
-      unsub1();
-      unsub2();
+      subscribes.forEach((sub) => {
+        sub();
+      });
     },
   };
 };

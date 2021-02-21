@@ -26,8 +26,8 @@ export const createDiv = ({
   div.style.height = `${bbox.height}px`;
   div.style.left = `${bbox.x + offsetX + scrollPosX}px`;
   div.style.top = `${bbox.y + offsetY + scrollPosY}px`;
-  div.addEventListener("mousedown", () => {
-    console.log(div);
-  });
+  // div.addEventListener("mousedown", () => {
+  //   console.log(div);
+  // });
   parent.appendChild(div);
 };

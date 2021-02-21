@@ -74,5 +74,7 @@ export const store = create<Store>((set, get) => ({
   currentPlayheadAnchor: null,
   measureStartTicks: [],
   files,
-  currentFilesIndex: 0,
+  currentFilesIndex: files.findIndex((f: FileData) => {
+    return f.name === "mozk545a_2-bars";
+  }),
 }));

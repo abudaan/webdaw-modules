@@ -11,28 +11,30 @@ const draw = (dim: { x: number; y: number; width: number; height: number }) => {
 };
 
 export const setup = () => {
-  const unsub1 = store.subscribe(
+  const unsubscribes: (() => void)[] = [];
+
+  unsubscribes[unsubscribes.length] = store.subscribe(
     (x: number) => {
       divPlayhead.style.left = `${x}px`;
     },
     (state) => state.playhead.x
   );
 
-  const unsub2 = store.subscribe(
+  unsubscribes[unsubscribes.length] = store.subscribe(
     (y: number) => {
       divPlayhead.style.top = `${y}px`;
     },
     (state) => state.playhead.y
   );
 
-  const unsub3 = store.subscribe(
+  unsubscribes[unsubscribes.length] = store.subscribe(
     (height: number) => {
       divPlayhead.style.height = `${height}px`;
     },
     (state) => state.playhead.height
   );
 
-  const unsub4 = store.subscribe(
+  unsubscribes[unsubscribes.length] = store.subscribe(
     () => {
       const { playhead, playheadAnchors } = store.getState();
       playhead.x = playheadAnchors[0].bbox.x;
@@ -41,7 +43,7 @@ export const setup = () => {
     (state) => state.loaded
   );
 
-  // const unsub5 = store.subscribe(
+  // subscribes[subscribes.length] = store.subscribe(
   //   () => {
   //     const { currentPlayheadAnchor, playhead } = store.getState();
   //     if (currentPlayheadAnchor) {
@@ -54,11 +56,9 @@ export const setup = () => {
 
   return {
     cleanup: () => {
-      unsub1();
-      unsub2();
-      unsub3();
-      unsub4();
-      // unsub5();
+      unsubscribes.forEach((sub) => {
+        sub();
+      });
     },
   };
 };

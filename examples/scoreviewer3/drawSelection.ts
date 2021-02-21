@@ -51,7 +51,7 @@ export const setup = () => {
     scrollPos: { x: scrollPosX, y: scrollPosY },
   } = store.getState());
 
-  const unsub1 = store.subscribe(
+  const unsub = store.subscribe(
     (pos: { x: number; y: number }) => {
       ({ x: scrollPosX, y: scrollPosY } = pos);
     },
@@ -60,7 +60,7 @@ export const setup = () => {
 
   return {
     cleanup: () => {
-      unsub1();
+      unsub();
     },
   };
 };

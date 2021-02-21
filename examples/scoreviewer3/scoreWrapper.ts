@@ -34,7 +34,6 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
     return Promise.reject();
   }
   const { repeats, initialTempo } = parsed;
-  // console.log("repeats", repeats);
 
   store.setState({
     repeats,
@@ -42,7 +41,9 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
   });
   await osmd.load(xmlDoc);
 
-  const unsub1 = store.subscribe(
+  const subscribes: (() => void)[] = [];
+
+  subscribes[subscribes.length] = store.subscribe(
     () => {
       render(osmd);
       updateBoundingBoxMeasures(osmd);
@@ -70,7 +71,9 @@ export const setup = async (divElem: HTMLDivElement): Promise<{ cleanup: () => v
 
   return {
     cleanup: () => {
-      unsub1();
+      subscribes.forEach((sub) => {
+        sub();
+      });
     },
   };
 };

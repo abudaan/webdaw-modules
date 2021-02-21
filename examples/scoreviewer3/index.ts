@@ -38,7 +38,7 @@ const init = async () => {
   setupPlayhead();
   setupDrawLoop();
   setupDrawSelection();
-  setupFollowScore();
+  setupFollowScore(); // makes the score scroll together with the playhead
   setupDebugAnchor();
   // compareScoreAndMIDI();
   ({ update: updateSparklingNotes } = setupSparklingNotes());

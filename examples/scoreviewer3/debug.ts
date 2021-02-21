@@ -1,5 +1,8 @@
 import { store } from "./store";
 
+/**
+ * prints of all repeats the start and end bar,
+ */
 export const setup = () => {
   const divContainer = document.getElementById("controls") as HTMLDivElement;
   const songBar = document.createElement("div");
