@@ -4,7 +4,7 @@ exports.getCurrentAnchor = void 0;
 exports.getCurrentAnchor = function (_a) {
     // choose to use millis or ticks to check if the playhead has passed the current anchor
     // millis is recommended when you use a low ppq value and your song has a slow tempo
-    var ticks = _a.ticks, millis = _a.millis, currentAnchor = _a.currentAnchor, anchors = _a.anchors, loops = _a.loops, endMillis = _a.endMillis;
+    var ticks = _a.ticks, millis = _a.millis, endMillis = _a.endMillis, currentAnchor = _a.currentAnchor, anchors = _a.anchors, loops = _a.loops;
     var forceUpdate = false;
     if (currentAnchor !== null) {
         if (loops.length) {

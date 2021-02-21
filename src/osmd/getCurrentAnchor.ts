@@ -13,10 +13,10 @@ type Args = {
 export const getCurrentAnchor = ({
   ticks,
   millis,
+  endMillis,
   currentAnchor,
   anchors,
   loops,
-  endMillis,
 }: Args): { anchor: AnchorData | null; updated: boolean } => {
   // choose to use millis or ticks to check if the playhead has passed the current anchor
   // millis is recommended when you use a low ppq value and your song has a slow tempo

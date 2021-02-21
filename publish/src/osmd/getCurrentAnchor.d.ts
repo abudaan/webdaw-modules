@@ -8,7 +8,7 @@ declare type Args = {
     anchors: AnchorData[];
     loops: LoopData[];
 };
-export declare const getCurrentAnchor: ({ ticks, millis, currentAnchor, anchors, loops, endMillis, }: Args) => {
+export declare const getCurrentAnchor: ({ ticks, millis, endMillis, currentAnchor, anchors, loops, }: Args) => {
     anchor: AnchorData | null;
     updated: boolean;
 };

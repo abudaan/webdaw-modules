@@ -11,6 +11,10 @@ export const setSongPosition = (millis: number, ticks: number) => {
     loops,
   } = store.getState();
 
+  // decide whether the playhead should jump from anchor to anchor or travel smoothly
+  // between anchors, sometimes jumping looks better
+  const smooth = true;
+
   // choose to use millis or ticks to check if the playhead has passed the current anchor
   // millis is recommended when you use a low ppq value and your song has a slow tempo
   // if you want to use millis, pass a positive value with the endMillis key to getCurrentAnchor()
@@ -42,7 +46,7 @@ export const setSongPosition = (millis: number, ticks: number) => {
         },
         currentPlayheadAnchor: anchor,
       });
-    } else if (currentAnchor !== null) {
+    } else if (currentAnchor !== null && smooth) {
       const x =
         currentAnchor.bbox.x + (ticks - currentAnchor.startTicks) * currentAnchor.pixelsPerTick;
 
