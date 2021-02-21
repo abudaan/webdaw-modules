@@ -74,5 +74,5 @@ export const store = create<Store>((set, get) => ({
   currentPlayheadAnchor: null,
   measureStartTicks: [],
   files,
-  currentFilesIndex: 1,
+  currentFilesIndex: 0,
 }));
