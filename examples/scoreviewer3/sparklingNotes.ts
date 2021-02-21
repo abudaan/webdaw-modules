@@ -71,6 +71,7 @@ export const setup = () => {
           ],
           instrumentName
         );
+        console.log("note number:", noteOn.noteNumber, "velocity:", noteOn.velocity);
       }
       e.stopImmediatePropagation();
     });
