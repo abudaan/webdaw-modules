@@ -54,20 +54,8 @@ declare namespace Heartbeat {
     addMidiEventListener: (event: string, callback: (arg?: any) => void) => void;
     removeEventListener: (type: string) => void;
     setLoop: (loop?: boolean) => void;
-    setLeftLocator: (
-      type: string,
-      bar: number,
-      beat?: number,
-      sixteenth?: number,
-      tick?: number
-    ) => void;
-    setRightLocator: (
-      type: string,
-      bar: number,
-      beat?: number,
-      sixteenth?: number,
-      tick?: number
-    ) => void;
+    setLeftLocator: (type: string, bar: number, beat?: number, sixteenth?: number, tick?: number) => void;
+    setRightLocator: (type: string, bar: number, beat?: number, sixteenth?: number, tick?: number) => void;
     addEvents: (events: Array<MIDIEvent>) => void;
     addTimeEvents: (events: Array<MIDIEvent>) => void;
     removeTimeEvents: () => void;
@@ -202,6 +190,12 @@ declare namespace Heartbeat {
     denominator: number;
     tracks: Array<Track>;
     timeEvents: Array<MIDIEvent>;
+    trackMapping: {
+      id: string;
+      name: string;
+      index: number;
+      usedInSong: boolean;
+    };
   }
 
   export type MIDIFileDataTrack = {
@@ -338,20 +332,12 @@ declare namespace Heartbeat {
     getAudioContext(): AudioContext;
     getMasterGainNode(): GainNode;
     createAudioEvent(config: any): Heartbeat.AudioEvent;
-    addMidiFile(
-      args: { url?: string; arraybuffer?: ArrayBuffer },
-      callback: (mf: Heartbeat.MIDIFileJSON) => void
-    ): void;
+    addMidiFile(args: { url?: string; arraybuffer?: ArrayBuffer }, callback: (mf: Heartbeat.MIDIFileJSON) => void): void;
     addAssetPack(ap: Heartbeat.AssetPack, callback: () => void): void;
     getInstruments(): Heartbeat.Instrument[];
     ready(): Promise<boolean>;
     getNoteNumber(step: string, octave: number): number;
-    createMidiEvent(
-      ticks: number,
-      type: number,
-      data1: number,
-      data2?: number
-    ): Heartbeat.MIDIEvent;
+    createMidiEvent(ticks: number, type: number, data1: number, data2?: number): Heartbeat.MIDIEvent;
     processEvent(event: Heartbeat.MIDIEvent, instrument: string): void;
     processEvent(event: Heartbeat.MIDIEvent[], instrument: string): void;
     stopProcessEvents(): void;

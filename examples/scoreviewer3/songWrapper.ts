@@ -39,7 +39,18 @@ export const setup = async (): Promise<{ cleanup: () => void }> => {
   const { name, midiFile } = files[currentFilesIndex];
   // load MIDI file and setup song
   await loadMIDIFile(midiFile);
-  song = sequencer.createSong(sequencer.getMidiFile(name));
+  // const parsed = sequencer.getMidiFile("mozk545a");
+  // const trackOrder = [];
+  // for (let i = 0; i < parsed.trackMapping.length; i++) {
+  //   const mapping = parsed.trackMapping[i];
+  //   if (mapping.usedInSong) {
+  //     trackOrder.push(mapping.id);
+  //   }
+  // }
+  // console.log(parsed);
+  // console.log(trackOrder);
+  const parsed = sequencer.getMidiFile(name);
+  song = sequencer.createSong(parsed);
   const keyEditor = sequencer.createKeyEditor(song, {});
   store.setState({ ppq: song.ppq });
 
@@ -51,6 +62,7 @@ export const setup = async (): Promise<{ cleanup: () => void }> => {
   const json = await loadJSON(url);
   await addAssetPack(json);
   song.tracks.forEach((track: Heartbeat.Track) => {
+    // console.log(track);
     track.setInstrument(instrumentName);
   });
 

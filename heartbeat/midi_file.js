@@ -30,6 +30,7 @@ function midiFile() {
 
   function parse(midifile, buffer, callback) {
     //console.time('parse midi');
+    var trackMapping = [];
     var data,
       i,
       j,
@@ -62,7 +63,7 @@ function midiFile() {
     // buffer is ArrayBuffer, so convert it
     buffer = new Uint8Array(buffer);
     data = parseMidiFile(buffer);
-    //console.log(data);
+    // console.log(data);
     //console.log(data.header.ticksPerBeat);
 
     // save some memory
@@ -269,18 +270,25 @@ function midiFile() {
 
       //console.log('NOTE ON', numNoteOn, 'NOTE OFF', numNoteOff, 'OTHER', numOther);
       // console.log('PARSED', parsed);
+      var originalName = data.trackNames[i];
       if (parsed.length > 0) {
         track.addPart(part);
         part.addEvents(parsed);
         midifile.tracks.push(track);
         midifile.numTracks++;
+        trackMapping.push({ name: track.name, id: track.id, index: i, usedInSong: true });
+      } else {
+        trackMapping.push({ name: originalName, id: track.id, index: i, usedInSong: false });
       }
       i++;
     }
-    midifile.tracks.reverse();
+    // midifile.tracks.reverse();
+    // console.log(midifile.tracks);
     midifile.timeEvents = timeEvents;
     midifile.autoSize = true;
+    midifile.trackMapping = trackMapping;
     //console.timeEnd('parse midi');
+    // console.log(trackMapping);
     midifile.loaded = true;
     callback(midifile);
   }

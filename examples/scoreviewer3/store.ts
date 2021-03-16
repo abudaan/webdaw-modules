@@ -74,9 +74,11 @@ export const store = create<Store>((set, get) => ({
   currentPlayheadAnchor: null,
   measureStartTicks: [],
   files,
-  currentFilesIndex: files.findIndex((f: FileData) => {
-    // return f.name === "mozk545a_2-bars";
-    return f.name === "mozk545a_musescore";
-    // return f.name === "multibar_rest2";
-  }),
+  currentFilesIndex: 0,
+  // currentFilesIndex: files.findIndex((f: FileData) => {
+  //   // return f.name === "mozk545a_2-bars";
+  //   // return f.name === "mozk545a_musescore";
+  //   // return f.name === "multibar_rest2";
+  //   return f.name === "chopin_valse_op.64_no.1_minute_valse";
+  // }),
 }));

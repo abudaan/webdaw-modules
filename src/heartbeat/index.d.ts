@@ -210,7 +210,13 @@ export module Heartbeat {
     nominator: number;
     denominator: number;
     tracks: Track[];
-    timeEvents: Array<MIDIEvent>;
+    timeEvents: MIDIEvent[];
+    trackMapping: {
+      id: string;
+      name: string;
+      index: number;
+      usedInSong: boolean;
+    }[];
   }
 
   export type MIDIFileDataTrack = {
