@@ -8,8 +8,8 @@ export type FileData = {
 export const files = [
   {
     name: "mozk545a_musescore",
-    // midiFile: "../assets/mozk545a_musescore.mid",
-    midiFile: "../assets/mozk545a.mid",
+    midiFile: "../assets/mozk545a_musescore.mid",
+    // midiFile: "../assets/mozk545a.mid",
     mxmlFile: "../assets/mozk545a_musescore.musicxml",
   },
   {

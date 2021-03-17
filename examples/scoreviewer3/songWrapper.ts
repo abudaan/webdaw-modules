@@ -50,6 +50,7 @@ export const setup = async (): Promise<{ cleanup: () => void }> => {
   // console.log(parsed);
   // console.log(trackOrder);
   const parsed = sequencer.getMidiFile(name);
+  // console.log(parsed);
   song = sequencer.createSong(parsed);
   const keyEditor = sequencer.createKeyEditor(song, {});
   store.setState({ ppq: song.ppq });

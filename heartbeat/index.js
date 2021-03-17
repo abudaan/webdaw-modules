@@ -7081,6 +7081,7 @@ function midiFile() {
   function parse(midifile, buffer, callback) {
     //console.time('parse midi');
     var trackMapping = [];
+    var rawEvents = [];
     var data,
       i,
       j,
@@ -7330,6 +7331,7 @@ function midiFile() {
       } else {
         trackMapping.push({ name: originalName, id: track.id, index: i, usedInSong: false });
       }
+      rawEvents.push(events);
       i++;
     }
     // midifile.tracks.reverse();
@@ -7337,6 +7339,7 @@ function midiFile() {
     midifile.timeEvents = timeEvents;
     midifile.autoSize = true;
     midifile.trackMapping = trackMapping;
+    midifile.rawEvents = rawEvents;
     //console.timeEnd('parse midi');
     // console.log(trackMapping);
     midifile.loaded = true;
